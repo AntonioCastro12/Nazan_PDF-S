@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LogManagerComponent } from './log-manager.component';
+import { OptionsComponent } from './options.component';
 
-describe('LogManagerComponent', () => {
-  let component: LogManagerComponent;
-  let fixture: ComponentFixture<LogManagerComponent>;
+describe('OptionsComponent', () => {
+  let component: OptionsComponent;
+  let fixture: ComponentFixture<OptionsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LogManagerComponent ]
+      declarations: [ OptionsComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LogManagerComponent);
+    fixture = TestBed.createComponent(OptionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

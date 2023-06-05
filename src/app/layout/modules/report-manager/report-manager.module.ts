@@ -8,12 +8,14 @@ import { ReportManagerRoutingModule } from './report-manager-routing.module';
 import { ReportManagerComponent } from './report-manager.component';
 import { ReportOrderListComponent } from './pages/report-order-list/report-order-list.component';
 import { ReportOrderLogComponent } from './pages/report-log-list/report-order-log.component';
+import { OptionsComponent } from 'src/app/shared/components/options/options.component';
 
 @NgModule({
   declarations: [
     ReportManagerComponent,
     ReportOrderListComponent,
-    ReportOrderLogComponent
+    ReportOrderLogComponent,
+    OptionsComponent
   ],
   imports: [
     LuxonModule,

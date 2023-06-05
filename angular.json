@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "nazan-middleware-cedis-frontend": {
+    "nazan-admin-reports-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/nazan-middleware-cedis-frontend",
+            "outputPath": "dist/nazan-admin-reports-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -68,10 +68,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "nazan-middleware-cedis-frontend:build:production"
+              "browserTarget": "nazan-admin-reports-frontend:build:production"
             },
             "development": {
-              "browserTarget": "nazan-middleware-cedis-frontend:build:development"
+              "browserTarget": "nazan-admin-reports-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +79,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "nazan-middleware-cedis-frontend:build"
+            "browserTarget": "nazan-admin-reports-frontend:build"
           }
         },
         "test": {

@@ -1,6 +1,7 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
     <div class="card-container yellow-container">
+      <app-options></app-options>
       <div class="spinner" *ngIf="isLoading">
         <p-progressSpinner styleClass="w-4rem h-4rem" fill="var(--surface-ground)"
           animationDuration=".5s"></p-progressSpinner>
