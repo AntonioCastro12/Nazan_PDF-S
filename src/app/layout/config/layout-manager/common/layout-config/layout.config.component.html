@@ -1,0 +1,166 @@
+<p-sidebar
+  [(visible)]="visible"
+  styleClass="p-sidebar-md"
+  position="right"
+  [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'"
+  styleClass="layout-config-sidebar"
+>
+  <h5>{{ TEMPLATE_TEXT.fontSize || "Font size" }}</h5>
+  <div class="flex align-items-center">
+    <button
+      icon="pi pi-minus"
+      type="button"
+      pButton
+      (click)="decrementScale()"
+      class="p-button-text p-button-rounded w-2rem h-2rem mr-2"
+      [disabled]="scale === scales[0]"
+    ></button>
+    <div class="flex gap-2 align-items-center">
+      <i
+        class="pi pi-circle-fill text-300"
+        *ngFor="let s of scales"
+        [ngClass]="{ 'text-primary-500': s === scale }"
+      ></i>
+    </div>
+    <button
+      icon="pi pi-plus"
+      type="button"
+      pButton
+      (click)="incrementScale()"
+      class="p-button-text p-button-rounded w-2rem h-2rem ml-2"
+      [disabled]="scale === scales[scales.length - 1]"
+    ></button>
+  </div>
+
+  <ng-container *ngIf="!minimal">
+    <h5>{{ TEMPLATE_TEXT.menuType || "Menu type" }}</h5>
+    <div class="field-radiobutton">
+      <p-radioButton
+        name="menuMode"
+        value="static"
+        [(ngModel)]="menuMode"
+        inputId="mode1"
+      ></p-radioButton>
+      <label for="mode1">{{ TEMPLATE_TEXT.static || "Static" }}</label>
+    </div>
+    <div class="field-radiobutton">
+      <p-radioButton
+        name="menuMode"
+        value="overlay"
+        [(ngModel)]="menuMode"
+        inputId="mode2"
+      ></p-radioButton>
+      <label for="mode2">{{ TEMPLATE_TEXT.dynamic || "Dynamic" }}</label>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!minimal">
+    <h5>{{ TEMPLATE_TEXT.inputStyle || "Input Style" }}</h5>
+    <div class="flex">
+      <div class="field-radiobutton flex-1">
+        <p-radioButton
+          name="inputStyle"
+          value="outlined"
+          [(ngModel)]="layoutState.config.appConfig.inputStyle"
+          inputId="outlined_input"
+        ></p-radioButton>
+        <label for="outlined_input">{{
+          TEMPLATE_TEXT.outline || "Outline"
+        }}</label>
+      </div>
+      <div class="field-radiobutton flex-1">
+        <p-radioButton
+          name="inputStyle"
+          value="filled"
+          [(ngModel)]="layoutState.config.appConfig.inputStyle"
+          inputId="filled_input"
+        ></p-radioButton>
+        <label for="filled_input">{{ TEMPLATE_TEXT.filled || "Filled" }}</label>
+      </div>
+    </div>
+
+    <h5>{{ TEMPLATE_TEXT.ripple || "Filled" }}</h5>
+    <p-inputSwitch
+      [(ngModel)]="layoutState.config.appConfig.ripple"
+    ></p-inputSwitch>
+  </ng-container>
+
+  <ng-container *ngIf="!minimal">
+    <h5>Tema</h5>
+
+    <section class="flex flex-wrap gap-1">
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-check"
+        class="p-button-rounded"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-bookmark"
+        class="p-button-rounded p-button-secondary"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-search"
+        class="p-button-rounded p-button-success"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-user"
+        class="p-button-rounded p-button-info"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-bell"
+        class="p-button-rounded p-button-warning"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-heart"
+        class="p-button-rounded p-button-help"
+      ></button>
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-times"
+        class="p-button-rounded p-button-danger"
+      ></button>
+    </section>
+
+    <article class="mt-1">
+      <span>{{ layoutState.config.themeConfig.name }}</span>
+    </article>
+
+    <article class="mt-3">
+      <p-tabView class="h-auto">
+        <p-tabPanel [header]="TEMPLATE_TEXT.light || 'Light'">
+          <section *ngFor="let theme of basicThemes | layoutFilterLightTheme">
+            <div (click)="onThemeChange(theme)">
+              <p>{{ theme.name }}</p>
+            </div>
+          </section>
+        </p-tabPanel>
+        <p-tabPanel [header]="TEMPLATE_TEXT.dark || 'Dark'">
+          <section *ngFor="let theme of basicThemes | layoutFilterDarkTheme">
+            <div (click)="onThemeChange(theme)">
+              <p>{{ theme.name }}</p>
+            </div>
+          </section>
+        </p-tabPanel>
+      </p-tabView>
+    </article>
+  </ng-container>
+</p-sidebar>

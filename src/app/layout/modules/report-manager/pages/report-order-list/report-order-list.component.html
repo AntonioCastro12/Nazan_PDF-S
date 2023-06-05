@@ -1,0 +1,136 @@
+<div *ngIf="!showDetail">
+  <div class="card" style="margin-bottom: 30px;">
+    <div class="card-container yellow-container">
+      <div class="spinner" *ngIf="isLoading">
+        <p-progressSpinner styleClass="w-4rem h-4rem" fill="var(--surface-ground)"
+          animationDuration=".5s"></p-progressSpinner>
+      </div>
+      <div class="block font-bold text-left breport-round mb-3">
+        <div>Reporte de órdenes</div>
+      </div>
+      <div class="text-left mb-4">
+        <div class="mb-2">Filtrar por:</div>
+        <div class="card-container blue-container flex align-items-center justify-content-start">
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column  p-2">
+              <label htmlFor="order_id" class="font-bold">{{reportEntityLabels.order_id}}</label>
+              <input pInputText id="order_id" aria-describedby="order_id-help"
+                (input)="handleChangeOrderId($event,'order_id')" [(ngModel)]="order_id" />
+            </div>
+          </div>
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column p-2">
+              <label htmlFor="status" class="font-bold">{{reportEntityLabels.status}}</label>
+              <section class="select" #search>
+                <p-dropdown [options]="statusList" [(ngModel)]="selectedStatus" optionValue="id"
+                  (onChange)="handleChangeStatus($event,'status')" optionLabel="name" [filter]="true" filterBy="name"
+                  placeholder="Seleccionar status" [style]="{'width':'100%'}">
+                </p-dropdown>
+              </section>
+            </div>
+          </div>
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column p-2">
+              <label htmlFor="from" class="font-bold">Desde</label>
+              <p-calendar [(ngModel)]="from" [readonlyInput]="true" (onSelect)="handleDateInput($event,'from')"
+                dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+          </div>
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column p-2">
+              <label htmlFor="to" class="font-bold">Hasta</label>
+              <p-calendar [(ngModel)]="to" [readonlyInput]="true" (onSelect)="handleDateInput($event,'to')"
+                dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+          </div>
+        </div>
+        <div class="card-container blue-container flex align-items-center justify-content-start">
+          <p class="mt-4"><p-button (onClick)="resetFilters()">Restaurar filtros</p-button></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div ng-if>
+    <div class="card">
+      <p-table #dt2 [value]="reportState.reportState.orderList.data" [paginator]="true" [rows]="2"
+        styleClass="mt-3 p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr class="text-sm">
+            <th class="text-center" id="{{reportEntityLabels.order_id}}">{{reportEntityLabels.order_id}}</th>
+            <th class="text-center" id="{{reportEntityLabels.date_created}}">{{reportEntityLabels.date_created}}</th>
+            <th class="text-center" id="{{reportEntityLabels.date_updated}}">{{reportEntityLabels.date_updated}}</th>
+            <th class="text-center" id="{{reportEntityLabels.status}}">{{reportEntityLabels.status}}</th>
+            <th class="text-center" id="{{reportEntityLabels.id_sap}}">{{reportEntityLabels.id_sap}}</th>
+            <th class="text-center" id="acciones">Acciones</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="6" class="text-center">
+              No records found
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr class="text-sm">
+            <td class="text-center">{{ report.order_id }}</td>
+            <td class="text-center">{{ report.date_created | dateTimeFromIso
+              | dateTimeToLocal
+              | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
+            <td class="text-center">{{ report.date_updated | dateTimeFromIso
+              | dateTimeToLocal
+              | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
+            <td class="text-center">{{ report.status }}</td>
+            <td class="text-center">{{ report.id_sap }}</td>
+            <td class="text-center"><p-button icon="pi pi-search" (onClick)="showDetails(report.tracking)"></p-button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <!--  <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="take"
+        [totalRecords]="reportState.reportState.orderList.total" [rowsPerPageOptions]="[2, 20, 50]"></p-paginator> -->
+    </div>
+  </div>
+</div>
+<p-dialog header="Order Tracking" [(visible)]="showModal" [style]="{width: '70vw'}">
+  <p>
+    <p-table #dt2 [value]="reportState.reportState.trackingActive" styleClass="mt-3 p-datatable-sm">
+      <ng-template pTemplate="header">
+        <tr class="text-sm">
+          <th class="text-center" id="{{reportTrackingEntityLabels.order_id}}">{{reportTrackingEntityLabels.order_id}}
+          </th>
+          <th class="text-center" id="{{reportTrackingEntityLabels.id_sap}}">{{reportTrackingEntityLabels.id_sap}}</th>
+          <th class="text-center" id="{{reportTrackingEntityLabels.date_opened}}">
+            {{reportTrackingEntityLabels.date_opened}}</th>
+          <th class="text-center" id="{{reportTrackingEntityLabels.date_closed}}">
+            {{reportTrackingEntityLabels.date_closed}}</th>
+          <th class="text-center" id="{{reportTrackingEntityLabels.status}}">{{reportTrackingEntityLabels.status}}</th>
+          <th class="text-center" id="{{reportTrackingEntityLabels.comment}}">{{reportTrackingEntityLabels.comment}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td [attr.colspan]="6" class="text-center">
+            No records found
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tracking>
+        <tr class="text-sm">
+          <td class="text-center">{{ tracking.order_id }}</td>
+          <td class="text-center">{{ tracking.id_sap }}</td>
+          <td class="text-center">{{ tracking.date_opened | dateTimeFromIso
+            | dateTimeToLocal
+            | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
+          <td class="text-center">{{ tracking.date_closed | dateTimeFromIso
+            | dateTimeToLocal
+            | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
+          <td class="text-center">{{ tracking.status }}</td>
+          <td class="text-center">{{ tracking.comment }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p>
+</p-dialog>

@@ -1,0 +1,25 @@
+<p-dialog header="Header" [(visible)]="visible" [style]="{ width: '50vw'}">
+  <ng-template pTemplate="header">
+    <span class="text-xl font-bold">{{typeMessage}}</span>
+  </ng-template>
+  <p>
+    {{message}}
+  </p>
+</p-dialog>
+<div class="card" style="margin-bottom: 30px;">
+  <div class="card-container yellow-container">
+    <div class="block font-bold text-left border-round mb-3">
+      <div>Ejecutar procesamiento de órdenes</div>
+      <div class="spinner" *ngIf="loading">
+        <p-progressSpinner styleClass="w-4rem h-4rem" fill="var(--surface-ground)"
+          animationDuration=".5s"></p-progressSpinner>
+      </div>
+    </div>
+    <div class="block text-left border-round mb-3">
+      Esta acción permite ejecutar el procesamiento de ordenes,
+      Desea ejecutar esta acción?
+    </div>
+    <p><p-button (onClick)="excecute()">Ejecutar</p-button></p>
+    <p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>
+  </div>
+</div>

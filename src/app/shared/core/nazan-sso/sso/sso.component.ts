@@ -1,0 +1,171 @@
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+// import { SsoEventListener } from "./sso.listener";
+import { environment } from 'src/environments/environment';
+import { Identity } from './identity.interface';
+import { SsoService } from './sso.service';
+// import { CreateLoading } from './loading';
+import { SsoStateService } from './sso.service';
+
+@Component({
+  selector: 'SSO',
+  templateUrl: './sso.component.html',
+  styleUrls: ['./sso.component.scss'],
+})
+export class SsoComponent implements OnInit {
+  @ViewChild('iframe', { static: true }) iframe!: ElementRef;
+
+  @Input() callback!: Function;
+  @Input() codeApp: string | null = null;
+  @Input() showInProduction: boolean = false; //TODO: <----------------------- TEST
+
+  ssoDashboardUrl: string = 'https://dashboard.impuls.com.mx';
+  inRequiedLogin: boolean = true;
+  identity: Identity = new Identity();
+
+  constructor(
+    // private ssoEventListener: SsoEventListener,
+    private ssoService: SsoService,
+    private ssoState: SsoStateService
+  ) {
+    // window["SSOisRequiredLogin"] = false;
+    // window["SSOlogueado"] = false;
+    // CreateLoading();
+
+    this.ssoState.subscribe((data) => {
+      if (data.actionLogout) {
+        data.actionLogout = false;
+        this.logout();
+      }
+      if (data.actionReload) {
+        data.actionReload = false;
+        this.reload();
+      }
+    });
+
+    // this.ssoEventListener.subscribe("reload", () => {
+    //     this.reload();
+    // });
+    // this.ssoEventListener.subscribe("identity", (callback: Function) =>
+    //     callback(this.identity, this.codeApp)
+    // );
+    // this.ssoEventListener.subscribe("logout", () => {
+    //     // if (window["SSOisRequiredLogin"]) return;
+    //     if (this.ssoProvider.SSOisRequiredLogin) return;
+    //     // window["SSOisRequiredLogin"] = true;
+    //     this.ssoProvider.SSOisRequiredLogin = true;
+    //     this.logout();
+    // });
+  }
+  ngOnInit() {
+    this.ssoService.codeApp = this.codeApp as string;
+
+    var eventMethod =
+      window.addEventListener != null ? 'addEventListener' : 'attachEvent';
+    var eventer = window[eventMethod as keyof typeof window];
+    var messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message';
+
+    eventer(messageEvent, (e: any) => {
+      const { action, value } = e.data;
+
+      if (action === 'showLogin') return this.showLogin();
+      if (action === 'sendAuth') return this.auth(value, false);
+      if (action === 'refresh') return this.auth(value, true);
+      if (action === 'reloadAndShowLogin') {
+        this.showLogin();
+        //FIXME: test -> this.callback && this.callback({}, false, false);
+        this.identity = new Identity();
+        this.callback && this.callback({}, false, true);
+        return;
+      }
+    });
+
+    if (!this.showInProduction && !environment.production) {
+      const identity: Identity = {
+        at_hash: 'noProduccionHash',
+        aud: ['xstore'],
+        auth_time: 9999999,
+        exp: 9999999,
+        grupo: 'xstore',
+        iat: 9999999,
+        iss: 'noProduccionIss',
+        jti: 'noProduccionJti',
+        nombre: 'userTest',
+        nonce: 'noProduccionNonce',
+        privileges: { '*': ['*'] },
+        rat: 9999999,
+        sid: '997',
+        sub: '997',
+        banco: '29',
+        bancoNombre: 'SUCURSAL 29 MONTERREY',
+        bancoTipo: 'menudeo',
+      };
+
+      this.identity = identity;
+      this.ssoService.setIdentity(identity);
+      this.callback &&
+        this.callback({ token: 'noProduccionToken', identity }, false);
+    } else {
+      // si esta en  produccion
+      // iniciar SSO hydra
+      const el: HTMLIFrameElement = this.iframe.nativeElement;
+      el.setAttribute('src', this.ssoDashboardUrl);
+    }
+  }
+  showLogin() {
+    window['LOADING' as keyof typeof window] &&
+      window['LOADING' as keyof typeof window](false);
+    this.viewIframe(true);
+  }
+  viewIframe(show: boolean = true) {
+    Object.assign(
+      this.iframe.nativeElement.style,
+      show
+        ? {
+            display: 'block',
+            pointerEvents: 'all',
+          }
+        : {
+            display: 'none',
+            pointerEvents: 'none',
+          }
+    );
+  }
+  auth(data: { token: string; identity: any }, refresh: boolean) {
+    // window["SSOisRequiredLogin"] = false;
+    this.ssoService.SSOisRequiredLogin = false;
+
+    // debugger;
+    // this.inRequiedLogin = false;
+    this.viewIframe(false);
+    this.identity = data.identity;
+
+    this.ssoService.setIdentity(data.identity);
+    this.callback && this.callback(data, refresh);
+  }
+  logout = () => {
+    this.iframe.nativeElement.contentWindow.postMessage(
+      {
+        action: 'logout',
+      },
+      '*'
+    );
+    this.viewIframe(true);
+  };
+  reload() {
+    if (this.inRequiedLogin) return;
+    this.inRequiedLogin = true;
+    this.showLogin();
+    this.iframe.nativeElement.contentWindow.postMessage(
+      {
+        action: 'reload',
+      },
+      '*'
+    );
+    this.identity = new Identity();
+    this.ssoService.setIdentity(new Identity());
+    this.callback && this.callback({}, false, true);
+  }
+  loading(value: boolean = true, msg: string = 'cargando') {
+    return window['LOADING' as keyof typeof window](value, msg);
+  }
+}
