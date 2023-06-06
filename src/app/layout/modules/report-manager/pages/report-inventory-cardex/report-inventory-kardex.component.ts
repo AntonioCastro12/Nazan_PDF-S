@@ -80,7 +80,7 @@ export class ReportInventoryKardexComponent {
 
   getList() {
     this._reportApiService.listOrders({
-      select: {
+      /* select: {
         order_id: true,
         date_created: true,
         date_updated: true,
@@ -98,7 +98,7 @@ export class ReportInventoryKardexComponent {
 
         }
       },
-      where: this.filter
+      where: this.filter */
     }).subscribe({
       next: (data) => {
         this.reportState.reportState.orderList = { data, total: data.length }

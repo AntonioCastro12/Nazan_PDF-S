@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { OrderEntity } from '../models/order.entity';
 import { LogEntity } from '../models/log.entity';
+import { environment } from 'src/environments/environment';
+import { InventoryKardex, InventoryStockDetail, InventoryStockResume } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +14,14 @@ export class ReportApiService {
 
   constructor(private _http: HttpClient) { }
 
-  listOrders(data: any): Observable<OrderEntity[]> {
-    return this._http.post<OrderEntity[]>('https://apimiddlewarecedis.impuls.com.mx/api/report-module/order', { ...data });
+  inventoryKardexProduct(data: any): Observable<InventoryKardex[]> {
+    return this._http.post<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product`, { ...data });
   }
-
-  listLogs(data: any): Observable<LogEntity[]> {
-    return this._http.post<LogEntity[]>('https://apimiddlewarecedis.impuls.com.mx/api/report-module/logs', { ...data });
+  inventoryStockResume(data: any): Observable<InventoryStockResume[]> {
+    return this._http.post<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume`, { ...data });
+  }
+  inventoryStockDetail(data: any): Observable<InventoryStockDetail[]> {
+    return this._http.post<InventoryStockDetail[]>(`${environment.apiUrl}/api/inventories/inventory-stock/detail`, { ...data });
   }
 
 }

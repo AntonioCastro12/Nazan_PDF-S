@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
-
   hostname: 'localhost',
   host: 'http://localhost',
   apiUrl: 'http://localhost:3151',
