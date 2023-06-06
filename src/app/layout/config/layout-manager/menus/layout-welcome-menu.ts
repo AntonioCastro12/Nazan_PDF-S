@@ -10,48 +10,126 @@ export const welcomeMenu = [
     ],
   },
   {
-    label: 'Procesos OnDemand',
-    items: [
-      {
-        label: 'Proccess Orders',
-        icon: 'pi pi-fw pi-id-card',
-        routerLink: ['/layout/ondemand/processOrders'],
-      },
-      {
-        label: 'Close Orders',
-        icon: 'pi pi-fw pi-id-card',
-        routerLink: ['/layout/ondemand/closeOrders'],
-      },
-    ],
-  },
-  {
     label: 'Reportes',
     items: [
       {
         label: 'Órdenes',
-        icon: 'pi pi-fw pi-id-card',
+        icon: 'pi pi-fw pi-minus',
         routerLink: ['/layout/reports/orders/list'],
       },
       {
         label: 'Logs',
-        icon: 'pi pi-fw pi-id-card',
+        icon: 'pi pi-fw pi-minus',
         routerLink: ['/layout/reports/logs/list'],
       },
     ],
   },
-
-  /* {
-    label: 'Configuración',
+  {
+    label: 'Operaciones',
     items: [
       {
-        label: 'Prueba del sistema',
-        icon: 'pi pi-fw pi-eye',
-        routerLink: ['/layout/printer'],
-        badge: 'NEW',
+        label: 'Inventarios',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Kardex de artículo',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+          {
+            label: 'Existencia de inventario',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/logs/list'],
+          },
+          {
+            label: 'Cumplimiento de conteos ciclicos',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/logs/list'],
+          },
+        ]
+      },
+      {
+        label: 'Segmentos',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Segmento colaboradores Nazan',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+          {
+            label: 'Afiliados KIPON SHOE CLUB',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/logs/list'],
+          },
+        ]
       },
     ],
   },
- */
+  {
+    label: 'Marketing',
+    items: [
+      {
+        label: 'Programa de puntos',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Reporte deralledo puntos y premios',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+        ]
+      },
+    ],
+  },
+  {
+    label: 'Administración y Finanzas',
+    items: [
+      {
+        label: 'Ventas',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Informe general de ventas',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+        ]
+      },
+      {
+        label: 'Inventarios',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Kardex de articulo',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+          {
+            label: 'Existencia de inventario',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+        ]
+      },
+    ],
+  },
+  {
+    label: 'Planeación y Compras',
+    items: [
+      {
+        label: 'Inventario',
+        icon: 'pi pi-fw pi-minus',
+        items: [
+          {
+            label: 'Reporte de recepción de mercancía (POD)',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/orders/list'],
+          },
+        ]
+      },
+    ],
+  },
   {
     label: 'Salir',
     items: [

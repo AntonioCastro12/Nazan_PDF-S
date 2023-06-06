@@ -6,6 +6,7 @@ import { ReportStateService } from '../../services/report-state.service';
 import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
+import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
 @Component({
   selector: 'app-report-list',
   templateUrl: './report-order-list.component.html',
@@ -45,8 +46,32 @@ export class ReportOrderListComponent {
   first: number = 0;
   reportEntityLabels = orderEntityLabels;
   reportTrackingEntityLabels = orderTrackingEntityLabels;
-  constructor(private _reportApiService: ReportApiService, public reportState: ReportStateService, private router: Router) {
+  subscription: any = {};
+  optionsState: any = {};
+  constructor(public _optionServices: OptionsStateService, private _reportApiService: ReportApiService, public reportState: ReportStateService, private router: Router) {
     this.getList();
+  }
+  ngOnInit() {
+    this._optionServices.state.subscribe(optionsState => {
+      // Asigna el nuevo valor del estado al objeto optionsState en el componente
+
+      console.log('Cambios detectados:');
+
+      // Ejecuta alguna actividad según los cambios detectados:
+      if (optionsState.OptionsEntity.onChart) {
+        // Código para ejecutar si la propiedad `onChart` del objeto `OptionsEntity` cambió a `true`
+      }
+      if (optionsState.OptionsEntity.onDownload) {
+        // Código para ejecutar si la propiedad `onDownload` del objeto `OptionsEntity` cambió a `true`
+      }
+      if (optionsState.OptionsEntity.onSearch) {
+        // Código para ejecutar si la propiedad `onDownload` del objeto `OptionsEntity` cambió a `true`
+        console.log('aca')
+      } else {
+        console.log('false')
+      }
+      // ...
+    });
   }
   onPageChange(event: any) {
     this.skip = event.first;

@@ -1,4 +1,10 @@
 <div class="card" style="margin-bottom: 30px;">
   <div class="card-container yellow-container">
+    <p-button icon="pi pi-search" class="mr-1" (onClick)="handleSearch()" styleClass="p-button-rounded"></p-button>
+    <p-button icon="pi pi-chart-bar" class="mr-1" styleClass="p-button-rounded"></p-button>
+    <p-button icon="pi pi-refresh" class="mr-1" styleClass="p-button-rounded"></p-button>
+    <p-button icon="pi pi-cloud-download" class="mr-1" styleClass="p-button-rounded"></p-button>
+    <p-button icon="pi pi-eye" class="mr-1" styleClass="p-button-rounded"></p-button>
   </div>
+  {{optionServices.optionsState.OptionsEntity|json}}
 </div>

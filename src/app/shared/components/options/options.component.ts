@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { OptionsStateService } from './models/options-state.service';
 
 @Component({
   selector: 'app-options',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class OptionsComponent {
 
+
+  constructor(public optionServices: OptionsStateService) { }
+
+  handleSearch() {
+    this.optionServices.setSearch();
+  }
 }
