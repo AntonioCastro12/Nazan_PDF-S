@@ -1,29 +1,32 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { logEntityLabels } from '../../models/log.entity';
+import { OrderTrackingEntity, Status, orderEntityLabels, orderTrackingEntityLabels } from '../../models/order.entity';
 import { ReportApiService } from '../../services/report-api.service';
-import { LogStateService } from '../../services/log-state.service';
+import { ReportStateService } from '../../services/report-state.service';
 import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
+import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
 @Component({
-  selector: 'app-report-log',
-  templateUrl: './report-order-log.component.html',
-  styleUrls: ['./report-order-log.component.scss'],
+  selector: 'app-report-list',
+  templateUrl: './report-inventory-kardex.component.html',
+  styleUrls: ['./report-inventory-kardex.component.scss'],
   providers: [
     HttpClient
   ]
 })
-export class ReportOrderLogComponent {
+export class ReportInventoryKardexComponent {
+  statusList: Status[] = [{ name: 'Open', id: "open" }, { name: 'Close', id: "close" }];
   selectedStatus!: string;
   isLoading: boolean = true;
+  showModal: boolean = false;
   showDetail: boolean = false;
   status: string = '';
-  level: string = '';
+  order_id: string = '';
   from: Date = new Date();
   to: Date = new Date();
   filter: object = {
-    createdAt: {
+    date_created: {
       gte: DateTime.fromJSDate(new Date(this.from)).set({
         hour: 0,
         minute: 0,
@@ -41,9 +44,34 @@ export class ReportOrderLogComponent {
   take: number = 2;
   skip: number = 0;
   first: number = 0;
-  reportEntityLabels = logEntityLabels;
-  constructor(private _excelService: ExcelService, private _reportApiService: ReportApiService, public logState: LogStateService, private router: Router) {
+  reportEntityLabels = orderEntityLabels;
+  reportTrackingEntityLabels = orderTrackingEntityLabels;
+  subscription: any = {};
+  optionsState: any = {};
+  constructor(public _optionServices: OptionsStateService, private _reportApiService: ReportApiService, public reportState: ReportStateService, private router: Router) {
     this.getList();
+  }
+  ngOnInit() {
+    this._optionServices.state.subscribe(optionsState => {
+      // Asigna el nuevo valor del estado al objeto optionsState en el componente
+
+      console.log('Cambios detectados:');
+
+      // Ejecuta alguna actividad según los cambios detectados:
+      if (optionsState.OptionsEntity.onChart) {
+        // Código para ejecutar si la propiedad `onChart` del objeto `OptionsEntity` cambió a `true`
+      }
+      if (optionsState.OptionsEntity.onDownload) {
+        // Código para ejecutar si la propiedad `onDownload` del objeto `OptionsEntity` cambió a `true`
+      }
+      if (optionsState.OptionsEntity.onSearch) {
+        // Código para ejecutar si la propiedad `onDownload` del objeto `OptionsEntity` cambió a `true`
+        console.log('aca')
+      } else {
+        console.log('false')
+      }
+      // ...
+    });
   }
   onPageChange(event: any) {
     this.skip = event.first;
@@ -51,11 +79,29 @@ export class ReportOrderLogComponent {
   }
 
   getList() {
-    this._reportApiService.listLogs({
+    this._reportApiService.listOrders({
+      select: {
+        order_id: true,
+        date_created: true,
+        date_updated: true,
+        status: true,
+        id_sap: true,
+        tracking: {
+          select: {
+            comment: true,
+            date_closed: true,
+            date_opened: true,
+            id_sap: true,
+            order_id: true,
+            status: true,
+          }
+
+        }
+      },
       where: this.filter
     }).subscribe({
       next: (data) => {
-        this.logState.logState.logList = { data, total: data.length }
+        this.reportState.reportState.orderList = { data, total: data.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -94,7 +140,7 @@ export class ReportOrderLogComponent {
   handleDateInput(e: any, name: string) {
     if (this.from && this.to) {
       const filter = {
-        createdAt: {
+        date_created: {
           gte: DateTime.fromJSDate(new Date(this.from)).set({
             hour: 0,
             minute: 0,
@@ -109,7 +155,7 @@ export class ReportOrderLogComponent {
           })
         },
       }
-      this.handleChangeFilter(filter, 'createdAt')
+      this.handleChangeFilter(filter, 'date_created')
     }
   }
   handleChangeFilter(filterValue: object, name: string) {
@@ -128,11 +174,11 @@ export class ReportOrderLogComponent {
   resetFilters() {
     this.selectedStatus = '';
     this.status = '';
-    this.level = '';
+    this.order_id = '';
     this.from = new Date();
     this.to = new Date();
     this.filter = {
-      createdAt: {
+      date_created: {
         gte: DateTime.fromJSDate(new Date(this.from)).set({
           hour: 0,
           minute: 0,
@@ -150,16 +196,10 @@ export class ReportOrderLogComponent {
     this.isLoading = true;
     this.getList();
   }
-  async exportExcel() {
-    const blob = await this._excelService.generateExcel(this.logState.logState.logList.data);
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
-    a.click();
-    window.URL.revokeObjectURL(url);
-    document.body.removeChild(a);
+
+  showDetails(data: OrderTrackingEntity[]) {
+    this.reportState.reportState.trackingActive = data;
+    this.showModal = true;
   }
 
 }
