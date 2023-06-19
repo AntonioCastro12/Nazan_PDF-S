@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { OrderEntity } from '../models/order.entity';
-import { LogEntity } from '../models/log.entity';
 import { environment } from 'src/environments/environment';
 import { InventoryKardex, InventoryStockDetail, InventoryStockResume } from '../models/report.entity';
 
@@ -15,7 +13,8 @@ export class ReportApiService {
   constructor(private _http: HttpClient) { }
 
   inventoryKardexProduct(data: any): Observable<InventoryKardex[]> {
-    return this._http.post<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product`, { ...data });
+    console.log(data)
+    return this._http.get<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product`);
   }
   inventoryStockResume(data: any): Observable<InventoryStockResume[]> {
     return this._http.post<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume`, { ...data });

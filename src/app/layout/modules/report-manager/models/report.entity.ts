@@ -1,3 +1,9 @@
+
+
+export class ReportList {
+  total: number = 0;
+  data: InventoryKardex[] = []
+}
 export class InventoryKardex {
   store_id: number = 0;
   trans_seq: string = "";

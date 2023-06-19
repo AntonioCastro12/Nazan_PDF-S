@@ -1,12 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { OrderTrackingEntity, Status, orderEntityLabels, orderTrackingEntityLabels } from '../../models/order.entity';
 import { ReportApiService } from '../../services/report-api.service';
 import { ReportStateService } from '../../services/report-state.service';
 import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
+import { CommonApiService } from '../../services/common-api.service';
+import { CommonStateService } from '../../services/common-state.service';
+import { Store } from '../../models/store.model';
+import { searchFormEntityLabels } from '../../models/search-form-entity';
 @Component({
   selector: 'app-report-list',
   templateUrl: './report-inventory-kardex.component.html',
@@ -16,12 +19,15 @@ import { OptionsStateService } from 'src/app/shared/components/options/models/op
   ]
 })
 export class ReportInventoryKardexComponent {
-  statusList: Status[] = [{ name: 'Open', id: "open" }, { name: 'Close', id: "close" }];
   selectedStatus!: string;
-  isLoading: boolean = true;
+  selectedStore: string = '';
+  suggestions: Store[] = [];
+  isLoading: boolean = false;
   showModal: boolean = false;
   showDetail: boolean = false;
   status: string = '';
+  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  searchFormEntityLabels = searchFormEntityLabels;
   order_id: string = '';
   from: Date = new Date();
   to: Date = new Date();
@@ -44,14 +50,20 @@ export class ReportInventoryKardexComponent {
   take: number = 2;
   skip: number = 0;
   first: number = 0;
-  reportEntityLabels = orderEntityLabels;
-  reportTrackingEntityLabels = orderTrackingEntityLabels;
   subscription: any = {};
   optionsState: any = {};
-  constructor(public _optionServices: OptionsStateService, private _reportApiService: ReportApiService, public reportState: ReportStateService, private router: Router) {
-    this.getList();
+  constructor(
+    public _optionServices: OptionsStateService,
+    private _reportApiService: ReportApiService,
+    private _commonApiService: CommonApiService,
+    public reportState: ReportStateService,
+    public commonState: CommonStateService,
+    private router: Router
+  ) {
+    //this.getList();
   }
   ngOnInit() {
+    this.getStores()
     this._optionServices.state.subscribe(optionsState => {
       // Asigna el nuevo valor del estado al objeto optionsState en el componente
 
@@ -78,8 +90,32 @@ export class ReportInventoryKardexComponent {
     this.take = event.rows;
   }
 
+  filterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    for (const store of this.commonState.commonState.stores) {
+      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
+      }
+    }
+    this.suggestions = filteredStores;
+  }
+
+  getStores() {
+    this._commonApiService.getStores().
+      subscribe({
+        next: (data) => {
+          this.commonState.commonState.stores = data
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
+  }
   getList() {
-    this._reportApiService.listOrders({
+    this._reportApiService.inventoryKardexProduct({
       /* select: {
         order_id: true,
         date_created: true,
@@ -101,7 +137,7 @@ export class ReportInventoryKardexComponent {
       where: this.filter */
     }).subscribe({
       next: (data) => {
-        this.reportState.reportState.orderList = { data, total: data.length }
+        this.reportState.reportState.inventory.kardex.list = { data, total: data.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -164,7 +200,7 @@ export class ReportInventoryKardexComponent {
       ...filterValue
     }
     this.isLoading = true;
-    this.getList();
+    //this.getList();
   }
 
   showreport(NroTicker: string) {
@@ -172,6 +208,7 @@ export class ReportInventoryKardexComponent {
   }
 
   resetFilters() {
+    this.selectedStore = '';
     this.selectedStatus = '';
     this.status = '';
     this.order_id = '';
@@ -193,12 +230,12 @@ export class ReportInventoryKardexComponent {
         })
       },
     };
-    this.isLoading = true;
-    this.getList();
+    //this.isLoading = true;
+    //this.getList();
   }
 
-  showDetails(data: OrderTrackingEntity[]) {
-    this.reportState.reportState.trackingActive = data;
+  showDetails(data: any) {
+    //this.reportState.reportState.trackingActive = data;
     this.showModal = true;
   }
 
