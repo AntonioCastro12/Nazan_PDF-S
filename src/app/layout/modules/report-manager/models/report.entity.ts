@@ -2,7 +2,7 @@
 
 export class ReportList {
   total: number = 0;
-  data: InventoryKardex[] = []
+  data: any[] = []
 }
 export class InventoryKardex {
   store_id: number = 0;
@@ -31,6 +31,11 @@ export const inventoryKardexLabels = {
   item_id: 'Artículo',
   sku: 'SKU',
   document: 'Documento',
+  qty: 'Cantidad'
+}
+
+export const inventoryStockResumeLabels = {
+  line: 'Linea',
   qty: 'Cantidad'
 }
 

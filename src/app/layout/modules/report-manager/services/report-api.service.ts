@@ -16,10 +16,10 @@ export class ReportApiService {
     return this._http.get<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product${data}`);
   }
   inventoryStockResume(data: any): Observable<InventoryStockResume[]> {
-    return this._http.post<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume`, { ...data });
+    return this._http.get<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume${data}`);
   }
   inventoryStockDetail(data: any): Observable<InventoryStockDetail[]> {
-    return this._http.post<InventoryStockDetail[]>(`${environment.apiUrl}/api/inventories/inventory-stock/detail`, { ...data });
+    return this._http.get<InventoryStockDetail[]>(`${environment.apiUrl}/api/inventories/inventory-stock/detail`);
   }
 
 }

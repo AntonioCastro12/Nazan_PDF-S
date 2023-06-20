@@ -32,8 +32,18 @@
   font-size: 22px;
   color: black;
 }
+.report-subtitle{
+  margin-top: 5px;
+  font-size: 14px;
+}
 
 .highlight {
   background-color: #ffff00;
   font-weight: bold;
+}
+
+.spinner{
+  display:inline-flex;
+  position: absolute;
+  right: 40px;
 }

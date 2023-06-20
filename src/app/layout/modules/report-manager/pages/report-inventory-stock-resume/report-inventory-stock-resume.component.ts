@@ -9,23 +9,22 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventoryKardexLabels } from '../../models/report.entity';
+import { inventoryStockResumeLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
   selector: 'app-report-list',
-  templateUrl: './report-inventory-kardex.component.html',
-  styleUrls: ['./report-inventory-kardex.component.scss'],
+  templateUrl: './report-inventory-stock-resume.component.html',
+  styleUrls: ['./report-inventory-stock-resume.component.scss'],
   providers: [
     HttpClient
   ]
 })
-export class ReportInventoryKardexComponent {
+export class ReportInventoryStockResumeComponent {
   searchText: string = "";
   selectedStatus!: string;
   selectedStore: Store | null = null;
-  selectedOrigin: string = '';
   suggestions: Store[] = [];
   isLoading: boolean = false;
   showModal: boolean = false;
@@ -35,10 +34,7 @@ export class ReportInventoryKardexComponent {
   showDetail: boolean = false;
   originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
   searchFormEntityLabels = searchFormEntityLabels;
-  inventoryKardexLabels = inventoryKardexLabels;
-  productCode: string = '15134001';
-  from: Date = new Date();
-  to: Date = new Date();
+  inventoryStockResumeLabels = inventoryStockResumeLabels;
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
@@ -97,9 +93,9 @@ export class ReportInventoryKardexComponent {
   }
   getList() {
     this.isLoading = true;
-    this._reportApiService.inventoryKardexProduct(this.filter).subscribe({
+    this._reportApiService.inventoryStockResume(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.inventory.kardex.list = { data, total: data.length }
+        this.reportState.reportState.inventory.stockResume.list = { data, total: data.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -111,25 +107,21 @@ export class ReportInventoryKardexComponent {
   }
 
   async handleSearch() {
-    if (this.selectedStore === null || this.productCode === "" || this.selectedOrigin === "") {
+    if (this.selectedStore === null) {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&productId=${this.productCode}&origin=${this.selectedOrigin}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
     this.getList();
   }
   resetFilters() {
     this.selectedStore = null;
-    this.selectedOrigin = '';
-    this.productCode = '';
-    this.from = new Date();
-    this.to = new Date();
     this.filter = ''
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.inventory.kardex.list.data;
-    this.reportState.reportState.inventory.kardex.filter.data = list.filter((item) =>
+    const list = this.reportState.reportState.inventory.stockResume.list.data;
+    this.reportState.reportState.inventory.stockResume.filter.data = list.filter((item) =>
       objectContainsValue(item, this.searchText)
     );
   }
@@ -142,11 +134,11 @@ export class ReportInventoryKardexComponent {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.inventory.kardex.list.data.length <= 0) {
+    if (this.reportState.reportState.inventory.stockResume.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    const list = this.reportState.reportState.inventory.kardex.filter.data.length > 0 ? this.reportState.reportState.inventory.kardex.filter.data : this.reportState.reportState.inventory.kardex.list.data
+    const list = this.reportState.reportState.inventory.stockResume.filter.data.length > 0 ? this.reportState.reportState.inventory.stockResume.filter.data : this.reportState.reportState.inventory.stockResume.list.data
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
