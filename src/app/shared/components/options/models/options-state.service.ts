@@ -26,4 +26,8 @@ export class OptionsStateService {
     this.optionsState.OptionsEntity.onRefresh = !this.optionsState.OptionsEntity.onRefresh;
     this.subject.next(this.optionsState);
   }
+  setDownload() {
+    this.optionsState.OptionsEntity.onDownload = !this.optionsState.OptionsEntity.onDownload;
+    this.subject.next(this.optionsState);
+  }
 }

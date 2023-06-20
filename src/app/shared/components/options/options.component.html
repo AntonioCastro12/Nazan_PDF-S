@@ -7,8 +7,8 @@
       styleClass="p-button-rounded"></p-button>
     <p-button *ngIf="showRefresh" pTooltip="Renovar la lista" tooltipPosition="bottom" icon="pi pi-refresh" class="mr-1"
       (onClick)="handleRefresh()" styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showDownload" pTooltip="Exportar registros" tooltipPosition="bottom" icon="pi pi-cloud-download"
-      class="mr-1" styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showDownload" (onClick)="handleDownload()" pTooltip="Exportar registros" tooltipPosition="bottom"
+      icon="pi pi-cloud-download" class="mr-1" styleClass="p-button-rounded"></p-button>
     <p-button *ngIf="showEye" pTooltip="Mostrar registro" tooltipPosition="bottom" icon="pi pi-eye" class="mr-1"
       styleClass="p-button-rounded"></p-button>
   </div>

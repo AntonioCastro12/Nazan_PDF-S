@@ -11,6 +11,7 @@ import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { inventoryKardexLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
+import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
   selector: 'app-report-list',
@@ -43,21 +44,31 @@ export class ReportInventoryKardexComponent {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
+  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
+
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
     private _commonApiService: CommonApiService,
     public reportState: ReportStateService,
     public commonState: CommonStateService,
+    public _excelService: ExcelService,
   ) {
   }
   ngOnInit() {
     this.getStores()
-    this._optionServices.state.subscribe(optionsState => {
-      if (optionsState.OptionsEntity.onRefresh) {
-        this.handleSearch()
+    this.subscription = this._optionServices.state.subscribe((optionsState) => {
+      if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
+        const { onChart, onDownload, onRefresh, onSearch, onShow } =
+          optionsState.OptionsEntity;
+        if (onRefresh !== this.lastOptionsEntity.onRefresh) {
+          this.handleSearch();
+        }
+        if (onDownload !== this.lastOptionsEntity.onDownload) {
+          this.exportExcel();
+        }
+        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow };
       }
-
     });
   }
 
@@ -100,12 +111,9 @@ export class ReportInventoryKardexComponent {
     })
   }
 
-  handleSearch() {
+  async handleSearch() {
     if (this.selectedStore === null || this.productCode === "" || this.selectedOrigin === "") {
-      this.titleModal = 'Error'
-      this.textModal = 'Debe completar los datos del formulario de busqueda'
-      this.widthModal = '50px'
-      this.showModal = true
+      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
     this.filter = `?storeId=${this.selectedStore?.storeInfoId}&productId=${this.productCode}&origin=${this.selectedOrigin}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
@@ -121,15 +129,36 @@ export class ReportInventoryKardexComponent {
     this.filter = ''
   }
 
-  showDetails(data: any) {
-    this.showModal = true;
-  }
-
   handleSearchRecords() {
     const list = this.reportState.reportState.inventory.kardex.list.data;
     this.reportState.reportState.inventory.kardex.filter.data = list.filter((item) =>
       objectContainsValue(item, this.searchText)
     );
+  }
+
+  async setErrorModal(title: string, text: string, width: string) {
+    this.titleModal = title;
+    this.textModal = text;
+    this.widthModal = width;
+    this.showModal = true;
+  }
+
+  async exportExcel() {
+    if (this.reportState.reportState.inventory.kardex.list.data.length <= 0) {
+      await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
+      return;
+    }
+    const list = this.reportState.reportState.inventory.kardex.filter.data.length > 0 ? this.reportState.reportState.inventory.kardex.filter.data : this.reportState.reportState.inventory.kardex.list.data
+    const blob = await this._excelService.generateExcel(list);
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = `${new Date().getTime()}.xlsx`;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+
   }
 
 

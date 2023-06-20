@@ -10,47 +10,55 @@ export class ExcelService {
 
   constructor() { }
 
-  async generateExcel(data: any[]) {
-    const worksheet = XLSX.utils.aoa_to_sheet([
-      ['id', 'level', 'message', 'stacktrace', 'context', 'createdAt']
-    ]);
+  public async generateExcel(data: any[], sheetName: string = 'Datos') {
+    const worksheet = XLSX.utils.json_to_sheet(data);
 
-    // Configuración de columna con los estilos
-    worksheet['!cols'] = [
-      { width: 10 },
-      { width: 10 },
-      { width: 50 }, // Ancho de columna para el texto
-      { width: 10 },
-      { wch: 50 },
-      { width: 10 },
-    ];
-    worksheet['!ref'] = 'A1:F1';  // Establecer el rango de celdas
+    const cols: Array<any> = [];
+    Object.keys(data[0]).forEach(key => {
+      const colWidth = this.getMaxColumnWidth(data, key);
+      cols.push({ wch: colWidth });
+      worksheet[`!cols`] = cols;
 
-    // Establecer estilo de celda para el ajuste de texto
-    for (let col = 0; col < 6; col++) {
-      for (let row = 0; row < 1; row++) {
-        const cellRef = XLSX.utils.encode_cell({ r: row, c: col });
-        if (!worksheet[cellRef]) {
-          worksheet[cellRef] = {};
-        }
-        worksheet[cellRef].s = {
-          alignment: { wrapText: true },
-          font: { bold: true },
-        };
-      }
-    }
-
-    // Agregamos los datos a la hoja de cálculo
-    data.forEach(item => {
-      XLSX.utils.sheet_add_aoa(worksheet, [[item.id, item.level, item.message, item.stacktrace, JSON.stringify(item.context), item.createdAt]], { origin: -1 });
+      const cellRef = XLSX.utils.encode_cell({ r: 0, c: cols.length - 1 });
+      worksheet[cellRef].s = {
+        alignment: { wrapText: true },
+        font: { bold: true },
+      };
     });
 
-    // Creamos un objeto workbook y añadimos la hoja al workbook
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Datos');
+    data.forEach(item => {
+      Object.keys(item).forEach(key => {
+        const value = item[key];
+        if (Array.isArray(value) || typeof value === 'object') {
+          item[key] = JSON.stringify(value);
+        }
+      });
 
-    // Guardamos el archivo como un blob
+      XLSX.utils.sheet_add_json(worksheet, [item], { skipHeader: true, origin: -1 });
+    });
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
+
     const blob = new Blob([XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })], { type: 'application/octet-stream' });
+
     return blob;
+  }
+
+  private getMaxColumnWidth(data: any[], key: string): number {
+    const values: any[] = data.map((item: any) => {
+      return item[key];
+    });
+
+    const lengths: number[] = values.map(value => {
+      if (Array.isArray(value) || typeof value === 'object') {
+        value = JSON.stringify(value);
+      }
+
+      return String(value).length;
+    });
+
+    const maxLength = Math.max(...lengths);
+    return maxLength > 30 ? maxLength : 30;
   }
 }

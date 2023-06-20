@@ -21,4 +21,8 @@ export class OptionsComponent {
   handleRefresh() {
     this.optionServices.setRefresh();
   }
+
+  handleDownload() {
+    this.optionServices.setDownload();
+  }
 }
