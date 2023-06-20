@@ -18,8 +18,8 @@ export class ReportApiService {
   inventoryStockResume(data: any): Observable<InventoryStockResume[]> {
     return this._http.get<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume${data}`);
   }
-  inventoryStockDetail(data: any): Observable<InventoryStockDetail[]> {
-    return this._http.get<InventoryStockDetail[]>(`${environment.apiUrl}/api/inventories/inventory-stock/detail`);
+  inventoryStockDetails(data: any): Observable<InventoryStockDetail[]> {
+    return this._http.get<InventoryStockDetail[]>(`${environment.apiUrl}/api/inventories/inventory-stock/detail${data}`);
   }
 
 }

@@ -1,17 +1,18 @@
-import { LogList } from "./log.entity";
-import { ReportList } from "./report.entity";
+import { InventoryStockDetail, ReportList } from "./report.entity";
 
 class BasicObjectState {
   list: ReportList = { total: 0, data: [] };
   filter: ReportList = { total: 0, data: [] };
-  details?: [];
+}
+class InventoryStockResume extends BasicObjectState {
+  details: InventoryStockDetail[] = [];
 }
 
 
 export class ReportState {
   inventory: {
     kardex: BasicObjectState
-    stockResume: BasicObjectState,
+    stockResume: InventoryStockResume,
   } = {
       kardex: {
         list: { total: 0, data: [] },

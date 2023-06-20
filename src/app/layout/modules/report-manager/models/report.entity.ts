@@ -44,6 +44,15 @@ export class InventoryStockResume {
   qty: number = 0;
 }
 
+
+export const inventoryStockDetailLabels = {
+  sku: 'SKU',
+  createDate: 'Fecha',
+  line: 'línea',
+  description: 'Descripción',
+  qty: 'Cantidad'
+}
+
 export class InventoryStockDetail {
   storeId: string = "";
   itemId: string = "";

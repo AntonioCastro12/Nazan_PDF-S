@@ -9,7 +9,7 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventoryStockResumeLabels } from '../../models/report.entity';
+import { inventoryStockResumeLabels, inventoryStockDetailLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
@@ -23,11 +23,13 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 })
 export class ReportInventoryStockResumeComponent {
   searchText: string = "";
+  searchTextDetails: string = "";
   selectedStatus!: string;
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
   isLoading: boolean = false;
   showModal: boolean = false;
+  showDetailsModal: boolean = false;
   titleModal: string = '';
   textModal: string = '';
   widthModal: string = '';
@@ -35,6 +37,7 @@ export class ReportInventoryStockResumeComponent {
   originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
   searchFormEntityLabels = searchFormEntityLabels;
   inventoryStockResumeLabels = inventoryStockResumeLabels;
+  inventoryStockDetailLabels = inventoryStockDetailLabels;
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
@@ -92,6 +95,9 @@ export class ReportInventoryStockResumeComponent {
       })
   }
   getList() {
+    this.showDetailsModal = false
+    this.reportState.reportState.inventory.stockResume.list.data = []
+    this.reportState.reportState.inventory.stockResume.details = []
     this.isLoading = true;
     this._reportApiService.inventoryStockResume(this.filter).subscribe({
       next: (data) => {
@@ -107,7 +113,8 @@ export class ReportInventoryStockResumeComponent {
   }
 
   async handleSearch() {
-    if (this.selectedStore === null) {
+
+    if (this.selectedStore === null || typeof this.selectedStore === 'string') {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
@@ -126,6 +133,24 @@ export class ReportInventoryStockResumeComponent {
     );
   }
 
+  async findDetails() {
+    this.isLoading = true;
+    this._reportApiService.inventoryStockDetails(this.filter).subscribe({
+      next: (data) => {
+        this.reportState.reportState.inventory.stockResume.details = data
+      },
+      error: (e) => {
+        console.log('error loading data', e)
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    })
+  }
+
+  async showDetails() {
+    this.showDetailsModal = true
+  }
   async setErrorModal(title: string, text: string, width: string) {
     this.titleModal = title;
     this.textModal = text;
@@ -150,8 +175,4 @@ export class ReportInventoryStockResumeComponent {
     document.body.removeChild(a);
 
   }
-
-
-
-
 }

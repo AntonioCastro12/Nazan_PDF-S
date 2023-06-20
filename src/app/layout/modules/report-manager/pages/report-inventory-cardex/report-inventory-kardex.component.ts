@@ -96,6 +96,7 @@ export class ReportInventoryKardexComponent {
       })
   }
   getList() {
+    this.reportState.reportState.inventory.kardex.list.data = []
     this.isLoading = true;
     this._reportApiService.inventoryKardexProduct(this.filter).subscribe({
       next: (data) => {
@@ -111,7 +112,7 @@ export class ReportInventoryKardexComponent {
   }
 
   async handleSearch() {
-    if (this.selectedStore === null || this.productCode === "" || this.selectedOrigin === "") {
+    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.productCode === "" || this.selectedOrigin === "") {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
