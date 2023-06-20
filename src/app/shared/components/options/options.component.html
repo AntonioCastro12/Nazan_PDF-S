@@ -1,12 +1,15 @@
 <div class="card" style="margin-bottom: 30px;">
   <div class="mb-3">Herramientas de reporte</div>
   <div class="card-container">
-    <p-button *ngIf="showSearch" icon="pi pi-search" class="mr-1" (onClick)="handleSearch()"
+    <p-button *ngIf="showSearch" pTooltip="Buscar los registros" tooltipPosition="bottom" icon="pi pi-search"
+      class="mr-1" (onClick)="handleSearch()" styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showChart" pTooltip="Ver gráfico" tooltipPosition="bottom" icon="pi pi-chart-bar" class="mr-1"
       styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showChart" icon="pi pi-chart-bar" class="mr-1" styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showRefresh" icon="pi pi-refresh" class="mr-1" (onClick)="handleRefresh()"
+    <p-button *ngIf="showRefresh" pTooltip="Renovar la lista" tooltipPosition="bottom" icon="pi pi-refresh" class="mr-1"
+      (onClick)="handleRefresh()" styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showDownload" pTooltip="Exportar registros" tooltipPosition="bottom" icon="pi pi-cloud-download"
+      class="mr-1" styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showEye" pTooltip="Mostrar registro" tooltipPosition="bottom" icon="pi pi-eye" class="mr-1"
       styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showDownload" icon="pi pi-cloud-download" class="mr-1" styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showEye" icon="pi pi-eye" class="mr-1" styleClass="p-button-rounded"></p-button>
   </div>
 </div>

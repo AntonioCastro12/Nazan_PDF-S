@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { OptionsStateService } from './models/options-state.service';
-
 @Component({
   selector: 'app-options',
   templateUrl: './options.component.html',

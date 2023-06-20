@@ -1,14 +1,12 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
     <div class="block font-bold text-left breport-round mb-3">
-      <div>Kardex de inventario</div>
+      <div class="report-title">Kardex de inventario</div>
+      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
+        animationDuration=".5s"></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
       <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"></app-options>
-      <div class="spinner" *ngIf="isLoading">
-        <p-progressSpinner styleClass="w-4rem h-4rem" fill="var(--surface-ground)"
-          animationDuration=".5s"></p-progressSpinner>
-      </div>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2">Filtrar por:</div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
@@ -52,8 +50,8 @@
           </div>
         </div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
-          <p class="mt-4"><p-button (onClick)="resetFilters()" class="mr-3">Restaurar filtros</p-button><p-button
-              (onClick)="handleSearch()">Buscar</p-button></p>
+          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
+              filtros</p-button><p-button (onClick)="handleSearch()">Buscar</p-button></p>
         </div>
 
       </div>
@@ -76,7 +74,6 @@
             <th class="text-center" id="{{inventoryKardexLabels.action_code}}">{{inventoryKardexLabels.action_code}}
             </th>
             <th class="text-center" id="{{inventoryKardexLabels.item_id}}">{{inventoryKardexLabels.item_id}}</th>
-            <th class="text-center" id="{{inventoryKardexLabels.sku}}">{{inventoryKardexLabels.sku}}</th>
             <th class="text-center" id="{{inventoryKardexLabels.document}}">{{inventoryKardexLabels.document}}</th>
             <th class="text-center" id="{{inventoryKardexLabels.qty}}">{{inventoryKardexLabels.qty}}</th>
           </tr>
@@ -97,7 +94,6 @@
             <td class="text-center">{{ report.destiny_bucket }}</td>
             <td class="text-center">{{ report.action_code }}</td>
             <td class="text-center">{{ report.item_id }}</td>
-            <td class="text-center">{{ report.sku }}</td>
             <td class="text-center">{{ report.document }}</td>
             <td class="text-center">{{ report.qty }}</td>
           </tr>
