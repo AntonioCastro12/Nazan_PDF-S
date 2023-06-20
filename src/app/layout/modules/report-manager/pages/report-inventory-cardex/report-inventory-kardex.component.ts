@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ReportApiService } from '../../services/report-api.service';
 import { ReportStateService } from '../../services/report-state.service';
-import { Router } from '@angular/router';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
@@ -11,6 +10,7 @@ import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { inventoryKardexLabels } from '../../models/report.entity';
+import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
 
 @Component({
   selector: 'app-report-list',
@@ -21,6 +21,7 @@ import { inventoryKardexLabels } from '../../models/report.entity';
   ]
 })
 export class ReportInventoryKardexComponent {
+  searchText: string = "";
   selectedStatus!: string;
   selectedStore: Store | null = null;
   selectedOrigin: string = '';
@@ -35,12 +36,13 @@ export class ReportInventoryKardexComponent {
   originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
   searchFormEntityLabels = searchFormEntityLabels;
   inventoryKardexLabels = inventoryKardexLabels;
-  productCode: string = '';
+  productCode: string = '15134001';
   from: Date = new Date();
   to: Date = new Date();
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
+  highlightSearchText = highlightSearchText;
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
@@ -122,5 +124,15 @@ export class ReportInventoryKardexComponent {
   showDetails(data: any) {
     this.showModal = true;
   }
+
+  handleSearchRecords() {
+    const list = this.reportState.reportState.inventory.kardex.list.data;
+    this.reportState.reportState.inventory.kardex.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
+    );
+  }
+
+
+
 
 }

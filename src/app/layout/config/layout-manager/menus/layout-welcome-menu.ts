@@ -10,21 +10,6 @@ export const welcomeMenu = [
     ],
   },
   {
-    label: 'Reportes',
-    items: [
-      {
-        label: 'Órdenes',
-        icon: 'pi pi-fw pi-minus',
-        routerLink: ['/layout/reports/orders/list'],
-      },
-      {
-        label: 'Logs',
-        icon: 'pi pi-fw pi-minus',
-        routerLink: ['/layout/reports/logs/list'],
-      },
-    ],
-  },
-  {
     label: 'Operaciones',
     items: [
       {

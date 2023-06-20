@@ -8,7 +8,7 @@ export class InventoryKardex {
   store_id: number = 0;
   trans_seq: string = "";
   ws_id: string = "";
-  create_date: Date | null = null;;
+  create_date: string = "null";
   origin_bucket: string = "";
   destiny_bucket: string = "";
   action_code: string = "";
@@ -17,7 +17,7 @@ export class InventoryKardex {
   document: string = "";
   qty: number = 0;
   on_hand: number = 0;
-  time_trans: Date | null = null;
+  time_trans: string = "";
   on_order: number = 0;
 }
 
