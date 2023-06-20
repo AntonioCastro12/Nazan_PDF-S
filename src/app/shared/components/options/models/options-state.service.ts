@@ -22,4 +22,8 @@ export class OptionsStateService {
     this.optionsState.OptionsEntity.onSearch = !this.optionsState.OptionsEntity.onSearch;
     this.subject.next(this.optionsState);
   }
+  setRefresh() {
+    this.optionsState.OptionsEntity.onRefresh = !this.optionsState.OptionsEntity.onRefresh;
+    this.subject.next(this.optionsState);
+  }
 }

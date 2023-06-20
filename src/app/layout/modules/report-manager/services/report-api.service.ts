@@ -12,9 +12,9 @@ export class ReportApiService {
 
   constructor(private _http: HttpClient) { }
 
-  inventoryKardexProduct(data: any): Observable<InventoryKardex[]> {
+  inventoryKardexProduct(data: string): Observable<InventoryKardex[]> {
     console.log(data)
-    return this._http.get<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product`);
+    return this._http.get<InventoryKardex[]>(`${environment.apiUrl}/api/inventories/kardex-product${data}`);
   }
   inventoryStockResume(data: any): Observable<InventoryStockResume[]> {
     return this._http.post<InventoryStockResume[]>(`${environment.apiUrl}/api/inventories/inventory-stock/resume`, { ...data });

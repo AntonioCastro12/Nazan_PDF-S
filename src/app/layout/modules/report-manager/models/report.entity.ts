@@ -21,6 +21,19 @@ export class InventoryKardex {
   on_order: number = 0;
 }
 
+export const inventoryKardexLabels = {
+  store_id: 'Tienda',
+  trans_seq: 'Transacción',
+  create_date: 'Creación',
+  origin_bucket: 'Bloque origen',
+  destiny_bucket: 'Bloque destino',
+  action_code: 'Acción',
+  item_id: 'Artículo',
+  sku: 'SKU',
+  document: 'Documento',
+  qty: 'Cantidad'
+}
+
 export class InventoryStockResume {
   line: string = ""
   qty: number = 0;

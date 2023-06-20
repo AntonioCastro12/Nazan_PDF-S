@@ -1,13 +1,13 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
+    <div class="block font-bold text-left breport-round mb-3">
+      <div>Kardex de inventario</div>
+    </div>
     <div class="card-container yellow-container">
-      <app-options></app-options>
+      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"></app-options>
       <div class="spinner" *ngIf="isLoading">
         <p-progressSpinner styleClass="w-4rem h-4rem" fill="var(--surface-ground)"
           animationDuration=".5s"></p-progressSpinner>
-      </div>
-      <div class="block font-bold text-left breport-round mb-3">
-        <div>Kardex de inventario</div>
       </div>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2">Filtrar por:</div>
@@ -16,113 +16,98 @@
             <div class="flex flex-column  p-2">
               <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
               <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-                (completeMethod)="filterStores($event)" field="storeInfoName"
-                [style]="{'width':'100%'}"></p-autoComplete>
+                (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
+                placeholder="Seleccionar tienda"></p-autoComplete>
 
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.productCode}}</label>
-              <input pInputText id="order_id" aria-describedby="order_id-help" [(ngModel)]="order_id" />
+              <label htmlFor="productCode" class="font-bold">{{searchFormEntityLabels.productCode}}</label>
+              <input pInputText id="productCode" placeholder="Código de producto" aria-describedby="productCode-help"
+                [(ngModel)]="productCode" />
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="status" class="font-bold">{{searchFormEntityLabels.origin}}</label>
               <section class="select" #search>
-                <p-dropdown [options]="originList" [(ngModel)]="selectedStatus" optionValue="id" optionLabel="name"
+                <p-dropdown [options]="originList" [(ngModel)]="selectedOrigin" optionValue="id" optionLabel="name"
                   [filter]="true" filterBy="name" placeholder="Seleccionar status" [style]="{'width':'100%'}">
                 </p-dropdown>
               </section>
             </div>
           </div>
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column p-2">
+              <label htmlFor="from" class="font-bold">Desde</label>
+              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+          </div>
+          <div class="flex-1 h-4rem">
+            <div class="flex flex-column p-2">
+              <label htmlFor="to" class="font-bold">Hasta</label>
+              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy"></p-calendar>
+            </div>
+          </div>
         </div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
-          <p class="mt-4"><p-button (onClick)="resetFilters()">Restaurar filtros</p-button></p>
+          <p class="mt-4"><p-button (onClick)="resetFilters()" class="mr-3">Restaurar filtros</p-button><p-button
+              (onClick)="handleSearch()">Buscar</p-button></p>
         </div>
 
       </div>
     </div>
   </div>
   <div ng-if>
-    <!-- <div class="card">
-      <p-table #dt2 [value]="reportState.reportState.inventory.kardex.list.data" [paginator]="true" [rows]="2"
+    <div class="card">
+      <p-table #dt2 [value]="reportState.reportState.inventory.kardex.list.data" [paginator]="true" [rows]="15"
         styleClass="mt-3 p-datatable-sm">
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{reportEntityLabels.order_id}}">{{reportEntityLabels.order_id}}</th>
-            <th class="text-center" id="{{reportEntityLabels.date_created}}">{{reportEntityLabels.date_created}}</th>
-            <th class="text-center" id="{{reportEntityLabels.date_updated}}">{{reportEntityLabels.date_updated}}</th>
-            <th class="text-center" id="{{reportEntityLabels.status}}">{{reportEntityLabels.status}}</th>
-            <th class="text-center" id="{{reportEntityLabels.id_sap}}">{{reportEntityLabels.id_sap}}</th>
-            <th class="text-center" id="acciones">Acciones</th>
+            <th class="text-center" id="{{inventoryKardexLabels.store_id}}">{{inventoryKardexLabels.store_id}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.trans_seq}}">{{inventoryKardexLabels.trans_seq}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.create_date}}">{{inventoryKardexLabels.create_date}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.origin_bucket}}">{{inventoryKardexLabels.origin_bucket}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.destiny_bucket}}">
+              {{inventoryKardexLabels.destiny_bucket}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.action_code}}">{{inventoryKardexLabels.action_code}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.item_id}}">{{inventoryKardexLabels.item_id}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.sku}}">{{inventoryKardexLabels.sku}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.document}}">{{inventoryKardexLabels.document}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.qty}}">{{inventoryKardexLabels.qty}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
-            <td [attr.colspan]="6" class="text-center">
-              No records found
+            <td [attr.colspan]="10" class="text-center">
+              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center">{{ report.order_id }}</td>
-            <td class="text-center">{{ report.date_created | dateTimeFromIso
-              | dateTimeToLocal
-              | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
-            <td class="text-center">{{ report.date_updated | dateTimeFromIso
-              | dateTimeToLocal
-              | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
-            <td class="text-center">{{ report.status }}</td>
-            <td class="text-center">{{ report.id_sap }}</td>
-            <td class="text-center"><p-button icon="pi pi-search" (onClick)="showDetails(report.tracking)"></p-button>
-            </td>
+            <td class="text-center">{{ report.store_id }}</td>
+            <td class="text-center">{{ report.trans_seq }}</td>
+            <td class="text-center">{{ report.create_date }}</td>
+            <td class="text-center">{{ report.origin_bucket }}</td>
+            <td class="text-center">{{ report.destiny_bucket }}</td>
+            <td class="text-center">{{ report.action_code }}</td>
+            <td class="text-center">{{ report.item_id }}</td>
+            <td class="text-center">{{ report.sku }}</td>
+            <td class="text-center">{{ report.document }}</td>
+            <td class="text-center">{{ report.qty }}</td>
           </tr>
         </ng-template>
       </p-table>
     </div>
-  </div> -->
   </div>
-  <!-- <p-dialog header="Order Tracking" [(visible)]="showModal" [style]="{width: '70vw'}">
+</div>
+<p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
   <p>
-    <p-table #dt2 [value]="reportState.reportState.trackingActive" styleClass="mt-3 p-datatable-sm">
-      <ng-template pTemplate="header">
-        <tr class="text-sm">
-          <th class="text-center" id="{{reportTrackingEntityLabels.order_id}}">{{reportTrackingEntityLabels.order_id}}
-          </th>
-          <th class="text-center" id="{{reportTrackingEntityLabels.id_sap}}">{{reportTrackingEntityLabels.id_sap}}</th>
-          <th class="text-center" id="{{reportTrackingEntityLabels.date_opened}}">
-            {{reportTrackingEntityLabels.date_opened}}</th>
-          <th class="text-center" id="{{reportTrackingEntityLabels.date_closed}}">
-            {{reportTrackingEntityLabels.date_closed}}</th>
-          <th class="text-center" id="{{reportTrackingEntityLabels.status}}">{{reportTrackingEntityLabels.status}}</th>
-          <th class="text-center" id="{{reportTrackingEntityLabels.comment}}">{{reportTrackingEntityLabels.comment}}
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage" let-columns>
-        <tr>
-          <td [attr.colspan]="6" class="text-center">
-            No records found
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-tracking>
-        <tr class="text-sm">
-          <td class="text-center">{{ tracking.order_id }}</td>
-          <td class="text-center">{{ tracking.id_sap }}</td>
-          <td class="text-center">{{ tracking.date_opened | dateTimeFromIso
-            | dateTimeToLocal
-            | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
-          <td class="text-center">{{ tracking.date_closed | dateTimeFromIso
-            | dateTimeToLocal
-            | dateTimeToFormat : "dd/MM/yyyy HH:mm a" }}</td>
-          <td class="text-center">{{ tracking.status }}</td>
-          <td class="text-center">{{ tracking.comment }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+    {{textModal}}
   </p>
-</p-dialog> -->
+</p-dialog>
