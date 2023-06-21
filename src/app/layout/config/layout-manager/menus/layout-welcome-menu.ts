@@ -32,6 +32,11 @@ export const welcomeMenu = [
             routerLink: ['/layout/reports/inventory/comparison'],
           },
           {
+            label: 'Pod',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/inventory/pod'],
+          },
+          {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/logs/list'],

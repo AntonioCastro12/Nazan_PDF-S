@@ -89,6 +89,32 @@ export const inventoryComparisonLabels = {
   orderbroker_qty: 'Cantidad Order-Broker',
 }
 
+export class InventoryPod {
+  T_ORIGEN: string = '';
+  NOMBRE_TDA_ORIGEN: string = '0';
+  T_DESTINO: number = 0
+  L_EMBARQUE: string = ''
+  TIPO_EMBARQUE: string = ''
+  FEC_CREA_SISTEMA: string = ''
+  FEC_HORA_POD: string = ''
+  FEC_HORA_CIERRE: string = '';
+  TIEMPO_HRS: number = 0;
+  ESTATUS: string = ''
+}
+
+export const inventoryPodLabels = {
+  T_ORIGEN: 'T_ORIGEN',
+  NOMBRE_TDA_ORIGEN: 'NOMBRE_TDA_ORIGEN',
+  T_DESTINO: 'T_DESTINO',
+  L_EMBARQUE: 'L_EMBARQUE',
+  TIPO_EMBARQUE: 'TIPO_EMBARQUE',
+  FEC_CREA_SISTEMA: 'FEC_CREA_SISTEMA',
+  FEC_HORA_POD: 'FEC_HORA_POD',
+  FEC_HORA_CIERRE: 'FEC_HORA_CIERRE',
+  TIEMPO_HRS: 'TIEMPO_HRS',
+  ESTATUS: 'ESTATUS',
+}
+
 class ApiErrorDetail {
   path: string = "";
   method: string = "";

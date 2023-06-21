@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InventoryComparison, InventoryKardex, InventoryStockDetail, InventoryStockResume } from '../models/report.entity';
+import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,9 @@ export class ReportApiService {
   }
   inventoryComparison(data: any): Observable<InventoryComparison[]> {
     return this._http.get<InventoryComparison[]>(`${environment.apiUrl}/api/inventories/inventory-comparison${data}`);
+  }
+  inventoryPod(data: any): Observable<InventoryPod[]> {
+    return this._http.get<InventoryPod[]>(`${environment.apiUrl}/api/inventories/pod${data}`);
   }
 
 }

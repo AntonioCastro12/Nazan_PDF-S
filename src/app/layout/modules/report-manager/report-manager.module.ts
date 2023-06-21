@@ -10,6 +10,7 @@ import { OptionsComponent } from 'src/app/shared/components/options/options.comp
 import { ReportInventoryKardexComponent } from './pages/report-inventory-cardex/report-inventory-kardex.component';
 import { ReportInventoryStockResumeComponent } from './pages/report-inventory-stock-resume/report-inventory-stock-resume.component';
 import { ReportInventoryComparisonComponent } from './pages/report-inventory-comparison/report-inventory-comparison.component';
+import { ReportInventoryPodComponent } from './pages/report-inventory-pod/report-inventory-pod.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReportInventoryComparisonComponent } from './pages/report-inventory-com
     OptionsComponent,
     ReportInventoryKardexComponent,
     ReportInventoryStockResumeComponent,
-    ReportInventoryComparisonComponent
+    ReportInventoryComparisonComponent,
+    ReportInventoryPodComponent
   ],
   imports: [
     LuxonModule,
