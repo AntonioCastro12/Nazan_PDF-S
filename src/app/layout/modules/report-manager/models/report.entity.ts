@@ -185,6 +185,32 @@ export const pointProgramDetailWallet = {
   "ACTIVIDAD": "ACTIVIDAD",
 }
 
+export class PointProgramTotalMovement {
+  "NUM SOCIO": string = "";
+  "NOM CORTO": string = "";
+  "NOMBRE SOCIO": string = "";
+  "NIVEL": string = "";
+  "PUNTOS OTROGADOS": number = 0;
+  "TIENDA": number = 0;
+  "TRANSACCION": number = 0;
+  "CAJA": number = 0;
+  "FECHA ACTIVIDAD": string = "";
+  "ACTIVIDAD": string = "";
+}
+
+export const pointProgramTotalMovementLabels = {
+  "NUM SOCIO": "NUM SOCIO",
+  "NOM CORTO": "NOM CORTO",
+  "NOMBRE SOCIO": "NOMBRE SOCIO",
+  "NIVEL": "NIVEL",
+  "PUNTOS OTROGADOS": "PUNTOS OTROGADOS",
+  "TIENDA": "TIENDA",
+  "TRANSACCION": "TRANSACCION",
+  "CAJA": "CAJA",
+  "FECHA ACTIVIDAD": "FECHA ACTIVIDAD",
+  "ACTIVIDAD": "ACTIVIDAD"
+};
+
 export class SalesInvoiceTotal {
   storeId: string = "";
   businessDate: string = "";
@@ -211,7 +237,6 @@ export const salesInvoiceTotalLabels = {
   totalMoneySale: '$ Ventas',
   totalMoneyFreight: '$ Flete',
   totalMoneyReturn: '$ Devoluciones',
-
 }
 
 class ApiErrorDetail {

@@ -41,7 +41,12 @@ export class ReportState {
   pointProgram: {
     detailPoints: BasicObjectState
     detailWallet: BasicObjectState
+    totalMovement: BasicObjectState
   } = {
+      totalMovement: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
       detailPoints: {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }

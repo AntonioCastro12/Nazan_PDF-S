@@ -15,6 +15,7 @@ import { ReportPointProgramDetailPointsComponent } from './pages/report-point-pr
 import { ReportPointProgramDetailWalletComponent } from './pages/report-point-program-detail-wallet/report-point-program-detail-wallet.component';
 import { ReportSalesInvoiceTotal } from './pages/report-sales-invoice-total/report-sales-invoice-total.component';
 import { ReportInventorySapXtoreComponent } from './pages/report-inventory-sap-xstore/report-inventory-sap-xstore.component';
+import { ReportPointProgramTotalMovementComponent } from './pages/report-point-program-total-movement/report-point-program-total-movement.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ReportInventorySapXtoreComponent } from './pages/report-inventory-sap-x
     ReportPointProgramDetailPointsComponent,
     ReportPointProgramDetailWalletComponent,
     ReportSalesInvoiceTotal,
-    ReportInventorySapXtoreComponent
+    ReportInventorySapXtoreComponent,
+    ReportPointProgramTotalMovementComponent
   ],
   imports: [
     LuxonModule,

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, SalesInvoiceTotal } from '../models/report.entity';
+import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesInvoiceTotal } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,11 @@ export class ReportApiService {
   }
 
   pointProgramDetailPoints(data: any): Observable<PointProgramDetailPoints[]> {
-    return this._http.get<PointProgramDetailPoints[]>(`${environment.apiUrl}/api/point-program/detail-points${data}`);
+    return this._http.get<PointProgramDetailPoints[]>(`${environment.apiUrl}/api/point-program/total-points${data}`);
+  }
+
+  pointProgramTotalMovement(data: any): Observable<PointProgramTotalMovement[]> {
+    return this._http.get<PointProgramTotalMovement[]>(`${environment.apiUrl}/api/point-program/total-movement${data}`);
   }
 
   pointProgramDetailWallet(data: any): Observable<PointProgramDetailWallet[]> {
