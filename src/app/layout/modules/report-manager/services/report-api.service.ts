@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet } from '../models/report.entity';
+import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, SalesInvoiceTotal } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -32,12 +32,20 @@ export class ReportApiService {
     return this._http.get<InventoryPod[]>(`${environment.apiUrl}/api/inventories/pod${data}`);
   }
 
+  inventorySapXstore(data: any): Observable<InventoryPod[]> {
+    return this._http.get<InventoryPod[]>(`${environment.apiUrl}/api/inventories/sap-xstore${data}`);
+  }
+
   pointProgramDetailPoints(data: any): Observable<PointProgramDetailPoints[]> {
     return this._http.get<PointProgramDetailPoints[]>(`${environment.apiUrl}/api/point-program/detail-points${data}`);
   }
 
   pointProgramDetailWallet(data: any): Observable<PointProgramDetailWallet[]> {
     return this._http.get<PointProgramDetailWallet[]>(`${environment.apiUrl}/api/point-program/detail-wallet${data}`);
+  }
+
+  salesInvoiceaTotal(data: any): Observable<SalesInvoiceTotal[]> {
+    return this._http.get<SalesInvoiceTotal[]>(`${environment.apiUrl}/api/sales/invoice-total${data}`);
   }
 
 }

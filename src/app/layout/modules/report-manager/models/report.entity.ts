@@ -89,6 +89,26 @@ export const inventoryComparisonLabels = {
   orderbroker_qty: 'Cantidad Order-Broker',
 }
 
+export class InventorySapXstore {
+  store_id: number = 0;
+  material: string = "";
+  year: number = 0;
+  sap: number = 0;
+  xstore: number = 0;
+  difference: number = 0;
+  abs: number = 0;
+}
+
+export const inventorySapXstoreLabels = {
+  store_id: 'store_id',
+  material: 'material',
+  year: 'year',
+  sap: 'sap',
+  xstore: 'xstore',
+  difference: 'difference',
+  abs: 'abs',
+}
+
 export class InventoryPod {
   T_ORIGEN: string = '';
   NOMBRE_TDA_ORIGEN: string = '0';
@@ -165,6 +185,34 @@ export const pointProgramDetailWallet = {
   "ACTIVIDAD": "ACTIVIDAD",
 }
 
+export class SalesInvoiceTotal {
+  storeId: string = "";
+  businessDate: string = "";
+  saleTypeSale: string = "";
+  totalMoneySale: number = 0;
+  totalUnitSale: number = 0;
+  countInvoiceSale: number = 0;
+  saleTypeReturn: string = "";
+  totalMoneyReturn: number = 0;
+  totalUnitReturn: number = 0;
+  countInvoiceReturn: number = 0;
+  saleTypeFreight: string = "";
+  totalMoneyFreight: number = 0;
+  totalUnitFreight: number = 0;
+  countInvoiceFreight: number = 0;
+}
+export const salesInvoiceTotalLabels = {
+  storeId: 'Tienda',
+  businessDate: 'Fecha',
+  countInvoiceSale: 'Cantidad facturas',
+  totalUnitSale: 'Ventas unidades',
+  totalUnitReturn: 'Devoluciones unidades',
+  totalUnitFreight: 'Cantidad fletes',
+  totalMoneySale: '$ Ventas',
+  totalMoneyFreight: '$ Flete',
+  totalMoneyReturn: '$ Devoluciones',
+
+}
 
 class ApiErrorDetail {
   path: string = "";
@@ -178,28 +226,4 @@ export class ApiErrorResponse {
   code: number = 0;
   name: string = "";
   errors: ApiErrorDetail[] = []
-}
-
-export class InventoryCycleCount {
-}
-
-export class SalesInvoiceTotalReturns {
-  saleTypeReturn: string = "";
-  storeId: string = "";
-  businessDate: string = "";
-  totalMoneyReturn: number = 0;
-  totalUnitReturn: number = 0;
-  countInvoiceReturn: number = 0;
-}
-export class SalesInvoiceTotalSales {
-  saleTypeSale: string = "";
-  storeId: string = "";
-  businessDate: string = "";
-  totalMoneySale: number = 0;
-  totalUnitSale: number = 0;
-  countInvoiceSale: number = 0;
-}
-export class SalesInvoiceTotal {
-  sales: SalesInvoiceTotalSales | null = null;
-  returns: SalesInvoiceTotalReturns | null = null;
 }

@@ -14,6 +14,7 @@ export class ReportState {
     stockResume: InventoryStockResume,
     comparison: BasicObjectState,
     pod: BasicObjectState,
+    sapXstore: BasicObjectState,
   } = {
       kardex: {
         list: { total: 0, data: [] },
@@ -31,6 +32,10 @@ export class ReportState {
       pod: {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
+      },
+      sapXstore: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] },
       }
     };
   pointProgram: {
@@ -42,6 +47,14 @@ export class ReportState {
         filter: { total: 0, data: [] }
       },
       detailWallet: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
+    };
+  sales: {
+    invoiceTotal: BasicObjectState
+  } = {
+      invoiceTotal: {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },

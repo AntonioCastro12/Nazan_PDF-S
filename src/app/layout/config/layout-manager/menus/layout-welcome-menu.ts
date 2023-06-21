@@ -41,6 +41,11 @@ export const welcomeMenu = [
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/logs/list'],
           },
+          {
+            label: 'Diferencia de inventario SAP vs Xstore',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/inventory/sap-xstore'],
+          },
         ]
       },
       {
@@ -90,9 +95,9 @@ export const welcomeMenu = [
         icon: 'pi pi-fw pi-minus',
         items: [
           {
-            label: 'Informe general de ventas',
+            label: 'Totales de facturación',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/sales/invoice-total'],
           },
         ]
       },
