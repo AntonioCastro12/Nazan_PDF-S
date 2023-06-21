@@ -113,7 +113,6 @@ export class ReportPointProgramTotalMovementComponent {
       diffDays = DateTime.fromJSDate(this.rangeDates[1])
         .diff(DateTime.fromJSDate(this.rangeDates[0]), 'days').days;
     if (diffDays > 90) {
-      console.log('entrando')
       const newDate = DateTime.fromJSDate(this.rangeDates[0]).plus({ days: 90 }).toJSDate();
       this.rangeDates[1] = newDate;
     }
