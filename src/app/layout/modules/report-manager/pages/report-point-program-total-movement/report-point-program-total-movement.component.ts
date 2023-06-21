@@ -22,6 +22,10 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
   ]
 })
 export class ReportPointProgramTotalMovementComponent {
+  rangeDates: Array<any> = [
+    DateTime.local().toJSDate(),
+    DateTime.local().plus({ days: 1 }).toJSDate()
+  ];
   searchText: string = "";
   isLoading: boolean = false;
   showModal: boolean = false;
@@ -31,8 +35,6 @@ export class ReportPointProgramTotalMovementComponent {
   showDetail: boolean = false;
   searchFormEntityLabels = searchFormEntityLabels;
   pointProgramTotalMovementLabels = pointProgramTotalMovementLabels;
-  from: Date = new Date();
-  to: Date = new Date();
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
@@ -80,12 +82,14 @@ export class ReportPointProgramTotalMovementComponent {
   }
 
   async handleSearch() {
-    this.filter = `?startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
+    this.filter = `?startDate=${DateTime.fromJSDate(new Date(this.rangeDates[0])).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.rangeDates[1])).toFormat('yyyy-MM-dd')}`
     this.getList();
   }
   resetFilters() {
-    this.from = new Date();
-    this.to = new Date();
+    this.rangeDates = [
+      DateTime.local().toJSDate(),
+      DateTime.local().plus({ days: 1 }).toJSDate()
+    ];
     this.filter = ''
   }
 
@@ -101,6 +105,18 @@ export class ReportPointProgramTotalMovementComponent {
     this.textModal = text;
     this.widthModal = width;
     this.showModal = true;
+  }
+
+  onSelectRangeEnd(event: any): void {
+    let diffDays = 0;
+    if (this.rangeDates[0] && this.rangeDates[1])
+      diffDays = DateTime.fromJSDate(this.rangeDates[1])
+        .diff(DateTime.fromJSDate(this.rangeDates[0]), 'days').days;
+    if (diffDays > 90) {
+      console.log('entrando')
+      const newDate = DateTime.fromJSDate(this.rangeDates[0]).plus({ days: 90 }).toJSDate();
+      this.rangeDates[1] = newDate;
+    }
   }
 
   async exportExcel() {

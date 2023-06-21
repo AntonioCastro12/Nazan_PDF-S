@@ -32,11 +32,6 @@ export const welcomeMenu = [
             routerLink: ['/layout/reports/inventory/comparison'],
           },
           {
-            label: 'Pod',
-            icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/pod'],
-          },
-          {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/logs/list'],
@@ -118,12 +113,12 @@ export const welcomeMenu = [
           {
             label: 'Kardex de articulo',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/inventory/kardex'],
           },
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/inventory/stock-resume'],
           },
         ]
       },
@@ -139,7 +134,7 @@ export const welcomeMenu = [
           {
             label: 'Reporte de recepción de mercancía (POD)',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/inventory/pod'],
           },
         ]
       },
