@@ -14,7 +14,7 @@ import { objectContainsValue, highlightSearchText } from 'src/app/shared/functio
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
-  selector: 'app-report-list',
+  selector: 'app-report-inventory-comparison',
   templateUrl: './report-inventory-comparison.component.html',
   styleUrls: ['./report-inventory-comparison.component.scss'],
   providers: [
