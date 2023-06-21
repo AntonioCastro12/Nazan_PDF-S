@@ -12,6 +12,7 @@ import { ReportInventoryStockResumeComponent } from './pages/report-inventory-st
 import { ReportInventoryComparisonComponent } from './pages/report-inventory-comparison/report-inventory-comparison.component';
 import { ReportInventoryPodComponent } from './pages/report-inventory-pod/report-inventory-pod.component';
 import { ReportPointProgramDetailPointsComponent } from './pages/report-point-program-detail-points/report-point-program-detail-points.component';
+import { ReportPointProgramDetailWalletComponent } from './pages/report-point-program-detail-wallet/report-point-program-detail-wallet.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ReportPointProgramDetailPointsComponent } from './pages/report-point-pr
     ReportInventoryStockResumeComponent,
     ReportInventoryComparisonComponent,
     ReportInventoryPodComponent,
-    ReportPointProgramDetailPointsComponent
+    ReportPointProgramDetailPointsComponent,
+    ReportPointProgramDetailWalletComponent
   ],
   imports: [
     LuxonModule,

@@ -69,9 +69,14 @@ export const welcomeMenu = [
         icon: 'pi pi-fw pi-minus',
         items: [
           {
-            label: 'Detalle de puntos',
+            label: 'Reporte de Detalle de moviminetos de puntos y premios',
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/point-program/detail-points'],
+          },
+          {
+            label: 'Reporte de Detalle de moviminetos de monedero',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/point-program/detail-wallet'],
           },
         ]
       },

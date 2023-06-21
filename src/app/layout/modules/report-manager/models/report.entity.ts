@@ -140,6 +140,32 @@ export const pointProgramDetailPointsLabels = {
   "ACTIVIDAD": "ACTIVIDAD",
 }
 
+export class PointProgramDetailWallet {
+  "NUM SOCIO": string = "";
+  "NOM CORTO": string = "";
+  "NOMBRE SOCIO": string = "";
+  "NIVEL": string = "";
+  "MONTO": number = 0;
+  "TIENDA": number = 0;
+  "TRANSACCION": number = 0;
+  "CAJA": number = 0;
+  "FECHA ACTIVIDAD": string = "";
+  "ACTIVIDAD": string = "";
+}
+export const pointProgramDetailWallet = {
+  "NUM SOCIO": "NUM SOCIO",
+  "NOM CORTO": "NOM CORTO",
+  "NOMBRE SOCIO": "NOMBRE SOCIO",
+  "NIVEL": "NIVEL",
+  "MONTO": "MONTO",
+  "TIENDA": "TIENDA",
+  "TRANSACCION": "TRANSACCION",
+  "CAJA": "CAJA",
+  "FECHA ACTIVIDAD": "FECHA ACTIVIDAD",
+  "ACTIVIDAD": "ACTIVIDAD",
+}
+
+
 class ApiErrorDetail {
   path: string = "";
   method: string = "";

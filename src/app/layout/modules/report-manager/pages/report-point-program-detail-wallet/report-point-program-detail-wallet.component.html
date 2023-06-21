@@ -1,7 +1,7 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
     <div class="block font-bold text-left breport-round mb-3">
-      <div class="report-title">Reporte de Detalle de moviminetos de puntos y premios</div>
+      <div class="report-title">Reporte de Detalle de moviminetos de monedero</div>
       <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
         animationDuration=".5s"></p-progressSpinner>
     </div>
@@ -35,7 +35,7 @@
   </div>
   <div ng-if>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.pointProgram.detailPoints.list.data.length>0">
+      <div class="grid" *ngIf="reportState.reportState.pointProgram.detailWallet.list.data.length>0">
         <div class=" col-4"></div>
         <div class=" col-4"></div>
         <div class=" col-4">
@@ -47,33 +47,33 @@
         </div>
       </div>
       <p-table #dt2
-        [value]="searchText === '' ? reportState.reportState.pointProgram.detailPoints.list.data : reportState.reportState.pointProgram.detailPoints.filter.data"
+        [value]="searchText === '' ? reportState.reportState.pointProgram.detailWallet.list.data : reportState.reportState.pointProgram.detailWallet.filter.data"
         [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{pointProgramDetailPointsLabels['NUM SOCIO']}}">
-              {{pointProgramDetailPointsLabels['NUM SOCIO']}}</th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels['NOM CORTO']}}">
-              {{pointProgramDetailPointsLabels['NOM CORTO']}}</th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels['NOMBRE SOCIO']}}">
-              {{pointProgramDetailPointsLabels['NOMBRE SOCIO']}}
+            <th class="text-center" id="{{pointProgramDetailWallet['NUM SOCIO']}}">
+              {{pointProgramDetailWallet['NUM SOCIO']}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet['NOM CORTO']}}">
+              {{pointProgramDetailWallet['NOM CORTO']}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet['NOMBRE SOCIO']}}">
+              {{pointProgramDetailWallet['NOMBRE SOCIO']}}
             </th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels.NIVEL}}">
-              {{pointProgramDetailPointsLabels.NIVEL}}
+            <th class="text-center" id="{{pointProgramDetailWallet.NIVEL}}">
+              {{pointProgramDetailWallet.NIVEL}}
             </th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels['PUNTOS OTORGADOS']}}">
-              {{pointProgramDetailPointsLabels['PUNTOS OTORGADOS']}}</th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels.TIENDA}}">
-              {{pointProgramDetailPointsLabels.TIENDA}}
+            <th class="text-center" id="{{pointProgramDetailWallet.MONTO}}">
+              {{pointProgramDetailWallet.MONTO}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet.TIENDA}}">
+              {{pointProgramDetailWallet.TIENDA}}
             </th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels.TRANSACCION}}">
-              {{pointProgramDetailPointsLabels.TRANSACCION}}</th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels.CAJA}}">{{pointProgramDetailPointsLabels.CAJA}}
+            <th class="text-center" id="{{pointProgramDetailWallet.TRANSACCION}}">
+              {{pointProgramDetailWallet.TRANSACCION}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet.CAJA}}">{{pointProgramDetailWallet.CAJA}}
             </th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels['FECHA ACTIVIDAD']}}">
-              {{pointProgramDetailPointsLabels['FECHA ACTIVIDAD']}}</th>
-            <th class="text-center" id="{{pointProgramDetailPointsLabels.ACTIVIDAD}}">
-              {{pointProgramDetailPointsLabels.ACTIVIDAD}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet['FECHA ACTIVIDAD']}}">
+              {{pointProgramDetailWallet['FECHA ACTIVIDAD']}}</th>
+            <th class="text-center" id="{{pointProgramDetailWallet.ACTIVIDAD}}">
+              {{pointProgramDetailWallet.ACTIVIDAD}}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
@@ -89,7 +89,7 @@
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['NOM CORTO'])"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['NOMBRE SOCIO'])"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.NIVEL)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['PUNTOS OTORGADOS'])"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.MONTO)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TIENDA)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TRANSACCION)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.CAJA)"></td>
