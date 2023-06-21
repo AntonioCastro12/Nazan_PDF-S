@@ -60,60 +60,58 @@
   <div ng-if>
     <div class="card">
       <div class="grid" *ngIf="reportState.reportState.inventory.kardex.list.data.length>0">
-        <div class="grid">
-          <div class=" col-4"></div>
-          <div class=" col-4"></div>
-          <div class=" col-4">
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-                (ngModelChange)="handleSearchRecords()" />
-            </span>
-          </div>
+        <div class=" col-4"></div>
+        <div class=" col-4"></div>
+        <div class=" col-4">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()" />
+          </span>
         </div>
-        <p-table #dt2
-          [value]="searchText === '' ? reportState.reportState.inventory.kardex.list.data : reportState.reportState.inventory.kardex.filter.data"
-          [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
-          <ng-template pTemplate="header">
-            <tr class="text-sm">
-              <th class="text-center" id="{{inventoryKardexLabels.store_id}}">{{inventoryKardexLabels.store_id}}</th>
-              <th class="text-center" id="{{inventoryKardexLabels.trans_seq}}">{{inventoryKardexLabels.trans_seq}}</th>
-              <th class="text-center" id="{{inventoryKardexLabels.create_date}}">{{inventoryKardexLabels.create_date}}
-              </th>
-              <th class="text-center" id="{{inventoryKardexLabels.origin_bucket}}">
-                {{inventoryKardexLabels.origin_bucket}}
-              </th>
-              <th class="text-center" id="{{inventoryKardexLabels.destiny_bucket}}">
-                {{inventoryKardexLabels.destiny_bucket}}</th>
-              <th class="text-center" id="{{inventoryKardexLabels.action_code}}">{{inventoryKardexLabels.action_code}}
-              </th>
-              <th class="text-center" id="{{inventoryKardexLabels.item_id}}">{{inventoryKardexLabels.item_id}}</th>
-              <th class="text-center" id="{{inventoryKardexLabels.document}}">{{inventoryKardexLabels.document}}</th>
-              <th class="text-center" id="{{inventoryKardexLabels.qty}}">{{inventoryKardexLabels.qty}}</th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="emptymessage" let-columns>
-            <tr>
-              <td [attr.colspan]="10" class="text-center">
-                {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
-              </td>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-report>
-            <tr class="text-sm">
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.trans_seq)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.origin_bucket)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.destiny_bucket)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.action_code)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.item_id)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.document)"></td>
-              <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.qty)"></td>
-            </tr>
-          </ng-template>
-        </p-table>
       </div>
+      <p-table #dt2
+        [value]="searchText === '' ? reportState.reportState.inventory.kardex.list.data : reportState.reportState.inventory.kardex.filter.data"
+        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr class="text-sm">
+            <th class="text-center" id="{{inventoryKardexLabels.store_id}}">{{inventoryKardexLabels.store_id}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.trans_seq}}">{{inventoryKardexLabels.trans_seq}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.create_date}}">{{inventoryKardexLabels.create_date}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.origin_bucket}}">
+              {{inventoryKardexLabels.origin_bucket}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.destiny_bucket}}">
+              {{inventoryKardexLabels.destiny_bucket}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.action_code}}">{{inventoryKardexLabels.action_code}}
+            </th>
+            <th class="text-center" id="{{inventoryKardexLabels.item_id}}">{{inventoryKardexLabels.item_id}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.document}}">{{inventoryKardexLabels.document}}</th>
+            <th class="text-center" id="{{inventoryKardexLabels.qty}}">{{inventoryKardexLabels.qty}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="9" class="text-center">
+              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr class="text-sm">
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.trans_seq)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.origin_bucket)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.destiny_bucket)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.action_code)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.item_id)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.document)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.qty)"></td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
   <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">

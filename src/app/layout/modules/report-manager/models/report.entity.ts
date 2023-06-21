@@ -80,6 +80,15 @@ export class InventoryComparison {
   orderbroker_qty: string = "";
 }
 
+export const inventoryComparisonLabels = {
+  productId: 'Producto',
+  storeId: 'Tienda',
+  xstore_qty: 'Cantidad xStore',
+  xcenter_qty: 'Cantidad xCenter',
+  atg_qty: 'Cantidad ATG',
+  orderbroker_qty: 'Cantidad Order-Broker',
+}
+
 class ApiErrorDetail {
   path: string = "";
   method: string = "";

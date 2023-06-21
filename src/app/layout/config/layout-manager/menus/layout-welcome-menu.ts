@@ -27,6 +27,11 @@ export const welcomeMenu = [
             routerLink: ['/layout/reports/inventory/stock-resume'],
           },
           {
+            label: 'Comparación de inventario',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/inventory/comparison'],
+          },
+          {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/logs/list'],

@@ -13,6 +13,7 @@ export class ReportState {
   inventory: {
     kardex: BasicObjectState
     stockResume: InventoryStockResume,
+    comparison: BasicObjectState,
   } = {
       kardex: {
         list: { total: 0, data: [] },
@@ -22,6 +23,10 @@ export class ReportState {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
         details: []
+      },
+      comparison: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] },
       }
     };
 
