@@ -57,9 +57,14 @@ export class ReportState {
       },
     };
   sales: {
-    invoiceTotal: BasicObjectState
+    invoiceTotal: BasicObjectState,
+    generalSales: BasicObjectState
   } = {
       invoiceTotal: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
+      generalSales: {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },

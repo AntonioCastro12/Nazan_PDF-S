@@ -239,6 +239,17 @@ export const salesInvoiceTotalLabels = {
   totalMoneyReturn: '$ Devoluciones',
 }
 
+export class SalesGeneralSales {
+  titleLine: string = "";
+  countTransactions: number = 0;
+  totalMoney: number = 0;
+}
+export const salesGeneralSalesLabels = {
+  titleLine: 'Texto',
+  countTransactions: 'Cantidad transacciones',
+  totalMoney: 'Valor',
+}
+
 class ApiErrorDetail {
   path: string = "";
   method: string = "";

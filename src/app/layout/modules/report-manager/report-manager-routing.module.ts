@@ -10,6 +10,7 @@ import { ReportPointProgramDetailWalletComponent } from './pages/report-point-pr
 import { ReportSalesInvoiceTotal } from './pages/report-sales-invoice-total/report-sales-invoice-total.component';
 import { ReportInventorySapXtoreComponent } from './pages/report-inventory-sap-xstore/report-inventory-sap-xstore.component';
 import { ReportPointProgramTotalMovementComponent } from './pages/report-point-program-total-movement/report-point-program-total-movement.component';
+import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/report-sales-general-sales.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
@@ -26,6 +27,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }
     { path: 'point-program/detail-points', component: ReportPointProgramDetailPointsComponent },
     { path: 'point-program/detail-wallet', component: ReportPointProgramDetailWalletComponent },
     { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
+    { path: 'sales/general-sales', component: ReportSalesGeneralSales },
   ],
 },];
 

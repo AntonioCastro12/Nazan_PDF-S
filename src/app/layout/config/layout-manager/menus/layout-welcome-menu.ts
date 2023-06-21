@@ -104,6 +104,11 @@ export const welcomeMenu = [
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/sales/invoice-total'],
           },
+          {
+            label: 'Informe general de ventas',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/sales/general-sales'],
+          },
         ]
       },
       {

@@ -1,7 +1,7 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
     <div class="block font-bold text-left breport-round mb-3">
-      <div class="report-title">Totales de facturación</div>
+      <div class="report-title">Informe general de ventas</div>
       <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
         animationDuration=".5s"></p-progressSpinner>
     </div>
@@ -21,15 +21,8 @@
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
-              <label htmlFor="from" class="font-bold">Desde</label>
-              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy"
-                [style]="{'width':'100%'}"></p-calendar>
-            </div>
-          </div>
-          <div class="flex-1 h-4rem">
-            <div class="flex flex-column p-2">
-              <label htmlFor="to" class="font-bold">Hasta</label>
-              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy"
+              <label htmlFor="from" class="font-bold">Fecha</label>
+              <p-calendar [(ngModel)]="businessDate" [readonlyInput]="true" dateFormat="dd/mm/yy"
                 [style]="{'width':'100%'}"></p-calendar>
             </div>
           </div>
@@ -44,7 +37,7 @@
   </div>
   <div ng-if>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.sales.invoiceTotal.list.data.length>0">
+      <div class="grid" *ngIf="reportState.reportState.sales.generalSales.list.data.length>0">
         <div class=" col-4"></div>
         <div class=" col-4"></div>
         <div class=" col-4">
@@ -56,26 +49,19 @@
         </div>
       </div>
       <p-table #dt2
-        [value]="searchText === '' ? reportState.reportState.sales.invoiceTotal.list.data : reportState.reportState.sales.invoiceTotal.filter.data"
+        [value]="searchText === '' ? reportState.reportState.sales.generalSales.list.data : reportState.reportState.sales.generalSales.filter.data"
         [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
         <ng-template pTemplate="header">
-          <!-- <tr class="text-sm">
-            <th class="text-center" id="{{salesInvoiceTotalLabels.store_id}}">{{salesInvoiceTotalLabels.store_id}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.trans_seq}}">{{salesInvoiceTotalLabels.trans_seq}}
+          <tr class="text-sm">
+            <th class="text-center" id="{{salesGeneralSalesLabels.titleLine}}">{{salesGeneralSalesLabels.titleLine}}
             </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.create_date}}">{{salesInvoiceTotalLabels.create_date}}
+            <th class="text-center" id="{{salesGeneralSalesLabels.countTransactions}}">
+              {{salesGeneralSalesLabels.countTransactions}}
             </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.origin_bucket}}">
-              {{salesInvoiceTotalLabels.origin_bucket}}
+            <th class="text-center" id="{{salesGeneralSalesLabels.totalMoney}}">{{salesGeneralSalesLabels.totalMoney}}
             </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.destiny_bucket}}">
-              {{salesInvoiceTotalLabels.destiny_bucket}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.action_code}}">{{salesInvoiceTotalLabels.action_code}}
-            </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.item_id}}">{{salesInvoiceTotalLabels.item_id}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.document}}">{{salesInvoiceTotalLabels.document}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.qty}}">{{salesInvoiceTotalLabels.qty}}</th>
-          </tr> -->
+
+          </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
@@ -86,15 +72,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.trans_seq)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.origin_bucket)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.destiny_bucket)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.action_code)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.item_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.document)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.qty)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.titleLine)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.countTransactions)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoney)"></td>
           </tr>
         </ng-template>
       </p-table>
