@@ -35,6 +35,7 @@ export const inventoryKardexLabels = {
 }
 
 export const inventoryStockResumeLabels = {
+  store_id: 'Tienda',
   line: 'Linea',
   qty: 'Cantidad'
 }

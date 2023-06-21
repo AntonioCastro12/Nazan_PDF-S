@@ -47,6 +47,8 @@
         [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
         <ng-template pTemplate="header">
           <tr class="text-sm">
+            <th class="text-center" id="{{inventoryStockResumeLabels.store_id}}">{{inventoryStockResumeLabels.store_id}}
+            </th>
             <th class="text-center" id="{{inventoryStockResumeLabels.line}}">{{inventoryStockResumeLabels.line}}
             </th>
             <th class="text-center" id="{{inventoryStockResumeLabels.qty}}">
@@ -62,6 +64,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
+            <td class="text-center"
+              [innerHTML]="highlightSearchText(searchText,selectedStore?selectedStore.storeInfoId:'')">
+            </td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.line)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.qty)"></td>
           </tr>

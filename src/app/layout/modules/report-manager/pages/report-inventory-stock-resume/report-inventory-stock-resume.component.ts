@@ -163,7 +163,15 @@ export class ReportInventoryStockResumeComponent {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    const list = this.reportState.reportState.inventory.stockResume.filter.data.length > 0 ? this.reportState.reportState.inventory.stockResume.filter.data : this.reportState.reportState.inventory.stockResume.list.data
+    let list = this.reportState.reportState.inventory.stockResume.filter.data.length > 0 ? this.reportState.reportState.inventory.stockResume.filter.data : this.reportState.reportState.inventory.stockResume.list.data
+    list = list.map(item => {
+      return {
+        storeId: this.selectedStore ? this.selectedStore.storeInfoId : '',
+        line: item.line,
+        qty: item.qty,
+      }
+    })
+
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
