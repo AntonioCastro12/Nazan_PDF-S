@@ -303,10 +303,10 @@ export class SegmentCollaboratorsNazan {
   second_last_name: string = "";
   cellphone_number: string = "";
   mail: string = "";
-  birthday: string = "";
+  birthday: Date = new Date();
   gender: string = "";
   marital_status: string = "";
-  signup_date: string = "";
+  signup_date: Date = new Date();
 }
 
 export const segmentCollaboratorsNazanLabels = {
