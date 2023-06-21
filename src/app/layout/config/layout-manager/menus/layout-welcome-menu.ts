@@ -60,7 +60,7 @@ export const welcomeMenu = [
           {
             label: 'Afiliados KIPON SHOE CLUB',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/logs/list'],
+            routerLink: ['/layout/reports/segments/affiliated-kipon'],
           },
         ]
       },

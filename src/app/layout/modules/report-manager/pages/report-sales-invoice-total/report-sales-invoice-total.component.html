@@ -59,42 +59,53 @@
         [value]="searchText === '' ? reportState.reportState.sales.invoiceTotal.list.data : reportState.reportState.sales.invoiceTotal.filter.data"
         [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
         <ng-template pTemplate="header">
-          <!-- <tr class="text-sm">
-            <th class="text-center" id="{{salesInvoiceTotalLabels.store_id}}">{{salesInvoiceTotalLabels.store_id}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.trans_seq}}">{{salesInvoiceTotalLabels.trans_seq}}
-            </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.create_date}}">{{salesInvoiceTotalLabels.create_date}}
-            </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.origin_bucket}}">
-              {{salesInvoiceTotalLabels.origin_bucket}}
-            </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.destiny_bucket}}">
-              {{salesInvoiceTotalLabels.destiny_bucket}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.action_code}}">{{salesInvoiceTotalLabels.action_code}}
-            </th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.item_id}}">{{salesInvoiceTotalLabels.item_id}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.document}}">{{salesInvoiceTotalLabels.document}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.qty}}">{{salesInvoiceTotalLabels.qty}}</th>
-          </tr> -->
+          <tr class="text-sm">
+            <th class="text-center" id="{{salesInvoiceTotalLabels.storeId}}">{{salesInvoiceTotalLabels.storeId}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.businessDate}}">
+              {{salesInvoiceTotalLabels.businessDate}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.countInvoiceSale}}">
+              {{salesInvoiceTotalLabels.countInvoiceSale}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitSale}}">
+              {{salesInvoiceTotalLabels.totalUnitSale}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitReturn}}">
+              {{salesInvoiceTotalLabels.totalUnitReturn}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.unitPercentReturn}}">
+              {{salesInvoiceTotalLabels.unitPercentReturn}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitFreight}}">
+              {{salesInvoiceTotalLabels.totalUnitFreight}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneySale}}">
+              {{salesInvoiceTotalLabels.totalMoneySale}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneyFreight}}">
+              {{salesInvoiceTotalLabels.totalMoneyFreight}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneyReturn}}">
+              {{salesInvoiceTotalLabels.totalMoneyReturn}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.totalPercentReturn}}">
+              {{salesInvoiceTotalLabels.totalPercentReturn}}</th>
+            <th class="text-center" id="{{salesInvoiceTotalLabels.avgSales}}">{{salesInvoiceTotalLabels.avgSales}}</th>
+
+          </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
-            <td [attr.colspan]="9" class="text-center">
+            <td [attr.colspan]="12" class="text-center">
               {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.trans_seq)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.origin_bucket)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.destiny_bucket)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.action_code)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.item_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.document)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.qty)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.storeId)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.businessDate)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.countInvoiceSale)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitSale)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitReturn)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.unitPercentReturn)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitFreight)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneySale)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneyFreight)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneyReturn)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalPercentReturn)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.avgSales)"></td>
           </tr>
         </ng-template>
       </p-table>

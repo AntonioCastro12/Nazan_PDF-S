@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesGeneralSales, SalesInvoiceTotal } from '../models/report.entity';
+import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesGeneralSales, SalesInvoiceTotal, SegmentAffiliatedKipon } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -54,6 +54,10 @@ export class ReportApiService {
 
   salesGeneralSales(data: any): Observable<SalesGeneralSales[]> {
     return this._http.get<SalesGeneralSales[]>(`${environment.apiUrl}/api/sales/general-sales${data}`);
+  }
+
+  segmentsAffiliatedKipon(data: any): Observable<SegmentAffiliatedKipon[]> {
+    return this._http.get<SegmentAffiliatedKipon[]>(`${environment.apiUrl}/api/segments/affiliated-kipon${data}`);
   }
 
 }

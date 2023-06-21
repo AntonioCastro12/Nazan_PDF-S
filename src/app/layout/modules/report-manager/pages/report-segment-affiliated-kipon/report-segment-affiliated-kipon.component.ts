@@ -9,19 +9,19 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { salesInvoiceTotalLabels } from '../../models/report.entity';
+import { segmentAffiliatedKiponLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
-  selector: 'app-report-sales-invoice-total',
-  templateUrl: './report-sales-invoice-total.component.html',
-  styleUrls: ['./report-sales-invoice-total.component.scss'],
+  selector: 'app-report-segment-affiliated-kipon',
+  templateUrl: './report-segment-affiliated-kipon.component.html',
+  styleUrls: ['./report-segment-affiliated-kipon.component.scss'],
   providers: [
     HttpClient
   ]
 })
-export class ReportSalesInvoiceTotal {
+export class ReportSegmentAffiliatedKipon {
   searchText: string = "";
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
@@ -33,7 +33,7 @@ export class ReportSalesInvoiceTotal {
   showDetail: boolean = false;
   originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
   searchFormEntityLabels = searchFormEntityLabels;
-  salesInvoiceTotalLabels = salesInvoiceTotalLabels;
+  segmentAffiliatedKiponLabels = segmentAffiliatedKiponLabels;
   from: Date = new Date();
   to: Date = new Date();
   filter: string = '';
@@ -93,11 +93,11 @@ export class ReportSalesInvoiceTotal {
       })
   }
   getList() {
-    this.reportState.reportState.sales.invoiceTotal.list.data = []
+    this.reportState.reportState.segments.affiliatedKipon.list.data = []
     this.isLoading = true;
-    this._reportApiService.salesInvoiceTotal(this.filter).subscribe({
+    this._reportApiService.segmentsAffiliatedKipon(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.sales.invoiceTotal.list = { data, total: data.length }
+        this.reportState.reportState.segments.affiliatedKipon.list = { data, total: data.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -124,8 +124,8 @@ export class ReportSalesInvoiceTotal {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.sales.invoiceTotal.list.data;
-    this.reportState.reportState.sales.invoiceTotal.filter.data = list.filter((item) =>
+    const list = this.reportState.reportState.segments.affiliatedKipon.list.data;
+    this.reportState.reportState.segments.affiliatedKipon.filter.data = list.filter((item) =>
       objectContainsValue(item, this.searchText)
     );
   }
@@ -138,11 +138,11 @@ export class ReportSalesInvoiceTotal {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0) {
+    if (this.reportState.reportState.segments.affiliatedKipon.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    const list = this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0 ? this.reportState.reportState.sales.invoiceTotal.filter.data : this.reportState.reportState.sales.invoiceTotal.list.data
+    const list = this.reportState.reportState.segments.affiliatedKipon.filter.data.length > 0 ? this.reportState.reportState.segments.affiliatedKipon.filter.data : this.reportState.reportState.segments.affiliatedKipon.list.data
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

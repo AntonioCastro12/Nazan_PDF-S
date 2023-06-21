@@ -226,17 +226,23 @@ export class SalesInvoiceTotal {
   totalMoneyFreight: number = 0;
   totalUnitFreight: number = 0;
   countInvoiceFreight: number = 0;
+  unitPercentReturn: number = 0;
+  totalPercentReturn: number = 0;
 }
+
 export const salesInvoiceTotalLabels = {
   storeId: 'Tienda',
   businessDate: 'Fecha',
   countInvoiceSale: 'Cantidad facturas',
   totalUnitSale: 'Ventas unidades',
   totalUnitReturn: 'Devoluciones unidades',
+  unitPercentReturn: '% Devoluciones unidades',
   totalUnitFreight: 'Cantidad fletes',
   totalMoneySale: '$ Ventas',
   totalMoneyFreight: '$ Flete',
   totalMoneyReturn: '$ Devoluciones',
+  totalPercentReturn: '% Devoluciones $',
+  avgSales: 'Promedio ventas $',
 }
 
 export class SalesGeneralSales {
@@ -249,6 +255,42 @@ export const salesGeneralSalesLabels = {
   countTransactions: 'Cantidad transacciones',
   totalMoney: 'Valor',
 }
+
+export class SegmentAffiliatedKipon {
+  store_id: string = "";
+  membership: string = "";
+  cust_id: string = "";
+  first_name: string = "";
+  second_name: string = "";
+  surname: string = "";
+  lastname: string = "";
+  home_phone: string = "";
+  cel_phone: string = "";
+  business_phone: string = "";
+  email: string = "";
+  birthday: string = "";
+  gender: string = "";
+  status: string = "";
+  signup_date: string = "";
+}
+
+export const segmentAffiliatedKiponLabels = {
+  store_id: "ID tienda",
+  membership: "Pertenencia",
+  cust_id: "ID cliente",
+  first_name: "Nombre",
+  second_name: "Nombre 2",
+  surname: "Apellido paterno",
+  lastname: "Apellido materno",
+  home_phone: "Teléfono de casa",
+  cel_phone: "Teléfono celular",
+  business_phone: "Teléfono de trabajo",
+  email: "Correo electrónico",
+  birthday: "Fecha de nacimiento",
+  gender: "Género",
+  status: "Estado",
+  signup_date: "Fecha de registro"
+};
 
 class ApiErrorDetail {
   path: string = "";

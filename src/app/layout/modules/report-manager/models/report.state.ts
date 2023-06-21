@@ -69,5 +69,13 @@ export class ReportState {
         filter: { total: 0, data: [] }
       },
     };
+  segments: {
+    affiliatedKipon: BasicObjectState,
+  } = {
+      affiliatedKipon: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
+    };
 
 }
