@@ -18,6 +18,7 @@ import { ReportInventorySapXtoreComponent } from './pages/report-inventory-sap-x
 import { ReportPointProgramTotalMovementComponent } from './pages/report-point-program-total-movement/report-point-program-total-movement.component';
 import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/report-sales-general-sales.component';
 import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-kipon/report-segment-affiliated-kipon.component';
+import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-
     ReportInventorySapXtoreComponent,
     ReportPointProgramTotalMovementComponent,
     ReportSalesGeneralSales,
-    ReportSegmentAffiliatedKipon
+    ReportSegmentAffiliatedKipon,
+    ReportSegmentCollaboratorsNazan
   ],
   imports: [
     LuxonModule,

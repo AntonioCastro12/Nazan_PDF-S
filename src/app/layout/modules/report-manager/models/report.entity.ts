@@ -292,6 +292,40 @@ export const segmentAffiliatedKiponLabels = {
   signup_date: "Fecha de registro"
 };
 
+export class SegmentCollaboratorsNazan {
+  store_id: string = "";
+  segment: number = 0;
+  membership: string = "";
+  client_id: string = "";
+  first_name: string = "";
+  second_name: string = "";
+  last_name: string = "";
+  second_last_name: string = "";
+  cellphone_number: string = "";
+  mail: string = "";
+  birthday: string = "";
+  gender: string = "";
+  marital_status: string = "";
+  signup_date: string = "";
+}
+
+export const segmentCollaboratorsNazanLabels = {
+  store_id: "ID tienda",
+  segment: "Segmento",
+  membership: "Membresía",
+  client_id: "ID cliente",
+  first_name: "Nombre",
+  second_name: "Nombre 2",
+  last_name: "Apellido paterno",
+  second_last_name: "Apellido materno",
+  cellphone_number: "Número de celular",
+  mail: "Correo electrónico",
+  birthday: "Fecha de nacimiento",
+  gender: "Género",
+  marital_status: "Estado civil",
+  signup_date: "Fecha de registro"
+};
+
 class ApiErrorDetail {
   path: string = "";
   method: string = "";

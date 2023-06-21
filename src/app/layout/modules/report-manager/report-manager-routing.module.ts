@@ -12,6 +12,7 @@ import { ReportInventorySapXtoreComponent } from './pages/report-inventory-sap-x
 import { ReportPointProgramTotalMovementComponent } from './pages/report-point-program-total-movement/report-point-program-total-movement.component';
 import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/report-sales-general-sales.component';
 import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-kipon/report-segment-affiliated-kipon.component';
+import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
@@ -30,6 +31,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }
     { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
     { path: 'sales/general-sales', component: ReportSalesGeneralSales },
     { path: 'segments/affiliated-kipon', component: ReportSegmentAffiliatedKipon },
+    { path: 'segments/collaborators-nazan', component: ReportSegmentCollaboratorsNazan },
   ],
 },];
 

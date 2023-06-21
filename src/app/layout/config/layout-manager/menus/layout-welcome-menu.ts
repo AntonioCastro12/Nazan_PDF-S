@@ -55,7 +55,7 @@ export const welcomeMenu = [
           {
             label: 'Segmento colaboradores Nazan',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/segments/collaborators-nazan'],
           },
           {
             label: 'Afiliados KIPON SHOE CLUB',
