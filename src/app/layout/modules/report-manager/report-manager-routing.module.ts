@@ -5,6 +5,7 @@ import { ReportInventoryKardexComponent } from './pages/report-inventory-cardex/
 import { ReportInventoryStockResumeComponent } from './pages/report-inventory-stock-resume/report-inventory-stock-resume.component';
 import { ReportInventoryComparisonComponent } from './pages/report-inventory-comparison/report-inventory-comparison.component';
 import { ReportInventoryPodComponent } from './pages/report-inventory-pod/report-inventory-pod.component';
+import { ReportPointProgramDetailPointsComponent } from './pages/report-point-program-detail-points/report-point-program-detail-points.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
@@ -16,6 +17,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }
     { path: 'inventory/stock-resume', component: ReportInventoryStockResumeComponent },
     { path: 'inventory/comparison', component: ReportInventoryComparisonComponent },
     { path: 'inventory/pod', component: ReportInventoryPodComponent },
+    { path: 'point-program/detail-points', component: ReportPointProgramDetailPointsComponent },
   ],
 },];
 

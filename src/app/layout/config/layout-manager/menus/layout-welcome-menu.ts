@@ -69,9 +69,9 @@ export const welcomeMenu = [
         icon: 'pi pi-fw pi-minus',
         items: [
           {
-            label: 'Reporte deralledo puntos y premios',
+            label: 'Detalle de puntos',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/orders/list'],
+            routerLink: ['/layout/reports/point-program/detail-points'],
           },
         ]
       },

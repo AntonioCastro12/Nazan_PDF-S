@@ -8,7 +8,6 @@ class InventoryStockResume extends BasicObjectState {
   details: InventoryStockDetail[] = [];
 }
 
-
 export class ReportState {
   inventory: {
     kardex: BasicObjectState
@@ -33,6 +32,14 @@ export class ReportState {
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
       }
+    };
+  pointProgram: {
+    detailPoints: BasicObjectState
+  } = {
+      detailPoints: {
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
     };
 
 }
