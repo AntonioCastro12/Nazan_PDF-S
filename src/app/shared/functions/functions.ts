@@ -22,8 +22,11 @@ export const addIdToData = (data: any) => {
 }
 
 export function highlightSearchText(searchText: string, value: string): string {
+  if (typeof value === 'object' || typeof value === 'undefined') {
+    value = '';
+  }
   if (typeof value !== 'string') {
-    value = String(value);
+    value = String(value !== 'null' || value !== null || value !== undefined ? value : '');
   }
   if (searchText.length > 0 && value) {
     const re = new RegExp(searchText, 'gi');
