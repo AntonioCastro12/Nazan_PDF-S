@@ -9,21 +9,23 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { salesGeneralSalesLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
+import { inventoryComparisonLabels } from '../../models/report.entity';
+import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
-  selector: 'app-report-sales-general-sales',
-  templateUrl: './report-sales-general-sales.component.html',
-  styleUrls: ['./report-sales-general-sales.component.scss'],
+  selector: 'app-report-inventory-cycle-count',
+  templateUrl: './report-inventory-cycle-count.component.html',
+  styleUrls: ['./report-inventory-cycle-count.component.scss'],
   providers: [
     HttpClient
   ]
 })
-export class ReportSalesGeneralSales {
+export class ReportInventoryCycleCountComponent {
   searchText: string = "";
+  selectedStatus!: string;
   selectedStore: Store | null = null;
+  selectedOrigin: string = '';
   suggestions: Store[] = [];
   isLoading: boolean = false;
   showModal: boolean = false;
@@ -33,8 +35,7 @@ export class ReportSalesGeneralSales {
   showDetail: boolean = false;
   originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
   searchFormEntityLabels = searchFormEntityLabels;
-  salesGeneralSalesLabels = salesGeneralSalesLabels;
-  businessDate: Date = new Date();
+  inventoryComparisonLabels = inventoryComparisonLabels;
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
@@ -50,7 +51,7 @@ export class ReportSalesGeneralSales {
     public _excelService: ExcelService,
   ) {
   }
-  ngOnInit() {
+  /* ngOnInit() {
     this.getStores()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
@@ -92,17 +93,22 @@ export class ReportSalesGeneralSales {
       })
   }
   getList() {
-    this.reportState.reportState.sales.generalSales.list.data = []
+    this.reportState.reportState.inventory.comparison.list.data = []
     this.isLoading = true;
-    this._reportApiService.salesGeneralSales(this.filter).subscribe({
-      next: (data: any) => {
-        const dataOriginal = addIdToData(data.sales.data);
-        this.reportState.reportState.sales.generalSales.original = { data: dataOriginal, total: dataOriginal.length }
+    this._reportApiService.inventoryComparison(this.filter).subscribe({
+      next: (data) => {
+        this.reportState.reportState.inventory.comparison.list = { data, total: data.length }
+        const dataOriginal = addIdToData(data);
+        this.reportState.reportState.inventory.comparison.original = { data: dataOriginal, total: dataOriginal.length }
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
-          totalMoney: { type: 'number', format: 'currency' },
+          businessDate: { type: 'date', format: 'dd-MM-yyyy' },
+          totalMoneyReturn: { type: 'number', format: 'currency' },
+          totalMoneySale: { type: 'number', format: 'currency' },
+          totalPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
+          unitPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
         });
-        this.reportState.reportState.sales.generalSales.list = { data: dataFormatted, total: dataFormatted.length }
+        this.reportState.reportState.inventory.comparison.list = { data: dataFormatted, total: dataFormatted.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -118,18 +124,18 @@ export class ReportSalesGeneralSales {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&businessDate=${DateTime.fromJSDate(new Date(this.businessDate)).toFormat('yyyy-MM-dd')}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
     this.getList();
   }
   resetFilters() {
     this.selectedStore = null;
-    this.businessDate = new Date();
+    this.selectedOrigin = '';
     this.filter = ''
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.sales.generalSales.list.data;
-    this.reportState.reportState.sales.generalSales.filter.data = list.filter((item) =>
+    const list = this.reportState.reportState.inventory.comparison.list.data;
+    this.reportState.reportState.inventory.comparison.filter.data = list.filter((item) =>
       objectContainsValue(item, this.searchText)
     );
   }
@@ -142,13 +148,13 @@ export class ReportSalesGeneralSales {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.sales.generalSales.list.data.length <= 0) {
+    if (this.reportState.reportState.inventory.comparison.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.sales.generalSales.filter.data.length > 0 ? this.reportState.reportState.sales.generalSales.filter.data : this.reportState.reportState.sales.generalSales.list.data
+    let list = this.reportState.reportState.inventory.comparison.filter.data.length > 0 ? this.reportState.reportState.inventory.comparison.filter.data : this.reportState.reportState.inventory.comparison.list.data
     const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.sales.generalSales.original.data.filter(item => {
+    list = this.reportState.reportState.inventory.comparison.original.data.filter(item => {
       if (ids.includes(item[ID_DATA_NAME])) {
         return item
       }
@@ -163,7 +169,7 @@ export class ReportSalesGeneralSales {
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
 
-  }
+  } */
 
 
 

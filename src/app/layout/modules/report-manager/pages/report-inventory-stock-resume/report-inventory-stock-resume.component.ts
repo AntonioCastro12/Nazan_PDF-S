@@ -10,7 +10,7 @@ import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { inventoryStockResumeLabels, inventoryStockDetailLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
+import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
@@ -96,12 +96,14 @@ export class ReportInventoryStockResumeComponent {
   }
   getList() {
     this.showDetailsModal = false
-    this.reportState.reportState.inventory.stockResume.list.data = []
-    this.reportState.reportState.inventory.stockResume.details = []
     this.isLoading = true;
     this._reportApiService.inventoryStockResume(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.inventory.stockResume.list = { data, total: data.length }
+        const dataOriginal = addIdToData(data);
+        this.reportState.reportState.inventory.stockResume.original = { data: dataOriginal, total: dataOriginal.length }
+        let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
+        dataFormatted = formatArrayValues(dataFormatted, {});
+        this.reportState.reportState.inventory.stockResume.list = { data: dataFormatted, total: dataFormatted.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -164,14 +166,12 @@ export class ReportInventoryStockResumeComponent {
       return;
     }
     let list = this.reportState.reportState.inventory.stockResume.filter.data.length > 0 ? this.reportState.reportState.inventory.stockResume.filter.data : this.reportState.reportState.inventory.stockResume.list.data
-    list = list.map(item => {
-      return {
-        storeId: this.selectedStore ? this.selectedStore.storeInfoId : '',
-        line: item.line,
-        qty: item.qty,
+    const ids = list.map(item => item[ID_DATA_NAME])
+    list = this.reportState.reportState.inventory.stockResume.original.data.filter(item => {
+      if (ids.includes(item[ID_DATA_NAME])) {
+        return item
       }
     })
-
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -181,6 +181,7 @@ export class ReportInventoryStockResumeComponent {
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
+
 
   }
 }

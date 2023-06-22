@@ -34,7 +34,7 @@ export const welcomeMenu = [
           {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/logs/list'],
+            routerLink: ['/layout/reports/inventory/cycle-count'],
           },
           {
             label: 'Diferencia de inventario SAP vs Xstore',

@@ -8,7 +8,7 @@ import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { inventorySapXstoreLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
+import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
@@ -76,11 +76,16 @@ export class ReportInventorySapXtoreComponent {
   }
 
   getList() {
-    this.reportState.reportState.inventory.sapXstore.list.data = []
     this.isLoading = true;
     this._reportApiService.inventorySapXstore(this.filter).subscribe({
       next: (data) => {
         this.reportState.reportState.inventory.sapXstore.list = { data, total: data.length }
+
+        const dataOriginal = addIdToData(data);
+        this.reportState.reportState.inventory.sapXstore.original = { data: dataOriginal, total: dataOriginal.length }
+        let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
+        dataFormatted = formatArrayValues(dataFormatted, {});
+        this.reportState.reportState.inventory.sapXstore.list = { data: dataFormatted, total: dataFormatted.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -119,7 +124,13 @@ export class ReportInventorySapXtoreComponent {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    const list = this.reportState.reportState.inventory.sapXstore.filter.data.length > 0 ? this.reportState.reportState.inventory.sapXstore.filter.data : this.reportState.reportState.inventory.sapXstore.list.data
+    let list = this.reportState.reportState.inventory.sapXstore.filter.data.length > 0 ? this.reportState.reportState.inventory.sapXstore.filter.data : this.reportState.reportState.inventory.sapXstore.list.data
+    const ids = list.map(item => item[ID_DATA_NAME])
+    list = this.reportState.reportState.inventory.sapXstore.original.data.filter(item => {
+      if (ids.includes(item[ID_DATA_NAME])) {
+        return item
+      }
+    })
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

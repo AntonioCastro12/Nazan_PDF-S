@@ -19,6 +19,7 @@ import { ReportPointProgramTotalMovementComponent } from './pages/report-point-p
 import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/report-sales-general-sales.component';
 import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-kipon/report-segment-affiliated-kipon.component';
 import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
+import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cycle-count/report-inventory-cycle-count.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collabor
     ReportSalesGeneralSales,
     ReportSegmentAffiliatedKipon,
     ReportSegmentCollaboratorsNazan,
+    ReportInventoryCycleCountComponent
   ],
   imports: [
     LuxonModule,

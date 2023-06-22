@@ -102,7 +102,8 @@
           <tr class="text-sm">
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.trans_seq)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.create_date)" [style]="{'
+              width':'100px'}"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.origin_bucket)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.destiny_bucket)"></td>
             <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.action_code)"></td>

@@ -8,7 +8,7 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { segmentCollaboratorsNazanLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText } from 'src/app/shared/functions/functions';
+import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
 @Component({
@@ -67,7 +67,15 @@ export class ReportSegmentCollaboratorsNazan {
     this.isLoading = true;
     this._reportApiService.segmentsCollaboratorsNazan(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.segments.collaboratorsNazan.list = { data, total: data.length }
+        const dataOriginal = addIdToData(data);
+        this.reportState.reportState.segments.collaboratorsNazan.original = { data: dataOriginal, total: dataOriginal.length }
+        let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
+        dataFormatted = formatArrayValues(dataFormatted, {
+          signup_date: { type: 'date', format: 'dd-MM-yyyy' },
+          birthday: { type: 'date', format: 'dd-MM-yyyy' },
+        });
+        this.reportState.reportState.segments.collaboratorsNazan.list = { data: dataFormatted, total: dataFormatted.length }
+
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -114,7 +122,13 @@ export class ReportSegmentCollaboratorsNazan {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    const list = this.reportState.reportState.segments.collaboratorsNazan.filter.data.length > 0 ? this.reportState.reportState.segments.collaboratorsNazan.filter.data : this.reportState.reportState.segments.collaboratorsNazan.list.data
+    let list = this.reportState.reportState.segments.collaboratorsNazan.filter.data.length > 0 ? this.reportState.reportState.segments.collaboratorsNazan.filter.data : this.reportState.reportState.segments.collaboratorsNazan.list.data
+    const ids = list.map(item => item[ID_DATA_NAME])
+    list = this.reportState.reportState.segments.collaboratorsNazan.original.data.filter(item => {
+      if (ids.includes(item[ID_DATA_NAME])) {
+        return item
+      }
+    })
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

@@ -148,7 +148,7 @@ export class PointProgramDetailPoints {
   "NOM CORTO": string = "";
   "NOMBRE SOCIO": string = "";
   "NIVEL": string = "";
-  "PUNTOS OTORGADOS": number = 0;
+  "PUNTOS OTROGADOS": number = 0;
   "TIENDA": number = 0;
   "TRANSACCION": number = 0;
   "CAJA": number = 0;

@@ -105,17 +105,15 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,inventoryStockDetailLabels.sku)">
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.sku)">
         </td>
-        <td class="text-center"
-          [innerHTML]="highlightSearchText(searchTextDetails,inventoryStockDetailLabels.createDate)">
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.createDate)">
         </td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,inventoryStockDetailLabels.line)">
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.line)">
         </td>
-        <td class="text-center"
-          [innerHTML]="highlightSearchText(searchTextDetails,inventoryStockDetailLabels.description)">
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.description)">
         </td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,inventoryStockDetailLabels.qty)">
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.qty)">
         </td>
       </tr>
     </ng-template>

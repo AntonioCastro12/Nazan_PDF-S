@@ -37,7 +37,7 @@ export class ReportApiService {
   }
 
   pointProgramDetailPoints(data: any): Observable<PointProgramDetailPoints[]> {
-    return this._http.get<PointProgramDetailPoints[]>(`${environment.apiUrl}/api/point-program/total-points${data}`);
+    return this._http.get<PointProgramDetailPoints[]>(`${environment.apiUrl}/api/point-program/detail-points${data}`);
   }
 
   pointProgramTotalMovement(data: any): Observable<PointProgramTotalMovement[]> {

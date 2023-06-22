@@ -13,6 +13,7 @@ import { ReportPointProgramTotalMovementComponent } from './pages/report-point-p
 import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/report-sales-general-sales.component';
 import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-kipon/report-segment-affiliated-kipon.component';
 import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
+import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cycle-count/report-inventory-cycle-count.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
@@ -25,6 +26,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }
     { path: 'inventory/comparison', component: ReportInventoryComparisonComponent },
     { path: 'inventory/pod', component: ReportInventoryPodComponent },
     { path: 'inventory/sap-xstore', component: ReportInventorySapXtoreComponent },
+    { path: 'inventory/cycle-count', component: ReportInventoryCycleCountComponent },
     { path: 'point-program/total-movement', component: ReportPointProgramTotalMovementComponent },
     { path: 'point-program/detail-points', component: ReportPointProgramDetailPointsComponent },
     { path: 'point-program/detail-wallet', component: ReportPointProgramDetailWalletComponent },
