@@ -1,3 +1,4 @@
+import { ID_DATA_NAME } from "src/app/shared/functions/functions";
 
 
 export class ReportList {
@@ -5,6 +6,7 @@ export class ReportList {
   data: any[] = []
 }
 export class InventoryKardex {
+  [ID_DATA_NAME]?: number;
   store_id: number = 0;
   trans_seq: string = "";
   ws_id: string = "";
@@ -41,6 +43,7 @@ export const inventoryStockResumeLabels = {
 }
 
 export class InventoryStockResume {
+  [ID_DATA_NAME]?: number;
   line: string = ""
   qty: number = 0;
 }
@@ -55,6 +58,7 @@ export const inventoryStockDetailLabels = {
 }
 
 export class InventoryStockDetail {
+  [ID_DATA_NAME]?: number;
   storeId: string = "";
   itemId: string = "";
   sku: string = "";
@@ -72,6 +76,7 @@ export class InventoryStockDetail {
 }
 
 export class InventoryComparison {
+  [ID_DATA_NAME]?: number;
   productId: string = "";
   storeId: string = "";
   xstore_qty: string = "";
@@ -90,6 +95,7 @@ export const inventoryComparisonLabels = {
 }
 
 export class InventorySapXstore {
+  [ID_DATA_NAME]?: number;
   store_id: number = 0;
   material: string = "";
   year: number = 0;
@@ -110,6 +116,7 @@ export const inventorySapXstoreLabels = {
 }
 
 export class InventoryPod {
+  [ID_DATA_NAME]?: number;
   T_ORIGEN: string = '';
   NOMBRE_TDA_ORIGEN: string = '0';
   T_DESTINO: number = 0
@@ -136,6 +143,7 @@ export const inventoryPodLabels = {
 }
 
 export class PointProgramDetailPoints {
+  [ID_DATA_NAME]?: number;
   "NUM SOCIO": string = "";
   "NOM CORTO": string = "";
   "NOMBRE SOCIO": string = "";
@@ -161,6 +169,7 @@ export const pointProgramDetailPointsLabels = {
 }
 
 export class PointProgramDetailWallet {
+  [ID_DATA_NAME]?: number;
   "NUM SOCIO": string = "";
   "NOM CORTO": string = "";
   "NOMBRE SOCIO": string = "";
@@ -186,6 +195,7 @@ export const pointProgramDetailWallet = {
 }
 
 export class PointProgramTotalMovement {
+  [ID_DATA_NAME]?: number;
   "NUM SOCIO": string = "";
   "NOM CORTO": string = "";
   "NOMBRE SOCIO": string = "";
@@ -212,6 +222,7 @@ export const pointProgramTotalMovementLabels = {
 };
 
 export class SalesInvoiceTotal {
+  [ID_DATA_NAME]?: number;
   storeId: string = "";
   businessDate: string = "";
   saleTypeSale: string = "";
@@ -246,6 +257,7 @@ export const salesInvoiceTotalLabels = {
 }
 
 export class SalesGeneralSales {
+  [ID_DATA_NAME]?: number;
   titleLine: string = "";
   countTransactions: number = 0;
   totalMoney: number = 0;
@@ -257,6 +269,7 @@ export const salesGeneralSalesLabels = {
 }
 
 export class SegmentAffiliatedKipon {
+  [ID_DATA_NAME]?: number;
   store_id: string = "";
   membership: string = "";
   cust_id: string = "";
@@ -293,6 +306,7 @@ export const segmentAffiliatedKiponLabels = {
 };
 
 export class SegmentCollaboratorsNazan {
+  [ID_DATA_NAME]?: number;
   store_id: string = "";
   segment: number = 0;
   membership: string = "";

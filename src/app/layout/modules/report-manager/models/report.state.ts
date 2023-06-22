@@ -1,6 +1,7 @@
 import { InventoryStockDetail, ReportList } from "./report.entity";
 
 class BasicObjectState {
+  original: ReportList = { total: 0, data: [] };
   list: ReportList = { total: 0, data: [] };
   filter: ReportList = { total: 0, data: [] };
 }
@@ -17,23 +18,28 @@ export class ReportState {
     sapXstore: BasicObjectState,
   } = {
       kardex: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
       stockResume: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
         details: []
       },
       comparison: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
       },
       pod: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
       },
       sapXstore: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },
       }
@@ -44,14 +50,17 @@ export class ReportState {
     totalMovement: BasicObjectState
   } = {
       totalMovement: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
       detailPoints: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
       detailWallet: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
@@ -61,10 +70,12 @@ export class ReportState {
     generalSales: BasicObjectState
   } = {
       invoiceTotal: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
       generalSales: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
@@ -74,10 +85,12 @@ export class ReportState {
     collaboratorsNazan: BasicObjectState,
   } = {
       affiliatedKipon: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },
       collaboratorsNazan: {
+        original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
       },

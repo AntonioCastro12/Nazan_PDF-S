@@ -11,36 +11,41 @@ export class ExcelService {
   constructor() { }
 
   public async generateExcel(data: any[], sheetName: string = 'Datos') {
-    const worksheet = XLSX.utils.json_to_sheet(data);
+    const worksheet = XLSX.utils.json_to_sheet([]);
 
     const cols: Array<any> = [];
     Object.keys(data[0]).forEach(key => {
       const colWidth = this.getMaxColumnWidth(data, key);
       cols.push({ wch: colWidth });
-      worksheet[`!cols`] = cols;
-
       const cellRef = XLSX.utils.encode_cell({ r: 0, c: cols.length - 1 });
-      worksheet[cellRef].s = {
-        alignment: { wrapText: true },
-        font: { bold: true },
+      worksheet[cellRef] = {
+        t: "s",
+        v: key,
+        s: {
+          alignment: { wrapText: true },
+          font: { bold: true },
+        },
       };
     });
 
-    data.forEach(item => {
+    const rows = data.map(item => {
       Object.keys(item).forEach(key => {
         const value = item[key];
         if (Array.isArray(value) || typeof value === 'object') {
           item[key] = JSON.stringify(value);
         }
       });
-
-      XLSX.utils.sheet_add_json(worksheet, [item], { skipHeader: true, origin: -1 });
+      return Object.values(item);
     });
 
+    XLSX.utils.sheet_add_aoa(worksheet, [Object.keys(data[0]), ...rows]);
+
+    worksheet["!cols"] = cols;
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, sheetName);
 
-    const blob = new Blob([XLSX.write(workbook, { bookType: 'xlsx', type: 'array' })], { type: 'application/octet-stream' });
+    const content = XLSX.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    const blob = new Blob([content], { type: 'application/octet-stream' });
 
     return blob;
   }

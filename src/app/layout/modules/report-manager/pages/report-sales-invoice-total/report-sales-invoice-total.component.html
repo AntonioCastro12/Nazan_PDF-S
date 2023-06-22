@@ -94,18 +94,31 @@
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.storeId)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.businessDate)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.countInvoiceSale)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitSale)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitReturn)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.unitPercentReturn)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalUnitFreight)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneySale)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneyFreight)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalMoneyReturn)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.totalPercentReturn)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.avgSales)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.storeId)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.businessDate)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.countInvoiceSale)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalUnitSale)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalUnitReturn)">asda</td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.unitPercentReturn)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalUnitFreight)"></td>
+            <td class="text-center text-green" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalMoneySale)"></td>
+            <td class="text-center text-blue" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalMoneyFreight)">
+            </td>
+            <td class="text-center text-red" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalMoneyReturn)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.totalPercentReturn)"></td>
+            <td class="text-center" [style]="{'min-width':'100px'}"
+              [innerHTML]="highlightSearchText(searchText,report.avgSales)"></td>
           </tr>
         </ng-template>
       </p-table>

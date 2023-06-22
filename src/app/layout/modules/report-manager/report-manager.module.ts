@@ -35,13 +35,13 @@ import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collabor
     ReportPointProgramTotalMovementComponent,
     ReportSalesGeneralSales,
     ReportSegmentAffiliatedKipon,
-    ReportSegmentCollaboratorsNazan
+    ReportSegmentCollaboratorsNazan,
   ],
   imports: [
     LuxonModule,
     CommonModule,
     ReportManagerRoutingModule,
     PrimeNgModule
-  ]
+  ],
 })
 export class ReportManagerModule { }
