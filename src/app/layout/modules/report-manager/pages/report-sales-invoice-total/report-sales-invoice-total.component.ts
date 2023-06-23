@@ -9,7 +9,7 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { salesInvoiceTotalLabels } from '../../models/report.entity';
+import { ReportsExcelNames, salesInvoiceTotalLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { Chart } from 'angular-highcharts';
@@ -252,7 +252,7 @@ export class ReportSalesInvoiceTotal {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.TOTALES_DE_FACTURACION_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

@@ -16,6 +16,13 @@ const routes: Routes = [{ path: '', redirectTo: 'layout', pathMatch: 'full' },
       (m) => m.ReportManagerModule
     ),
 },
+{
+  path: 'home',
+  loadChildren: () =>
+    import('src/app/layout/modules/home-manager/home-manager.module').then(
+      (m) => m.HomeManagerModule
+    ),
+},
 ];
 
 @NgModule({

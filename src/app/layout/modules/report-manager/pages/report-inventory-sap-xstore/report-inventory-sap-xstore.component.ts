@@ -7,9 +7,10 @@ import { OptionsStateService } from 'src/app/shared/components/options/models/op
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventorySapXstoreLabels } from '../../models/report.entity';
+import { ReportsExcelNames, inventorySapXstoreLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-report-inventory-sap-xstore',
@@ -137,7 +138,7 @@ export class ReportInventorySapXtoreComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

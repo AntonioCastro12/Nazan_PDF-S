@@ -3,11 +3,18 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutFrameComponent } from './pages/layout-frame/layout-frame.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'reports', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   {
     path: '',
     component: LayoutFrameComponent,
     children: [
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('src/app/layout/modules/home-manager/home-manager.module').then(
+            (m) => m.HomeManagerModule
+          ),
+      },
       {
         path: 'reports',
         loadChildren: () =>

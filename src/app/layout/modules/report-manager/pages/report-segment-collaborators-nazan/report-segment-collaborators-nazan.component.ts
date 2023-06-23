@@ -6,9 +6,10 @@ import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { segmentCollaboratorsNazanLabels } from '../../models/report.entity';
+import { ReportsExcelNames, segmentCollaboratorsNazanLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-report-segment-collaborators-nazan',
@@ -133,7 +134,7 @@ export class ReportSegmentCollaboratorsNazan {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.SEGMENTOS_COLABORADORES_NAZAN_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

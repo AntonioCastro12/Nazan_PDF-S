@@ -9,7 +9,7 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { salesGeneralSalesLabels } from '../../models/report.entity';
+import { ReportsExcelNames, salesGeneralSalesLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 
@@ -159,7 +159,7 @@ export class ReportSalesGeneralSales {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.INFORME_GENERAL_DE_VENTAS_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

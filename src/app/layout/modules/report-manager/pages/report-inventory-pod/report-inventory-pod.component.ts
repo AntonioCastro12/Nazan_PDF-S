@@ -8,9 +8,10 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventoryPodLabels } from '../../models/report.entity';
+import { ReportsExcelNames, inventoryPodLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-report-inventory-pod',
@@ -167,7 +168,7 @@ export class ReportInventoryPodComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.REPORTE_DE_RECEPCION_DE_MERCANCIA_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
