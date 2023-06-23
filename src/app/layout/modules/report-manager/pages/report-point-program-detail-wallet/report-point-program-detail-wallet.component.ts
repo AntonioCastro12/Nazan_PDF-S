@@ -46,6 +46,7 @@ export class ReportPointProgramDetailWalletComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
   ) {
+    _optionServices.initState()
   }
   ngOnInit() {
     this.subscription = this._optionServices.state.subscribe((optionsState) => {

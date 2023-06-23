@@ -4,7 +4,6 @@ import { ReportApiService } from '../../services/report-api.service';
 import { ReportStateService } from '../../services/report-state.service';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
-import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { segmentCollaboratorsNazanLabels } from '../../models/report.entity';
@@ -40,11 +39,11 @@ export class ReportSegmentCollaboratorsNazan {
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
   ) {
+    _optionServices.initState()
   }
   ngOnInit() {
     this.subscription = this._optionServices.state.subscribe((optionsState) => {

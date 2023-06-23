@@ -53,6 +53,7 @@ export class ReportInventoryKardexComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
   ) {
+    _optionServices.initState()
   }
   ngOnInit() {
     this.getStores()

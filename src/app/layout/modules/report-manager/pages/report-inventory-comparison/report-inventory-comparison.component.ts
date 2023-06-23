@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ReportApiService } from '../../services/report-api.service';
 import { ReportStateService } from '../../services/report-state.service';
-import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
 import { CommonApiService } from '../../services/common-api.service';
@@ -50,6 +49,7 @@ export class ReportInventoryComparisonComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
   ) {
+    _optionServices.initState()
   }
   ngOnInit() {
     this.getStores()

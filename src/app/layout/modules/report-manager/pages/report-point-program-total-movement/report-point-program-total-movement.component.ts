@@ -5,9 +5,7 @@ import { ReportStateService } from '../../services/report-state.service';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
-import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
-import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { pointProgramTotalMovementLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
@@ -48,6 +46,7 @@ export class ReportPointProgramTotalMovementComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
   ) {
+    _optionServices.initState()
   }
   ngOnInit() {
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
