@@ -3,8 +3,8 @@
   <div class="card-container">
     <p-button *ngIf="showSearch" pTooltip="Buscar los registros" tooltipPosition="bottom" icon="pi pi-search"
       class="mr-1" (onClick)="handleSearch()" styleClass="p-button-rounded"></p-button>
-    <p-button *ngIf="showChart" pTooltip="Ver gráfico" tooltipPosition="bottom" icon="pi pi-chart-bar" class="mr-1"
-      styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showChart" (onClick)="handleChart()" pTooltip="Ver gráfico" tooltipPosition="bottom"
+      icon="pi pi-chart-bar" class="mr-1" styleClass="p-button-rounded"></p-button>
     <p-button *ngIf="showRefresh" pTooltip="Renovar la lista" tooltipPosition="bottom" icon="pi pi-refresh" class="mr-1"
       (onClick)="handleRefresh()" styleClass="p-button-rounded"></p-button>
     <p-button *ngIf="showDownload" (onClick)="handleDownload()" pTooltip="Exportar registros" tooltipPosition="bottom"

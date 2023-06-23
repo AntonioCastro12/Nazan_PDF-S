@@ -6,7 +6,7 @@
         animationDuration=".5s"></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"></app-options>
+      <app-options [showSearch]="true" [showChart]="true" [showRefresh]="true" [showDownload]="true"></app-options>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2">Filtrar por:</div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
@@ -42,7 +42,7 @@
       </div>
     </div>
   </div>
-  <div ng-if>
+  <div *ngIf="!showChart">
     <div class="card">
       <div class="grid" *ngIf="reportState.reportState.sales.invoiceTotal.list.data.length>0">
         <div class=" col-4"></div>
@@ -124,7 +124,7 @@
       </p-table>
     </div>
   </div>
-  <!-- <div [chart]="chart"></div> -->
+  <div *ngIf="showChart" [chart]="chart"></div>
   <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
     <p>
       {{textModal}}

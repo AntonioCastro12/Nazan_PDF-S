@@ -28,6 +28,7 @@ export class ReportSalesInvoiceTotal {
   suggestions: Store[] = [];
   isLoading: boolean = false;
   showModal: boolean = false;
+  showChart: boolean = false;
   titleModal: string = '';
   textModal: string = '';
   widthModal: string = '';
@@ -42,77 +43,7 @@ export class ReportSalesInvoiceTotal {
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
   lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
-  /* chart = new Chart({
-    chart: {
-      type: 'column'
-    },
-    title: {
-      text: 'Monthly Average Rainfall'
-    },
-    subtitle: {
-      text: 'Source: WorldClimate.com'
-    },
-    xAxis: {
-      reversed: true,
-      categories: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ]
-    },
-    yAxis: {
-      reversed: false,
-      title: {
-        text: 'Rainfall (mm)'
-      }
-    },
-    tooltip: {
-      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
-      footerFormat: '</table>',
-      shared: true,
-      useHTML: true
-    },
-    plotOptions: {
-      column: {
-        dataLabels: {
-          enabled: true
-        },
-        pointPlacement: 'between'
-      }
-    },
-    series: [{
-      name: 'Tokyo',
-      data: [54.4, 95.6, 194.1, 216.4, 148.5, 135.6, 176.0, 144.0, 129.2, 106.4, 71.5, 49.9],
-      type: 'column'
-
-    }, {
-      name: 'New York',
-      data: [92.3, 106.6, 83.5, 91.2, 104.3, 105.0, 84.5, 106.0, 93.4, 98.5, 78.8, 83.6],
-      type: 'column'
-
-    }, {
-      name: 'London',
-      data: [51.2, 59.3, 65.2, 52.4, 59.6, 48.3, 47.0, 41.4, 39.3, 38.8, 39.3, 48.9],
-      type: 'column'
-
-    }, {
-      name: 'Berlin',
-      data: [51.1, 46.8, 39.1, 47.6, 60.4, 57.4, 75.5, 52.6, 39.7, 34.5, 33.2, 42.4],
-      type: 'column'
-
-    }]
-  }); */
+  chart = new Chart();
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
@@ -129,15 +60,28 @@ export class ReportSalesInvoiceTotal {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow } =
           optionsState.OptionsEntity;
+        if (onSearch !== this.lastOptionsEntity.onSearch) {
+          this.checkOnSearch();
+        }
         if (onRefresh !== this.lastOptionsEntity.onRefresh) {
           this.handleSearch();
         }
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onChart !== this.lastOptionsEntity.onChart) {
+          this.lastOptionsEntity.onChart = onChart;
+          this.handleChart();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow };
       }
     });
+  }
+
+  checkOnSearch() {
+    if (this.lastOptionsEntity.onChart) {
+      this.showChart = false;
+    }
   }
 
   filterStores(event: { query: string }) {
@@ -191,12 +135,84 @@ export class ReportSalesInvoiceTotal {
   }
 
   async handleSearch() {
+    if (this.lastOptionsEntity.onChart) {
+      this._optionServices.setChart()
+      this.showChart = false;
+    }
     if (this.selectedStore === null || typeof this.selectedStore === 'string') {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
     this.filter = `?storeId=${this.selectedStore?.storeInfoId}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
     this.getList();
+  }
+
+  async handleChart() {
+    if (this.lastOptionsEntity.onChart) {
+      if (this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0) {
+        await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
+        this._optionServices.setChart()
+        return;
+      }
+      let list = this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0 ? this.reportState.reportState.sales.invoiceTotal.filter.data : this.reportState.reportState.sales.invoiceTotal.list.data
+      const ids = list.map(item => item[ID_DATA_NAME])
+      list = this.reportState.reportState.sales.invoiceTotal.original.data.filter(item => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item
+        }
+      })
+
+      console.log(list.map(item => item.totalMoneySale),
+        list.map(item => item.totalMoneyFreight),
+        list.map(item => item.totalMoneyReturn), list.map(item => item.businessDate))
+
+      this.chart = new Chart({
+        credits: {
+          enabled: false
+        },
+        chart: {
+          type: 'column'
+        },
+        title: {
+          text: 'Totales de facturación'
+        },
+        xAxis: {
+          reversed: true,
+          categories: list.map(item => item.businessDate)
+        },
+        yAxis: {
+          reversed: false,
+        },
+        plotOptions: {
+          column: {
+            dataLabels: {
+              enabled: true
+            },
+            pointPlacement: 'between'
+          }
+        },
+        series: [{
+          name: salesInvoiceTotalLabels.totalMoneySale,
+          data: list.map(item => item.totalMoneySale),
+          type: 'column'
+
+        }, {
+          name: salesInvoiceTotalLabels.totalMoneyFreight,
+          data: list.map(item => item.totalMoneyFreight),
+          type: 'column'
+
+        }, {
+          name: salesInvoiceTotalLabels.totalMoneyReturn,
+          data: list.map(item => item.totalMoneyReturn),
+          type: 'column'
+
+        }]
+      });
+      this.showChart = true;
+    } else {
+      this.showChart = false;
+    }
+
   }
   resetFilters() {
     this.selectedStore = null;
@@ -221,7 +237,7 @@ export class ReportSalesInvoiceTotal {
 
   async exportExcel() {
     if (this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0) {
-      await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
+      await this.setErrorModal('Error', 'No hay datos a graficar', '50px');
       return;
     }
     let list = this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0 ? this.reportState.reportState.sales.invoiceTotal.filter.data : this.reportState.reportState.sales.invoiceTotal.list.data

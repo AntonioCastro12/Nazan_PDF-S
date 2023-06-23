@@ -30,4 +30,9 @@ export class OptionsStateService {
     this.optionsState.OptionsEntity.onDownload = !this.optionsState.OptionsEntity.onDownload;
     this.subject.next(this.optionsState);
   }
+
+  setChart() {
+    this.optionsState.OptionsEntity.onChart = !this.optionsState.OptionsEntity.onChart;
+    this.subject.next(this.optionsState);
+  }
 }

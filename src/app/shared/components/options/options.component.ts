@@ -18,6 +18,10 @@ export class OptionsComponent {
     this.optionServices.setSearch();
   }
 
+  handleChart() {
+    this.optionServices.setChart();
+  }
+
   handleRefresh() {
     this.optionServices.setRefresh();
   }
