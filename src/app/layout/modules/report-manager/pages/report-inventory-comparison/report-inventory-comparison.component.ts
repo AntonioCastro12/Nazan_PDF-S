@@ -52,6 +52,12 @@ export class ReportInventoryComparisonComponent {
   ) {
     _optionServices.initState()
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.getStores()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {

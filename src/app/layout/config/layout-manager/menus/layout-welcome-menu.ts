@@ -5,7 +5,7 @@ export const welcomeMenu = [
       {
         label: 'Inicio',
         icon: 'pi pi-fw pi-home',
-        routerLink: ['/layout/ticket/list'],
+        routerLink: ['/layout/home'],
       },
     ],
   },

@@ -50,6 +50,12 @@ export class ReportInventorySapXtoreComponent {
   ) {
     _optionServices.initState()
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.getList()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {

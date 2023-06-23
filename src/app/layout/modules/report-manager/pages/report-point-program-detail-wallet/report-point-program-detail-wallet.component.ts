@@ -48,6 +48,12 @@ export class ReportPointProgramDetailWalletComponent {
   ) {
     _optionServices.initState()
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
   ngOnInit() {
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
