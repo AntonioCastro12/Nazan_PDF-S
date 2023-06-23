@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { ChartModule } from 'angular-highcharts';
 import { PrimeNgModule } from 'src/app/shared/vendor/prime-ng';
 import { LuxonModule } from 'luxon-angular';
 import { ReportManagerRoutingModule } from './report-manager-routing.module';
@@ -43,7 +42,8 @@ import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cyc
     LuxonModule,
     CommonModule,
     ReportManagerRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    ChartModule
   ],
 })
 export class ReportManagerModule { }

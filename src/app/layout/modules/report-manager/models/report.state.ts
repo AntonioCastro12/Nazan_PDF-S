@@ -9,6 +9,10 @@ class InventoryStockResume extends BasicObjectState {
   details: InventoryStockDetail[] = [];
 }
 
+class SalesChart extends BasicObjectState {
+  chart: any[] = [];
+}
+
 export class ReportState {
   inventory: {
     kardex: BasicObjectState
@@ -66,13 +70,14 @@ export class ReportState {
       },
     };
   sales: {
-    invoiceTotal: BasicObjectState,
+    invoiceTotal: SalesChart,
     generalSales: BasicObjectState
   } = {
       invoiceTotal: {
         original: { total: 0, data: [] },
         list: { total: 0, data: [] },
-        filter: { total: 0, data: [] }
+        filter: { total: 0, data: [] },
+        chart: []
       },
       generalSales: {
         original: { total: 0, data: [] },

@@ -12,6 +12,7 @@ import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { salesInvoiceTotalLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { Chart } from 'angular-highcharts';
 
 @Component({
   selector: 'app-report-sales-invoice-total',
@@ -41,7 +42,77 @@ export class ReportSalesInvoiceTotal {
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
   lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
+  /* chart = new Chart({
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Monthly Average Rainfall'
+    },
+    subtitle: {
+      text: 'Source: WorldClimate.com'
+    },
+    xAxis: {
+      reversed: true,
+      categories: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec'
+      ]
+    },
+    yAxis: {
+      reversed: false,
+      title: {
+        text: 'Rainfall (mm)'
+      }
+    },
+    tooltip: {
+      headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+      pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+        '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+      footerFormat: '</table>',
+      shared: true,
+      useHTML: true
+    },
+    plotOptions: {
+      column: {
+        dataLabels: {
+          enabled: true
+        },
+        pointPlacement: 'between'
+      }
+    },
+    series: [{
+      name: 'Tokyo',
+      data: [54.4, 95.6, 194.1, 216.4, 148.5, 135.6, 176.0, 144.0, 129.2, 106.4, 71.5, 49.9],
+      type: 'column'
 
+    }, {
+      name: 'New York',
+      data: [92.3, 106.6, 83.5, 91.2, 104.3, 105.0, 84.5, 106.0, 93.4, 98.5, 78.8, 83.6],
+      type: 'column'
+
+    }, {
+      name: 'London',
+      data: [51.2, 59.3, 65.2, 52.4, 59.6, 48.3, 47.0, 41.4, 39.3, 38.8, 39.3, 48.9],
+      type: 'column'
+
+    }, {
+      name: 'Berlin',
+      data: [51.1, 46.8, 39.1, 47.6, 60.4, 57.4, 75.5, 52.6, 39.7, 34.5, 33.2, 42.4],
+      type: 'column'
+
+    }]
+  }); */
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
