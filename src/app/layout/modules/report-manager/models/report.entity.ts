@@ -130,16 +130,16 @@ export class InventoryPod {
 }
 
 export const inventoryPodLabels = {
-  T_ORIGEN: 'T_ORIGEN',
-  NOMBRE_TDA_ORIGEN: 'NOMBRE_TDA_ORIGEN',
-  T_DESTINO: 'T_DESTINO',
-  L_EMBARQUE: 'L_EMBARQUE',
-  TIPO_EMBARQUE: 'TIPO_EMBARQUE',
-  FEC_CREA_SISTEMA: 'FEC_CREA_SISTEMA',
-  FEC_HORA_POD: 'FEC_HORA_POD',
-  FEC_HORA_CIERRE: 'FEC_HORA_CIERRE',
-  TIEMPO_HRS: 'TIEMPO_HRS',
-  ESTATUS: 'ESTATUS',
+  T_ORIGEN: "TIENDA ORIGEN",
+  NOMBRE_TDA_ORIGEN: "NOMBRE TIENDA ORIGEN",
+  T_DESTINO: "TIENDA DESTINO",
+  L_EMBARQUE: "LINEA DE EMBARQUE",
+  TIPO_EMBARQUE: "TIPO EMBARQUE",
+  FEC_CREA_SISTEMA: "FECHA CREACION SISTEMA",
+  FEC_HORA_POD: "FECHA/HORA RECEPCION",
+  FEC_HORA_CIERRE: "FECHA/HORA CIERRE",
+  TIEMPO_HRS: "TIEMPO",
+  ESTATUS: "ESTATUS"
 }
 
 export class PointProgramDetailPoints {
@@ -156,15 +156,15 @@ export class PointProgramDetailPoints {
   "ACTIVIDAD": string = "";
 }
 export const pointProgramDetailPointsLabels = {
-  "NUM SOCIO": "NUM SOCIO",
-  "NOM CORTO": "NOM CORTO",
-  "NOMBRE SOCIO": "NOMBRE SOCIO",
+  "NUM SOCIO": "SOCIO",
+  "NOM CORTO": "NOMBRE CORTO",
+  "NOMBRE SOCIO": "NOMBRE",
   "NIVEL": "NIVEL",
   "PUNTOS OTORGADOS": "PUNTOS OTORGADOS",
   "TIENDA": "TIENDA",
   "TRANSACCION": "TRANSACCION",
   "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA ACTIVIDAD",
+  "FECHA ACTIVIDAD": "FECHA",
   "ACTIVIDAD": "ACTIVIDAD",
 }
 
@@ -182,15 +182,15 @@ export class PointProgramDetailWallet {
   "ACTIVIDAD": string = "";
 }
 export const pointProgramDetailWallet = {
-  "NUM SOCIO": "NUM SOCIO",
-  "NOM CORTO": "NOM CORTO",
-  "NOMBRE SOCIO": "NOMBRE SOCIO",
+  "NUM SOCIO": "SOCIO",
+  "NOM CORTO": "NOMBRE CORTO",
+  "NOMBRE SOCIO": "NOMBRE",
   "NIVEL": "NIVEL",
   "MONTO": "MONTO",
   "TIENDA": "TIENDA",
   "TRANSACCION": "TRANSACCION",
   "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA ACTIVIDAD",
+  "FECHA ACTIVIDAD": "FECHA",
   "ACTIVIDAD": "ACTIVIDAD",
 }
 
@@ -209,15 +209,15 @@ export class PointProgramTotalMovement {
 }
 
 export const pointProgramTotalMovementLabels = {
-  "NUM SOCIO": "NUM SOCIO",
-  "NOM CORTO": "NOM CORTO",
-  "NOMBRE SOCIO": "NOMBRE SOCIO",
+  "NUM SOCIO": "SOCIO",
+  "NOM CORTO": "NOMBRE CORTO",
+  "NOMBRE SOCIO": "NOMBRE",
   "NIVEL": "NIVEL",
   "PUNTOS OTROGADOS": "PUNTOS OTROGADOS",
   "TIENDA": "TIENDA",
   "TRANSACCION": "TRANSACCION",
   "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA ACTIVIDAD",
+  "FECHA ACTIVIDAD": "FECHA",
   "ACTIVIDAD": "ACTIVIDAD"
 };
 
@@ -288,21 +288,21 @@ export class SegmentAffiliatedKipon {
 }
 
 export const segmentAffiliatedKiponLabels = {
-  store_id: "ID tienda",
-  membership: "Pertenencia",
-  cust_id: "ID cliente",
-  first_name: "Nombre",
-  second_name: "Nombre 2",
-  surname: "Apellido paterno",
-  lastname: "Apellido materno",
-  home_phone: "Teléfono de casa",
-  cel_phone: "Teléfono celular",
-  business_phone: "Teléfono de trabajo",
-  email: "Correo electrónico",
-  birthday: "Fecha de nacimiento",
-  gender: "Género",
-  status: "Estado",
-  signup_date: "Fecha de registro"
+  store_id: "TIENDA",
+  membership: "NUMERO SOCIO",
+  cust_id: "ID CLIENTE",
+  first_name: "PRIMER NOMBRE",
+  second_name: "SEGUNDO NOMBRE",
+  surname: "PRIMER APELLIDO",
+  lastname: "SEGUNDO APELLIDO",
+  home_phone: "TELEFONO CASA",
+  cel_phone: "TELEFONO CELULAR",
+  business_phone: "TELEFONO TRABAJO",
+  email: "EMAIL",
+  birthday: "FECHA NACIMIENTO",
+  gender: "GENERO",
+  status: "ESTATUS",
+  signup_date: "FECHA REGISTRO"
 };
 
 export class SegmentCollaboratorsNazan {
@@ -324,20 +324,20 @@ export class SegmentCollaboratorsNazan {
 }
 
 export const segmentCollaboratorsNazanLabels = {
-  store_id: "ID tienda",
-  segment: "Segmento",
-  membership: "Membresía",
-  client_id: "ID cliente",
-  first_name: "Nombre",
-  second_name: "Nombre 2",
-  last_name: "Apellido paterno",
-  second_last_name: "Apellido materno",
-  cellphone_number: "Número de celular",
-  mail: "Correo electrónico",
-  birthday: "Fecha de nacimiento",
-  gender: "Género",
-  marital_status: "Estado civil",
-  signup_date: "Fecha de registro"
+  store_id: "TIENDA",
+  segment: "SEGMENTO",
+  membership: "NUMERO SOCIO",
+  client_id: "ID CLIENTE",
+  first_name: "PRIMER NOMBRE",
+  second_name: "SEGUNDO NOMBRE",
+  last_name: "PRIMER APELLIDO",
+  second_last_name: "SEGUNDO APELLIDO",
+  cellphone_number: "NUMERO CELULAR",
+  mail: "EMAIL",
+  birthday: "FECHA NACIMIENTO",
+  gender: "GÉNERO",
+  marital_status: "ESTADO CIVIL",
+  signup_date: "FECHA DE REGISTRO"
 };
 
 class ApiErrorDetail {
