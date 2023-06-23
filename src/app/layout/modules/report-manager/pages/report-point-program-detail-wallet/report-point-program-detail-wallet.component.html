@@ -13,23 +13,22 @@
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="from" class="font-bold">Desde</label>
-              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy"
-                [style]="{'width':'100%'}"></p-calendar>
+              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
+                (onSelect)="onSelectRange()"></p-calendar>
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="to" class="font-bold">Hasta</label>
-              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy"
-                [style]="{'width':'100%'}"></p-calendar>
+              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
+                (onSelect)="onSelectRange()"></p-calendar>
             </div>
           </div>
         </div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
           <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button (onClick)="handleSearch()">Buscar</p-button></p>
+              filtros</p-button><p-button [disabled]="checkRange()" (onClick)="handleSearch()">Buscar</p-button></p>
         </div>
-
       </div>
     </div>
   </div>

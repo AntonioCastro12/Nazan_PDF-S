@@ -119,6 +119,25 @@ export class ReportPointProgramDetailPointsComponent {
     );
   }
 
+  checkRange() {
+    return DateTime.fromJSDate(this.to)
+      .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days > 90 || DateTime.fromJSDate(this.to)
+        .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days < 0;
+  }
+
+  async onSelectRange() {
+    let diffDays = 0;
+    if (this.from && this.to)
+      diffDays = DateTime.fromJSDate(this.to).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days;
+    if (diffDays > 90) {
+      await this.setErrorModal('Error', 'El rango supera el limite de 90 dias', '50px');
+    }
+    if (diffDays < 0) {
+      await this.setErrorModal('Error', 'La fecha final no puede ser menor a la fecha final', '50px');
+    }
+  }
+
   async setErrorModal(title: string, text: string, width: string) {
     this.titleModal = title;
     this.textModal = text;

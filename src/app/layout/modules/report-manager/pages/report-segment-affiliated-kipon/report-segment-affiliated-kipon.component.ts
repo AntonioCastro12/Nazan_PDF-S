@@ -89,7 +89,7 @@ export class ReportSegmentAffiliatedKipon {
     this._commonApiService.getStores().
       subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+          this.commonState.commonState.stores = data.filter(item => item.storeInfoType === "K")
         },
         error: (e) => {
           console.log('error loading data', e)

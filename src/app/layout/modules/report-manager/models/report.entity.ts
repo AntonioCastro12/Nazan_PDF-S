@@ -106,13 +106,13 @@ export class InventorySapXstore {
 }
 
 export const inventorySapXstoreLabels = {
-  store_id: 'store_id',
-  material: 'material',
-  year: 'year',
-  sap: 'sap',
-  xstore: 'xstore',
-  difference: 'difference',
-  abs: 'abs',
+  store_id: 'Tienda',
+  material: 'Material',
+  year: 'Año',
+  sap: 'Sap',
+  xstore: 'Xstore',
+  difference: 'Diferencia',
+  abs: 'ABS',
 }
 
 export class InventoryPod {
@@ -130,17 +130,17 @@ export class InventoryPod {
 }
 
 export const inventoryPodLabels = {
-  T_ORIGEN: "TIENDA ORIGEN",
-  NOMBRE_TDA_ORIGEN: "NOMBRE TIENDA ORIGEN",
-  T_DESTINO: "TIENDA DESTINO",
-  L_EMBARQUE: "LINEA DE EMBARQUE",
-  TIPO_EMBARQUE: "TIPO EMBARQUE",
-  FEC_CREA_SISTEMA: "FECHA CREACION SISTEMA",
-  FEC_HORA_POD: "FECHA/HORA RECEPCION",
-  FEC_HORA_CIERRE: "FECHA/HORA CIERRE",
-  TIEMPO_HRS: "TIEMPO",
-  ESTATUS: "ESTATUS"
-}
+  T_ORIGEN: "Tienda origen",
+  NOMBRE_TDA_ORIGEN: "Nombre tienda origen",
+  T_DESTINO: "Tienda destino",
+  L_EMBARQUE: "Linea de embarque",
+  TIPO_EMBARQUE: "Tipo embarque",
+  FEC_CREA_SISTEMA: "Fecha creacion sistema",
+  FEC_HORA_POD: "Fecha/Hora recepcion",
+  FEC_HORA_CIERRE: "Fecha/Hora cierre",
+  TIEMPO_HRS: "Tiempo",
+  ESTATUS: "Estatus"
+};
 
 export class PointProgramDetailPoints {
   [ID_DATA_NAME]?: number;
@@ -156,17 +156,17 @@ export class PointProgramDetailPoints {
   "ACTIVIDAD": string = "";
 }
 export const pointProgramDetailPointsLabels = {
-  "NUM SOCIO": "SOCIO",
-  "NOM CORTO": "NOMBRE CORTO",
-  "NOMBRE SOCIO": "NOMBRE",
-  "NIVEL": "NIVEL",
-  "PUNTOS OTORGADOS": "PUNTOS OTORGADOS",
-  "TIENDA": "TIENDA",
-  "TRANSACCION": "TRANSACCION",
-  "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA",
-  "ACTIVIDAD": "ACTIVIDAD",
-}
+  "NUM SOCIO": "Socio",
+  "NOM CORTO": "Nombre corto",
+  "NOMBRE SOCIO": "Nombre",
+  "NIVEL": "Nivel",
+  "PUNTOS OTORGADOS": "Puntos otorgados",
+  "TIENDA": "Tienda",
+  "TRANSACCION": "Transacción",
+  "CAJA": "Caja",
+  "FECHA ACTIVIDAD": "Fecha",
+  "ACTIVIDAD": "Actividad",
+};
 
 export class PointProgramDetailWallet {
   [ID_DATA_NAME]?: number;
@@ -182,17 +182,17 @@ export class PointProgramDetailWallet {
   "ACTIVIDAD": string = "";
 }
 export const pointProgramDetailWallet = {
-  "NUM SOCIO": "SOCIO",
-  "NOM CORTO": "NOMBRE CORTO",
-  "NOMBRE SOCIO": "NOMBRE",
-  "NIVEL": "NIVEL",
-  "MONTO": "MONTO",
-  "TIENDA": "TIENDA",
-  "TRANSACCION": "TRANSACCION",
-  "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA",
-  "ACTIVIDAD": "ACTIVIDAD",
-}
+  "NUM SOCIO": "Socio",
+  "NOM CORTO": "Nombre corto",
+  "NOMBRE SOCIO": "Nombre",
+  "NIVEL": "Nivel",
+  "MONTO": "Monto",
+  "TIENDA": "Tienda",
+  "TRANSACCION": "Transacción",
+  "CAJA": "Caja",
+  "FECHA ACTIVIDAD": "Fecha",
+  "ACTIVIDAD": "Actividad"
+};
 
 export class PointProgramTotalMovement {
   [ID_DATA_NAME]?: number;
@@ -209,16 +209,16 @@ export class PointProgramTotalMovement {
 }
 
 export const pointProgramTotalMovementLabels = {
-  "NUM SOCIO": "SOCIO",
-  "NOM CORTO": "NOMBRE CORTO",
-  "NOMBRE SOCIO": "NOMBRE",
-  "NIVEL": "NIVEL",
-  "PUNTOS OTROGADOS": "PUNTOS OTROGADOS",
-  "TIENDA": "TIENDA",
-  "TRANSACCION": "TRANSACCION",
-  "CAJA": "CAJA",
-  "FECHA ACTIVIDAD": "FECHA",
-  "ACTIVIDAD": "ACTIVIDAD"
+  "NUM SOCIO": "Socio",
+  "NOM CORTO": "Nombre corto",
+  "NOMBRE SOCIO": "Nombre",
+  "NIVEL": "Nivel",
+  "PUNTOS OTROGADOS": "Puntos otragados",
+  "TIENDA": "Tienda",
+  "TRANSACCION": "Transacción",
+  "CAJA": "Caja",
+  "FECHA ACTIVIDAD": "Fecha",
+  "ACTIVIDAD": "Actividad"
 };
 
 export class SalesInvoiceTotal {

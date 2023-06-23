@@ -20,13 +20,12 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
   ]
 })
 export class ReportPointProgramTotalMovementComponent {
-  rangeDates: Array<any> = [
-    DateTime.local().toJSDate(),
-    DateTime.local().plus({ days: 1 }).toJSDate()
-  ];
+  from: Date = new Date();
+  to: Date = new Date();
   searchText: string = "";
   isLoading: boolean = false;
   showModal: boolean = false;
+  allowSearch: boolean = true;
   titleModal: string = '';
   textModal: string = '';
   widthModal: string = '';
@@ -93,14 +92,12 @@ export class ReportPointProgramTotalMovementComponent {
   }
 
   async handleSearch() {
-    this.filter = `?startDate=${DateTime.fromJSDate(new Date(this.rangeDates[0])).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.rangeDates[1])).toFormat('yyyy-MM-dd')}`
+    this.filter = `?startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
     this.getList();
   }
   resetFilters() {
-    this.rangeDates = [
-      DateTime.local().toJSDate(),
-      DateTime.local().plus({ days: 1 }).toJSDate()
-    ];
+    this.from = new Date();
+    this.to = new Date();
     this.filter = ''
   }
 
@@ -118,14 +115,22 @@ export class ReportPointProgramTotalMovementComponent {
     this.showModal = true;
   }
 
-  onSelectRangeEnd(event: any): void {
+  checkRange() {
+    return DateTime.fromJSDate(this.to)
+      .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days > 90 || DateTime.fromJSDate(this.to)
+        .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days < 0;
+  }
+
+  async onSelectRange() {
     let diffDays = 0;
-    if (this.rangeDates[0] && this.rangeDates[1])
-      diffDays = DateTime.fromJSDate(this.rangeDates[1])
-        .diff(DateTime.fromJSDate(this.rangeDates[0]), 'days').days;
+    if (this.from && this.to)
+      diffDays = DateTime.fromJSDate(this.to).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days;
     if (diffDays > 90) {
-      const newDate = DateTime.fromJSDate(this.rangeDates[0]).plus({ days: 90 }).toJSDate();
-      this.rangeDates[1] = newDate;
+      await this.setErrorModal('Error', 'El rango supera el limite de 90 dias', '50px');
+    }
+    if (diffDays < 0) {
+      await this.setErrorModal('Error', 'La fecha final no puede ser menor a la fecha final', '50px');
     }
   }
 
