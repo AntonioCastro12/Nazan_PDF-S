@@ -288,21 +288,21 @@ export class SegmentAffiliatedKipon {
 }
 
 export const segmentAffiliatedKiponLabels = {
-  store_id: "TIENDA",
-  membership: "NUMERO SOCIO",
-  cust_id: "ID CLIENTE",
-  first_name: "PRIMER NOMBRE",
-  second_name: "SEGUNDO NOMBRE",
-  surname: "PRIMER APELLIDO",
-  lastname: "SEGUNDO APELLIDO",
-  home_phone: "TELEFONO CASA",
-  cel_phone: "TELEFONO CELULAR",
-  business_phone: "TELEFONO TRABAJO",
-  email: "EMAIL",
-  birthday: "FECHA NACIMIENTO",
-  gender: "GENERO",
-  status: "ESTATUS",
-  signup_date: "FECHA REGISTRO"
+  store_id: "Tienda",
+  membership: "Numero socio",
+  cust_id: "Id cliente",
+  first_name: "Primer nombre",
+  second_name: "Segundo nombre",
+  surname: "Primer apellido",
+  lastname: "Segundo apellido",
+  home_phone: "Telefono casa",
+  cel_phone: "Telefono celular",
+  business_phone: "Telefono trabajo",
+  email: "Email",
+  birthday: "Fecha nacimiento",
+  gender: "Genero",
+  status: "Estatus",
+  signup_date: "Fecha registro"
 };
 
 export class SegmentCollaboratorsNazan {
@@ -324,20 +324,20 @@ export class SegmentCollaboratorsNazan {
 }
 
 export const segmentCollaboratorsNazanLabels = {
-  store_id: "TIENDA",
-  segment: "SEGMENTO",
-  membership: "NUMERO SOCIO",
-  client_id: "ID CLIENTE",
-  first_name: "PRIMER NOMBRE",
-  second_name: "SEGUNDO NOMBRE",
-  last_name: "PRIMER APELLIDO",
-  second_last_name: "SEGUNDO APELLIDO",
-  cellphone_number: "NUMERO CELULAR",
-  mail: "EMAIL",
-  birthday: "FECHA NACIMIENTO",
-  gender: "GÉNERO",
-  marital_status: "ESTADO CIVIL",
-  signup_date: "FECHA DE REGISTRO"
+  store_id: "Tienda",
+  segment: "Segmento",
+  membership: "Numero socio",
+  client_id: "Id cliente",
+  first_name: "Primer nombre",
+  second_name: "Segundo nombre",
+  last_name: "Primer apellido",
+  second_last_name: "Segundo apellido",
+  cellphone_number: "Numero celular",
+  mail: "Email",
+  birthday: "Fecha nacimiento",
+  gender: "Género",
+  marital_status: "Estado civil",
+  signup_date: "Fecha de registro"
 };
 
 class ApiErrorDetail {
