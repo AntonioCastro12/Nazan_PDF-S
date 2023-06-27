@@ -9,11 +9,10 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(@Inject(AUTH_STATE_SERVICE_TOKEN) private readonly authState: AuthStateService) { } // Usa el nuevo token
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('interceptor ', this.authState.authState.access_token, req.url)
     const authReq = req.clone({
       headers: req.headers.set(
         'Authorization',
-        `Bearer ${this.authState.authState.access_token ? this.authState.authState.access_token : ''}`
+        `Bearer ${this.authState.getToken() ? this.authState.getToken() : ''}`
       ),
     });
     return next.handle(authReq);

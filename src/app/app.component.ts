@@ -3,6 +3,8 @@ import { Identity } from './sso/identity.interface';
 import { SsoService } from './sso/sso.service';
 import { $Loading } from 'src/app/shared/popups';
 import { AuthStateService } from './layout/modules/auth-manager/services/auth-state.service';
+import { LayoutState } from './layout/config/layout-manager/models/layout.state';
+import { LayoutStateService } from './layout/config/layout-manager';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +12,12 @@ import { AuthStateService } from './layout/modules/auth-manager/services/auth-st
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  constructor(private readonly _sso: SsoService, public authStateService: AuthStateService) { }
   identity!: Identity | null;
 
-  constructor(private readonly _sso: SsoService, private readonly authStateService: AuthStateService) { }
 
   ngOnInit(): void {
     this.authStateService.loadUserInfo()
-    // $Loading.open();
   }
 
   onLogoutSSO = () => {

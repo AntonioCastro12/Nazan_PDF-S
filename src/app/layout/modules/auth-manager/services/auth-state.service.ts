@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthState } from '../models/auth.model';
 import { AuthApiService } from './auth-api.service';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Injectable({
   providedIn: 'root'
@@ -13,20 +14,18 @@ export class AuthStateService {
   authState = new AuthState();
 
   constructor(private readonly authApiService: AuthApiService) {
-    console.log('pasando')
-    this.authState.access_token = localStorage.getItem('access_token') ?? '';
     this.loadUserInfo();
     this.subject.next(this.authState);
   }
 
   loadUserInfo(): void {
-    console.log('llegando a loadUserInfo')
+
     if (this.authState.nombre === '') {
       this.authApiService.getUserInfo().
         subscribe({
           next: (data) => {
             console.log('user info', data)
-            //this.setInfoUser(data);
+            this.setInfoUser(data);
           },
           error: (e) => {
             console.log('error loading data', e)
@@ -39,12 +38,13 @@ export class AuthStateService {
   }
 
   setInfoUser(user: AuthState) {
+    console.log('setInfoUser')
     this.authState = { ...user }
     this.subject.next(this.authState);
   }
 
   getToken() {
-    return this.authState.access_token
+    return localStorage.getItem('access_token') ?? ''
   }
 
   getUser() {

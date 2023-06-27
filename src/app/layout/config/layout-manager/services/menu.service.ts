@@ -3,9 +3,6 @@ import { Subject } from 'rxjs';
 import { MenuChangeEvent } from 'src/app/layout/config/layout-manager/models/menu.entity';
 
 import {
-  warehouseMenu,
-  adminMenu,
-  frontdeskMenu,
   welcomeMenu,
 } from 'src/app/layout/config/layout-manager/menus';
 
@@ -29,10 +26,6 @@ export class MenuService {
 
   onChangeMenu(menuValue: string) {
     let displayMeny: any = welcomeMenu;
-
-    menuValue == 'warehouse' ? (displayMeny = warehouseMenu) : '';
-    menuValue == 'frontdesk' ? (displayMeny = frontdeskMenu) : '';
-    menuValue == 'admin' ? (displayMeny = adminMenu) : '';
 
     return displayMeny;
   }

@@ -19,6 +19,8 @@ import { LayoutFrameComponent } from 'src/app/layout/config/layout-manager/pages
 import { LayoutFilterDarkThemePipe } from './pipes/layout-filter-dark-theme.pipe';
 import { LayoutFilterLightThemePipe } from './pipes/layout-filter-light-theme.pipe';
 import { PrimeNgModule } from 'src/app/shared/vendor/prime-ng';
+import { AuthStateService } from '../../modules/auth-manager/services/auth-state.service';
+import { AuthManagerModule } from '../../modules/auth-manager/auth-manager.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { PrimeNgModule } from 'src/app/shared/vendor/prime-ng';
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    AuthManagerModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

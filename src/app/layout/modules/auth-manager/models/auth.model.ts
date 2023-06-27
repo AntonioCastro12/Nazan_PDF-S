@@ -14,5 +14,4 @@ export class AuthState {
   tienda: string = "";
   tiendaNombre: string = "";
   tiendaTipo: string = "";
-  access_token: string = "";
 }

@@ -20,3 +20,14 @@ export class LayoutEntity {
   userConfig: UserConfig = new UserConfig();
   menuSelected: Array<any> = welcomeMenu;
 }
+
+export enum Roles {
+  TIENDA = 'tienda',
+  STAFF_MENUDEO = 'staff_menudeo',
+  STAFF_MAYOREO = 'staff_mayoreo',
+  STAFF_KIPON = 'staff_kipon',
+  STAFF_MARKETING = 'staff_marketing',
+  STAFF_INGRESOS = 'staff_ingresos',
+  STAFF_INVENTARIO_OST = 'staff_inventario_ost',
+  STAFF_PLANEACION = 'staff_planeacion',
+}
