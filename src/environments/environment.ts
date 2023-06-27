@@ -1,7 +1,8 @@
 export const environment = {
-  production: false,
+  production: true,
   hostname: 'localhost',
   host: 'http://localhost',
   apiUrl: 'http://localhost:3151',
-  utilityUrl: 'https://utilityapi.impuls.com.mx'
+  utilityUrl: 'https://utilityapi.impuls.com.mx',
+  dashboardUrl: 'https://dashboard.impuls.com.mx',
 };

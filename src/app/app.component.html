@@ -1,1 +1,11 @@
-<router-outlet></router-outlet>
+<SSO
+  [callback]="ssoCallback"
+  codeApp="reportesadministrativos"
+  [onShowLogin]="onShowLoginSSO"
+  [showLoginInDevelop]="true"
+  [onLogout]="onLogoutSSO"
+>
+</SSO>
+<app-loader></app-loader>
+
+<router-outlet *ngIf="identity"></router-outlet>
