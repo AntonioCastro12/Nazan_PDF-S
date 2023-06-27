@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Identity } from './sso/identity.interface';
 import { SsoService } from './sso/sso.service';
 import { $Loading } from 'src/app/shared/popups';
+import { AuthStateService } from './layout/modules/auth-manager/services/auth-state.service';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +12,10 @@ import { $Loading } from 'src/app/shared/popups';
 export class AppComponent implements OnInit {
   identity!: Identity | null;
 
-  constructor(private readonly _sso: SsoService) {}
+  constructor(private readonly _sso: SsoService, private readonly authStateService: AuthStateService) { }
 
   ngOnInit(): void {
+    this.authStateService.loadUserInfo()
     // $Loading.open();
   }
 
