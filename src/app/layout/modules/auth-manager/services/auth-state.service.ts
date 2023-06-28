@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AuthState } from '../models/auth.model';
 import { AuthApiService } from './auth-api.service';
@@ -13,45 +13,36 @@ export class AuthStateService {
 
   authState = new AuthState();
 
-  constructor(private readonly authApiService: AuthApiService) {
+  constructor(private readonly authApiService: AuthApiService, private injector: Injector) {
     this.loadUserInfo();
     this.subject.next(this.authState);
   }
 
+  resetState(): void {
+    this.authState = new AuthState();
+    this.subject.next(this.authState);
+  }
   loadUserInfo(): void {
+    this.authApiService.getUserInfo().
+      subscribe({
+        next: (data) => {
+          this.setInfoUser(data);
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.resetState();
+        },
+        complete: () => {
+          return
+        }
+      });
 
-    if (this.authState.nombre === '') {
-      this.authApiService.getUserInfo().
-        subscribe({
-          next: (data) => {
-            console.log('user info', data)
-            this.setInfoUser(data);
-          },
-          error: (e) => {
-            console.log('error loading data', e)
-          },
-          complete: () => {
-            return
-          }
-        });
-    }
   }
 
   setInfoUser(user: AuthState) {
-    console.log('setInfoUser')
+    const layout = this.injector.get(LayoutStateService);
+    layout.setSidebar()
     this.authState = { ...user }
     this.subject.next(this.authState);
-  }
-
-  getToken() {
-    return localStorage.getItem('access_token') ?? ''
-  }
-
-  getUser() {
-
-  }
-
-  getPermission() {
-
   }
 }

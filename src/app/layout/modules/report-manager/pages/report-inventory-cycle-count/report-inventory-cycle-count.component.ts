@@ -11,6 +11,7 @@ import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { inventoryComparisonLabels } from '../../models/report.entity';
 import { highlightSearchText } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 
 @Component({
   selector: 'app-report-inventory-cycle-count',
@@ -48,7 +49,9 @@ export class ReportInventoryCycleCountComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
+    public authStateService: AuthStateService
   ) {
+    this.authStateService.loadUserInfo()
   }
   /* ngOnInit() {
     this.getStores()

@@ -8,6 +8,7 @@ import { SsoComponent } from './sso/sso.component';
 import { MyLoaderModule } from './core/loader/loader.module';
 import { AuthManagerModule } from './layout/modules/auth-manager/auth-manager.module';
 import { AuthStateService } from './layout/modules/auth-manager/services/auth-state.service';
+import { AuthInterceptor } from './layout/config/layout-manager/common/interceptors/auth.interceptor';
 @NgModule({
   declarations: [AppComponent, SsoComponent],
   imports: [
@@ -18,7 +19,7 @@ import { AuthStateService } from './layout/modules/auth-manager/services/auth-st
     MyLoaderModule,
     AuthManagerModule
   ],
-  providers: [AuthStateService],
+  providers: [AuthStateService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

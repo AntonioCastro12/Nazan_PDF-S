@@ -24,8 +24,8 @@ export class LayoutManagerMenuComponent implements OnInit {
     this.layoutState = this.layoutStateService.layoutState;
     this.authState = this.auth.authState
     this.layoutStateService.setSidebar()
-  }
 
+  }
   ngOnInit() {
   }
 }

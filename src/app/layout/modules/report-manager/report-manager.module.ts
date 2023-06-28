@@ -36,14 +36,15 @@ import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cyc
     ReportSalesGeneralSales,
     ReportSegmentAffiliatedKipon,
     ReportSegmentCollaboratorsNazan,
-    ReportInventoryCycleCountComponent
+    ReportInventoryCycleCountComponent,
+
   ],
   imports: [
     LuxonModule,
     CommonModule,
     ReportManagerRoutingModule,
     PrimeNgModule,
-    ChartModule
+    ChartModule,
   ],
 })
 export class ReportManagerModule { }

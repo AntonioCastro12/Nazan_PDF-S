@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 @Component({
   selector: 'app-home-page-compomnent',
   templateUrl: './home-page.component.html',
@@ -6,8 +7,8 @@ import { Component } from '@angular/core';
 
 })
 export class HomePageComponent {
-  constructor() {
-    console.log('llegando')
+  constructor(public authStateService: AuthStateService) {
+    this.authStateService.loadUserInfo()
   }
 
 }

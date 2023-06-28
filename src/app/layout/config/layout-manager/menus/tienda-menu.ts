@@ -35,4 +35,14 @@ export const tiendaMenu = [
       },
     ]
   },
+  {
+    label: 'Salir',
+    items: [
+      {
+        label: 'Salir',
+        icon: 'pi pi-fw pi-prime',
+        routerLink: ['/layout/welcome/logout'],
+      },
+    ],
+  },
 ];

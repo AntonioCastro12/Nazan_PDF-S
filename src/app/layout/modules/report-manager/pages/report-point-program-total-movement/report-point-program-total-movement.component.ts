@@ -10,6 +10,7 @@ import { searchFormEntityLabels } from '../../models/search-form-entity';
 import { ReportsExcelNames, pointProgramTotalMovementLabels } from '../../models/report.entity';
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
+import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 
 @Component({
   selector: 'app-report-point-program-total-movement',
@@ -44,7 +45,9 @@ export class ReportPointProgramTotalMovementComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
+    public authStateService: AuthStateService
   ) {
+    this.authStateService.loadUserInfo()
     _optionServices.initState()
   }
 

@@ -13,6 +13,7 @@ import { ReportsExcelNames, salesInvoiceTotalLabels } from '../../models/report.
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { Chart } from 'angular-highcharts';
+import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 
 @Component({
   selector: 'app-report-sales-invoice-total',
@@ -51,7 +52,9 @@ export class ReportSalesInvoiceTotal {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
+    public authStateService: AuthStateService
   ) {
+    this.authStateService.loadUserInfo()
     _optionServices.initState()
   }
 

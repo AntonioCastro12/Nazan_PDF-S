@@ -29,6 +29,7 @@ export class LayoutStateService {
   }
 
   setSidebar() {
+    console.log('pasando set sidebar', this._authStateService.authState.privileges.reportesadministrativos)
     let menu: any = [];
     const privileges = this._authStateService.authState.privileges.reportesadministrativos;
 
