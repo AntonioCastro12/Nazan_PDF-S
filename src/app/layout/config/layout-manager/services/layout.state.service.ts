@@ -12,6 +12,7 @@ import { staffIngresosMenu } from '../menus/staff-ingresos-menu';
 import { staffInventariosOSTMenu } from '../menus/staff-inventariosOST-menu';
 import { staffMarketingMenu } from '../menus/staff-marketing-menu';
 import { staffPlaneacionMenu } from '../menus/staff-planeacion-menu';
+import { welcomeMenu } from '../menus';
 
 /************************************************* */
 
@@ -29,14 +30,20 @@ export class LayoutStateService {
   }
 
   setSidebar() {
-    console.log('pasando set sidebar', this._authStateService.authState.privileges.reportesadministrativos)
+    console.log(
+      'pasando set sidebar',
+      this._authStateService.authState.privileges.reportesadministrativos
+    );
     let menu: any = [];
-    const privileges = this._authStateService.authState.privileges.reportesadministrativos;
+    const privileges =
+      this._authStateService.authState.privileges.reportesadministrativos;
 
     for (const value of Object.values(Roles)) {
-      if (privileges.find(item => item === value)) {
-        menu = privileges.length > 1 ? this.unifyMenus(menu, this.getMenu(value))
-          : this.getMenu(value)
+      if (privileges.find((item) => item === value)) {
+        menu =
+          privileges.length > 1
+            ? this.unifyMenus(menu, this.getMenu(value))
+            : this.getMenu(value);
       }
     }
     this.layoutState.config.menuSelected = menu;
@@ -44,46 +51,58 @@ export class LayoutStateService {
   }
 
   getMenu(value: string) {
-    let menu: any = []
+    let menu: any = [];
     switch (value) {
       case Roles.TIENDA:
         menu = tiendaMenu;
-        break
+        break;
       case Roles.STAFF_KIPON:
         menu = staffKiponMenu;
-        break
+        break;
       case Roles.STAFF_MAYOREO:
         menu = staffMayoreoMenu;
-        break
+        break;
       case Roles.STAFF_MENUDEO:
         menu = staffMenudeoMenu;
-        break
+        break;
       case Roles.STAFF_INGRESOS:
         menu = staffIngresosMenu;
-        break
+        break;
       case Roles.STAFF_INVENTARIO_OST:
         menu = staffInventariosOSTMenu;
-        break
+        break;
       case Roles.STAFF_MARKETING:
         menu = staffMarketingMenu;
-        break
+        break;
       case Roles.STAFF_PLANEACION:
         menu = staffPlaneacionMenu;
-        break
+        break;
+      case Roles.SISTEMAS:
+        menu = welcomeMenu;
+        break;
     }
-    return menu
+    return menu;
   }
 
   unifyMenus(menus1: any[], menus2: any[]): any[] {
     const combinedMenus = menus1.concat(menus2);
     const groupedMenus = combinedMenus.reduce((accumulator, item) => {
-      const existingMenu = accumulator.find((menu: any) => menu.label === item.label);
+      const existingMenu = accumulator.find(
+        (menu: any) => menu.label === item.label
+      );
       if (existingMenu) {
-        existingMenu.items.push(...item.items.filter((newItem: any) => !existingMenu.items.some((oldItem: any) => oldItem.label === newItem.label)));
+        existingMenu.items.push(
+          ...item.items.filter(
+            (newItem: any) =>
+              !existingMenu.items.some(
+                (oldItem: any) => oldItem.label === newItem.label
+              )
+          )
+        );
       } else {
         accumulator.push({
           label: item.label,
-          items: item.items
+          items: item.items,
         });
       }
       return accumulator;
@@ -91,5 +110,4 @@ export class LayoutStateService {
 
     return groupedMenus;
   }
-
 }
