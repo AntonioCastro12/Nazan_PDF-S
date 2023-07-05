@@ -30,10 +30,6 @@ export class LayoutStateService {
   }
 
   setSidebar() {
-    console.log(
-      'pasando set sidebar',
-      this._authStateService.authState.privileges.reportesadministrativos
-    );
     let menu: any = [];
     const privileges =
       this._authStateService.authState.privileges.reportesadministrativos;
@@ -107,6 +103,16 @@ export class LayoutStateService {
       }
       return accumulator;
     }, []);
+
+    groupedMenus.sort((a: any, b: any) => {
+      if (a.label === "Salir") {
+        return 1;
+      } else if (b.label === "Salir") {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
 
     return groupedMenus;
   }
