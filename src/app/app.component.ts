@@ -12,22 +12,19 @@ import { LayoutStateService } from './layout/config/layout-manager';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor(private readonly _sso: SsoService, public authStateService: AuthStateService) { }
   identity!: Identity | null;
 
+  constructor(private readonly _sso: SsoService) {}
 
   ngOnInit(): void {
-    this.authStateService.loadUserInfo()
+    $Loading.open();
   }
-
   onLogoutSSO = () => {
     this.identity = null;
   };
-
   onShowLoginSSO = () => {
     $Loading.close();
   };
-
   ssoCallback = (
     data: { token: any; identity: Identity },
     refresh: boolean,

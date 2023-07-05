@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  HostListener,
+} from '@angular/core';
 // import { SsoEventListener } from "./sso.listener";
 import { environment } from 'src/environments/environment';
 import { Identity } from './identity.interface';
@@ -53,25 +60,34 @@ export class SsoComponent implements OnInit {
     //     this.logout();
     // });
   }
+  @HostListener('addEventListener')
+  addEventListener() {
+    console.log('addEventListener');
+  }
+
+  @HostListener('attachEvent')
+  addAttachEvent() {
+    console.log('attachEvent');
+  }
+
   ngOnInit() {
     this.ssoService.codeApp = this.codeApp;
 
-    // var eventMethod = window.addEventListener
+    // var eventMethod = window.addEventListener()
     //   ? 'addEventListener'
     //   : 'attachEvent';
 
     let eventMethod = 'addEventListener';
 
     var eventer = window[eventMethod as keyof Window];
-    console.log({ eventer: eventer });
+
     var messageEvent = eventMethod === 'attachEvent' ? 'onmessage' : 'message';
-    console.log({ messageEvent: messageEvent });
 
     eventer(messageEvent, (e: any) => {
       const { action, value } = e.data;
       console.log({ action: action });
       console.log({ value: value });
-      // console.log(action, value);
+
       if (action === 'showLogin') return this.showLogin();
       if (action === 'sendAuth') return this.auth(value, false);
       if (action === 'refresh') return this.auth(value, true);
