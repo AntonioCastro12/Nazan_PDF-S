@@ -8,10 +8,11 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventoryComparisonLabels } from '../../models/report.entity';
-import { highlightSearchText } from 'src/app/shared/functions/functions';
+import { ReportsExcelNames, inventoryCycleCountLabels } from '../../models/report.entity';
+import { ID_DATA_NAME, addIdToData, formatArrayValues, highlightSearchText, objectContainsValue } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-report-inventory-cycle-count',
@@ -23,7 +24,7 @@ import { AuthStateService } from '../../../auth-manager/services/auth-state.serv
 })
 export class ReportInventoryCycleCountComponent {
   searchText: string = "";
-  selectedStatus!: string;
+  selectedCountType!: string;
   selectedStore: Store | null = null;
   selectedOrigin: string = '';
   suggestions: Store[] = [];
@@ -33,9 +34,11 @@ export class ReportInventoryCycleCountComponent {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  from: Date = new Date();
+  to: Date = new Date();
+  countTypeList: any[] = [{ name: 'Cycle Count', id: "CYCLE_COUNT" }, { name: 'Physical Count', id: "PHYSICAL_COUNT" }];
   searchFormEntityLabels = searchFormEntityLabels;
-  inventoryComparisonLabels = inventoryComparisonLabels;
+  inventoryCycleCountLabels = inventoryCycleCountLabels;
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
@@ -53,7 +56,7 @@ export class ReportInventoryCycleCountComponent {
   ) {
     this.authStateService.loadUserInfo()
   }
-  /* ngOnInit() {
+  ngOnInit() {
     this.getStores()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
@@ -95,22 +98,20 @@ export class ReportInventoryCycleCountComponent {
       })
   }
   getList() {
-    this.reportState.reportState.inventory.comparison.list.data = []
+    this.reportState.reportState.inventory.cycleCount.list.data = []
     this.isLoading = true;
-    this._reportApiService.inventoryComparison(this.filter).subscribe({
+    this._reportApiService.inventoryCycleCount(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.inventory.comparison.list = { data, total: data.length }
+        this.reportState.reportState.inventory.cycleCount.list = { data, total: data.length }
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.comparison.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.inventory.cycleCount.original = { data: dataOriginal, total: dataOriginal.length }
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
-          businessDate: { type: 'date', format: 'dd-MM-yyyy' },
-          totalMoneyReturn: { type: 'number', format: 'currency' },
-          totalMoneySale: { type: 'number', format: 'currency' },
-          totalPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
-          unitPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
+          FECHA_INICIAL: { type: 'date', format: 'dd-MM-yyyy' },
+          FECHA_FINAL: { type: 'date', format: 'dd-MM-yyyy' },
+          CANT_ITEMS: { type: 'number', format: 'currency' },
         });
-        this.reportState.reportState.inventory.comparison.list = { data: dataFormatted, total: dataFormatted.length }
+        this.reportState.reportState.inventory.cycleCount.list = { data: dataFormatted, total: dataFormatted.length }
       },
       error: (e) => {
         console.log('error loading data', e)
@@ -121,12 +122,26 @@ export class ReportInventoryCycleCountComponent {
     })
   }
 
+  async onSelectRange() {
+    let diffDays = 0;
+    if (this.from && this.to)
+      diffDays = DateTime.fromJSDate(this.to).set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+        .diff(DateTime.fromJSDate(this.from).set({ hour: 0, minute: 0, second: 0, millisecond: 0 }), 'days').days;
+    if (diffDays > 90) {
+      await this.setErrorModal('Error', 'El rango supera el limite de 90 dias', '50px');
+    }
+    if (diffDays < 0) {
+      await this.setErrorModal('Error', 'La fecha final no puede ser menor a la fecha final', '50px');
+    }
+  }
+
   async handleSearch() {
-    if (this.selectedStore === null || typeof this.selectedStore === 'string') {
+    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.selectedCountType === null) {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}&type=${this.selectedCountType}`
+
     this.getList();
   }
   resetFilters() {
@@ -136,8 +151,8 @@ export class ReportInventoryCycleCountComponent {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.inventory.comparison.list.data;
-    this.reportState.reportState.inventory.comparison.filter.data = list.filter((item) =>
+    const list = this.reportState.reportState.inventory.cycleCount.list.data;
+    this.reportState.reportState.inventory.cycleCount.filter.data = list.filter((item) =>
       objectContainsValue(item, this.searchText)
     );
   }
@@ -150,28 +165,28 @@ export class ReportInventoryCycleCountComponent {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.inventory.comparison.list.data.length <= 0) {
+    if (this.reportState.reportState.inventory.cycleCount.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.inventory.comparison.filter.data.length > 0 ? this.reportState.reportState.inventory.comparison.filter.data : this.reportState.reportState.inventory.comparison.list.data
+    let list = this.reportState.reportState.inventory.cycleCount.filter.data.length > 0 ? this.reportState.reportState.inventory.comparison.filter.data : this.reportState.reportState.inventory.cycleCount.list.data
     const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.inventory.comparison.original.data.filter(item => {
+    list = this.reportState.reportState.inventory.cycleCount.original.data.filter(item => {
       if (ids.includes(item[ID_DATA_NAME])) {
         return item
       }
     })
+
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${new Date().getTime()}.xlsx`;
+    a.download = `${ReportsExcelNames.CUMPLIMIENTO_CONTEOS_CICLICOS_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-
-  } */
+  }
 
 
 

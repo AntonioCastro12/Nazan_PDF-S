@@ -20,6 +20,7 @@ export class ReportState {
     comparison: BasicObjectState,
     pod: BasicObjectState,
     sapXstore: BasicObjectState,
+    cycleCount: BasicObjectState,
   } = {
       kardex: {
         original: { total: 0, data: [] },
@@ -43,6 +44,11 @@ export class ReportState {
         filter: { total: 0, data: [] },
       },
       sapXstore: {
+        original: { total: 0, data: [] },
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] },
+      },
+      cycleCount: {
         original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] },

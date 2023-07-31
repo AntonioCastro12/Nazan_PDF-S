@@ -63,10 +63,10 @@ const convertFunctions: ConvertFunctions = {
   string: (val: string) => val,
   number: (val: number, format: string) => {
     let result = ''
-    if (format === 'currency') {
+    if (val && format === 'currency') {
       result = val.toLocaleString('es-MX', { maximumFractionDigits: 2 })
     }
-    if (format === 'percent') {
+    if (val && format === 'percent') {
       result = String(val.toFixed(2));
     }
     return result;

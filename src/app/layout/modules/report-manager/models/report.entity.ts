@@ -142,6 +142,29 @@ export const inventoryPodLabels = {
   ESTATUS: "Estatus"
 };
 
+export class CycleCount {
+  [ID_DATA_NAME]?: number = 0;
+  rtl_loc_id: number = 0;
+  ID_CONTEO: string = "";
+  TIPO_CONTEO: string = "";
+  MARCA: string = "";
+  FECHA_INICIAL: string = "";
+  FECHA_FINAL: string = "";
+  count_status: string = "";
+  CANT_ITEMS: number = 0;
+}
+
+export const inventoryCycleCountLabels = {
+  rtl_loc_id: "Id tienda",
+  ID_CONTEO: "Id conteo",
+  TIPO_CONTEO: "Tipo conteo",
+  MARCA: "Marca",
+  FECHA_INICIAL: "Fecha inicial",
+  FECHA_FINAL: "Fecha final",
+  count_status: "Estado del conteo",
+  CANT_ITEMS: "Cantidad items"
+};
+
 export class PointProgramDetailPoints {
   [ID_DATA_NAME]?: number;
   "NUM SOCIO": string = "";
@@ -368,5 +391,6 @@ export enum ReportsExcelNames {
   TOTALES_DE_FACTURACION_ = 'TOTALES_DE_FACTURACION_',
   AFILIADOS_CLUP_KIPON_ = 'AFILIADOS_CLUP_KIPON_',
   SEGMENTOS_COLABORADORES_NAZAN_ = 'SEGMENTOS_COLABORADORES_NAZAN_',
+  CUMPLIMIENTO_CONTEOS_CICLICOS_ = 'CUMPLIMIENTO_CONTEOS_CICLICOS_',
 }
 //${ReportsExcelNames.SEGMENTOS_COLABORADORES_NAZAN_}

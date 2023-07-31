@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesGeneralSales, SalesInvoiceTotal, SegmentAffiliatedKipon, SegmentCollaboratorsNazan } from '../models/report.entity';
+import { CycleCount, InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesGeneralSales, SalesInvoiceTotal, SegmentAffiliatedKipon, SegmentCollaboratorsNazan } from '../models/report.entity';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +30,10 @@ export class ReportApiService {
 
   inventoryPod(data: any): Observable<InventoryPod[]> {
     return this._http.get<InventoryPod[]>(`${environment.apiUrl}/api/inventories/pod${data}`);
+  }
+
+  inventoryCycleCount(data: any): Observable<CycleCount[]> {
+    return this._http.get<CycleCount[]>(`${environment.apiUrl}/api/inventories/cycle-count${data}`);
   }
 
   inventorySapXstore(data: any): Observable<InventoryPod[]> {
