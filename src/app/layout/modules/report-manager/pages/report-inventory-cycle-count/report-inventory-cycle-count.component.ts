@@ -87,7 +87,35 @@ export class ReportInventoryCycleCountComponent {
     this._commonApiService.getStores().
       subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+
+          const total: Store[] = [{
+            storeInfoId: "todas",
+            storeInfoName: "Todas",
+            storeInfoAddress1: "",
+            storeInfoArea: "",
+            storeInfoChk: '',
+            storeInfoCity: '',
+            storeInfoCountry: "",
+            storeInfoCounty: "",
+            storeInfoSts: "",
+            storeInfoCreated: "",
+            storeInfoUpdated: "",
+            storeInfoData: "",
+            storeInfoType: "",
+            storeInfoState: "",
+            storeInfoZip: "",
+            storeInfoLocale: "",
+            storeInfoCurrencyId: "",
+            storeInfoLatitude: "",
+            storeInfoLongitude: "",
+            storeInfoPhone: "",
+            storeInfoDescription: "",
+            storeInfoManager: "",
+            storeInfoEmail: "",
+            storeInfoTax: "",
+            storeInfoLocType: ""
+          }, ...data]
+          this.commonState.commonState.stores = total
         },
         error: (e) => {
           console.log('error loading data', e)
