@@ -21,6 +21,11 @@ export const staffIngresosMenu = [
             icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/sales/general-sales'],
           },
+          {
+            label: 'Venta de Mayoreos',
+            icon: 'pi pi-fw pi-minus',
+            routerLink: ['/layout/reports/sales/wholesale'],
+          },
         ]
       },
 

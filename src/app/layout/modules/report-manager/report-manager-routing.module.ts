@@ -14,6 +14,7 @@ import { ReportSalesGeneralSales } from './pages/report-sales-general-sales/repo
 import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-kipon/report-segment-affiliated-kipon.component';
 import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
 import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cycle-count/report-inventory-cycle-count.component';
+import { ReportSalesWholesaleComponent } from './pages/report-sales-wholesale/report-sales-wholesale.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
@@ -32,6 +33,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }
     { path: 'point-program/detail-wallet', component: ReportPointProgramDetailWalletComponent },
     { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
     { path: 'sales/general-sales', component: ReportSalesGeneralSales },
+    { path: 'sales/wholesale', component: ReportSalesWholesaleComponent },
     { path: 'segments/affiliated-kipon', component: ReportSegmentAffiliatedKipon },
     { path: 'segments/collaborators-nazan', component: ReportSegmentCollaboratorsNazan },
   ],

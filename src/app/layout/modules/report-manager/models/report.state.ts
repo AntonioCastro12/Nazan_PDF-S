@@ -78,6 +78,7 @@ export class ReportState {
   sales: {
     invoiceTotal: SalesChart,
     generalSales: BasicObjectState
+    wholesale: BasicObjectState
   } = {
       invoiceTotal: {
         original: { total: 0, data: [] },
@@ -86,6 +87,11 @@ export class ReportState {
         chart: []
       },
       generalSales: {
+        original: { total: 0, data: [] },
+        list: { total: 0, data: [] },
+        filter: { total: 0, data: [] }
+      },
+      wholesale: {
         original: { total: 0, data: [] },
         list: { total: 0, data: [] },
         filter: { total: 0, data: [] }
