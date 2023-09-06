@@ -19,7 +19,7 @@ export const staffPlaneacionMenu = [
           {
             label: 'Reporte de recepción de mercancía (POD)',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/pod'],
+            routerLink: ['/layout/reports/inventories/pod'],
           },
         ]
       },

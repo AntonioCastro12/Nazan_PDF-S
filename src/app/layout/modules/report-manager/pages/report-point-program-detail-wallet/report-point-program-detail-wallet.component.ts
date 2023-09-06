@@ -39,7 +39,7 @@ export class ReportPointProgramDetailWalletComponent {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
+  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -61,7 +61,7 @@ export class ReportPointProgramDetailWalletComponent {
   ngOnInit() {
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
-        const { onChart, onDownload, onRefresh, onSearch, onShow } =
+        const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
           optionsState.OptionsEntity;
         if (onRefresh !== this.lastOptionsEntity.onRefresh) {
           this.handleSearch();
@@ -69,7 +69,7 @@ export class ReportPointProgramDetailWalletComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow };
+        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
   }

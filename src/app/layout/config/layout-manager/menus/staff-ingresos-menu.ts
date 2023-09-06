@@ -24,7 +24,7 @@ export const staffIngresosMenu = [
           {
             label: 'Venta de Mayoreos',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/sales/wholesale'],
+            routerLink: ['/layout/reports/sales/wholesale-sales'],
           },
         ]
       },

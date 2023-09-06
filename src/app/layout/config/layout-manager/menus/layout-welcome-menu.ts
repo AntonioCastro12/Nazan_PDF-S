@@ -19,27 +19,27 @@ export const welcomeMenu = [
           {
             label: 'Kardex de artículo',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/kardex'],
+            routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/stock-resume'],
+            routerLink: ['/layout/reports/inventories/stock-resume'],
           },
           {
             label: 'Comparación de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/comparison'],
+            routerLink: ['/layout/reports/inventories/comparison'],
           },
           {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/cycle-count'],
+            routerLink: ['/layout/reports/inventories/cycle-count'],
           },
           {
             label: 'Diferencia de inventario SAP vs Xstore',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/sap-xstore'],
+            routerLink: ['/layout/reports/inventories/sap-xstore'],
           },
         ]
       },
@@ -113,12 +113,12 @@ export const welcomeMenu = [
           {
             label: 'Kardex de articulo',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/kardex'],
+            routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/stock-resume'],
+            routerLink: ['/layout/reports/inventories/stock-resume'],
           },
         ]
       },
@@ -134,7 +134,7 @@ export const welcomeMenu = [
           {
             label: 'Reporte de recepción de mercancía (POD)',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/pod'],
+            routerLink: ['/layout/reports/inventories/pod'],
           },
         ]
       },

@@ -11,6 +11,7 @@ export class OptionsComponent {
   @Input() showChart: boolean = false;
   @Input() showEye: boolean = false;
   @Input() showDownload: boolean = false;
+  @Input() showFavorite: boolean = false;
 
   constructor(public optionServices: OptionsStateService) { }
 
@@ -28,5 +29,9 @@ export class OptionsComponent {
 
   handleDownload() {
     this.optionServices.setDownload();
+  }
+
+  handleFavorite() {
+    this.optionServices.setFavorite();
   }
 }

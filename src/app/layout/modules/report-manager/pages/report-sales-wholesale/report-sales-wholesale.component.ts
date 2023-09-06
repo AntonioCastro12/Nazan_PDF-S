@@ -41,7 +41,7 @@ export class ReportSalesWholesaleComponent {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
+  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -65,7 +65,7 @@ export class ReportSalesWholesaleComponent {
     this.getStores()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
-        const { onChart, onDownload, onRefresh, onSearch, onShow } =
+        const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
           optionsState.OptionsEntity;
         if (onRefresh !== this.lastOptionsEntity.onRefresh) {
           this.handleSearch();
@@ -73,9 +73,39 @@ export class ReportSalesWholesaleComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow };
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
+        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+  }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/sales/wholesale-sales"
+    }
+
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
   }
 
   filterStores(event: { query: string }) {

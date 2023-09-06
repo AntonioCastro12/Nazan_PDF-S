@@ -16,7 +16,7 @@ export class OptionsStateService {
   }
 
   initState() {
-    this.optionsState.OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false }
+    this.optionsState.OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false }
   }
   setSearch() {
     this.optionsState.OptionsEntity.onSearch = !this.optionsState.OptionsEntity.onSearch;
@@ -33,6 +33,11 @@ export class OptionsStateService {
 
   setChart() {
     this.optionsState.OptionsEntity.onChart = !this.optionsState.OptionsEntity.onChart;
+    this.subject.next(this.optionsState);
+  }
+
+  setFavorite() {
+    this.optionsState.OptionsEntity.onFavorite = !this.optionsState.OptionsEntity.onFavorite;
     this.subject.next(this.optionsState);
   }
 }

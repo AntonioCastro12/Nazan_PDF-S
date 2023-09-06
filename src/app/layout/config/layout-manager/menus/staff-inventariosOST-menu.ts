@@ -19,12 +19,12 @@ export const staffInventariosOSTMenu = [
           {
             label: 'Kardex de articulo',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/kardex'],
+            routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/stock-resume'],
+            routerLink: ['/layout/reports/inventories/stock-resume'],
           },
         ]
       },

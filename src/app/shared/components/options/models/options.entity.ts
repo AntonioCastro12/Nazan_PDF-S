@@ -5,4 +5,5 @@ export interface OptionsEntity {
   onRefresh: boolean;
   onDownload: boolean;
   onShow: boolean;
+  onFavorite: boolean;
 }

@@ -39,7 +39,6 @@ import { ReportSalesWholesaleComponent } from './pages/report-sales-wholesale/re
     ReportSegmentCollaboratorsNazan,
     ReportInventoryCycleCountComponent,
     ReportSalesWholesaleComponent,
-
   ],
   imports: [
     LuxonModule,

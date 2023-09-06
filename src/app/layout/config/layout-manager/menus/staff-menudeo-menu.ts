@@ -19,17 +19,17 @@ export const staffMenudeoMenu = [
           {
             label: 'Kardex de artículo',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/kardex'],
+            routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/stock-resume'],
+            routerLink: ['/layout/reports/inventories/stock-resume'],
           },
           {
             label: 'Cumplimiento de conteos ciclicos',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventory/cycle-count'],
+            routerLink: ['/layout/reports/inventories/cycle-count'],
           },
         ]
       },

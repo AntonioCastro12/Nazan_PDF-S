@@ -43,7 +43,7 @@ export class ReportSalesInvoiceTotal {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false };
+  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
   chart = new Chart();
   constructor(
     public _optionServices: OptionsStateService,
@@ -67,7 +67,7 @@ export class ReportSalesInvoiceTotal {
     this.getStores()
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
-        const { onChart, onDownload, onRefresh, onSearch, onShow } =
+        const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
           optionsState.OptionsEntity;
         if (onSearch !== this.lastOptionsEntity.onSearch) {
           this.checkOnSearch();
@@ -82,7 +82,7 @@ export class ReportSalesInvoiceTotal {
           this.lastOptionsEntity.onChart = onChart;
           this.handleChart();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow };
+        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
   }

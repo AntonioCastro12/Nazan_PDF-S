@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CycleCount, InventoryComparison, InventoryKardex, InventoryPod, InventoryStockDetail, InventoryStockResume, PointProgramDetailPoints, PointProgramDetailWallet, PointProgramTotalMovement, SalesGeneralSales, SalesInvoiceTotal, SalesWholesale, SegmentAffiliatedKipon, SegmentCollaboratorsNazan } from '../models/report.entity';
+import { Favorite, ListFavorites, ListHistoric } from 'src/app/layout/config/layout-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root'
@@ -70,6 +71,18 @@ export class ReportApiService {
 
   segmentsCollaboratorsNazan(data: any): Observable<SegmentCollaboratorsNazan[]> {
     return this._http.get<SegmentCollaboratorsNazan[]>(`${environment.apiUrl}/api/segments/collaborators-nazan${data}`);
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(`${environment.apiUrl}/api/bookmarks/favorites`, data);
+  }
+
+  getFavorites(): Observable<ListFavorites[]> {
+    return this._http.get<ListFavorites[]>(`${environment.apiUrl}/api/bookmarks/favorites`);
+  }
+
+  getHistoric(): Observable<ListHistoric[]> {
+    return this._http.get<ListHistoric[]>(`${environment.apiUrl}/api/bookmarks/historic`);
   }
 
 }

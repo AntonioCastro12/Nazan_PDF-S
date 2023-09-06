@@ -17,23 +17,23 @@ import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cyc
 import { ReportSalesWholesaleComponent } from './pages/report-sales-wholesale/report-sales-wholesale.component';
 
 
-const routes: Routes = [{ path: '', redirectTo: 'inventory', pathMatch: 'full' }, {
+const routes: Routes = [{ path: '', redirectTo: 'inventories', pathMatch: 'full' }, {
   path: '',
   component: ReportManagerComponent,
   children: [
-    { path: 'inventory', redirectTo: 'inventory/kardex', pathMatch: 'full' },
-    { path: 'inventory/kardex', component: ReportInventoryKardexComponent },
-    { path: 'inventory/stock-resume', component: ReportInventoryStockResumeComponent },
-    { path: 'inventory/comparison', component: ReportInventoryComparisonComponent },
-    { path: 'inventory/pod', component: ReportInventoryPodComponent },
-    { path: 'inventory/sap-xstore', component: ReportInventorySapXtoreComponent },
-    { path: 'inventory/cycle-count', component: ReportInventoryCycleCountComponent },
+    { path: 'inventories', redirectTo: 'inventories/kardex', pathMatch: 'full' },
+    { path: 'inventories/kardex', component: ReportInventoryKardexComponent },
+    { path: 'inventories/stock-resume', component: ReportInventoryStockResumeComponent },
+    { path: 'inventories/comparison', component: ReportInventoryComparisonComponent },
+    { path: 'inventories/pod', component: ReportInventoryPodComponent },
+    { path: 'inventories/sap-xstore', component: ReportInventorySapXtoreComponent },
+    { path: 'inventories/cycle-count', component: ReportInventoryCycleCountComponent },
     { path: 'point-program/total-movement', component: ReportPointProgramTotalMovementComponent },
     { path: 'point-program/detail-points', component: ReportPointProgramDetailPointsComponent },
     { path: 'point-program/detail-wallet', component: ReportPointProgramDetailWalletComponent },
     { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
     { path: 'sales/general-sales', component: ReportSalesGeneralSales },
-    { path: 'sales/wholesale', component: ReportSalesWholesaleComponent },
+    { path: 'sales/wholesale-sales', component: ReportSalesWholesaleComponent },
     { path: 'segments/affiliated-kipon', component: ReportSegmentAffiliatedKipon },
     { path: 'segments/collaborators-nazan', component: ReportSegmentCollaboratorsNazan },
   ],

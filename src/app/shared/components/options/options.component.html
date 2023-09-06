@@ -11,5 +11,7 @@
       icon="pi pi-cloud-download" class="mr-1" styleClass="p-button-rounded"></p-button>
     <p-button *ngIf="showEye" pTooltip="Mostrar registro" tooltipPosition="bottom" icon="pi pi-eye" class="mr-1"
       styleClass="p-button-rounded"></p-button>
+    <p-button *ngIf="showFavorite" pTooltip="Agregar a favoritos" tooltipPosition="bottom" icon="pi pi-heart"
+      class="mr-1" styleClass="p-button-rounded" (onClick)="handleFavorite()"></p-button>
   </div>
 </div>

@@ -11,6 +11,55 @@
         puedas optimizar tus procesos y alcanzar tus objetivos empresariales. ¡Disfruta del módulo de Reportes
         Administrativos y comienza a impulsar el crecimiento de tu empresa hoy mismo</p>
     </div>
+    <div class="block font-bold breport-round mb-3">
+      <div class="report-title">
+        <i class="pi pi-search" style="font-size: 1.2rem"></i> Consultas recientes
+      </div>
+      <p-table [value]="commonState.commonState.historic.slice(0,10)" #dt2 [rows]="10" styleClass="mt-3 p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr class="text-sm">
+            <th class="text-center">{{labelsListHistoric.url}}</th>
+            <th class="text-center">{{labelsListHistoric.createdAt}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="2" class="text-center">
+              {{commonState.commonState.historic.length===0? 'No hay datos para mostrar':''}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-historic>
+          <tr class="text-sm">
+            <td class="text-center">{{getReportName(historic.url)}}</td>
+            <td class="text-center">{{historic.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="block font-bold breport-round mb-3">
+      <div class="report-title"><i class="pi pi-heart" style="font-size: 1.2rem"></i> Favoritos</div>
+      <p-table [value]="commonState.commonState.favorites" #dt2 [rows]="10" styleClass="mt-3 p-datatable-sm">
+        <ng-template pTemplate="header">
+          <tr class="text-sm">
+            <th class="text-center">{{labelsListFavorites.url}}</th>
+            <th class="text-center">{{labelsListFavorites.actions}}</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="2" class="text-center">
+              {{commonState.commonState.favorites? 'No hay datos para mostrar':''}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-favorite>
+          <tr class="text-sm">
+            <td class="text-center">{{getReportName(favorite.url)}}</td>
+            <td class="text-center">acciones</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
   </div>
-
 </div>
