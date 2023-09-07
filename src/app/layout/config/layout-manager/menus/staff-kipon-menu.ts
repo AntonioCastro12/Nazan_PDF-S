@@ -14,11 +14,11 @@ export const staffKiponMenu = [
     items: [
       {
         label: 'Segmentos',
-        icon: 'pi pi-fw pi-minus',
+
         items: [
           {
             label: 'Afiliados KIPON SHOE CLUB',
-            icon: 'pi pi-fw pi-minus',
+
             routerLink: ['/layout/reports/segments/affiliated-kipon'],
           },
         ]

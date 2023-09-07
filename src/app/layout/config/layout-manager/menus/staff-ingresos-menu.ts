@@ -14,21 +14,30 @@ export const staffIngresosMenu = [
     items: [
       {
         label: 'Ventas',
-        icon: 'pi pi-fw pi-minus',
+
         items: [
           {
             label: 'Informe general de ventas',
-            icon: 'pi pi-fw pi-minus',
+
             routerLink: ['/layout/reports/sales/general-sales'],
           },
           {
             label: 'Venta de Mayoreos',
-            icon: 'pi pi-fw pi-minus',
+
             routerLink: ['/layout/reports/sales/wholesale-sales'],
           },
         ]
       },
-
+      {
+        label: 'Inventarios',
+        items: [
+          {
+            label: 'Existencia de inventario',
+            icon: 'pi pi›-fw pi-minus',
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+          },
+        ]
+      },
     ],
   },
 ];

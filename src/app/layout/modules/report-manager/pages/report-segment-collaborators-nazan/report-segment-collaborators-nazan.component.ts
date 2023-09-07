@@ -23,7 +23,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ReportSegmentCollaboratorsNazan {
   searchText: string = "";
-  segmentId: number = 0;
+  segmentId: number = 165;
   isLoading: boolean = false;
   showModal: boolean = false;
   titleModal: string = '';
@@ -79,10 +79,10 @@ export class ReportSegmentCollaboratorsNazan {
       const report: any = this.commonState.commonState.favorites.find(item => item.url === '/segments/collaborators-nazan')
       if (report) {
         this.segmentId = report.searchCriteria.segmentId
-        this._optionServices.setSearch()
-        this.handleSearch()
       }
     }
+    this._optionServices.setSearch()
+    this.handleSearch()
   }
 
   handleFavorite() {
@@ -139,7 +139,7 @@ export class ReportSegmentCollaboratorsNazan {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?&segmentId=${this.segmentId}`
+    this.filter = `?&segmentId=${this.segmentId ? this.segmentId : ''}`
     this.getList();
   }
   resetFilters() {

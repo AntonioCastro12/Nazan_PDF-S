@@ -104,6 +104,26 @@ export class LayoutStateService {
       return accumulator;
     }, []);
 
+    groupedMenus.forEach((menu: any) => {
+      menu.items.sort((a: any, b: any) => {
+        return a.label.localeCompare(b.label);
+      });
+    });
+
+    groupedMenus.sort((a: any, b: any) => {
+      return a.label.localeCompare(b.label);
+    });
+
+    groupedMenus.sort((a: any, b: any) => {
+      if (a.label === "Bienvenida") {
+        return -1;
+      } else if (b.label === "Bienvenida") {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+
     groupedMenus.sort((a: any, b: any) => {
       if (a.label === "Salir") {
         return 1;

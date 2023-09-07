@@ -14,16 +14,15 @@ export const staffInventariosOSTMenu = [
     items: [
       {
         label: 'Inventarios',
-        icon: 'pi pi-fw pi-minus',
+
         items: [
           {
             label: 'Kardex de articulo',
-            icon: 'pi pi-fw pi-minus',
+
             routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
             label: 'Existencia de inventario',
-            icon: 'pi pi-fw pi-minus',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
         ]
