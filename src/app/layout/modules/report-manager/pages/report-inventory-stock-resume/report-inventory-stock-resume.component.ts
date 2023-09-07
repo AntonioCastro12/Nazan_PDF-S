@@ -13,6 +13,7 @@ import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValue
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-inventory-stock-resume',
@@ -52,7 +53,8 @@ export class ReportInventoryStockResumeComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     this.authStateService.loadUserInfo()
     _optionServices.initState()
@@ -63,7 +65,7 @@ export class ReportInventoryStockResumeComponent {
     }
   }
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.inventory.stockResume.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -74,10 +76,50 @@ export class ReportInventoryStockResumeComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite') && this.commonState.commonState.favorites.length > 0) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/inventory-stock/resume')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    });
   }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+      },
+      url: "/inventories/inventory-stock/resume"
+    }
+
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
+  }
+
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
@@ -89,20 +131,24 @@ export class ReportInventoryStockResumeComponent {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+          this.commonState.commonState.stores = data;
+          resolve();
         },
         error: (e) => {
-          console.log('error loading data', e)
+          console.log('error loading data', e);
+          reject(e);
         },
         complete: () => {
-          this.isLoading = false;
+          resolve();
         }
-      })
+      });
+    });
   }
+
   getList() {
     this.showDetailsModal = false
     this.isLoading = true;

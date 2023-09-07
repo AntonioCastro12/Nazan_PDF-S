@@ -6,7 +6,8 @@
         animationDuration=".5s"></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"></app-options>
+      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
+        [showFavorite]="reportState.reportState.segments.collaboratorsNazan.list.data.length>0?true:false"></app-options>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2">Filtrar por:</div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
@@ -78,7 +79,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
-            <td [attr.colspan]="12" class="text-center">
+            <td [attr.colspan]="14" class="text-center">
               {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
             </td>
           </tr>

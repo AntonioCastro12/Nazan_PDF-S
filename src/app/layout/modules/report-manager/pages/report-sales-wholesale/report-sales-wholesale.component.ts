@@ -13,6 +13,8 @@ import { ReportsExcelNames, salesWholesaleLabels } from '../../models/report.ent
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
+import { mapUrlReport } from 'src/app/layout/config/layout-manager/models/bookmarks.model';
 
 @Component({
   selector: 'app-report-sales-wholesale',
@@ -50,7 +52,8 @@ export class ReportSalesWholesaleComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     _optionServices.initState()
     this.authStateService.loadUserInfo()
@@ -61,8 +64,9 @@ export class ReportSalesWholesaleComponent {
       this.subscription.unsubscribe();
     }
   }
+
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.sales.wholesale.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -79,6 +83,19 @@ export class ReportSalesWholesaleComponent {
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite')) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/sales/wholesale-sales')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    })
   }
 
   handleFavorite() {
@@ -118,19 +135,22 @@ export class ReportSalesWholesaleComponent {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+          this.commonState.commonState.stores = data;
+          resolve();
         },
         error: (e) => {
-          console.log('error loading data', e)
+          console.log('error loading data', e);
+          reject(e);
         },
         complete: () => {
-          this.isLoading = false;
+          resolve();
         }
-      })
+      });
+    });
   }
   getList() {
     this.reportState.reportState.sales.wholesale.list.data = []
@@ -144,12 +164,14 @@ export class ReportSalesWholesaleComponent {
           Fecha: { type: 'date', format: 'dd-MM-yyyy' },
         });
         this.reportState.reportState.sales.wholesale.list = { data: dataFormatted, total: dataFormatted.length }
+        console.log('complete')
+        this.isLoading = false;
       },
       error: (e) => {
         console.log('error loading data', e)
       },
       complete: () => {
-        this.isLoading = false;
+
       }
     })
   }

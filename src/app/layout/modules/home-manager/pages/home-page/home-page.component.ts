@@ -3,6 +3,7 @@ import { AuthStateService } from '../../../auth-manager/services/auth-state.serv
 import { CommonStateService } from '../../../report-manager/services/common-state.service';
 import { ReportApiService } from '../../../report-manager/services/report-api.service';
 import { ListHistoric, labelsListFavorites, labelsListHistoric, mapUrlReport } from 'src/app/layout/config/layout-manager/models/bookmarks.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home-page-compomnent',
   templateUrl: './home-page.component.html',
@@ -13,7 +14,8 @@ export class HomePageComponent {
   constructor(
     public authStateService: AuthStateService,
     public commonState: CommonStateService,
-    private _reportApiService: ReportApiService) {
+    private _reportApiService: ReportApiService,
+    private router: Router) {
     this.authStateService.loadUserInfo()
   }
   labelsListFavorites = labelsListFavorites
@@ -57,6 +59,11 @@ export class HomePageComponent {
   getReportName(data: string) {
     const report = mapUrlReport.find(item => data.includes(item.url))
     return report ? report.name : data
+  }
+  handleShowReport(data: string) {
+    let report: any = ''
+    report = mapUrlReport.find(item => data.includes(item.url))
+    this.router.navigate([`/layout/reports/${report.url}`], { queryParams: { favorite: true } });
   }
 
 }

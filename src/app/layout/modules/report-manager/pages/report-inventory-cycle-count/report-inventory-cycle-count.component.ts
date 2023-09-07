@@ -13,6 +13,7 @@ import { ID_DATA_NAME, addIdToData, formatArrayValues, highlightSearchText, obje
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { DateTime } from 'luxon';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-inventory-cycle-count',
@@ -52,12 +53,21 @@ export class ReportInventoryCycleCountComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     this.authStateService.loadUserInfo()
+    this._optionServices.initState()
   }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.inventory.cycleCount.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -68,9 +78,54 @@ export class ReportInventoryCycleCountComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite')) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/cycle-count')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedCountType = this.countTypeList.find(item => item.id === report.searchCriteria.type)
+          this.selectedStore = selectedStore || null;
+          this.selectedCountType = selectedCountType.id || null;
+          this.from = new Date(report.searchCriteria.startDate)
+          this.to = new Date(report.searchCriteria.endDate)
+          this.lastOptionsEntity.onSearch === false ? this._optionServices.setSearch() : null
+          this.handleSearch()
+        }
+      }
+    })
+  }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+        type: this.selectedCountType,
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/inventories/cycle-count"
+    }
+
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+        }
+      })
   }
 
   filterStores(event: { query: string }) {
@@ -83,50 +138,53 @@ export class ReportInventoryCycleCountComponent {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
-        next: (data) => {
 
-          const total: Store[] = [{
-            storeInfoId: "todas",
-            storeInfoName: "Todas",
-            storeInfoAddress1: "",
-            storeInfoArea: "",
-            storeInfoChk: '',
-            storeInfoCity: '',
-            storeInfoCountry: "",
-            storeInfoCounty: "",
-            storeInfoSts: "",
-            storeInfoCreated: "",
-            storeInfoUpdated: "",
-            storeInfoData: "",
-            storeInfoType: "",
-            storeInfoState: "",
-            storeInfoZip: "",
-            storeInfoLocale: "",
-            storeInfoCurrencyId: "",
-            storeInfoLatitude: "",
-            storeInfoLongitude: "",
-            storeInfoPhone: "",
-            storeInfoDescription: "",
-            storeInfoManager: "",
-            storeInfoEmail: "",
-            storeInfoTax: "",
-            storeInfoLocType: ""
-          }, ...data]
-          this.commonState.commonState.stores = total
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      })
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().
+        subscribe({
+          next: (data) => {
+            const total: Store[] = [{
+              storeInfoId: "todas",
+              storeInfoName: "Todas",
+              storeInfoAddress1: "",
+              storeInfoArea: "",
+              storeInfoChk: '',
+              storeInfoCity: '',
+              storeInfoCountry: "",
+              storeInfoCounty: "",
+              storeInfoSts: "",
+              storeInfoCreated: "",
+              storeInfoUpdated: "",
+              storeInfoData: "",
+              storeInfoType: "",
+              storeInfoState: "",
+              storeInfoZip: "",
+              storeInfoLocale: "",
+              storeInfoCurrencyId: "",
+              storeInfoLatitude: "",
+              storeInfoLongitude: "",
+              storeInfoPhone: "",
+              storeInfoDescription: "",
+              storeInfoManager: "",
+              storeInfoEmail: "",
+              storeInfoTax: "",
+              storeInfoLocType: ""
+            }, ...data]
+            this.commonState.commonState.stores = total
+            resolve();
+          },
+          error: (e) => {
+            console.log('error loading data', e)
+            reject();
+          },
+          complete: () => {
+            resolve();
+          }
+        })
+    });
   }
   getList() {
-    this.reportState.reportState.inventory.cycleCount.list.data = []
     this.isLoading = true;
     this._reportApiService.inventoryCycleCount(this.filter).subscribe({
       next: (data) => {

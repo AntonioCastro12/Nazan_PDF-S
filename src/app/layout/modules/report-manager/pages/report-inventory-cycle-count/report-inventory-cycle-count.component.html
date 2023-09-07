@@ -2,9 +2,12 @@
   <div class="card" style="margin-bottom: 30px;">
     <div class="block font-bold text-left breport-round mb-3">
       <div class="report-title">Cumplimiento de conteos ciclicos</div>
+      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
+        animationDuration=".5s"></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"></app-options>
+      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
+        [showFavorite]="reportState.reportState.inventory.cycleCount.list.data.length>0?true:false"></app-options>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2">Filtrar por:</div>
         <div class="card-container blue-container flex align-items-center justify-content-start">

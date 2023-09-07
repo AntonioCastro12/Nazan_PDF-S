@@ -23,7 +23,7 @@ const routes: Routes = [{ path: '', redirectTo: 'inventories', pathMatch: 'full'
   children: [
     { path: 'inventories', redirectTo: 'inventories/kardex', pathMatch: 'full' },
     { path: 'inventories/kardex', component: ReportInventoryKardexComponent },
-    { path: 'inventories/stock-resume', component: ReportInventoryStockResumeComponent },
+    { path: 'inventories/inventory-stock/resume', component: ReportInventoryStockResumeComponent },
     { path: 'inventories/comparison', component: ReportInventoryComparisonComponent },
     { path: 'inventories/pod', component: ReportInventoryPodComponent },
     { path: 'inventories/sap-xstore', component: ReportInventorySapXtoreComponent },

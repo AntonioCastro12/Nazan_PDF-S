@@ -13,6 +13,7 @@ import { ReportsExcelNames, inventoryKardexLabels } from '../../models/report.en
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-inventory-kardex',
@@ -53,7 +54,8 @@ export class ReportInventoryKardexComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     _optionServices.initState()
     this.authStateService.loadUserInfo()
@@ -65,7 +67,7 @@ export class ReportInventoryKardexComponent {
     }
   }
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.inventory.kardex.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -76,10 +78,58 @@ export class ReportInventoryKardexComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite')) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/kardex')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this.productCode = report.searchCriteria.productId
+          this.selectedOrigin = report.searchCriteria.origin
+          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    })
   }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+        productId: this.productCode,
+        origin: this.selectedOrigin,
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/inventories/kardex"
+    }
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
+  }
+
+
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
@@ -91,22 +141,24 @@ export class ReportInventoryKardexComponent {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+          this.commonState.commonState.stores = data;
+          resolve();
         },
         error: (e) => {
-          console.log('error loading data', e)
+          console.log('error loading data', e);
+          reject(e);
         },
         complete: () => {
-          this.isLoading = false;
+          resolve();
         }
-      })
+      });
+    });
   }
   getList() {
-    this.reportState.reportState.inventory.kardex.list.data = []
     this.isLoading = true;
     this._reportApiService.inventoryKardexProduct(this.filter).subscribe({
       next: (data) => {

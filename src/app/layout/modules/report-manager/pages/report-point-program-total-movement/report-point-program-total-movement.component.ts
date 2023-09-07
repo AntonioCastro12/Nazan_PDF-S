@@ -11,6 +11,7 @@ import { ReportsExcelNames, pointProgramTotalMovementLabels } from '../../models
 import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-point-program-total-movement',
@@ -45,7 +46,8 @@ export class ReportPointProgramTotalMovementComponent {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     this.authStateService.loadUserInfo()
     _optionServices.initState()
@@ -57,6 +59,7 @@ export class ReportPointProgramTotalMovementComponent {
     }
   }
   ngOnInit() {
+    this.reportState.reportState.pointProgram.totalMovement.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -67,9 +70,48 @@ export class ReportPointProgramTotalMovementComponent {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+
+    if (this.route.snapshot.queryParamMap.get('favorite')) {
+      const report: any = this.commonState.commonState.favorites.find(item => item.url === '/point-program/total-movement')
+      if (report) {
+        this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+        this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
+        this._optionServices.setSearch()
+        this.handleSearch()
+      }
+    }
+  }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/point-program/total-movement"
+    }
+
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
   }
 
   getList() {
@@ -84,12 +126,13 @@ export class ReportPointProgramTotalMovementComponent {
           "FECHA ACTIVIDAD": { type: 'date', format: 'dd-MM-yyyy' },
         });
         this.reportState.reportState.pointProgram.totalMovement.list = { data: dataFormatted, total: dataFormatted.length }
+        this.isLoading = false;
       },
       error: (e) => {
         console.log('error loading data', e)
       },
       complete: () => {
-        this.isLoading = false;
+
       }
     })
   }

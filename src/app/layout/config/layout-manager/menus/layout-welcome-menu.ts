@@ -24,7 +24,7 @@ export const welcomeMenu = [
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventories/stock-resume'],
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
           {
             label: 'Comparación de inventario',
@@ -118,7 +118,7 @@ export const welcomeMenu = [
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventories/stock-resume'],
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
         ]
       },

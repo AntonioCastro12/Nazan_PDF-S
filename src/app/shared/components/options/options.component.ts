@@ -32,6 +32,7 @@ export class OptionsComponent {
   }
 
   handleFavorite() {
+    console.log('options handleFavorite')
     this.optionServices.setFavorite();
   }
 }

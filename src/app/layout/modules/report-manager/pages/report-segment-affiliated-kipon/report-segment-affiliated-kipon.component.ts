@@ -13,6 +13,7 @@ import { ReportsExcelNames, segmentAffiliatedKiponLabels } from '../../models/re
 import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-segment-affiliated-kipon',
@@ -50,7 +51,8 @@ export class ReportSegmentAffiliatedKipon {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     this.authStateService.loadUserInfo()
     _optionServices.initState()
@@ -62,7 +64,7 @@ export class ReportSegmentAffiliatedKipon {
     }
   }
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.segments.affiliatedKipon.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -73,9 +75,52 @@ export class ReportSegmentAffiliatedKipon {
         if (onDownload !== this.lastOptionsEntity.onDownload) {
           this.exportExcel();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite')) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/segments/affiliated-kipon')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    })
+  }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/segments/affiliated-kipon"
+    }
+
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
   }
 
   filterStores(event: { query: string }) {
@@ -88,19 +133,22 @@ export class ReportSegmentAffiliatedKipon {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data.filter(item => item.storeInfoType === "K")
+          this.commonState.commonState.stores = data;
+          resolve();
         },
         error: (e) => {
-          console.log('error loading data', e)
+          console.log('error loading data', e);
+          reject(e);
         },
         complete: () => {
-          this.isLoading = false;
+          resolve();
         }
-      })
+      });
+    });
   }
   getList() {
     this.reportState.reportState.segments.affiliatedKipon.list.data = []

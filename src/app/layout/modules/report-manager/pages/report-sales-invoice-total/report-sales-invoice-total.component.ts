@@ -14,6 +14,7 @@ import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValue
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { Chart } from 'angular-highcharts';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-report-sales-invoice-total',
@@ -52,7 +53,8 @@ export class ReportSalesInvoiceTotal {
     public reportState: ReportStateService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService
+    public authStateService: AuthStateService,
+    private route: ActivatedRoute
   ) {
     this.authStateService.loadUserInfo()
     _optionServices.initState()
@@ -103,19 +105,22 @@ export class ReportSalesInvoiceTotal {
     this.suggestions = filteredStores;
   }
 
-  getStores() {
-    this._commonApiService.getStores().
-      subscribe({
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data
+          this.commonState.commonState.stores = data;
+          resolve();
         },
         error: (e) => {
-          console.log('error loading data', e)
+          console.log('error loading data', e);
+          reject(e);
         },
         complete: () => {
-          this.isLoading = false;
+          resolve();
         }
-      })
+      });
+    });
   }
   getList() {
     this.reportState.reportState.sales.invoiceTotal.list.data = []

@@ -24,7 +24,7 @@ export const staffMayoreoMenu = [
           {
             label: 'Existencia de inventario',
             icon: 'pi pi-fw pi-minus',
-            routerLink: ['/layout/reports/inventories/stock-resume'],
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
           {
             label: 'Cumplimiento de conteos ciclicos',
