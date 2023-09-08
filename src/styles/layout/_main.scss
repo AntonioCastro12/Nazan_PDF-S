@@ -6,9 +6,13 @@ html {
     height: 100%;
     font-size: $scale;
 }
+@font-face {
+  font-family: MetropolisRegular;
+  src: $fontFamily format("opentype");
+}
 
 body {
-    font-family: var(--font-family);
+    font-family: "MetropolisRegular";
     color: var(--text-color);
     background-color: var(--surface-ground);
     margin: 0;
