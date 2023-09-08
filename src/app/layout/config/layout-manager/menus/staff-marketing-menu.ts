@@ -13,21 +13,21 @@ export const staffMarketingMenu = [
     label: 'Marketing',
     items: [
       {
-        label: 'Programa de puntos',
+        label: 'Club impuls Premia',
 
         items: [
           {
-            label: 'Reporte de Totales de movimiento de puntos y monedero',
+            label: 'General mov. puntos y monedero',
 
             routerLink: ['/layout/reports/point-program/total-movement'],
           },
           {
-            label: 'Reporte de Detalle de moviminetos de puntos y premios',
+            label: 'Detalle mov. puntos y monedero',
 
             routerLink: ['/layout/reports/point-program/detail-points'],
           },
           {
-            label: 'Reporte de Detalle de moviminetos de monedero',
+            label: 'Detalle movimientos monedero',
 
             routerLink: ['/layout/reports/point-program/detail-wallet'],
           },

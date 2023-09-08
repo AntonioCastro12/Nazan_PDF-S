@@ -58,15 +58,15 @@ export const mapUrlReport = [
   },
   {
     url: 'point-program/total-movement',
-    name: "Reporte de Totales de movimiento de puntos y monedero"
+    name: "General mov. puntos y monedero"
   },
   {
     url: 'point-program/detail-points',
-    name: "Reporte de Detalle de moviminetos de puntos y premios"
+    name: "Detalle mov. puntos y monedero"
   },
   {
     url: 'point-program/detail-wallet',
-    name: "Reporte de Detalle de moviminetos de monedero"
+    name: "Detalle mov. puntos y monedero"
   },
   {
     url: 'sales/general-sales',
