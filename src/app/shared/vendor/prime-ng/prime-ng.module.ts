@@ -14,7 +14,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 import { RadioButtonModule } from 'primeng/radiobutton';
 import { RatingModule } from 'primeng/rating';
 
@@ -67,7 +67,8 @@ const primeModules: any = [
   ToggleButtonModule,
   StepsModule,
   PaginatorModule,
-  ProgressSpinnerModule
+  ProgressSpinnerModule,
+  MultiSelectModule
 ];
 
 @NgModule({

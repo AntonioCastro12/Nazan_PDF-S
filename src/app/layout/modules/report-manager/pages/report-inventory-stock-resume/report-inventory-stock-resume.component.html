@@ -10,10 +10,10 @@
       <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
         [showFavorite]="reportState.reportState.inventory.stockResume.list.data.length>0?true:false"></app-options>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
-        <div class="mb-2">Filtrar por:</div>
+        <div class="mb-2 p-2">Búsqueda por:</div>
         <div class="card-container blue-container flex align-items-center justify-content-start">
           <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
+            <div class="flex flex-column p-2">
               <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
               <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
                 (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div class="card-container blue-container flex align-items-center justify-content-start p-2">
           <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
               filtros</p-button><p-button (onClick)="handleSearch()">Buscar</p-button></p>
         </div>
@@ -33,9 +33,7 @@
   <div ng-if>
     <div class="card">
       <div class="grid" *ngIf="reportState.reportState.inventory.stockResume.list.data.length>0">
-        <div class=" col-4"></div>
-        <div class=" col-4"></div>
-        <div class=" col-4">
+        <div class=" col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
@@ -108,8 +106,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.sku)">
-        </td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.sku)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.createDate)">
         </td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchTextDetails,report.line)">

@@ -26,7 +26,7 @@ import { ActivatedRoute } from '@angular/router';
 export class ReportInventoryCycleCountComponent {
   searchText: string = "";
   selectedCountType!: string;
-  selectedStore: Store | null = null;
+  selectedStore: Store[] | null = null;
   selectedOrigin: string = '';
   suggestions: Store[] = [];
   isLoading: boolean = false;
@@ -37,7 +37,7 @@ export class ReportInventoryCycleCountComponent {
   showDetail: boolean = false;
   from: Date = new Date();
   to: Date = new Date();
-  countTypeList: any[] = [{ name: 'Cycle Count', id: "CYCLE_COUNT" }, { name: 'Physical Count', id: "PHYSICAL_COUNT" }];
+  countTypeList: any[] = [{ name: 'Contador de Cíclos', id: "CYCLE_COUNT" }, { name: 'Conteo Físico', id: "PHYSICAL_COUNT" }];
   searchFormEntityLabels = searchFormEntityLabels;
   inventoryCycleCountLabels = inventoryCycleCountLabels;
   filter: string = '';
@@ -88,7 +88,7 @@ export class ReportInventoryCycleCountComponent {
       if (this.route.snapshot.queryParamMap.get('favorite')) {
         const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/cycle-count')
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.filter(item => report.searchCriteria.storeId.split(',').includes(item.storeInfoId))
           const selectedCountType = this.countTypeList.find(item => item.id === report.searchCriteria.type)
           this.selectedStore = selectedStore || null;
           this.selectedCountType = selectedCountType.id || null;
@@ -105,7 +105,7 @@ export class ReportInventoryCycleCountComponent {
     this.isLoading = true
     const data = {
       searchCriteria: {
-        storeId: this.selectedStore?.storeInfoId,
+        storeId: this.selectedStore?.map(item => item.storeInfoId).join(','),
         type: this.selectedCountType,
         startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
         endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
@@ -222,11 +222,12 @@ export class ReportInventoryCycleCountComponent {
   }
 
   async handleSearch() {
-    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.selectedCountType === null) {
+    console.log(this.selectedStore, this.selectedCountType)
+    if (this.selectedStore === null || typeof this.selectedStore !== 'object' || this.selectedCountType === undefined) {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}&type=${this.selectedCountType}`
+    this.filter = `?storeId=${this.selectedStore?.map(item => item.storeInfoId).join(',')}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}&type=${this.selectedCountType}`
 
     this.getList();
   }

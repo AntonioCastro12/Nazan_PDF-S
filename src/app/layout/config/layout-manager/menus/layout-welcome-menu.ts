@@ -32,7 +32,7 @@ export const welcomeMenu = [
             routerLink: ['/layout/reports/inventories/comparison'],
           },
           {
-            label: 'Cumplimiento de conteos ciclicos',
+            label: 'Cumplimiento de Conteo',
 
             routerLink: ['/layout/reports/inventories/cycle-count'],
           },

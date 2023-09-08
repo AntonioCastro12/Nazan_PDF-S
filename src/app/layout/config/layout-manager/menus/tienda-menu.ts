@@ -22,7 +22,7 @@ export const tiendaMenu = [
             routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
-            label: 'Cumplimiento de conteos ciclicos',
+            label: 'Cumplimiento de Conteo',
 
             routerLink: ['/layout/reports/inventories/cycle-count'],
           },

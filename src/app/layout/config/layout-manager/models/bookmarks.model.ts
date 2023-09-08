@@ -46,7 +46,7 @@ export const mapUrlReport = [
   },
   {
     url: 'inventories/cycle-count',
-    name: "Cumplimiento de conteos ciclicos"
+    name: "Cumplimiento de Conteo"
   },
   {
     url: 'inventories/sap-xstore',

@@ -1,58 +1,43 @@
 <div *ngIf="!showDetail">
   <div class="card" style="margin-bottom: 30px;">
     <div class="block font-bold text-left breport-round mb-3">
-      <div class="report-title">Cumplimiento de conteos ciclicos</div>
+      <div class="report-title">Cumplimiento de Conteo</div>
       <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
         animationDuration=".5s"></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
       <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
         [showFavorite]="reportState.reportState.inventory.cycleCount.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
-        <div class="mb-2">Filtrar por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
-          <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
-              <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-                (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
-                placeholder="Seleccionar tienda"></p-autoComplete>
 
-            </div>
+
+      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+        <div class="mb-2 p-2">Búsqueda por:</div>
+        <div class="grid p-2">
+          <div class="col-3"> <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
+            <p-multiSelect [style]="{'width':'100%'}" fullwidth [(ngModel)]="selectedStore" optionLabel="storeInfoName"
+              [options]="commonState.commonState.stores" placeholder="Seleccionar tienda"></p-multiSelect>
           </div>
-          <div class="flex-1 h-4rem">
-            <div class="flex flex-column p-2">
-              <label htmlFor="status" class="font-bold">{{searchFormEntityLabels.origin}}</label>
-              <section class="select" #search>
-                <p-dropdown [options]="countTypeList" [(ngModel)]="selectedCountType" optionValue="id"
-                  optionLabel="name" [filter]="true" filterBy="name" placeholder="Count Type"
-                  [style]="{'width':'100%'}">
-                </p-dropdown>
-              </section>
-            </div>
+          <div class="col-3"><label htmlFor="status" class="font-bold">{{searchFormEntityLabels.origin}}</label>
+            <section class="select" #search>
+              <p-dropdown [options]="countTypeList" [(ngModel)]="selectedCountType" optionValue="id" optionLabel="name"
+                [filter]="true" filterBy="name" placeholder="{{searchFormEntityLabels.origin}}"
+                [style]="{'width':'100%'}">
+              </p-dropdown>
+            </section>
           </div>
-          <div class="card-container blue-container flex align-items-center justify-content-start">
-            <div class="flex-1 h-4rem">
-              <div class="flex flex-column p-2">
-                <label htmlFor="from" class="font-bold">Desde</label>
-                <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
-                  (onSelect)="onSelectRange()"></p-calendar>
-              </div>
-            </div>
-            <div class="flex-1 h-4rem">
-              <div class="flex flex-column p-2">
-                <label htmlFor="to" class="font-bold">Hasta</label>
-                <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
-                  (onSelect)="onSelectRange()"></p-calendar>
-              </div>
-            </div>
+          <div class="col-3"><label htmlFor="from" class="font-bold">Desde</label>
+            <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
+              (onSelect)="onSelectRange()"></p-calendar>
+          </div>
+          <div class="col-3"><label htmlFor="to" class="font-bold">Hasta</label>
+            <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
+              (onSelect)="onSelectRange()"></p-calendar>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div class="card-container blue-container flex align-items-center justify-content-start pl-2">
           <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
               filtros</p-button><p-button (onClick)="handleSearch()">Buscar</p-button></p>
         </div>
-
       </div>
     </div>
   </div>
@@ -61,9 +46,7 @@
 <div>
   <div class="card">
     <div class="grid" *ngIf="reportState.reportState.inventory.cycleCount.list.data.length>0">
-      <div class=" col-4"></div>
-      <div class=" col-4"></div>
-      <div class=" col-4">
+      <div class=" col-4 text-left">
         <span class="p-input-icon-left">
           <i class="pi pi-search"></i>
           <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
@@ -98,9 +81,6 @@
           <th class="text-center" id="{{inventoryCycleCountLabels.CANT_ITEMS}}">
             {{inventoryCycleCountLabels.CANT_ITEMS}}
           </th>
-
-
-
         </tr>
       </ng-template>
       <ng-template pTemplate="emptymessage" let-columns>
