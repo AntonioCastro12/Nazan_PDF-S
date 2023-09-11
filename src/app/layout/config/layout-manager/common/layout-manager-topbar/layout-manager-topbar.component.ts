@@ -6,6 +6,7 @@ import { LayoutService } from '../../services';
 
 import { DateTime } from 'luxon';
 import { concatMap, of, repeat, tap, timer } from 'rxjs';
+import { AuthStateService } from 'src/app/layout/modules/auth-manager/services/auth-state.service';
 
 @Component({
   selector: 'layout-manager-topbar',
@@ -30,6 +31,7 @@ export class LayoutManagerTopbarComponent implements OnInit {
     public layoutService: LayoutService,
     public router: Router,
     private layoutStateService: LayoutStateService,
+    public authStateService: AuthStateService,
   ) {
     this.layoutState = this.layoutStateService.layoutState;
   }

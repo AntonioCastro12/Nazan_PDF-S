@@ -11,6 +11,7 @@ export const staffPlaneacionMenu = [
   },
   {
     label: 'Planeación y Compras',
+    icon: 'pi pi-fw pi-list',
     items: [
       {
         label: 'Inventario',

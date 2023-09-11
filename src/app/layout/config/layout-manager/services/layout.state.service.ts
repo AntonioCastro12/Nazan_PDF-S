@@ -98,6 +98,7 @@ export class LayoutStateService {
       } else {
         accumulator.push({
           label: item.label,
+          icon: item.icon,
           items: item.items,
         });
       }

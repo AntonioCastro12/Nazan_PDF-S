@@ -25,6 +25,10 @@ export class LayoutService {
     this.layoutState = this.layoutStateService.layoutState;
   }
 
+  onOpenSidebar() {
+    this.layoutState.config.layoutConfig.sidebarActive =
+      !this.layoutState.config.layoutConfig.sidebarActive;
+  }
   onMenuToggle() {
     if (this.isOverlay()) {
       this.layoutState.config.layoutConfig.overlayMenuActive =

@@ -7,7 +7,7 @@
   --surface-f: #ffffff;
   --text-color: #4c566a;
   --text-color-secondary: #81a1c1;
-  --primary-color: #5e81ac;
+  --primary-color: red;
   --primary-color-text: #ffffff;
   --font-family: Inter, sans-serif;
   --surface-0: #ffffff;
@@ -46,7 +46,7 @@
 }
 
 :root {
-  --topbar-bg: var(--primary-200);
+  --topbar-bg: var(--primary-color);
   --topbar-text: var(--surface-800);
 
   --sidebar-bg: var(--primary-800);

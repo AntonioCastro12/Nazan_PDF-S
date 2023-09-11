@@ -27,6 +27,7 @@ import { MenuService } from '../../services/menu.service';
         *ngIf="root && item.visible !== false"
         class="layout-menuitem-root-text"
       >
+      <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
         {{ item.label }}
       </div>
       <a

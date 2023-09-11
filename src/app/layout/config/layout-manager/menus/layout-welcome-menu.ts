@@ -11,6 +11,7 @@ export const welcomeMenu = [
   },
   {
     label: 'Operaciones',
+    icon: 'pi pi-fw pi-truck',
     items: [
       {
         label: 'Inventarios',
@@ -63,10 +64,11 @@ export const welcomeMenu = [
   },
   {
     label: 'Marketing',
+    icon: 'pi pi-fw pi-megaphone',
     items: [
       {
         label: 'Club impuls Premia',
-
+        icon: 'pi pi-fw pi-bullhorn',
         items: [
           {
             label: 'General mov. puntos y monedero',
@@ -89,6 +91,7 @@ export const welcomeMenu = [
   },
   {
     label: 'Administración y Finanzas',
+    icon: 'pi pi-fw pi-money-bill',
     items: [
       {
         label: 'Ventas',
@@ -126,6 +129,7 @@ export const welcomeMenu = [
   },
   {
     label: 'Planeación y Compras',
+    icon: 'pi pi-fw pi-list',
     items: [
       {
         label: 'Inventario',
@@ -149,7 +153,7 @@ export const welcomeMenu = [
     items: [
       {
         label: 'Salir',
-        icon: 'pi pi-fw pi-prime',
+        icon: 'pi pi-sign-out',
         routerLink: ['/layout/welcome/logout'],
       },
     ],

@@ -11,6 +11,7 @@ export const staffKiponMenu = [
   },
   {
     label: 'Operaciones',
+    icon: 'pi pi-fw pi-truck',
     items: [
       {
         label: 'Segmentos',

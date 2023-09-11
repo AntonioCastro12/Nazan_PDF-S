@@ -15,7 +15,6 @@ import { LayoutStateService } from 'src/app/layout/config/layout-manager/service
 })
 export class LayoutFrameComponent implements OnDestroy {
   overlayMenuOpenSubscription: Subscription;
-
   menuOutsideClickListener: any;
 
   profileMenuOutsideClickListener: any;

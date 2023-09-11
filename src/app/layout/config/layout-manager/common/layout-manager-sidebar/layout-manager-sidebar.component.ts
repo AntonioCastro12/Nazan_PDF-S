@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
-import { LayoutService } from 'src/app/layout/config/layout-manager/services';
+import { LayoutService, LayoutStateService } from 'src/app/layout/config/layout-manager/services';
 import { SystemEnvironmentService } from 'src/app/shared/services/system.environment.service';
 
 @Component({
@@ -11,8 +11,11 @@ export class LayoutManagerSidebarComponent implements OnInit {
   constructor(
     public layoutService: LayoutService,
     public el: ElementRef,
-    public env: SystemEnvironmentService
+    public env: SystemEnvironmentService,
+    public layoutStateService: LayoutStateService
   ) { }
+  sidebarVisible: boolean = true;
+
 
   ngOnInit(): void { }
 }

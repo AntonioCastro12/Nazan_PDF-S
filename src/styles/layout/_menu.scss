@@ -10,8 +10,8 @@
   transition: transform $transitionDuration, left $transitionDuration;
   // background-color: var(--primary-700); //var(--surface-overlay);
   // border-radius: $borderRadius;
-  background-color: var(--sidebar-bg);
-  color: var(--sidebar-text);
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  color: white;
 
   padding: 0.5rem 2rem;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05),
@@ -28,8 +28,7 @@
       font-size: 0.857rem;
       text-transform: uppercase;
       font-weight: 700;
-      background-color: var(--sidebar-bg);
-      color: var(--sidebar-text);
+      color: white;
       margin: 0.75rem 0;
     }
 
@@ -62,12 +61,12 @@
     list-style-type: none;
 
     a {
+      margin-bottom: 2px;
       display: flex;
       align-items: center;
       position: relative;
       outline: 0 none;
-      background-color: var(--sidebar-bg);
-      color: var(--sidebar-text);
+      color: white;
       cursor: pointer;
       padding: 0.75rem 1rem;
       border-radius: $borderRadius;
@@ -86,12 +85,13 @@
 
       &.active-route {
         font-weight: 700;
-        color: var(--primary-color);
+        color: black;
+        background: linear-gradient(45deg, #ffd700, #ff9900);
       }
 
       &:hover {
-        background-color: var(--surface-hover);
-        color: var(--sidebar-bg);
+        background: linear-gradient(45deg,#ffd700, #ff9900);
+        color: black;
       }
 
       &:focus {
@@ -140,4 +140,44 @@
       }
     }
   }
+}
+.version{
+  margin-top: 15px;
+  font-size: 12px;
+color: white;
+
+}
+.p-button{
+  background: black !important;
+  border: 0px solid black !important;
+}
+
+.search-buttom {
+  .p-button{
+    color: black !important;
+    background: linear-gradient(45deg, #ffd700, #ff9900) !important;
+  }
+
+}
+
+.p-datepicker table td > span.p-highlight{
+  border: 0px solid black !important;
+  background: black !important;
+  color: white !important
+}
+.p-inputtext:enabled:hover {
+  border-color: black !important;
+}
+.p-button:focus {
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px black, 0 1px 2px 0 black !important;
+}
+.p-inputtext:enabled:focus {
+  outline: 0 none;
+  outline-offset: 0;
+  box-shadow: 0 0 0 0.2rem #ffffff !important;
+  border-color: black !important;
+}
+
+.p-dropdown:not(.p-disabled):hover {
+  border-color: black !important;
 }

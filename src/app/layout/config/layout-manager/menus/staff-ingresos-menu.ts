@@ -11,6 +11,7 @@ export const staffIngresosMenu = [
   },
   {
     label: 'Administración y Finanzas',
+    icon: 'pi pi-fw pi-money-bill',
     items: [
       {
         label: 'Ventas',

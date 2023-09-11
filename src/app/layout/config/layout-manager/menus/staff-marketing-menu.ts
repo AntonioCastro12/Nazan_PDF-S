@@ -11,6 +11,7 @@ export const staffMarketingMenu = [
   },
   {
     label: 'Marketing',
+    icon: 'pi pi-fw pi-megaphone',
     items: [
       {
         label: 'Club impuls Premia',

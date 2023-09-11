@@ -11,6 +11,7 @@ export const tiendaMenu = [
   },
   {
     label: 'Operaciones',
+    icon: 'pi pi-fw pi-truck',
     items: [
       {
         label: 'Inventarios',
@@ -35,7 +36,7 @@ export const tiendaMenu = [
     items: [
       {
         label: 'Salir',
-        icon: 'pi pi-fw pi-prime',
+        icon: 'pi pi-fw pi-sign-out',
         routerLink: ['/layout/welcome/logout'],
       },
     ],

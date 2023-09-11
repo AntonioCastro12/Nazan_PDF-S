@@ -11,6 +11,7 @@ export const staffMayoreoMenu = [
   },
   {
     label: 'Operaciones',
+    icon:'pi pi-fw pi-truck',
     items: [
       {
         label: 'Inventarios',

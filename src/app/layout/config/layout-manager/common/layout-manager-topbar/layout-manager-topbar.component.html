@@ -1,53 +1,26 @@
 <article class="layout-topbar">
-  <section #logo>
-    <a class="layout-topbar-logo" (click)="goStartPage()">
-      <span>Grupo</span><span> &nbsp;</span>
-      <span class="font-bold">Nazan</span>
-    </a>
-  </section>
-
-  <section>
-    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button"
-      (click)="layoutService.showProfileSidebar()">
-      <i class="pi pi-ellipsis-v"></i>
-    </button>
-  </section>
-
-  <section #topbarmenu class="layout-topbar-menu" [ngClass]="{
-      'layout-topbar-menu-mobile-active':
-        layoutState.config.layoutConfig.profileSidebarVisible
-    }">
-    <div class="flex justify-content-center align-items-center">
-      <p class="layout-topbar-menutext">
-        <span class="block font-bold">{{
-          layoutState.config.userConfig.user_id
-          }}</span>
-
-        <span></span>
-      </p>
+  <div class="grid flex align-items-center">
+    <div class="col-4">
+      <section #logo>
+        <a class="layout-topbar-logo" (click)="goStartPage()">
+          <span>Grupo</span><span> &nbsp;</span>
+          <span class="font-bold">Nazan</span>
+        </a>
+      </section>
     </div>
-    <p-divider class="layout-topbar-menutext"></p-divider>
-    <div class="flex justify-content-between align-items-center">
-      <span class="layout-topbar-date"></span>
-      <span></span>
+    <div class="col-4">
+      <div class="grid">
+        <div class="col text-center title-app">Reportes Administrativos</div>
+      </div>
     </div>
-
-    <div>
-      <!-- <button
-        #settingsbutton
-        class="p-link layout-topbar-button"
-        (click)="onConfig()"
-      >
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
-      </button> -->
-      <button #menubutton class="p-link layout-menu-button layout-topbar-button" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-arrow-right-arrow-left"></i>
-      </button>
+    <div class="col-4">
+      <div class="flex align-items-stretch align-items-end vertical-align-middle">
+        <div class="col text-center mb-2 text-right">Hola! {{authStateService.authState.nombre | uppercase}}</div>
+        <button #menubutton class="p-link layout-menu-button layout-topbar-button"
+          (click)="layoutService.onOpenSidebar()">
+          <i class="pi pi-arrow-right-arrow-left"></i>
+        </button>
+      </div>
     </div>
-  </section>
-</article>
-
-<article>
-  <!-- <layout-config></layout-config> -->
+  </div>
 </article>

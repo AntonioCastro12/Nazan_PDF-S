@@ -1,7 +1,8 @@
 export class LayoutConfig {
-  staticMenuDesktopInactive: boolean = false;
+  sidebarActive: boolean = false;
+  staticMenuDesktopInactive: boolean = true;
   overlayMenuActive: boolean = true;
-  profileSidebarVisible: boolean = true;
+  profileSidebarVisible: boolean = false;
   configSidebarVisible: boolean = true;
   staticMenuMobileActive: boolean = true;
   menuHoverActive: boolean = true;
