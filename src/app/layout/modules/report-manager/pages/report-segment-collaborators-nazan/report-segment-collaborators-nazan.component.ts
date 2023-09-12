@@ -12,6 +12,8 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { CommonApiService } from '../../services/common-api.service';
+import { Store } from '../../models/store.model';
 
 @Component({
   selector: 'app-report-segment-collaborators-nazan',
@@ -22,6 +24,9 @@ import { ActivatedRoute } from '@angular/router';
   ]
 })
 export class ReportSegmentCollaboratorsNazan {
+  selectedStore: Store | null = null;
+  suggestions: Store[] = [];
+  selectedOrigin: string = '';
   searchText: string = "";
   segmentId: number = 165;
   isLoading: boolean = false;
@@ -43,6 +48,7 @@ export class ReportSegmentCollaboratorsNazan {
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
     public reportState: ReportStateService,
+    private _commonApiService: CommonApiService,
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
@@ -75,14 +81,49 @@ export class ReportSegmentCollaboratorsNazan {
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
-    if (this.route.snapshot.queryParamMap.get('favorite')) {
-      const report: any = this.commonState.commonState.favorites.find(item => item.url === '/segments/collaborators-nazan')
-      if (report) {
-        this.segmentId = report.searchCriteria.segmentId
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite')) {
+        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/segments/collaborators-nazan')
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this.segmentId = report.searchCriteria.segmentId
+          this.segmentId = report.searchCriteria.segmentId
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    })
+
+  }
+
+
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApiService.getStores().subscribe({
+        next: (data) => {
+          this.commonState.commonState.stores = data;
+          resolve();
+        },
+        error: (e) => {
+          console.log('error loading data', e);
+          reject(e);
+        },
+        complete: () => {
+          resolve();
+        }
+      });
+    });
+  }
+
+  filterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    for (const store of this.commonState.commonState.stores) {
+      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
       }
     }
-    this._optionServices.setSearch()
-    this.handleSearch()
+    this.suggestions = filteredStores;
   }
 
   handleFavorite() {
@@ -90,6 +131,7 @@ export class ReportSegmentCollaboratorsNazan {
     const data = {
       searchCriteria: {
         segmentId: this.segmentId,
+        storeId: this.selectedStore?.storeInfoId,
       },
       url: "/segments/collaborators-nazan"
     }
@@ -135,11 +177,11 @@ export class ReportSegmentCollaboratorsNazan {
   }
 
   async handleSearch() {
-    if (this.segmentId === 0) {
+    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.segmentId === 0) {
       await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
       return;
     }
-    this.filter = `?&segmentId=${this.segmentId ? this.segmentId : ''}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&segmentId=${this.segmentId ? this.segmentId : ''}`
     this.getList();
   }
   resetFilters() {

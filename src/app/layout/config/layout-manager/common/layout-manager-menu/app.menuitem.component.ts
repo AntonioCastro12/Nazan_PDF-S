@@ -71,7 +71,6 @@ import { MenuService } from '../../services/menu.service';
         tabindex="0"
         pRipple
       >
-        <i [ngClass]="item.icon" class="layout-menuitem-icon"></i>
         <span class="layout-menuitem-text">{{ item.label }}</span>
         <i
           class="pi pi-fw pi-angle-down layout-submenu-toggler"

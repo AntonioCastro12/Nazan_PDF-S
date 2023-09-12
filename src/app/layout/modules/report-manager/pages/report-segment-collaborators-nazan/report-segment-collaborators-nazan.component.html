@@ -10,14 +10,18 @@
         [showFavorite]="reportState.reportState.segments.collaboratorsNazan.list.data.length>0?true:false"></app-options>
       <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
         <div class="mb-2 p-2">Búsqueda por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
-          <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="segmentId" class="font-bold">{{searchFormEntityLabels.segmentId}}</label>
-              <p-inputNumber inputId="integeronly" placeholder="Segmento Nro." [(ngModel)]="segmentId"
-                [style]="{'width':'100%'}" [format]="false">
-              </p-inputNumber>
-            </div>
+        <div class="grid p-2">
+          <div class="col-6">
+            <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
+            <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
+              (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
+              placeholder="Seleccionar tienda"></p-autoComplete>
+          </div>
+          <div class="col-6">
+            <label htmlFor="segmentId" class="font-bold w-full w-auto">{{searchFormEntityLabels.segmentId}}</label>
+            <p-inputNumber class="w-full" inputId="integeronly" placeholder="Segmento Nro." [(ngModel)]="segmentId"
+              [format]="false" [style]="{'width':'100%'}">
+            </p-inputNumber>
           </div>
         </div>
         <div class="card-container blue-container flex align-items-center justify-content-start p-2">
