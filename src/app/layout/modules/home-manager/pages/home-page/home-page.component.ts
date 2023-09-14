@@ -20,13 +20,18 @@ export class HomePageComponent {
   }
   labelsListFavorites = labelsListFavorites
   labelsListHistoric = labelsListHistoric
-
+  index: number | null = null;
 
   getHistoric() {
     this._reportApiService.getHistoric().
       subscribe({
         next: (data) => {
-          this.commonState.commonState.historic = data
+          this.commonState.commonState.historic = data.map((item, index) => {
+            return {
+              index, url: item.url, createdAt: item.createdAt, searchCriteria: item.searchCriteria,
+              updatedAt: item.updatedAt
+            }
+          })
         },
         error: (e) => {
           console.log('error loading data', e)
@@ -60,10 +65,17 @@ export class HomePageComponent {
     const report = mapUrlReport.find(item => data.includes(item.url))
     return report ? report.name : data
   }
-  handleShowReport(data: string) {
+  handleShowReport(data: string, index = null) {
     let report: any = ''
     report = mapUrlReport.find(item => data.includes(item.url))
-    this.router.navigate([`/layout/reports/${report.url}`], { queryParams: { favorite: true } });
+    let params = {}
+    console.log('index', index, typeof index)
+    if (typeof index === 'number') {
+      params = { historic: true, index }
+    } else {
+      params = { favorite: true }
+    }
+    this.router.navigate([`/layout/reports/${report.url}`], { queryParams: { ...params } });
   }
 
 }

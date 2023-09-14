@@ -17,6 +17,7 @@ export const labelsListFavorites = {
 }
 
 export class ListHistoric {
+  index: number = 0;
   url: string = "";
   searchCriteria: object = {};
   createdAt: string = "";
@@ -24,7 +25,8 @@ export class ListHistoric {
 }
 export const labelsListHistoric = {
   url: "Reporte",
-  createdAt: "Fecha de consulta"
+  createdAt: "Fecha de consulta",
+  actions: "Acciones"
 }
 
 export const mapUrlReport = [

@@ -85,8 +85,8 @@ export class ReportInventoryCycleCountComponent {
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite')) {
-        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/cycle-count')
+      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/cycle-count') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
         if (report) {
           const selectedStore = this.commonState.commonState.stores.filter(item => report.searchCriteria.storeId.split(',').includes(item.storeInfoId))
           const selectedCountType = this.countTypeList.find(item => item.id === report.searchCriteria.type)

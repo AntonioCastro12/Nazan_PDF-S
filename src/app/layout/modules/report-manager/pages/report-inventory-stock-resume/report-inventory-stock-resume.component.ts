@@ -84,7 +84,7 @@ export class ReportInventoryStockResumeComponent {
     });
     this.getStores().then(() => {
       if (this.route.snapshot.queryParamMap.get('favorite') && this.commonState.commonState.favorites.length > 0) {
-        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/inventories/inventory-stock/resume')
+        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/inventory-stock/resume') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
         if (report) {
           const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
           this.selectedStore = selectedStore || null;

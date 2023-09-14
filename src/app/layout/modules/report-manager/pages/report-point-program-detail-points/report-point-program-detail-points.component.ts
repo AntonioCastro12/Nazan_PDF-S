@@ -77,8 +77,8 @@ export class ReportPointProgramDetailPointsComponent {
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
     });
-    if (this.route.snapshot.queryParamMap.get('favorite')) {
-      const report: any = this.commonState.commonState.favorites.find(item => item.url === '/point-program/detail-points')
+    if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
+      const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/point-program/detail-points') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
       if (report) {
         this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
         this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();

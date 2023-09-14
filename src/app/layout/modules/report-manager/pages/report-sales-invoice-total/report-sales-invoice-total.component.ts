@@ -66,7 +66,7 @@ export class ReportSalesInvoiceTotal {
     }
   }
   ngOnInit() {
-    this.getStores()
+    this.reportState.reportState.sales.invoiceTotal.list.data = []
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -84,9 +84,51 @@ export class ReportSalesInvoiceTotal {
           this.lastOptionsEntity.onChart = onChart;
           this.handleChart();
         }
+        if (onFavorite !== this.lastOptionsEntity.onFavorite) {
+          this.handleFavorite();
+        }
         this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
       }
-    });
+    })
+    this.getStores().then(() => {
+      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/kardex') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+        if (report) {
+          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          this.selectedStore = selectedStore || null;
+          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
+          this._optionServices.setSearch()
+          this.handleSearch()
+        }
+      }
+    })
+  }
+
+  handleFavorite() {
+    this.isLoading = true
+    const data = {
+      searchCriteria: {
+        storeId: this.selectedStore?.storeInfoId,
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+      },
+      url: "/sales/invoice-total"
+    }
+    this._reportApiService.favorite(data).
+      subscribe({
+        next: async () => {
+          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
+          this.isLoading = false
+        },
+        error: (e) => {
+          console.log('error loading data', e)
+          this.isLoading = false
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
   }
 
   checkOnSearch() {
@@ -175,10 +217,6 @@ export class ReportSalesInvoiceTotal {
           return item
         }
       })
-
-      console.log(list.map(item => item.totalMoneySale),
-        list.map(item => item.totalMoneyFreight),
-        list.map(item => item.totalMoneyReturn), list.map(item => item.businessDate))
 
       this.chart = new Chart({
         credits: {

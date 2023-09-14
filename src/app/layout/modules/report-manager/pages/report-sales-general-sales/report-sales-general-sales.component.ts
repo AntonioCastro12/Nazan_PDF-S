@@ -81,8 +81,8 @@ export class ReportSalesGeneralSales {
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite')) {
-        const report: any = this.commonState.commonState.favorites.find(item => item.url === '/sales/general-sales')
+      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/sales/general-sales') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
         if (report) {
           const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
           this.selectedStore = selectedStore || null;
