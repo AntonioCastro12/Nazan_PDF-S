@@ -31,13 +31,13 @@ export class LayoutManagerTopbarComponent implements OnInit {
     public layoutService: LayoutService,
     public router: Router,
     private layoutStateService: LayoutStateService,
-    public authStateService: AuthStateService,
+    public authStateService: AuthStateService
   ) {
     this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnInit(): void {
-    this.layoutState.config.layoutConfig.configSidebarVisible = false;
+    this.layoutState.config.layoutConfig.configSidebarVisible = true;
     this.getCurrentDate();
   }
 
@@ -56,9 +56,7 @@ export class LayoutManagerTopbarComponent implements OnInit {
     let myRepeat = of(null)
       .pipe(
         concatMap(() => timer(each_interval)),
-        tap(() => {
-
-        }),
+        tap(() => {}),
         repeat() // optionally .repeat(10)
       )
       .subscribe();

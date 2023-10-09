@@ -14,10 +14,17 @@
       </div>
     </div>
     <div class="col-4">
-      <div class="flex align-items-stretch align-items-end vertical-align-middle">
-        <div class="col text-center mb-2 text-right">Hola! {{authStateService.authState.nombre | uppercase}}</div>
-        <button #menubutton class="p-link layout-menu-button layout-topbar-button"
-          (click)="layoutService.onOpenSidebar()">
+      <div
+        class="flex align-items-stretch align-items-end vertical-align-middle"
+      >
+        <div class="col text-center mb-2 text-right">
+          Hola! {{ authStateService.stateTemp.userInfo.nombre | uppercase }}
+        </div>
+        <button
+          #menubutton
+          class="p-link layout-menu-button layout-topbar-button"
+          (click)="layoutService.onOpenSidebar()"
+        >
           <i class="pi pi-arrow-right-arrow-left"></i>
         </button>
       </div>

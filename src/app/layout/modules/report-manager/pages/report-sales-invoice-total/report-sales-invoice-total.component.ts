@@ -9,23 +9,31 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { ReportsExcelNames, salesInvoiceTotalLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
+import {
+  ReportsExcelNames,
+  salesInvoiceTotalLabels,
+} from '../../models/report.entity';
+import {
+  objectContainsValue,
+  highlightSearchText,
+  addIdToData,
+  formatArrayValues,
+  ID_DATA_NAME,
+} from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { Chart } from 'angular-highcharts';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Component({
   selector: 'app-report-sales-invoice-total',
   templateUrl: './report-sales-invoice-total.component.html',
   styleUrls: ['./report-sales-invoice-total.component.scss'],
-  providers: [
-    HttpClient
-  ],
+  providers: [HttpClient],
 })
 export class ReportSalesInvoiceTotal {
-  searchText: string = "";
+  searchText: string = '';
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
   isLoading: boolean = false;
@@ -35,7 +43,10 @@ export class ReportSalesInvoiceTotal {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  originList: any[] = [
+    { name: 'xStore', id: 'xstore' },
+    { name: 'xCenter', id: 'xcenter' },
+  ];
   searchFormEntityLabels = searchFormEntityLabels;
   salesInvoiceTotalLabels = salesInvoiceTotalLabels;
   from: Date = new Date();
@@ -44,8 +55,18 @@ export class ReportSalesInvoiceTotal {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
+  lastOptionsEntity: OptionsEntity = {
+    onChart: false,
+    onDownload: false,
+    onRefresh: false,
+    onSearch: false,
+    onShow: false,
+    onFavorite: false,
+  };
   chart = new Chart();
+
+  layoutState;
+
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
@@ -54,10 +75,12 @@ export class ReportSalesInvoiceTotal {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private layoutStateService: LayoutStateService
   ) {
-    this.authStateService.loadUserInfo()
-    _optionServices.initState()
+    this.authStateService.loadUserInfo();
+    _optionServices.initState();
+    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -66,7 +89,8 @@ export class ReportSalesInvoiceTotal {
     }
   }
   ngOnInit() {
-    this.reportState.reportState.sales.invoiceTotal.list.data = []
+    this.layoutState.config.layoutConfig.sidebarActive = false;
+    this.reportState.reportState.sales.invoiceTotal.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -87,48 +111,75 @@ export class ReportSalesInvoiceTotal {
         if (onFavorite !== this.lastOptionsEntity.onFavorite) {
           this.handleFavorite();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
+        this.lastOptionsEntity = {
+          onChart,
+          onDownload,
+          onRefresh,
+          onSearch,
+          onShow,
+          onFavorite,
+        };
       }
-    })
+    });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
-        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/kardex') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') ||
+        this.route.snapshot.queryParamMap.get('historic')
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this.commonState.commonState.favorites.find(
+              (item) => item.url === '/inventories/kardex'
+            )
+          : this.commonState.commonState.historic.find(
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
           this.selectedStore = selectedStore || null;
-          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.from = DateTime.fromISO(
+            report.searchCriteria.startDate
+          ).toJSDate();
           this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
-          this._optionServices.setSearch()
-          this.handleSearch()
+          this._optionServices.setSearch();
+          this.handleSearch();
         }
       }
-    })
+    });
   }
 
   handleFavorite() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = {
       searchCriteria: {
         storeId: this.selectedStore?.storeInfoId,
-        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
-        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat(
+          'yyyy-MM-dd'
+        ),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd'),
       },
-      url: "/sales/invoice-total"
-    }
-    this._reportApiService.favorite(data).
-      subscribe({
-        next: async () => {
-          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
-          this.isLoading = false
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-          this.isLoading = false
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      })
+      url: '/sales/invoice-total',
+    };
+    this._reportApiService.favorite(data).subscribe({
+      next: async () => {
+        await this.setErrorModal(
+          'Completado',
+          'Reporte agregado a favorito',
+          '50px'
+        );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.log('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   checkOnSearch() {
@@ -140,7 +191,9 @@ export class ReportSalesInvoiceTotal {
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     for (const store of this.commonState.commonState.stores) {
-      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+      if (
+        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
+      ) {
         filteredStores.push(store);
       }
     }
@@ -160,77 +213,105 @@ export class ReportSalesInvoiceTotal {
         },
         complete: () => {
           resolve();
-        }
+        },
       });
     });
   }
   getList() {
-    this.reportState.reportState.sales.invoiceTotal.list.data = []
+    this.reportState.reportState.sales.invoiceTotal.list.data = [];
     this.isLoading = true;
     this._reportApiService.salesInvoiceTotal(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.sales.invoiceTotal.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.sales.invoiceTotal.original = {
+          data: dataOriginal,
+          total: dataOriginal.length,
+        };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
           businessDate: { type: 'date', format: 'dd-MM-yyyy' },
           totalMoneyReturn: { type: 'number', format: 'currency' },
           totalMoneySale: { type: 'number', format: 'currency' },
-          totalPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
+          totalPercentReturn: {
+            type: 'number',
+            format: 'percent',
+            suffix: '%',
+          },
           unitPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
         });
-        this.reportState.reportState.sales.invoiceTotal.list = { data: dataFormatted, total: dataFormatted.length }
+        this.reportState.reportState.sales.invoiceTotal.list = {
+          data: dataFormatted,
+          total: dataFormatted.length,
+        };
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async handleSearch() {
     if (this.lastOptionsEntity.onChart) {
-      this._optionServices.setChart()
+      this._optionServices.setChart();
       this.showChart = false;
     }
     if (this.selectedStore === null || typeof this.selectedStore === 'string') {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
+    this.filter = `?storeId=${
+      this.selectedStore?.storeInfoId
+    }&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat(
+      'yyyy-MM-dd'
+    )}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat(
+      'yyyy-MM-dd'
+    )}`;
     this.getList();
   }
 
   async handleChart() {
     if (this.lastOptionsEntity.onChart) {
-      if (this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0) {
+      if (
+        this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0
+      ) {
         await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
-        this._optionServices.setChart()
+        this._optionServices.setChart();
         return;
       }
-      let list = this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0 ? this.reportState.reportState.sales.invoiceTotal.filter.data : this.reportState.reportState.sales.invoiceTotal.list.data
-      const ids = list.map(item => item[ID_DATA_NAME])
-      list = this.reportState.reportState.sales.invoiceTotal.original.data.filter(item => {
-        if (ids.includes(item[ID_DATA_NAME])) {
-          return item
-        }
-      })
+      let list =
+        this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0
+          ? this.reportState.reportState.sales.invoiceTotal.filter.data
+          : this.reportState.reportState.sales.invoiceTotal.list.data;
+      const ids = list.map((item) => item[ID_DATA_NAME]);
+      list =
+        this.reportState.reportState.sales.invoiceTotal.original.data.filter(
+          (item) => {
+            if (ids.includes(item[ID_DATA_NAME])) {
+              return item;
+            }
+          }
+        );
 
       this.chart = new Chart({
         credits: {
-          enabled: false
+          enabled: false,
         },
         chart: {
-          type: 'column'
+          type: 'column',
         },
         title: {
-          text: 'Totales de facturación'
+          text: 'Totales de facturación',
         },
         xAxis: {
           reversed: true,
-          categories: list.map(item => item.businessDate)
+          categories: list.map((item) => item.businessDate),
         },
         yAxis: {
           reversed: false,
@@ -238,45 +319,45 @@ export class ReportSalesInvoiceTotal {
         plotOptions: {
           column: {
             dataLabels: {
-              enabled: true
+              enabled: true,
             },
-            pointPlacement: 'between'
-          }
+            pointPlacement: 'between',
+          },
         },
-        series: [{
-          name: salesInvoiceTotalLabels.totalMoneySale,
-          data: list.map(item => item.totalMoneySale),
-          type: 'column'
-
-        }, {
-          name: salesInvoiceTotalLabels.totalMoneyFreight,
-          data: list.map(item => item.totalMoneyFreight),
-          type: 'column'
-
-        }, {
-          name: salesInvoiceTotalLabels.totalMoneyReturn,
-          data: list.map(item => item.totalMoneyReturn),
-          type: 'column'
-
-        }]
+        series: [
+          {
+            name: salesInvoiceTotalLabels.totalMoneySale,
+            data: list.map((item) => item.totalMoneySale),
+            type: 'column',
+          },
+          {
+            name: salesInvoiceTotalLabels.totalMoneyFreight,
+            data: list.map((item) => item.totalMoneyFreight),
+            type: 'column',
+          },
+          {
+            name: salesInvoiceTotalLabels.totalMoneyReturn,
+            data: list.map((item) => item.totalMoneyReturn),
+            type: 'column',
+          },
+        ],
       });
       this.showChart = true;
     } else {
       this.showChart = false;
     }
-
   }
   resetFilters() {
     this.selectedStore = null;
     this.from = new Date();
     this.to = new Date();
-    this.filter = ''
+    this.filter = '';
   }
 
   handleSearchRecords() {
     const list = this.reportState.reportState.sales.invoiceTotal.list.data;
-    this.reportState.reportState.sales.invoiceTotal.filter.data = list.filter((item) =>
-      objectContainsValue(item, this.searchText)
+    this.reportState.reportState.sales.invoiceTotal.filter.data = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
     );
   }
 
@@ -292,26 +373,28 @@ export class ReportSalesInvoiceTotal {
       await this.setErrorModal('Error', 'No hay datos a graficar', '50px');
       return;
     }
-    let list = this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0 ? this.reportState.reportState.sales.invoiceTotal.filter.data : this.reportState.reportState.sales.invoiceTotal.list.data
-    const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.sales.invoiceTotal.original.data.filter(item => {
-      if (ids.includes(item[ID_DATA_NAME])) {
-        return item
+    let list =
+      this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0
+        ? this.reportState.reportState.sales.invoiceTotal.filter.data
+        : this.reportState.reportState.sales.invoiceTotal.list.data;
+    const ids = list.map((item) => item[ID_DATA_NAME]);
+    list = this.reportState.reportState.sales.invoiceTotal.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
+        }
       }
-    })
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.TOTALES_DE_FACTURACION_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.TOTALES_DE_FACTURACION_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-
   }
-
-
-
-
 }

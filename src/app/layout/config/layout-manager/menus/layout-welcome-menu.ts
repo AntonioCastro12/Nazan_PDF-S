@@ -28,11 +28,6 @@ export const welcomeMenu = [
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
           {
-            label: 'Comparación de inventario',
-
-            routerLink: ['/layout/reports/inventories/comparison'],
-          },
-          {
             label: 'Cumplimiento de Conteo',
 
             routerLink: ['/layout/reports/inventories/cycle-count'],

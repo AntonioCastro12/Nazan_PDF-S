@@ -1,115 +1,283 @@
 <div *ngIf="!showDetail">
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-left breport-round mb-3">
       <div class="report-title">Colaboradores Nazan</div>
-      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
-        animationDuration=".5s"></p-progressSpinner>
+      <p-progressSpinner
+        *ngIf="isLoading"
+        styleClass="w-4rem h-4rem spinner-position"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
-        [showFavorite]="reportState.reportState.segments.collaboratorsNazan.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+      <app-options
+        [showSearch]="false"
+        [showRefresh]="true"
+        [showDownload]="true"
+        [showFavorite]="
+          reportState.reportState.segments.collaboratorsNazan.list.data.length >
+          0
+            ? true
+            : false
+        "
+      ></app-options>
+      <div
+        class="text-left mb-4"
+        *ngIf="_optionServices.optionsState.OptionsEntity.onSearch"
+      >
         <div class="mb-2 p-2">Búsqueda por:</div>
         <div class="grid p-2">
           <div class="col-6">
-            <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
-            <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-              (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
-              placeholder="Seleccionar tienda"></p-autoComplete>
+            <label htmlFor="order_id" class="font-bold">{{
+              searchFormEntityLabels.store
+            }}</label>
+            <p-autoComplete
+              [(ngModel)]="selectedStore"
+              [dropdown]="true"
+              [suggestions]="suggestions"
+              (completeMethod)="filterStores($event)"
+              field="storeInfoName"
+              [style]="{ width: '100%' }"
+              placeholder="Seleccionar tienda"
+            ></p-autoComplete>
           </div>
           <div class="col-6">
-            <label htmlFor="segmentId" class="font-bold w-full w-auto">{{searchFormEntityLabels.segmentId}}</label>
-            <p-inputNumber class="w-full" inputId="integeronly" placeholder="Segmento Nro." [(ngModel)]="segmentId"
-              [format]="false" [style]="{'width':'100%'}">
+            <label htmlFor="segmentId" class="font-bold w-full w-auto">{{
+              searchFormEntityLabels.segmentId
+            }}</label>
+            <p-inputNumber
+              class="w-full"
+              inputId="integeronly"
+              placeholder="Segmento Nro."
+              [(ngModel)]="segmentId"
+              [format]="false"
+              [style]="{ width: '100%' }"
+            >
             </p-inputNumber>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start p-2">
-          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button (onClick)="handleSearch()" class="search-buttom">Buscar</p-button></p>
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start p-2"
+        >
+          <p class="mt-4">
+            <p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3"
+              >Restaurar filtros</p-button
+            ><p-button (onClick)="handleSearch()" class="search-buttom"
+              >Buscar</p-button
+            >
+          </p>
         </div>
-
       </div>
     </div>
   </div>
   <div ng-if>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.segments.collaboratorsNazan.list.data.length>0">
-        <div class=" col-12 text-left">
+      <div
+        class="grid"
+        *ngIf="
+          reportState.reportState.segments.collaboratorsNazan.list.data.length >
+          0
+        "
+      >
+        <div class="col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-              (ngModelChange)="handleSearchRecords()" />
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar..."
+              [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()"
+            />
           </span>
         </div>
       </div>
-      <p-table #dt2 [autoLayout]="true"
-        [value]="searchText === '' ? reportState.reportState.segments.collaboratorsNazan.list.data : reportState.reportState.segments.collaboratorsNazan.filter.data"
-        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+      <p-table
+        #dt2
+        [autoLayout]="true"
+        [value]="
+          searchText === ''
+            ? reportState.reportState.segments.collaboratorsNazan.list.data
+            : reportState.reportState.segments.collaboratorsNazan.filter.data
+        "
+        [paginator]="true"
+        [rows]="15"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.store_id}}">
-              {{segmentCollaboratorsNazanLabels.store_id}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.segment}}">
-              {{segmentCollaboratorsNazanLabels.segment}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.membership}}">
-              {{segmentCollaboratorsNazanLabels.membership}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.client_id}}">
-              {{segmentCollaboratorsNazanLabels.client_id}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.first_name}}">
-              {{segmentCollaboratorsNazanLabels.first_name}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.second_name}}">
-              {{segmentCollaboratorsNazanLabels.second_name}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.last_name}}">
-              {{segmentCollaboratorsNazanLabels.last_name}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.second_last_name}}">
-              {{segmentCollaboratorsNazanLabels.second_last_name}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.cellphone_number}}">
-              {{segmentCollaboratorsNazanLabels.cellphone_number}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.mail}}">
-              {{segmentCollaboratorsNazanLabels.mail}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.birthday}}">
-              {{segmentCollaboratorsNazanLabels.birthday}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.gender}}">
-              {{segmentCollaboratorsNazanLabels.gender}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.marital_status}}">
-              {{segmentCollaboratorsNazanLabels.marital_status}}</th>
-            <th class="text-center" id="{{segmentCollaboratorsNazanLabels.signup_date}}" style="width:200px">
-              {{segmentCollaboratorsNazanLabels.signup_date}}</th>
-
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.store_id }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.store_id }}
+            </th>
+            <!-- <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.segment }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.segment }}
+            </th> -->
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.membership }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.membership }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.client_id }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.client_id }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.first_name }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.first_name }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.second_name }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.second_name }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.last_name }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.last_name }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.second_last_name }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.second_last_name }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.cellphone_number }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.cellphone_number }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.mail }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.mail }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.birthday }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.birthday }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.gender }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.gender }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.marital_status }}"
+            >
+              {{ segmentCollaboratorsNazanLabels.marital_status }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ segmentCollaboratorsNazanLabels.signup_date }}"
+              style="width: 200px"
+            >
+              {{ segmentCollaboratorsNazanLabels.signup_date }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="14" class="text-center">
-              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+              {{
+                isLoading ? "Por favor espere..." : "No hay datos para mostrar"
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.store_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.segment)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.membership)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.client_id)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.first_name)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.second_name)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.last_name)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.second_last_name)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.cellphone_number)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.mail)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.birthday)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.gender)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.marital_status)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.signup_date)"></td>
-
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.store_id)"
+            ></td>
+            <!-- <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.segment)"
+            ></td> -->
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.membership)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.client_id)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.first_name)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.second_name)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.last_name)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.second_last_name)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.cellphone_number)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.mail)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.birthday)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.gender)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.marital_status)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.signup_date)"
+            ></td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
-  <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
+  <p-dialog
+    header="{{ titleModal }}"
+    [(visible)]="showModal"
+    [ngStyle]="{ width: widthModal }"
+  >
     <p>
-      {{textModal}}
+      {{ textModal }}
     </p>
   </p-dialog>
+</div>

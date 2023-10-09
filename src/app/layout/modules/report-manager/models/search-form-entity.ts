@@ -1,8 +1,7 @@
-
 export const searchFormEntityLabels = {
   productCode: 'Código de producto',
   store: 'Tienda',
-  origin: 'Tipo de conteo',
+  origin: 'Origen',
   segmentId: 'Segmento Nro.',
   days: 'Dias',
-}
+};

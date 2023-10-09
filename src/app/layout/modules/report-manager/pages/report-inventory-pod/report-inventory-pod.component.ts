@@ -8,23 +8,31 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { ReportsExcelNames, inventoryPodLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
+import {
+  ReportsExcelNames,
+  inventoryPodLabels,
+} from '../../models/report.entity';
+import {
+  objectContainsValue,
+  highlightSearchText,
+  ID_DATA_NAME,
+  addIdToData,
+  formatArrayValues,
+} from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Component({
   selector: 'app-report-inventory-pod',
   templateUrl: './report-inventory-pod.component.html',
   styleUrls: ['./report-inventory-pod.component.scss'],
-  providers: [
-    HttpClient
-  ]
+  providers: [HttpClient],
 })
 export class ReportInventoryPodComponent {
-  searchText: string = "";
+  searchText: string = '';
   selectedStatus!: string;
   selectedStore: Store | null = null;
   selectedOrigin: string = '';
@@ -35,7 +43,10 @@ export class ReportInventoryPodComponent {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  originList: any[] = [
+    { name: 'xStore', id: 'xstore' },
+    { name: 'xCenter', id: 'xcenter' },
+  ];
   searchFormEntityLabels = searchFormEntityLabels;
   inventoryPodLabels = inventoryPodLabels;
   days: number = 30;
@@ -45,7 +56,16 @@ export class ReportInventoryPodComponent {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
+  lastOptionsEntity: OptionsEntity = {
+    onChart: false,
+    onDownload: false,
+    onRefresh: false,
+    onSearch: false,
+    onShow: false,
+    onFavorite: false,
+  };
+
+  layoutState;
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -55,10 +75,12 @@ export class ReportInventoryPodComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private layoutStateService: LayoutStateService
   ) {
-    this.authStateService.loadUserInfo()
-    _optionServices.initState()
+    this.authStateService.loadUserInfo();
+    _optionServices.initState();
+    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -67,7 +89,8 @@ export class ReportInventoryPodComponent {
     }
   }
   ngOnInit() {
-    this.reportState.reportState.inventory.pod.list.data = []
+    this.layoutState.config.layoutConfig.sidebarActive = false;
+    this.reportState.reportState.inventory.pod.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -81,53 +104,76 @@ export class ReportInventoryPodComponent {
         if (onFavorite !== this.lastOptionsEntity.onFavorite) {
           this.handleFavorite();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
+        this.lastOptionsEntity = {
+          onChart,
+          onDownload,
+          onRefresh,
+          onSearch,
+          onShow,
+          onFavorite,
+        };
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
-        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/pod') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') ||
+        this.route.snapshot.queryParamMap.get('historic')
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this.commonState.commonState.favorites.find(
+              (item) => item.url === '/inventories/pod'
+            )
+          : this.commonState.commonState.historic.find(
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
           this.selectedStore = selectedStore || null;
-          this.days = report.searchCriteria.days
-          this._optionServices.setSearch()
-          this.handleSearch()
+          this.days = report.searchCriteria.days;
+          this._optionServices.setSearch();
+          this.handleSearch();
         }
       }
-    })
+    });
   }
 
   handleFavorite() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = {
       searchCriteria: {
         storeId: this.selectedStore?.storeInfoId,
         days: this.days,
       },
-      url: "/inventories/pod"
-    }
+      url: '/inventories/pod',
+    };
 
-    this._reportApiService.favorite(data).
-      subscribe({
-        next: async () => {
-          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
-          this.isLoading = false
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-          this.isLoading = false
-        },
-        complete: () => {
-        }
-      })
+    this._reportApiService.favorite(data).subscribe({
+      next: async () => {
+        await this.setErrorModal(
+          'Completado',
+          'Reporte agregado a favorito',
+          '50px'
+        );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.log('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {},
+    });
   }
-
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     for (const store of this.commonState.commonState.stores) {
-      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+      if (
+        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
+      ) {
         filteredStores.push(store);
       }
     }
@@ -147,40 +193,54 @@ export class ReportInventoryPodComponent {
         },
         complete: () => {
           resolve();
-        }
+        },
       });
     });
   }
   getList() {
-    this.reportState.reportState.inventory.pod.list.data = []
+    this.reportState.reportState.inventory.pod.list.data = [];
     this.isLoading = true;
     this._reportApiService.inventoryPod(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.pod.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.inventory.pod.original = {
+          data: dataOriginal,
+          total: dataOriginal.length,
+        };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
           FEC_CREA_SISTEMA: { type: 'date', format: 'dd-MM-yyyy' },
           FEC_HORA_POD: { type: 'date', format: 'dd-MM-yyyy HH:mm:ss' },
           FEC_HORA_CIERRE: { type: 'date', format: 'dd-MM-yyyy HH:mm:ss' },
         });
-        this.reportState.reportState.inventory.pod.list = { data: dataFormatted, total: dataFormatted.length }
+        this.reportState.reportState.inventory.pod.list = {
+          data: dataFormatted,
+          total: dataFormatted.length,
+        };
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async handleSearch() {
-    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.days === 0) {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+    if (
+      this.selectedStore === null ||
+      typeof this.selectedStore === 'string' ||
+      this.days === 0
+    ) {
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&days=${this.days}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&days=${this.days}`;
     this.getList();
   }
   resetFilters() {
@@ -189,13 +249,13 @@ export class ReportInventoryPodComponent {
     this.days = 30;
     this.from = new Date();
     this.to = new Date();
-    this.filter = ''
+    this.filter = '';
   }
 
   handleSearchRecords() {
     const list = this.reportState.reportState.inventory.pod.list.data;
-    this.reportState.reportState.inventory.pod.filter.data = list.filter((item) =>
-      objectContainsValue(item, this.searchText)
+    this.reportState.reportState.inventory.pod.filter.data = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
     );
   }
 
@@ -211,26 +271,28 @@ export class ReportInventoryPodComponent {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.inventory.pod.filter.data.length > 0 ? this.reportState.reportState.inventory.pod.filter.data : this.reportState.reportState.inventory.pod.list.data
-    const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.inventory.pod.original.data.filter(item => {
-      if (ids.includes(item[ID_DATA_NAME])) {
-        return item
+    let list =
+      this.reportState.reportState.inventory.pod.filter.data.length > 0
+        ? this.reportState.reportState.inventory.pod.filter.data
+        : this.reportState.reportState.inventory.pod.list.data;
+    const ids = list.map((item) => item[ID_DATA_NAME]);
+    list = this.reportState.reportState.inventory.pod.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
+        }
       }
-    })
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.REPORTE_DE_RECEPCION_DE_MERCANCIA_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.REPORTE_DE_RECEPCION_DE_MERCANCIA_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-
   }
-
-
-
-
 }

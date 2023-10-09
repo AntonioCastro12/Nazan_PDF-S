@@ -27,12 +27,14 @@ export class LayoutStateService {
 
   constructor(private _authStateService: AuthStateService) {
     this.state.subscribe((state) => (this.layoutState = state));
+    this.setSidebar();
   }
 
   setSidebar() {
     let menu: any = [];
     const privileges =
-      this._authStateService.authState.privileges.reportesadministrativos;
+      this._authStateService.stateTemp.userInfo.privileges
+        .reportesadministrativos;
 
     for (const value of Object.values(Roles)) {
       if (privileges.find((item) => item === value)) {
@@ -116,9 +118,9 @@ export class LayoutStateService {
     });
 
     groupedMenus.sort((a: any, b: any) => {
-      if (a.label === "Bienvenida") {
+      if (a.label === 'Bienvenida') {
         return -1;
-      } else if (b.label === "Bienvenida") {
+      } else if (b.label === 'Bienvenida') {
         return 1;
       } else {
         return 0;
@@ -126,9 +128,9 @@ export class LayoutStateService {
     });
 
     groupedMenus.sort((a: any, b: any) => {
-      if (a.label === "Salir") {
+      if (a.label === 'Salir') {
         return 1;
-      } else if (b.label === "Salir") {
+      } else if (b.label === 'Salir') {
         return -1;
       } else {
         return 0;

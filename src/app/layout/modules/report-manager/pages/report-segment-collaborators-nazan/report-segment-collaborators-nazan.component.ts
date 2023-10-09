@@ -6,28 +6,36 @@ import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { ReportsExcelNames, segmentCollaboratorsNazanLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, ID_DATA_NAME, addIdToData, formatArrayValues } from 'src/app/shared/functions/functions';
+import {
+  ReportsExcelNames,
+  segmentCollaboratorsNazanLabels,
+} from '../../models/report.entity';
+import {
+  objectContainsValue,
+  highlightSearchText,
+  ID_DATA_NAME,
+  addIdToData,
+  formatArrayValues,
+} from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonApiService } from '../../services/common-api.service';
 import { Store } from '../../models/store.model';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Component({
   selector: 'app-report-segment-collaborators-nazan',
   templateUrl: './report-segment-collaborators-nazan.component.html',
   styleUrls: ['./report-segment-collaborators-nazan.component.scss'],
-  providers: [
-    HttpClient
-  ]
+  providers: [HttpClient],
 })
 export class ReportSegmentCollaboratorsNazan {
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
   selectedOrigin: string = '';
-  searchText: string = "";
+  searchText: string = '';
   segmentId: number = 165;
   isLoading: boolean = false;
   showModal: boolean = false;
@@ -35,14 +43,26 @@ export class ReportSegmentCollaboratorsNazan {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  originList: any[] = [
+    { name: 'xStore', id: 'xstore' },
+    { name: 'xCenter', id: 'xcenter' },
+  ];
   searchFormEntityLabels = searchFormEntityLabels;
   segmentCollaboratorsNazanLabels = segmentCollaboratorsNazanLabels;
   filter: string = '';
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
+  lastOptionsEntity: OptionsEntity = {
+    onChart: false,
+    onDownload: false,
+    onRefresh: false,
+    onSearch: false,
+    onShow: false,
+    onFavorite: false,
+  };
+
+  layoutState;
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -52,10 +72,12 @@ export class ReportSegmentCollaboratorsNazan {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private layoutStateService: LayoutStateService
   ) {
-    this.authStateService.loadUserInfo()
-    _optionServices.initState()
+    this.authStateService.loadUserInfo();
+    _optionServices.initState();
+    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -64,7 +86,9 @@ export class ReportSegmentCollaboratorsNazan {
     }
   }
   ngOnInit() {
-    this.reportState.reportState.segments.collaboratorsNazan.list.data = []
+    this.layoutState.config.layoutConfig.sidebarActive = false;
+    this.reportState.reportState.segments.collaboratorsNazan.list.data = [];
+    this.getList();
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -78,25 +102,43 @@ export class ReportSegmentCollaboratorsNazan {
         if (onFavorite !== this.lastOptionsEntity.onFavorite) {
           this.handleFavorite();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
+        this.lastOptionsEntity = {
+          onChart,
+          onDownload,
+          onRefresh,
+          onSearch,
+          onShow,
+          onFavorite,
+        };
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
-        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/segments/collaborators-nazan') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') ||
+        this.route.snapshot.queryParamMap.get('historic')
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this.commonState.commonState.favorites.find(
+              (item) => item.url === '/segments/collaborators-nazan'
+            )
+          : this.commonState.commonState.historic.find(
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
           this.selectedStore = selectedStore || null;
-          this.segmentId = report.searchCriteria.segmentId
-          this.segmentId = report.searchCriteria.segmentId
-          this._optionServices.setSearch()
-          this.handleSearch()
+          this.segmentId = report.searchCriteria.segmentId;
+          this.segmentId = report.searchCriteria.segmentId;
+          this._optionServices.setSearch();
+          this.handleSearch();
         }
       }
-    })
-
+    });
   }
-
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
@@ -111,7 +153,7 @@ export class ReportSegmentCollaboratorsNazan {
         },
         complete: () => {
           resolve();
-        }
+        },
       });
     });
   }
@@ -119,7 +161,9 @@ export class ReportSegmentCollaboratorsNazan {
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     for (const store of this.commonState.commonState.stores) {
-      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+      if (
+        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
+      ) {
         filteredStores.push(store);
       }
     }
@@ -127,77 +171,97 @@ export class ReportSegmentCollaboratorsNazan {
   }
 
   handleFavorite() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = {
       searchCriteria: {
         segmentId: this.segmentId,
         storeId: this.selectedStore?.storeInfoId,
       },
-      url: "/segments/collaborators-nazan"
-    }
+      url: '/segments/collaborators-nazan',
+    };
 
-    this._reportApiService.favorite(data).
-      subscribe({
-        next: async () => {
-          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
-          this.isLoading = false
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-          this.isLoading = false
-        },
-        complete: () => {
-        }
-      })
+    this._reportApiService.favorite(data).subscribe({
+      next: async () => {
+        await this.setErrorModal(
+          'Completado',
+          'Reporte agregado a favorito',
+          '50px'
+        );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.log('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {},
+    });
   }
 
-
   getList() {
-    this.reportState.reportState.segments.collaboratorsNazan.list.data = []
+    this.reportState.reportState.segments.collaboratorsNazan.list.data = [];
     this.isLoading = true;
     this._reportApiService.segmentsCollaboratorsNazan(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.segments.collaboratorsNazan.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.segments.collaboratorsNazan.original = {
+          data: dataOriginal,
+          total: dataOriginal.length,
+        };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
           signup_date: { type: 'date', format: 'dd-MM-yyyy' },
           birthday: { type: 'date', format: 'dd-MM-yyyy' },
         });
-        this.reportState.reportState.segments.collaboratorsNazan.list = { data: dataFormatted, total: dataFormatted.length }
-
+        this.reportState.reportState.segments.collaboratorsNazan.list = {
+          data: dataFormatted,
+          total: dataFormatted.length,
+        };
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async handleSearch() {
-    if (this.selectedStore === null || typeof this.selectedStore === 'string' || this.segmentId === 0) {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+    if (
+      this.selectedStore === null ||
+      typeof this.selectedStore === 'string' ||
+      this.segmentId === 0
+    ) {
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&segmentId=${this.segmentId ? this.segmentId : ''}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&segmentId=${
+      this.segmentId ? this.segmentId : ''
+    }`;
     this.getList();
   }
   resetFilters() {
     this.segmentId = 0;
-    this.filter = ''
+    this.filter = '';
   }
 
   async handleSearchRecords() {
     if (this.segmentId === 0) {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    const list = this.reportState.reportState.segments.collaboratorsNazan.list.data;
-    this.reportState.reportState.segments.collaboratorsNazan.filter.data = list.filter((item) =>
-      objectContainsValue(item, this.searchText)
-    );
+    const list =
+      this.reportState.reportState.segments.collaboratorsNazan.list.data;
+    this.reportState.reportState.segments.collaboratorsNazan.filter.data =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 
   async setErrorModal(title: string, text: string, width: string) {
@@ -208,30 +272,37 @@ export class ReportSegmentCollaboratorsNazan {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.segments.collaboratorsNazan.list.data.length <= 0) {
+    if (
+      this.reportState.reportState.segments.collaboratorsNazan.list.data
+        .length <= 0
+    ) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.segments.collaboratorsNazan.filter.data.length > 0 ? this.reportState.reportState.segments.collaboratorsNazan.filter.data : this.reportState.reportState.segments.collaboratorsNazan.list.data
-    const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.segments.collaboratorsNazan.original.data.filter(item => {
-      if (ids.includes(item[ID_DATA_NAME])) {
-        return item
-      }
-    })
+    let list =
+      this.reportState.reportState.segments.collaboratorsNazan.filter.data
+        .length > 0
+        ? this.reportState.reportState.segments.collaboratorsNazan.filter.data
+        : this.reportState.reportState.segments.collaboratorsNazan.list.data;
+    const ids = list.map((item) => item[ID_DATA_NAME]);
+    list =
+      this.reportState.reportState.segments.collaboratorsNazan.original.data.filter(
+        (item) => {
+          if (ids.includes(item[ID_DATA_NAME])) {
+            return item;
+          }
+        }
+      );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.SEGMENTOS_COLABORADORES_NAZAN_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.SEGMENTOS_COLABORADORES_NAZAN_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-
   }
-
-
-
-
 }

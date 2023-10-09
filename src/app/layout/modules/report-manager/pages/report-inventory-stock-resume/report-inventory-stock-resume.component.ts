@@ -8,24 +8,33 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { inventoryStockResumeLabels, inventoryStockDetailLabels, ReportsExcelNames } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
+import {
+  inventoryStockResumeLabels,
+  inventoryStockDetailLabels,
+  ReportsExcelNames,
+} from '../../models/report.entity';
+import {
+  objectContainsValue,
+  highlightSearchText,
+  addIdToData,
+  formatArrayValues,
+  ID_DATA_NAME,
+} from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Component({
   selector: 'app-report-inventory-stock-resume',
   templateUrl: './report-inventory-stock-resume.component.html',
   styleUrls: ['./report-inventory-stock-resume.component.scss'],
-  providers: [
-    HttpClient
-  ]
+  providers: [HttpClient],
 })
 export class ReportInventoryStockResumeComponent {
-  searchText: string = "";
-  searchTextDetails: string = "";
+  searchText: string = '';
+  searchTextDetails: string = '';
   selectedStatus!: string;
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
@@ -36,7 +45,10 @@ export class ReportInventoryStockResumeComponent {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  originList: any[] = [
+    { name: 'xStore', id: 'xstore' },
+    { name: 'xCenter', id: 'xcenter' },
+  ];
   searchFormEntityLabels = searchFormEntityLabels;
   inventoryStockResumeLabels = inventoryStockResumeLabels;
   inventoryStockDetailLabels = inventoryStockDetailLabels;
@@ -44,7 +56,16 @@ export class ReportInventoryStockResumeComponent {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
+  lastOptionsEntity: OptionsEntity = {
+    onChart: false,
+    onDownload: false,
+    onRefresh: false,
+    onSearch: false,
+    onShow: false,
+    onFavorite: false,
+  };
+
+  layoutState;
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -54,10 +75,12 @@ export class ReportInventoryStockResumeComponent {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private layoutStateService: LayoutStateService
   ) {
-    this.authStateService.loadUserInfo()
-    _optionServices.initState()
+    this.authStateService.loadUserInfo();
+    _optionServices.initState();
+    this.layoutState = this.layoutStateService.layoutState;
   }
   ngOnDestroy(): void {
     if (this.subscription) {
@@ -65,7 +88,8 @@ export class ReportInventoryStockResumeComponent {
     }
   }
   ngOnInit() {
-    this.reportState.reportState.inventory.stockResume.list.data = []
+    this.layoutState.config.layoutConfig.sidebarActive = false;
+    this.reportState.reportState.inventory.stockResume.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -79,52 +103,97 @@ export class ReportInventoryStockResumeComponent {
         if (onFavorite !== this.lastOptionsEntity.onFavorite) {
           this.handleFavorite();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
+        this.lastOptionsEntity = {
+          onChart,
+          onDownload,
+          onRefresh,
+          onSearch,
+          onShow,
+          onFavorite,
+        };
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite') && this.commonState.commonState.favorites.length > 0) {
-        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/inventories/inventory-stock/resume') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') &&
+        this.commonState.commonState.favorites.length > 0
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this.commonState.commonState.favorites.find(
+              (item) => item.url === '/inventories/inventory-stock/resume'
+            )
+          : this.commonState.commonState.historic.find(
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
           this.selectedStore = selectedStore || null;
-          this._optionServices.setSearch()
-          this.handleSearch()
+          this._optionServices.setSearch();
+          this.handleSearch();
         }
       }
     });
   }
 
   handleFavorite() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = {
       searchCriteria: {
         storeId: this.selectedStore?.storeInfoId,
       },
-      url: "/inventories/inventory-stock/resume"
-    }
+      url: '/inventories/inventory-stock/resume',
+    };
 
-    this._reportApiService.favorite(data).
-      subscribe({
-        next: async () => {
-          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
-          this.isLoading = false
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-          this.isLoading = false
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      })
+    this._reportApiService.favorite(data).subscribe({
+      next: async () => {
+        await this.setErrorModal(
+          'Completado',
+          'Reporte agregado a favorito',
+          '50px'
+        );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.log('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
-
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
-      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+    const storeByRole: Store[] = [];
+    const userRol =
+      this.authStateService.stateTemp.userInfo.privileges
+        .reportesadministrativos;
+
+    if (userRol.includes('staff-menudeo')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (x) => x.storeInfoType === 'R'
+      );
+      storeByRole.push(...temp);
+    }
+    if (userRol.includes('staff-mayoreo')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (x) => x.storeInfoType === 'W'
+      );
+      storeByRole.push(...temp);
+    }
+    if (userRol.includes('sistemas')) {
+      storeByRole.push(...this.commonState.commonState.stores);
+    }
+
+    for (const store of storeByRole) {
+      if (
+        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
+      ) {
         filteredStores.push(store);
       }
     }
@@ -144,69 +213,77 @@ export class ReportInventoryStockResumeComponent {
         },
         complete: () => {
           resolve();
-        }
+        },
       });
     });
   }
 
   getList() {
-    this.showDetailsModal = false
+    this.showDetailsModal = false;
     this.isLoading = true;
     this._reportApiService.inventoryStockResume(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.stockResume.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.inventory.stockResume.original = {
+          data: dataOriginal,
+          total: dataOriginal.length,
+        };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {});
-        this.reportState.reportState.inventory.stockResume.list = { data: dataFormatted, total: dataFormatted.length }
+        this.reportState.reportState.inventory.stockResume.list = {
+          data: dataFormatted,
+          total: dataFormatted.length,
+        };
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async handleSearch() {
-
     if (this.selectedStore === null || typeof this.selectedStore === 'string') {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`;
     this.getList();
   }
   resetFilters() {
     this.selectedStore = null;
-    this.filter = ''
+    this.filter = '';
   }
 
   handleSearchRecords() {
     const list = this.reportState.reportState.inventory.stockResume.list.data;
-    this.reportState.reportState.inventory.stockResume.filter.data = list.filter((item) =>
-      objectContainsValue(item, this.searchText)
-    );
+    this.reportState.reportState.inventory.stockResume.filter.data =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 
   async findDetails() {
     this.isLoading = true;
     this._reportApiService.inventoryStockDetails(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.inventory.stockResume.details = data
+        this.reportState.reportState.inventory.stockResume.details = data;
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async showDetails() {
-    this.showDetailsModal = true
+    this.showDetailsModal = true;
   }
   async setErrorModal(title: string, text: string, width: string) {
     this.titleModal = title;
@@ -216,43 +293,55 @@ export class ReportInventoryStockResumeComponent {
   }
 
   async exportDetailsExcel() {
-    if (this.reportState.reportState.inventory.stockResume.details.length <= 0) {
+    if (
+      this.reportState.reportState.inventory.stockResume.details.length <= 0
+    ) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.inventory.stockResume.details
+    let list = this.reportState.reportState.inventory.stockResume.details;
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_DETALLE_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_DETALLE_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
-
   }
   async exportExcel() {
-    if (this.reportState.reportState.inventory.stockResume.list.data.length <= 0) {
+    if (
+      this.reportState.reportState.inventory.stockResume.list.data.length <= 0
+    ) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.inventory.stockResume.filter.data.length > 0 ? this.reportState.reportState.inventory.stockResume.filter.data : this.reportState.reportState.inventory.stockResume.list.data
-    const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.inventory.stockResume.original.data.filter(item => {
-      if (ids.includes(item[ID_DATA_NAME])) {
-        return item
-      }
-    })
+    let list =
+      this.reportState.reportState.inventory.stockResume.filter.data.length > 0
+        ? this.reportState.reportState.inventory.stockResume.filter.data
+        : this.reportState.reportState.inventory.stockResume.list.data;
+    const ids = list.map((item) => item[ID_DATA_NAME]);
+    list =
+      this.reportState.reportState.inventory.stockResume.original.data.filter(
+        (item) => {
+          if (ids.includes(item[ID_DATA_NAME])) {
+            return item;
+          }
+        }
+      );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_RESUMEN_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_RESUMEN_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   }
-
 }

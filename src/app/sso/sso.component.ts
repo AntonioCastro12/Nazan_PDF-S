@@ -85,8 +85,6 @@ export class SsoComponent implements OnInit {
 
     eventer(messageEvent, (e: any) => {
       const { action, value } = e.data;
-      console.log({ action: action });
-      console.log({ value: value });
 
       if (action === 'showLogin') return this.showLogin();
       if (action === 'sendAuth') return this.auth(value, false);

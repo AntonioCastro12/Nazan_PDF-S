@@ -9,22 +9,30 @@ import { CommonApiService } from '../../services/common-api.service';
 import { CommonStateService } from '../../services/common-state.service';
 import { Store } from '../../models/store.model';
 import { searchFormEntityLabels } from '../../models/search-form-entity';
-import { ReportsExcelNames, segmentAffiliatedKiponLabels } from '../../models/report.entity';
-import { objectContainsValue, highlightSearchText, addIdToData, formatArrayValues, ID_DATA_NAME } from 'src/app/shared/functions/functions';
+import {
+  ReportsExcelNames,
+  segmentAffiliatedKiponLabels,
+} from '../../models/report.entity';
+import {
+  objectContainsValue,
+  highlightSearchText,
+  addIdToData,
+  formatArrayValues,
+  ID_DATA_NAME,
+} from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 
 @Component({
   selector: 'app-report-segment-affiliated-kipon',
   templateUrl: './report-segment-affiliated-kipon.component.html',
   styleUrls: ['./report-segment-affiliated-kipon.component.scss'],
-  providers: [
-    HttpClient
-  ]
+  providers: [HttpClient],
 })
 export class ReportSegmentAffiliatedKipon {
-  searchText: string = "";
+  searchText: string = '';
   selectedStore: Store | null = null;
   suggestions: Store[] = [];
   isLoading: boolean = false;
@@ -33,7 +41,10 @@ export class ReportSegmentAffiliatedKipon {
   textModal: string = '';
   widthModal: string = '';
   showDetail: boolean = false;
-  originList: any[] = [{ name: 'xStore', id: "xstore" }, { name: 'xCenter', id: "xcenter" }];
+  originList: any[] = [
+    { name: 'xStore', id: 'xstore' },
+    { name: 'xCenter', id: 'xcenter' },
+  ];
   searchFormEntityLabels = searchFormEntityLabels;
   segmentAffiliatedKiponLabels = segmentAffiliatedKiponLabels;
   from: Date = new Date();
@@ -42,7 +53,16 @@ export class ReportSegmentAffiliatedKipon {
   subscription: any = {};
   optionsState: any = {};
   highlightSearchText = highlightSearchText;
-  lastOptionsEntity: OptionsEntity = { onChart: false, onDownload: false, onRefresh: false, onSearch: false, onShow: false, onFavorite: false };
+  lastOptionsEntity: OptionsEntity = {
+    onChart: false,
+    onDownload: false,
+    onRefresh: false,
+    onSearch: false,
+    onShow: false,
+    onFavorite: false,
+  };
+
+  layoutState;
 
   constructor(
     public _optionServices: OptionsStateService,
@@ -52,10 +72,12 @@ export class ReportSegmentAffiliatedKipon {
     public commonState: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private layoutStateService: LayoutStateService
   ) {
-    this.authStateService.loadUserInfo()
-    _optionServices.initState()
+    this.authStateService.loadUserInfo();
+    _optionServices.initState();
+    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -64,7 +86,8 @@ export class ReportSegmentAffiliatedKipon {
     }
   }
   ngOnInit() {
-    this.reportState.reportState.segments.affiliatedKipon.list.data = []
+    this.layoutState.config.layoutConfig.sidebarActive = false;
+    this.reportState.reportState.segments.affiliatedKipon.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -78,55 +101,84 @@ export class ReportSegmentAffiliatedKipon {
         if (onFavorite !== this.lastOptionsEntity.onFavorite) {
           this.handleFavorite();
         }
-        this.lastOptionsEntity = { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite };
+        this.lastOptionsEntity = {
+          onChart,
+          onDownload,
+          onRefresh,
+          onSearch,
+          onShow,
+          onFavorite,
+        };
       }
     });
     this.getStores().then(() => {
-      if (this.route.snapshot.queryParamMap.get('favorite') || this.route.snapshot.queryParamMap.get('historic')) {
-        const report: any = this.route.snapshot.queryParamMap.get('favorite') ? this.commonState.commonState.favorites.find(item => item.url === '/segments/affiliated-kipon') : this.commonState.commonState.historic.find((item) => item.index === Number(this.route.snapshot.queryParamMap.get('index')))
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') ||
+        this.route.snapshot.queryParamMap.get('historic')
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this.commonState.commonState.favorites.find(
+              (item) => item.url === '/segments/affiliated-kipon'
+            )
+          : this.commonState.commonState.historic.find(
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(item => item.storeInfoId === report.searchCriteria.storeId)
+          const selectedStore = this.commonState.commonState.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
           this.selectedStore = selectedStore || null;
-          this.from = DateTime.fromISO(report.searchCriteria.startDate).toJSDate();
+          this.from = DateTime.fromISO(
+            report.searchCriteria.startDate
+          ).toJSDate();
           this.to = DateTime.fromISO(report.searchCriteria.endDate).toJSDate();
-          this._optionServices.setSearch()
-          this.handleSearch()
+          this._optionServices.setSearch();
+          this.handleSearch();
         }
       }
-    })
+    });
   }
 
   handleFavorite() {
-    this.isLoading = true
+    this.isLoading = true;
     const data = {
       searchCriteria: {
         storeId: this.selectedStore?.storeInfoId,
-        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd'),
-        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')
+        startDate: DateTime.fromJSDate(new Date(this.from)).toFormat(
+          'yyyy-MM-dd'
+        ),
+        endDate: DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd'),
       },
-      url: "/segments/affiliated-kipon"
-    }
+      url: '/segments/affiliated-kipon',
+    };
 
-    this._reportApiService.favorite(data).
-      subscribe({
-        next: async () => {
-          await this.setErrorModal('Completado', 'Reporte agregado a favorito', '50px');
-          this.isLoading = false
-        },
-        error: (e) => {
-          console.log('error loading data', e)
-          this.isLoading = false
-        },
-        complete: () => {
-          this.isLoading = false;
-        }
-      })
+    this._reportApiService.favorite(data).subscribe({
+      next: async () => {
+        await this.setErrorModal(
+          'Completado',
+          'Reporte agregado a favorito',
+          '50px'
+        );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.log('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     for (const store of this.commonState.commonState.stores) {
-      if (store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())) {
+      if (
+        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
+      ) {
         filteredStores.push(store);
       }
     }
@@ -146,54 +198,69 @@ export class ReportSegmentAffiliatedKipon {
         },
         complete: () => {
           resolve();
-        }
+        },
       });
     });
   }
   getList() {
-    this.reportState.reportState.segments.affiliatedKipon.list.data = []
+    this.reportState.reportState.segments.affiliatedKipon.list.data = [];
     this.isLoading = true;
     this._reportApiService.segmentsAffiliatedKipon(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.segments.affiliatedKipon.original = { data: dataOriginal, total: dataOriginal.length }
+        this.reportState.reportState.segments.affiliatedKipon.original = {
+          data: dataOriginal,
+          total: dataOriginal.length,
+        };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {
           signup_date: { type: 'date', format: 'dd-MM-yyyy' },
           birthday: { type: 'date', format: 'dd-MM-yyyy' },
         });
-        this.reportState.reportState.segments.affiliatedKipon.list = { data: dataFormatted, total: dataFormatted.length }
-
+        this.reportState.reportState.segments.affiliatedKipon.list = {
+          data: dataFormatted,
+          total: dataFormatted.length,
+        };
       },
       error: (e) => {
-        console.log('error loading data', e)
+        console.log('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
-      }
-    })
+      },
+    });
   }
 
   async handleSearch() {
     if (this.selectedStore === null || typeof this.selectedStore === 'string') {
-      await this.setErrorModal('Error', 'Debe completar los datos del formulario de busqueda', '50px');
+      await this.setErrorModal(
+        'Error',
+        'Debe completar los datos del formulario de busqueda',
+        '50px'
+      );
       return;
     }
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat('yyyy-MM-dd')}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat('yyyy-MM-dd')}`
+    this.filter = `?storeId=${
+      this.selectedStore?.storeInfoId
+    }&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat(
+      'yyyy-MM-dd'
+    )}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat(
+      'yyyy-MM-dd'
+    )}`;
     this.getList();
   }
   resetFilters() {
     this.selectedStore = null;
     this.from = new Date();
     this.to = new Date();
-    this.filter = ''
+    this.filter = '';
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.segments.affiliatedKipon.list.data;
-    this.reportState.reportState.segments.affiliatedKipon.filter.data = list.filter((item) =>
-      objectContainsValue(item, this.searchText)
-    );
+    const list =
+      this.reportState.reportState.segments.affiliatedKipon.list.data;
+    this.reportState.reportState.segments.affiliatedKipon.filter.data =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 
   async setErrorModal(title: string, text: string, width: string) {
@@ -204,29 +271,37 @@ export class ReportSegmentAffiliatedKipon {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.segments.affiliatedKipon.list.data.length <= 0) {
+    if (
+      this.reportState.reportState.segments.affiliatedKipon.list.data.length <=
+      0
+    ) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
-    let list = this.reportState.reportState.segments.affiliatedKipon.filter.data.length > 0 ? this.reportState.reportState.segments.affiliatedKipon.filter.data : this.reportState.reportState.segments.affiliatedKipon.list.data
-    const ids = list.map(item => item[ID_DATA_NAME])
-    list = this.reportState.reportState.segments.affiliatedKipon.original.data.filter(item => {
-      if (ids.includes(item[ID_DATA_NAME])) {
-        return item
-      }
-    })
+    let list =
+      this.reportState.reportState.segments.affiliatedKipon.filter.data.length >
+      0
+        ? this.reportState.reportState.segments.affiliatedKipon.filter.data
+        : this.reportState.reportState.segments.affiliatedKipon.list.data;
+    const ids = list.map((item) => item[ID_DATA_NAME]);
+    list =
+      this.reportState.reportState.segments.affiliatedKipon.original.data.filter(
+        (item) => {
+          if (ids.includes(item[ID_DATA_NAME])) {
+            return item;
+          }
+        }
+      );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.AFILIADOS_CLUP_KIPON_}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.AFILIADOS_CLUP_KIPON_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
   }
-
-
-
-
 }
