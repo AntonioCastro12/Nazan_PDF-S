@@ -175,14 +175,14 @@ export class ReportInventoryCycleCountComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {},
     });
   }
 
-  filterStores(event: { query: string }) {
+  filterStores() {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
@@ -209,14 +209,7 @@ export class ReportInventoryCycleCountComponent {
       storeList.push(...this.commonState.commonState.stores);
     }
 
-    for (const store of storeList) {
-      if (
-        store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
-      ) {
-        filteredStores.push(store);
-      }
-    }
-    this.suggestions = filteredStores;
+    this.suggestions = storeList;
   }
 
   getStores(): Promise<void> {
@@ -227,7 +220,7 @@ export class ReportInventoryCycleCountComponent {
           resolve();
         },
         error: (e) => {
-          console.log('error loading data', e);
+          console.error('error loading data', e);
           reject();
         },
         complete: () => {
@@ -261,7 +254,7 @@ export class ReportInventoryCycleCountComponent {
         };
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
@@ -300,7 +293,7 @@ export class ReportInventoryCycleCountComponent {
   }
 
   async handleSearch() {
-    console.log(this.selectedStore, this.selectedCountType);
+    console.error(this.selectedStore, this.selectedCountType);
     if (
       this.selectedStore === null ||
       typeof this.selectedStore !== 'object' ||

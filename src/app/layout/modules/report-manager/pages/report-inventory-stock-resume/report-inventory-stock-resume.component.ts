@@ -158,7 +158,7 @@ export class ReportInventoryStockResumeComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {
@@ -212,7 +212,7 @@ export class ReportInventoryStockResumeComponent {
           resolve();
         },
         error: (e) => {
-          console.log('error loading data', e);
+          console.error('error loading data', e);
           reject(e);
         },
         complete: () => {
@@ -240,7 +240,7 @@ export class ReportInventoryStockResumeComponent {
         };
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;
@@ -278,7 +278,7 @@ export class ReportInventoryStockResumeComponent {
         this.reportState.reportState.inventory.stockResume.details = data;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;

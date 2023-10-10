@@ -28,7 +28,6 @@ export class AuthStateService {
   loadUserInfo(): void {
     this.authApiService.getUserInfo().subscribe({
       next: (data) => {
-        console.log({ user: data });
         this.stateTemp.userInfo = data;
         this.setInfoUser();
       },
