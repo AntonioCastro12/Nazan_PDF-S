@@ -23,11 +23,21 @@ export const staffMenudeoMenu = [
             routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
+            label: 'Existencia de inventario',
+
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+          },
+          {
             label: 'Cumplimiento de Conteo',
 
             routerLink: ['/layout/reports/inventories/cycle-count'],
           },
-        ]
+          {
+            label: 'Diferencia de inventario SAP vs Xstore',
+
+            routerLink: ['/layout/reports/inventories/sap-xstore'],
+          },
+        ],
       },
       {
         label: 'Segmentos',
@@ -38,7 +48,7 @@ export const staffMenudeoMenu = [
 
             routerLink: ['/layout/reports/segments/collaborators-nazan'],
           },
-        ]
+        ],
       },
     ],
   },

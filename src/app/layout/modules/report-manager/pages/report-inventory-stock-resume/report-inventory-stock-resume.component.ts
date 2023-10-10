@@ -169,28 +169,32 @@ export class ReportInventoryStockResumeComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    const storeByRole: Store[] = [];
+    const storeList: Store[] = [];
     const userRol =
       this.authStateService.stateTemp.userInfo.privileges
         .reportesadministrativos;
+    const userStore = this.authStateService.stateTemp.userInfo.tienda;
 
-    if (userRol.includes('staff-menudeo')) {
+    if (userRol.includes('tienda')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (store) => store.storeInfoId === userStore
+      );
+      storeList.push(...temp);
+    } else if (userRol.includes('staff-menudeo')) {
       const temp = this.commonState.commonState.stores.filter(
         (x) => x.storeInfoType === 'R'
       );
-      storeByRole.push(...temp);
-    }
-    if (userRol.includes('staff-mayoreo')) {
+      storeList.push(...temp);
+    } else if (userRol.includes('staff-mayoreo')) {
       const temp = this.commonState.commonState.stores.filter(
         (x) => x.storeInfoType === 'W'
       );
-      storeByRole.push(...temp);
-    }
-    if (userRol.includes('sistemas')) {
-      storeByRole.push(...this.commonState.commonState.stores);
+      storeList.push(...temp);
+    } else {
+      storeList.push(...this.commonState.commonState.stores);
     }
 
-    for (const store of storeByRole) {
+    for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {

@@ -175,7 +175,25 @@ export class ReportSegmentAffiliatedKipon {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    const storeList: Store[] = [];
+    const userRol =
+      this.authStateService.stateTemp.userInfo.privileges
+        .reportesadministrativos;
+    const userStore = this.authStateService.stateTemp.userInfo.tienda;
+    const kiponStores = this.commonState.commonState.stores.filter(
+      (x) => x.storeInfoType === 'K'
+    );
+
+    if (userRol.includes('tienda')) {
+      const temp = kiponStores.filter(
+        (store) => store.storeInfoId === userStore
+      );
+      storeList.push(...temp);
+    } else {
+      storeList.push(...kiponStores);
+    }
+
+    for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {

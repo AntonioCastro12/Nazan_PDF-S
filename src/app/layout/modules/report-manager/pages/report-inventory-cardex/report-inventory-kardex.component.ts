@@ -183,14 +183,20 @@ export class ReportInventoryKardexComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
+    const storeList: Store[] = [];
     const userStore = this.authStateService.stateTemp.userInfo.tienda;
-    console.log({ tienda: this.authStateService.stateTemp.userInfo });
-    const storeList =
-      userStore.length == 0
-        ? this.commonState.commonState.stores
-        : this.commonState.commonState.stores.filter(
-            (store) => store.storeInfoId === userStore
-          );
+    const userRol =
+      this.authStateService.stateTemp.userInfo.privileges
+        .reportesadministrativos;
+
+    if (userRol.includes('tienda')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (store) => store.storeInfoId === userStore
+      );
+      storeList.push(...temp);
+    } else {
+      storeList.push(...this.commonState.commonState.stores);
+    }
 
     for (const store of storeList) {
       if (

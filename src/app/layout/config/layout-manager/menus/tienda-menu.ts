@@ -23,13 +23,18 @@ export const tiendaMenu = [
             routerLink: ['/layout/reports/inventories/kardex'],
           },
           {
+            label: 'Existencia de inventario',
+
+            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+          },
+          {
             label: 'Cumplimiento de Conteo',
 
             routerLink: ['/layout/reports/inventories/cycle-count'],
           },
-        ]
+        ],
       },
-    ]
+    ],
   },
   {
     label: 'Salir',

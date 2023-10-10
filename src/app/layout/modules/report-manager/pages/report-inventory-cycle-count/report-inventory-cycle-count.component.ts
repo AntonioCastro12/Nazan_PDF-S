@@ -184,7 +184,32 @@ export class ReportInventoryCycleCountComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    const storeList: Store[] = [];
+    const userRol =
+      this.authStateService.stateTemp.userInfo.privileges
+        .reportesadministrativos;
+    const userStore = this.authStateService.stateTemp.userInfo.tienda;
+
+    if (userRol.includes('tienda')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (store) => store.storeInfoId === userStore
+      );
+      storeList.push(...temp);
+    } else if (userRol.includes('staff-menudeo')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (x) => x.storeInfoType === 'R'
+      );
+      storeList.push(...temp);
+    } else if (userRol.includes('staff-mayoreo')) {
+      const temp = this.commonState.commonState.stores.filter(
+        (x) => x.storeInfoType === 'W'
+      );
+      storeList.push(...temp);
+    } else {
+      storeList.push(...this.commonState.commonState.stores);
+    }
+
+    for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {
