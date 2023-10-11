@@ -1,0 +1,35 @@
+<article class="layoput-fixed-nav-bar">
+  <template-topbar></template-topbar>
+</article>
+
+<article
+  class="layout-fixed-content"
+  [ngClass]="
+    _template.state.sidebarMainVisible
+      ? 'layout-sidebar-true'
+      : 'layout-sidebar-false'
+  "
+>
+  <div class="" *ngIf="_template.state.sidebarMainVisible">
+    <template-sidebar-left></template-sidebar-left>
+  </div>
+
+  <div class="" *ngIf="_template.state.sidebarOverlayVisible">
+    <template-sidebar-overlay></template-sidebar-overlay>
+  </div>
+
+  <div class="">
+    <router-outlet></router-outlet>
+  </div>
+</article>
+
+<!--
+<div class="item2" *ngIf="_template.state.sidebarMainVisible">
+  <template-sidebar-left></template-sidebar-left>
+</div>
+<div class="item3" [ngClass]="columnChange()">
+  <router-outlet></router-outlet>
+</div>
+<div class="item5">
+  <template-footer></template-footer>
+</div> -->

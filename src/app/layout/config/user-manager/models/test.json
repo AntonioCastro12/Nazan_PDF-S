@@ -1,0 +1,25 @@
+{
+  "dashboard": [
+    "admin"
+  ],
+  "kiponshoesclub": [
+    "admin"
+  ],
+  "prenomina": [
+    "prenomina-status",
+    "manager",
+    "todas-las-tiendas"
+  ],
+  "preprod": [
+    "sistemas"
+  ],
+  "promotoresimpuls": [
+    "admin"
+  ],
+  "reportesadministrativos": [
+    "sistemas"
+  ],
+  "retailcustomermanager": [
+    "admin"
+  ]
+}

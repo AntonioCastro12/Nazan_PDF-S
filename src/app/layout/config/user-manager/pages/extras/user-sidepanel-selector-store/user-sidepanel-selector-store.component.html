@@ -1,0 +1,65 @@
+<p-sidebar
+  [(visible)]="_user.state.isStoreSidepanel"
+  [style]="{ width: '300px' }"
+  position="right"
+  [modal]="true"
+  [blockScroll]="true"
+  [showCloseIcon]="false"
+>
+  <article>
+    <section>
+      <div class="sticky top-0 surface-200">
+        <span class="text-2xl font-bold">Seleccionar una tienda</span>
+
+        <div class="filter">
+          <div class="p-inputgroup">
+            <button
+              type="button"
+              pButton
+              label="Buscar"
+              (click)="onSearchParams()"
+            ></button>
+            <input
+              type="text"
+              pInputText
+              [(ngModel)]="value"
+              placeholder="Palabra a buscar"
+            />
+          </div>
+        </div>
+      </div>
+
+      <section class="container mt-5">
+        <div
+          *ngIf="
+            _user.state.userList.length <= 0 && !_user.state.isPrimeSpinnerUser
+          "
+        >
+          <p>No se encontraron datos</p>
+        </div>
+
+        <div class="grid-center" *ngIf="_user.state.isPrimeSpinnerUser">
+          <p>In progress</p>
+          <!-- <p-progressSpinner styleClass="w-4rem h-4rem"></p-progressSpinner> -->
+        </div>
+
+        <div class="grid" *ngFor="let store of _store.state.storeFilterList">
+          <div class="mt-1 col-12" (dblclick)="onSelectStore(store)">
+            <div class="cursor-pointer text-md">
+              <span class="block font-bold"
+                >{{ TEMPLATE_TEXT.name }}: {{ store.name }}</span
+              >
+              <span class="block text-xs"
+                >{{ TEMPLATE_TEXT.id }}: {{ store.id }}</span
+              >
+              <span class="block text-xs"
+                >{{ TEMPLATE_TEXT.type }}: {{ store.type }}</span
+              >
+            </div>
+            <hr />
+          </div>
+        </div>
+      </section>
+    </section>
+  </article>
+</p-sidebar>

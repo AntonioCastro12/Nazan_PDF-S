@@ -1,0 +1,71 @@
+<main class="w-full bg-black-alpha-90 template-topbar">
+  <div
+    class="flex justify-content-between align-items-center mx-5 text-white h-3rem"
+  >
+    <article
+      class="text-4xl pointer gap-5"
+      (click)="_template.state.toogleSidebarMainVisible()"
+    >
+      <i class="pi pi-arrow-right-arrow-left mr-2"></i>
+      Grupo <span class="font-bold bold">Nazan</span>
+    </article>
+
+    <article class="font-bold text-2xl">Registro de Clientes</article>
+
+    <article
+      class="text-4xl pointer flex justify-content-between align-items-center gap-5"
+      (click)="_template.state.toogleSidebarOverlayVisible()"
+    >
+      <div class="font-bold text-2xl">
+        {{ _user.state.userSelected.nombre }}
+      </div>
+      <i class="pi pi-bars"></i>
+    </article>
+
+    <!-- <article class="flex justify-content-between align-items-center gap-5">
+      <div class="font-bold text-2xl">
+        {{ _user.state.userSelected.nombre }}
+      </div>
+      <button
+        #menubutton
+        class="p-link layout-menu-button layout-topbar-button"
+        (click)="this._templateAction.onOpenSidebar()"
+      >
+        <i class="pi pi-bars text-white"></i>
+      </button>
+    </article> -->
+  </div>
+</main>
+<!-- <article class="layout-topbar">
+  <div class="grid flex align-items-center">
+    <div class="col-4">
+      <section #logo>
+        <a class="layout-topbar-logo" (click)="goStartPage()">
+          <span>Grupo</span><span> &nbsp;</span>
+          <span class="font-bold">Nazan</span>
+        </a>
+      </section>
+    </div>
+    <div class="col-4">
+      <div class="grid">
+        <div class="col text-center title-app">Reportes Administrativos</div>
+      </div>
+    </div>
+    <div class="col-4">
+      <div
+        class="flex align-items-stretch align-items-end vertical-align-middle"
+      >
+        <div class="col text-center mb-2 text-right">
+          Hola! {{ _user.state.currentUser.firstName | uppercase }}
+        </div>
+        <button
+          #menubutton
+          class="p-link layout-menu-button layout-topbar-button"
+          (click)="this._templateAction.onOpenSidebar()"
+        >
+          <i class="pi pi-arrow-right-arrow-left"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</article> -->

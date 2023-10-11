@@ -22,7 +22,18 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@user-manager/*": [
+        "src/app/layout/config/user-manager/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/*"
+      ],
+      "@store-manager": [
+        "src/app/layout/config/store-manager/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
