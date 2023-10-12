@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
-import { CookieService } from 'ngx-cookie-service';
-import { DirectusLoginResponse, UserEntity } from '@shared/models';
-import { SharedStateService, SharedEnvironmentService } from '@shared/modules';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { SharedEnvironmentService } from '@shared/services';
 
 @Injectable({
   providedIn: 'root',
@@ -36,7 +34,6 @@ export class AuthService {
     };
     return this.http.post(`${this.apiUrl}/auth/login`, body).pipe(
       tap((response: DirectusLoginResponse) => {
-
         this.cookieService.set(
           'access_token',
           response?.data?.access_token as string

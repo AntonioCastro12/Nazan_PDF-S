@@ -1,105 +1,221 @@
 <div *ngIf="!showDetail">
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-left breport-round mb-3">
       <div class="report-title">Detalle movimientos monedero</div>
-      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
-        animationDuration=".5s"></p-progressSpinner>
+      <p-progressSpinner
+        *ngIf="isLoading"
+        styleClass="w-4rem h-4rem spinner-position"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
-        [showFavorite]="reportState.reportState.pointProgram.detailWallet.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+      <app-options
+        [showSearch]="true"
+        [showRefresh]="true"
+        [showDownload]="true"
+        [showFavorite]="
+          _report.state.pointProgram.detailWallet.list.data.length > 0
+            ? true
+            : false
+        "
+      ></app-options>
+      <div
+        class="text-left mb-4"
+        *ngIf="_optionServices.optionsState.OptionsEntity.onSearch"
+      >
         <div class="mb-2 p-2">Búsqueda por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start"
+        >
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="from" class="font-bold">Desde</label>
-              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
-                (onSelect)="onSelectRange()"></p-calendar>
+              <p-calendar
+                [(ngModel)]="from"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+                (onSelect)="onSelectRange()"
+              ></p-calendar>
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="to" class="font-bold">Hasta</label>
-              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy" [style]="{'width':'100%'}"
-                (onSelect)="onSelectRange()"></p-calendar>
+              <p-calendar
+                [(ngModel)]="to"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+                (onSelect)="onSelectRange()"
+              ></p-calendar>
             </div>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
-          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button [disabled]="checkRange()" (onClick)="handleSearch()">Buscar</p-button></p>
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start"
+        >
+          <p class="mt-4">
+            <p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3"
+              >Restaurar filtros</p-button
+            ><p-button [disabled]="checkRange()" (onClick)="handleSearch()"
+              >Buscar</p-button
+            >
+          </p>
         </div>
       </div>
     </div>
   </div>
   <div ng-if>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.pointProgram.detailWallet.list.data.length>0">
-        <div class=" col-12 text-left">
+      <div
+        class="grid"
+        *ngIf="_report.state.pointProgram.detailWallet.list.data.length > 0"
+      >
+        <div class="col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-              (ngModelChange)="handleSearchRecords()" />
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar..."
+              [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()"
+            />
           </span>
         </div>
       </div>
-      <p-table #dt2
-        [value]="searchText === '' ? reportState.reportState.pointProgram.detailWallet.list.data : reportState.reportState.pointProgram.detailWallet.filter.data"
-        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+      <p-table
+        #dt2
+        [value]="
+          searchText === ''
+            ? _report.state.pointProgram.detailWallet.list.data
+            : _report.state.pointProgram.detailWallet.filter.data
+        "
+        [paginator]="true"
+        [rows]="15"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{pointProgramDetailWallet['NUM SOCIO']}}">
-              {{pointProgramDetailWallet['NUM SOCIO']}}</th>
-            <th class="text-center" id="{{pointProgramDetailWallet['NOM CORTO']}}">
-              {{pointProgramDetailWallet['NOM CORTO']}}</th>
-            <th class="text-center" id="{{pointProgramDetailWallet['NOMBRE SOCIO']}}">
-              {{pointProgramDetailWallet['NOMBRE SOCIO']}}
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet['NUM SOCIO'] }}"
+            >
+              {{ pointProgramDetailWallet["NUM SOCIO"] }}
             </th>
-            <th class="text-center" id="{{pointProgramDetailWallet.NIVEL}}">
-              {{pointProgramDetailWallet.NIVEL}}
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet['NOM CORTO'] }}"
+            >
+              {{ pointProgramDetailWallet["NOM CORTO"] }}
             </th>
-            <th class="text-center" id="{{pointProgramDetailWallet.MONTO}}">
-              {{pointProgramDetailWallet.MONTO}}</th>
-            <th class="text-center" id="{{pointProgramDetailWallet.TIENDA}}">
-              {{pointProgramDetailWallet.TIENDA}}
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet['NOMBRE SOCIO'] }}"
+            >
+              {{ pointProgramDetailWallet["NOMBRE SOCIO"] }}
             </th>
-            <th class="text-center" id="{{pointProgramDetailWallet.TRANSACCION}}">
-              {{pointProgramDetailWallet.TRANSACCION}}</th>
-            <th class="text-center" id="{{pointProgramDetailWallet.CAJA}}">{{pointProgramDetailWallet.CAJA}}
+            <th class="text-center" id="{{ pointProgramDetailWallet.NIVEL }}">
+              {{ pointProgramDetailWallet.NIVEL }}
             </th>
-            <th class="text-center" id="{{pointProgramDetailWallet['FECHA ACTIVIDAD']}}">
-              {{pointProgramDetailWallet['FECHA ACTIVIDAD']}}</th>
-            <th class="text-center" id="{{pointProgramDetailWallet.ACTIVIDAD}}">
-              {{pointProgramDetailWallet.ACTIVIDAD}}</th>
+            <th class="text-center" id="{{ pointProgramDetailWallet.MONTO }}">
+              {{ pointProgramDetailWallet.MONTO }}
+            </th>
+            <th class="text-center" id="{{ pointProgramDetailWallet.TIENDA }}">
+              {{ pointProgramDetailWallet.TIENDA }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet.TRANSACCION }}"
+            >
+              {{ pointProgramDetailWallet.TRANSACCION }}
+            </th>
+            <th class="text-center" id="{{ pointProgramDetailWallet.CAJA }}">
+              {{ pointProgramDetailWallet.CAJA }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet['FECHA ACTIVIDAD'] }}"
+            >
+              {{ pointProgramDetailWallet["FECHA ACTIVIDAD"] }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ pointProgramDetailWallet.ACTIVIDAD }}"
+            >
+              {{ pointProgramDetailWallet.ACTIVIDAD }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="10" class="text-center">
-              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+              {{
+                isLoading ? "Por favor espere..." : "No hay datos para mostrar"
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['NUM SOCIO'])"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['NOM CORTO'])"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['NOMBRE SOCIO'])"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.NIVEL)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.MONTO)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TIENDA)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TRANSACCION)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.CAJA)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report['FECHA ACTIVIDAD'])"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.ACTIVIDAD)"></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report['NUM SOCIO'])"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report['NOM CORTO'])"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report['NOMBRE SOCIO'])
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.NIVEL)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.MONTO)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.TIENDA)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.TRANSACCION)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.CAJA)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report['FECHA ACTIVIDAD'])
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.ACTIVIDAD)"
+            ></td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
-  <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
+  <p-dialog
+    header="{{ titleModal }}"
+    [(visible)]="showModal"
+    [ngStyle]="{ width: widthModal }"
+  >
     <p>
-      {{textModal}}
+      {{ textModal }}
     </p>
   </p-dialog>
+</div>

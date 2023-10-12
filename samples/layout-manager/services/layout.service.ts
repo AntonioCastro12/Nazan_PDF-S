@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { AppConfig } from 'src/app/layout/config/layout-manager/models/app.config';
 import { LayoutStateService } from './layout.state.service';
 import { LayoutConfig } from '../models/layout.config';
+import { AppConfig } from '../models/app.config';
 
 @Injectable({
   providedIn: 'root',

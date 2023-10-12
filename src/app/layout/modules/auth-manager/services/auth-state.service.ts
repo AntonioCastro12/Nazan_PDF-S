@@ -1,34 +1,34 @@
 import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { AuthState } from '../models/auth.state';
 import { AuthApiService } from './auth-api.service';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
 import { UserInfoEntity } from '../models/auth.entity';
+import { AuthState } from '../models/auth.state';
+import { TemplateStateService } from 'src/app/template';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthStateService {
   private subject = new BehaviorSubject<AuthState>(new AuthState());
-  private state = this.subject.asObservable();
+  private state$ = this.subject.asObservable();
 
-  stateTemp = new AuthState();
+  state = new AuthState();
 
   constructor(
     private readonly authApiService: AuthApiService,
     private injector: Injector
   ) {
-    this.state.subscribe((state) => (this.stateTemp = state));
+    this.state$.subscribe((state) => (this.state = state));
   }
 
   resetUserInfo(): void {
-    this.stateTemp.userInfo = new UserInfoEntity();
+    this.state.userInfo = new UserInfoEntity();
   }
 
   loadUserInfo(): void {
     this.authApiService.getUserInfo().subscribe({
       next: (data) => {
-        this.stateTemp.userInfo = data;
+        this.state.userInfo = data;
         this.setInfoUser();
       },
       error: (e) => {
@@ -42,8 +42,8 @@ export class AuthStateService {
   }
 
   setInfoUser(user?: UserInfoEntity) {
-    const layout = this.injector.get(LayoutStateService);
-    layout.setSidebar();
+    const layout = this.injector.get(TemplateStateService);
+    layout.state.toogleSidebarMainVisible();
     // this.userInfo = { ...user };
     // this.subject.next(this.userInfo);
   }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { of, tap } from 'rxjs';
-import { AuthService } from './auth2.service';
+import { AuthService } from '../set-01';
 
 @Injectable({
   providedIn: 'root',

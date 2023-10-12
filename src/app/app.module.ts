@@ -8,9 +8,9 @@ import { SsoComponent } from './sso/sso.component';
 import { MyLoaderModule } from './core/loader/loader.module';
 import { AuthManagerModule } from './layout/modules/auth-manager/auth-manager.module';
 import { AuthStateService } from './layout/modules/auth-manager/services/auth-state.service';
-import { AuthInterceptor } from './layout/config/layout-manager/common/interceptors/auth.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthInterceptor } from './interceptors/set-03';
 
 @NgModule({
   declarations: [AppComponent, SsoComponent],

@@ -21,7 +21,7 @@ import {
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-point-program-total-movement',
@@ -55,21 +55,18 @@ export class ReportPointProgramTotalMovementComponent {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -78,8 +75,8 @@ export class ReportPointProgramTotalMovementComponent {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.pointProgram.totalMovement.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.pointProgram.totalMovement.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -109,10 +106,10 @@ export class ReportPointProgramTotalMovementComponent {
       this.route.snapshot.queryParamMap.get('historic')
     ) {
       const report: any = this.route.snapshot.queryParamMap.get('favorite')
-        ? this.commonState.commonState.favorites.find(
+        ? this._common.state.favorites.find(
             (item) => item.url === '/point-program/total-movement'
           )
-        : this.commonState.commonState.historic.find(
+        : this._common.state.historic.find(
             (item) =>
               item.index ===
               Number(this.route.snapshot.queryParamMap.get('index'))
@@ -140,7 +137,7 @@ export class ReportPointProgramTotalMovementComponent {
       url: '/point-program/total-movement',
     };
 
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -160,12 +157,12 @@ export class ReportPointProgramTotalMovementComponent {
   }
 
   getList() {
-    this.reportState.reportState.pointProgram.totalMovement.list.data = [];
+    this._report.state.pointProgram.totalMovement.list.data = [];
     this.isLoading = true;
-    this._reportApiService.pointProgramTotalMovement(this.filter).subscribe({
+    this._reportApi.pointProgramTotalMovement(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.pointProgram.totalMovement.original = {
+        this._report.state.pointProgram.totalMovement.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -173,7 +170,7 @@ export class ReportPointProgramTotalMovementComponent {
         dataFormatted = formatArrayValues(dataFormatted, {
           'FECHA ACTIVIDAD': { type: 'date', format: 'dd-MM-yyyy' },
         });
-        this.reportState.reportState.pointProgram.totalMovement.list = {
+        this._report.state.pointProgram.totalMovement.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -201,10 +198,10 @@ export class ReportPointProgramTotalMovementComponent {
   }
 
   handleSearchRecords() {
-    const list =
-      this.reportState.reportState.pointProgram.totalMovement.list.data;
-    this.reportState.reportState.pointProgram.totalMovement.filter.data =
-      list.filter((item) => objectContainsValue(item, this.searchText));
+    const list = this._report.state.pointProgram.totalMovement.list.data;
+    this._report.state.pointProgram.totalMovement.filter.data = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
+    );
   }
 
   async setErrorModal(title: string, text: string, width: string) {
@@ -268,27 +265,22 @@ export class ReportPointProgramTotalMovementComponent {
   }
 
   async exportExcel() {
-    if (
-      this.reportState.reportState.pointProgram.totalMovement.list.data
-        .length <= 0
-    ) {
+    if (this._report.state.pointProgram.totalMovement.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.pointProgram.totalMovement.filter.data
-        .length > 0
-        ? this.reportState.reportState.pointProgram.totalMovement.filter.data
-        : this.reportState.reportState.pointProgram.totalMovement.list.data;
+      this._report.state.pointProgram.totalMovement.filter.data.length > 0
+        ? this._report.state.pointProgram.totalMovement.filter.data
+        : this._report.state.pointProgram.totalMovement.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list =
-      this.reportState.reportState.pointProgram.totalMovement.original.data.filter(
-        (item) => {
-          if (ids.includes(item[ID_DATA_NAME])) {
-            return item;
-          }
+    list = this._report.state.pointProgram.totalMovement.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
         }
-      );
+      }
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

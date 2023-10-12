@@ -2,50 +2,41 @@ import { Component } from '@angular/core';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { CommonStateService } from '../../../report-manager/services/common-state.service';
 import { ReportApiService } from '../../../report-manager/services/report-api.service';
+import { Router } from '@angular/router';
+import { TemplateStateService } from 'src/app/template';
 import {
-  ListHistoric,
   labelsListFavorites,
   labelsListHistoric,
   mapUrlReport,
-} from 'src/app/layout/config/layout-manager/models/bookmarks.model';
-import { Router } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
-import { TemplateStateService } from 'src/app/template';
-import {
-  StoreApiService,
-  StoreStateService,
-} from 'src/app/layout/config/store-manager/services';
+} from '../../models/bookmarks.model';
 import { UserHydraService } from '@user-manager/services/user-hydra.service';
-import { UserEntity } from '@user-manager/models';
-import { UserStateService } from '@user-manager/services';
+import { StoreApiService } from '@store-manager/services';
+import { StoreStateService } from '@store-manager/services';
+
 @Component({
   selector: 'app-home-page-compomnent',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent {
-
-
   constructor(
-    public authStateService: AuthStateService,
-    public commonState: CommonStateService,
-    private _reportApiService: ReportApiService,
+    public _auth: AuthStateService,
+    public _common: CommonStateService,
+    private _reportApi: ReportApiService,
     private router: Router,
-
     private _template: TemplateStateService,
-    private _storeApi: StoreApiService,
-    private _store: StoreStateService,
     private _userHydra: UserHydraService,
-    private _user: UserStateService
+    private _storeApi: StoreApiService,
+    private _store: StoreStateService
   ) {
-
+    this._auth.loadUserInfo();
   }
   labelsListFavorites = labelsListFavorites;
   labelsListHistoric = labelsListHistoric;
   index: number | null = null;
 
   getHistoric() {
-    this._reportApiService.getHistoric().subscribe({
+    this._reportApi.getHistoric().subscribe({
       next: (data) => {
         const temp = data.map((item, index) => {
           return {
@@ -56,7 +47,7 @@ export class HomePageComponent {
             updatedAt: item.updatedAt,
           };
         });
-        this.commonState.commonState.historic = temp.slice(0, 5);
+        this._common.state.historic = temp.slice(0, 5);
       },
       error: (e) => {
         console.error('error loading data', e);
@@ -68,9 +59,9 @@ export class HomePageComponent {
   }
 
   getFavorites() {
-    this._reportApiService.getFavorites().subscribe({
+    this._reportApi.getFavorites().subscribe({
       next: (data) => {
-        this.commonState.commonState.favorites = data;
+        this._common.state.favorites = data;
       },
       error: (e) => {
         console.error('error loading data', e);
@@ -83,8 +74,6 @@ export class HomePageComponent {
 
   ngOnInit() {
     this._template.state.sidebarMainVisible = true;
-    this.onGetStoreList();
-    this.getUserInfo();
     this.getHistoric();
     this.getFavorites();
   }

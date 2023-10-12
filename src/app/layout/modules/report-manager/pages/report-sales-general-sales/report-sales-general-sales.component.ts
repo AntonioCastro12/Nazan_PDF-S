@@ -23,7 +23,7 @@ import {
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-sales-general-sales',
@@ -61,22 +61,19 @@ export class ReportSalesGeneralSales {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    private _commonApi: CommonApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -85,8 +82,8 @@ export class ReportSalesGeneralSales {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.sales.generalSales.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.sales.generalSales.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -116,16 +113,16 @@ export class ReportSalesGeneralSales {
         this.route.snapshot.queryParamMap.get('historic')
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
-          ? this.commonState.commonState.favorites.find(
+          ? this._common.state.favorites.find(
               (item) => item.url === '/sales/general-sales'
             )
-          : this.commonState.commonState.historic.find(
+          : this._common.state.historic.find(
               (item) =>
                 item.index ===
                 Number(this.route.snapshot.queryParamMap.get('index'))
             );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(
+          const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
           );
           this.selectedStore = selectedStore || null;
@@ -151,7 +148,7 @@ export class ReportSalesGeneralSales {
       url: '/sales/general-sales',
     };
 
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -172,7 +169,7 @@ export class ReportSalesGeneralSales {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    for (const store of this._common.state.stores) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {
@@ -184,9 +181,9 @@ export class ReportSalesGeneralSales {
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this._commonApiService.getStores().subscribe({
+      this._commonApi.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data;
+          this._common.state.stores = data;
           resolve();
         },
         error: (e) => {
@@ -200,12 +197,12 @@ export class ReportSalesGeneralSales {
     });
   }
   getList() {
-    this.reportState.reportState.sales.generalSales.list.data = [];
+    this._report.state.sales.generalSales.list.data = [];
     this.isLoading = true;
-    this._reportApiService.salesGeneralSales(this.filter).subscribe({
+    this._reportApi.salesGeneralSales(this.filter).subscribe({
       next: (data: any) => {
         const dataOriginal = addIdToData(data.sales.data);
-        this.reportState.reportState.sales.generalSales.original = {
+        this._report.state.sales.generalSales.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -213,7 +210,7 @@ export class ReportSalesGeneralSales {
         dataFormatted = formatArrayValues(dataFormatted, {
           totalMoney: { type: 'number', format: 'currency' },
         });
-        this.reportState.reportState.sales.generalSales.list = {
+        this._report.state.sales.generalSales.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -250,9 +247,9 @@ export class ReportSalesGeneralSales {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.sales.generalSales.list.data;
-    this.reportState.reportState.sales.generalSales.filter.data = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
+    const list = this._report.state.sales.generalSales.list.data;
+    this._report.state.sales.generalSales.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
     );
   }
 
@@ -264,16 +261,16 @@ export class ReportSalesGeneralSales {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.sales.generalSales.list.data.length <= 0) {
+    if (this._report.state.sales.generalSales.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.sales.generalSales.filter.data.length > 0
-        ? this.reportState.reportState.sales.generalSales.filter.data
-        : this.reportState.reportState.sales.generalSales.list.data;
+      this._report.state.sales.generalSales.filter.data.length > 0
+        ? this._report.state.sales.generalSales.filter.data
+        : this._report.state.sales.generalSales.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list = this.reportState.reportState.sales.generalSales.original.data.filter(
+    list = this._report.state.sales.generalSales.original.data.filter(
       (item) => {
         if (ids.includes(item[ID_DATA_NAME])) {
           return item;

@@ -22,7 +22,7 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-inventory-sap-xstore',
@@ -61,21 +61,18 @@ export class ReportInventorySapXtoreComponent {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -84,8 +81,8 @@ export class ReportInventorySapXtoreComponent {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.inventory.sapXstore.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.inventory.sapXstore.list.data = [];
     // this.getList();
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
@@ -115,16 +112,16 @@ export class ReportInventorySapXtoreComponent {
       this.route.snapshot.queryParamMap.get('historic')
     ) {
       const report: any = this.route.snapshot.queryParamMap.get('favorite')
-        ? this.commonState.commonState.favorites.find(
+        ? this._common.state.favorites.find(
             (item) => item.url === '/inventories/sap-xstore'
           )
-        : this.commonState.commonState.historic.find(
+        : this._common.state.historic.find(
             (item) =>
               item.index ===
               Number(this.route.snapshot.queryParamMap.get('index'))
           );
       if (report) {
-        const selectedStore = this.commonState.commonState.stores.find(
+        const selectedStore = this._common.state.stores.find(
           (item) => item.storeInfoId === report.searchCriteria.storeId
         );
         this.selectedStore = selectedStore || null;
@@ -143,7 +140,7 @@ export class ReportInventorySapXtoreComponent {
       url: '/inventories/sap-xstore',
     };
 
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -166,22 +163,21 @@ export class ReportInventorySapXtoreComponent {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
-      this.authStateService.stateTemp.userInfo.privileges
-        .reportesadministrativos;
-    const userStore = this.authStateService.stateTemp.userInfo.tienda;
+      this._auth.state.userInfo.privileges.reportesadministrativos;
+    const userStore = this._auth.state.userInfo.tienda;
 
     if (userRol.includes('staff-menudeo')) {
-      const temp = this.commonState.commonState.stores.filter(
+      const temp = this._common.state.stores.filter(
         (x) => x.storeInfoType === 'R'
       );
       storeList.push(...temp);
     } else if (userRol.includes('staff-mayoreo')) {
-      const temp = this.commonState.commonState.stores.filter(
+      const temp = this._common.state.stores.filter(
         (x) => x.storeInfoType === 'W'
       );
       storeList.push(...temp);
     } else {
-      storeList.push(...this.commonState.commonState.stores);
+      storeList.push(...this._common.state.stores);
     }
 
     for (const store of storeList) {
@@ -196,21 +192,21 @@ export class ReportInventorySapXtoreComponent {
 
   getList() {
     this.isLoading = true;
-    this._reportApiService.inventorySapXstore(this.filter).subscribe({
+    this._reportApi.inventorySapXstore(this.filter).subscribe({
       next: (data) => {
-        this.reportState.reportState.inventory.sapXstore.list = {
+        this._report.state.inventory.sapXstore.list = {
           data,
           total: data.length,
         };
 
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.sapXstore.original = {
+        this._report.state.inventory.sapXstore.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
         let dataFormatted = dataOriginal.map((obj: any) => ({ ...obj }));
         dataFormatted = formatArrayValues(dataFormatted, {});
-        this.reportState.reportState.inventory.sapXstore.list = {
+        this._report.state.inventory.sapXstore.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -234,9 +230,9 @@ export class ReportInventorySapXtoreComponent {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.inventory.sapXstore.list.data;
-    this.reportState.reportState.inventory.sapXstore.filter.data = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
+    const list = this._report.state.inventory.sapXstore.list.data;
+    this._report.state.inventory.sapXstore.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
     );
   }
 
@@ -248,25 +244,22 @@ export class ReportInventorySapXtoreComponent {
   }
 
   async exportExcel() {
-    if (
-      this.reportState.reportState.inventory.sapXstore.list.data.length <= 0
-    ) {
+    if (this._report.state.inventory.sapXstore.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.inventory.sapXstore.filter.data.length > 0
-        ? this.reportState.reportState.inventory.sapXstore.filter.data
-        : this.reportState.reportState.inventory.sapXstore.list.data;
+      this._report.state.inventory.sapXstore.filter.data.length > 0
+        ? this._report.state.inventory.sapXstore.filter.data
+        : this._report.state.inventory.sapXstore.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list =
-      this.reportState.reportState.inventory.sapXstore.original.data.filter(
-        (item) => {
-          if (ids.includes(item[ID_DATA_NAME])) {
-            return item;
-          }
+    list = this._report.state.inventory.sapXstore.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
         }
-      );
+      }
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ReportState } from '../models/report.state';
+import { HomeState } from '../models/home.state';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ReportStateService {
-  private subject = new BehaviorSubject<ReportState>(new ReportState());
+export class HomeStateService {
+  private subject = new BehaviorSubject<HomeState>(new HomeState());
   private state$ = this.subject.asObservable();
 
-  state = new ReportState();
+  state = new HomeState();
 
   constructor() {
     this.state$.subscribe((state) => (this.state = state));

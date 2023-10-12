@@ -23,7 +23,7 @@ import {
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-inventory-kardex',
@@ -65,22 +65,19 @@ export class ReportInventoryKardexComponent {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    private _commonApi: CommonApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
     _optionServices.initState();
-    this.authStateService.loadUserInfo();
-    this.layoutState = this.layoutStateService.layoutState;
+    this._auth.loadUserInfo();
   }
 
   ngOnDestroy(): void {
@@ -90,8 +87,8 @@ export class ReportInventoryKardexComponent {
   }
 
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.inventory.kardex.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.inventory.kardex.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -122,16 +119,16 @@ export class ReportInventoryKardexComponent {
         this.route.snapshot.queryParamMap.get('historic')
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
-          ? this.commonState.commonState.favorites.find(
+          ? this._common.state.favorites.find(
               (item) => item.url === '/inventories/kardex'
             )
-          : this.commonState.commonState.historic.find(
+          : this._common.state.historic.find(
               (item) =>
                 item.index ===
                 Number(this.route.snapshot.queryParamMap.get('index'))
             );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(
+          const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
           );
           this.selectedStore = selectedStore || null;
@@ -162,7 +159,7 @@ export class ReportInventoryKardexComponent {
       },
       url: '/inventories/kardex',
     };
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -184,18 +181,17 @@ export class ReportInventoryKardexComponent {
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
-    const userStore = this.authStateService.stateTemp.userInfo.tienda;
+    const userStore = this._auth.state.userInfo.tienda;
     const userRol =
-      this.authStateService.stateTemp.userInfo.privileges
-        .reportesadministrativos;
+      this._auth.state.userInfo.privileges.reportesadministrativos;
 
     if (userRol.includes('tienda')) {
-      const temp = this.commonState.commonState.stores.filter(
+      const temp = this._common.state.stores.filter(
         (store) => store.storeInfoId === userStore
       );
       storeList.push(...temp);
     } else {
-      storeList.push(...this.commonState.commonState.stores);
+      storeList.push(...this._common.state.stores);
     }
 
     for (const store of storeList) {
@@ -210,9 +206,9 @@ export class ReportInventoryKardexComponent {
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this._commonApiService.getStores().subscribe({
+      this._commonApi.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data;
+          this._common.state.stores = data;
           resolve();
         },
         error: (e) => {
@@ -227,10 +223,10 @@ export class ReportInventoryKardexComponent {
   }
   getList() {
     this.isLoading = true;
-    this._reportApiService.inventoryKardexProduct(this.filter).subscribe({
+    this._reportApi.inventoryKardexProduct(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.kardex.original = {
+        this._report.state.inventory.kardex.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -238,7 +234,7 @@ export class ReportInventoryKardexComponent {
         dataFormatted = formatArrayValues(dataFormatted, {
           create_date: { type: 'date', format: 'dd-MM-yyyy HH:mm:ss' },
         });
-        this.reportState.reportState.inventory.kardex.list = {
+        this._report.state.inventory.kardex.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -285,9 +281,9 @@ export class ReportInventoryKardexComponent {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.inventory.kardex.list.data;
-    this.reportState.reportState.inventory.kardex.filter.data = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
+    const list = this._report.state.inventory.kardex.list.data;
+    this._report.state.inventory.kardex.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
     );
   }
 
@@ -299,22 +295,20 @@ export class ReportInventoryKardexComponent {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.inventory.kardex.list.data.length <= 0) {
+    if (this._report.state.inventory.kardex.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.inventory.kardex.filter.data.length > 0
-        ? this.reportState.reportState.inventory.kardex.filter.data
-        : this.reportState.reportState.inventory.kardex.list.data;
+      this._report.state.inventory.kardex.filter.data.length > 0
+        ? this._report.state.inventory.kardex.filter.data
+        : this._report.state.inventory.kardex.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list = this.reportState.reportState.inventory.kardex.original.data.filter(
-      (item) => {
-        if (ids.includes(item[ID_DATA_NAME])) {
-          return item;
-        }
+    list = this._report.state.inventory.kardex.original.data.filter((item) => {
+      if (ids.includes(item[ID_DATA_NAME])) {
+        return item;
       }
-    );
+    });
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

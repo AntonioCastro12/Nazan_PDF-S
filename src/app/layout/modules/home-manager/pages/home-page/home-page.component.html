@@ -1,70 +1,110 @@
 <div>
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-center breport-round mb-3">
       <div class="report-title">Reportes administrativos</div>
-      <p class="intro-text">¡Bienvenido al módulo de Reportes Administrativos de Nazan!<br /><br /> Este módulo es la
-        herramienta
-        perfecta para
-        analizar y visualizar los datos de tu empresa de manera eficiente y efectiva. Con el uso de nuestros informes y
-        gráficas, podrás identificar fácilmente patrones y tendencias para tomar decisiones informadas y
-        mejorar el desempeño de tu negocio. En Nazan, nos comprometemos a ofrecerte las mejores herramientas para que
-        puedas optimizar tus procesos y alcanzar tus objetivos empresariales. ¡Disfruta del módulo de Reportes
-        Administrativos y comienza a impulsar el crecimiento de tu empresa hoy mismo</p>
+      <p class="intro-text">
+        ¡Bienvenido al módulo de Reportes Administrativos de Nazan!<br /><br />
+        Este módulo es la herramienta perfecta para analizar y visualizar los
+        datos de tu empresa de manera eficiente y efectiva. Con el uso de
+        nuestros informes y gráficas, podrás identificar fácilmente patrones y
+        tendencias para tomar decisiones informadas y mejorar el desempeño de tu
+        negocio. En Nazan, nos comprometemos a ofrecerte las mejores
+        herramientas para que puedas optimizar tus procesos y alcanzar tus
+        objetivos empresariales. ¡Disfruta del módulo de Reportes
+        Administrativos y comienza a impulsar el crecimiento de tu empresa hoy
+        mismo
+      </p>
     </div>
     <div class="block font-bold breport-round mb-3">
       <div class="report-title">
-        <i class="pi pi-search" style="font-size: 1.2rem"></i> Consultas recientes
+        <i class="pi pi-search" style="font-size: 1.2rem"></i> Consultas
+        recientes
       </div>
-      <p-table [value]="commonState.commonState.historic.slice(0,10)" #dt2 [rows]="10" styleClass="mt-3 p-datatable-sm">
+      <p-table
+        [value]="_common.state.historic.slice(0, 10)"
+        #dt2
+        [rows]="10"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center">{{labelsListHistoric.url}}</th>
-            <th class="text-center">{{labelsListHistoric.createdAt}}</th>
-            <th class="text-center">{{labelsListHistoric.actions}}</th>
-
+            <th class="text-center">{{ labelsListHistoric.url }}</th>
+            <th class="text-center">{{ labelsListHistoric.createdAt }}</th>
+            <th class="text-center">{{ labelsListHistoric.actions }}</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="3" class="text-center">
-              {{commonState.commonState.historic.length===0? 'No hay datos para mostrar':''}}
+              {{
+                _common.state.historic.length === 0
+                  ? "No hay datos para mostrar"
+                  : ""
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-historic>
           <tr class="text-sm">
-            <td class="text-center" [style]="{'width':'33%'}">{{getReportName(historic.url)}}</td>
-            <td class="text-center" [style]="{'width':'33%'}">{{historic.createdAt | date: 'dd/MM/yyyy HH:mm:ss'}}
+            <td class="text-center" [style]="{ width: '33%' }">
+              {{ getReportName(historic.url) }}
+            </td>
+            <td class="text-center" [style]="{ width: '33%' }">
+              {{ historic.createdAt | date : "dd/MM/yyyy HH:mm:ss" }}
             </td>
             <td class="text-center">
-              <p-button pTooltip="Consultar reporte" tooltipPosition="bottom" icon="pi pi-search" class="mr-1"
-                (onClick)="handleShowReport(historic.url, historic.index)" styleClass="p-button-rounded"></p-button>
+              <p-button
+                pTooltip="Consultar reporte"
+                tooltipPosition="bottom"
+                icon="pi pi-search"
+                class="mr-1"
+                (onClick)="handleShowReport(historic.url, historic.index)"
+                styleClass="p-button-rounded"
+              ></p-button>
             </td>
           </tr>
         </ng-template>
       </p-table>
     </div>
     <div class="block font-bold breport-round mb-3">
-      <div class="report-title"><i class="pi pi-heart" style="font-size: 1.2rem"></i> Favoritos</div>
-      <p-table [value]="commonState.commonState.favorites" #dt2 [rows]="10" styleClass="mt-3 p-datatable-sm">
+      <div class="report-title">
+        <i class="pi pi-heart" style="font-size: 1.2rem"></i> Favoritos
+      </div>
+      <p-table
+        [value]="_common.state.favorites"
+        #dt2
+        [rows]="10"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" [style]="{'width':'50%'}">{{labelsListFavorites.url}}</th>
-            <th class="text-center" [style]="{'width':'50%'}">{{labelsListFavorites.actions}}</th>
+            <th class="text-center" [style]="{ width: '50%' }">
+              {{ labelsListFavorites.url }}
+            </th>
+            <th class="text-center" [style]="{ width: '50%' }">
+              {{ labelsListFavorites.actions }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="3" class="text-center">
-              {{commonState.commonState.favorites? 'No hay datos para mostrar':''}}
+              {{ _common.state.favorites ? "No hay datos para mostrar" : "" }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-favorite>
           <tr class="text-sm">
-            <td class="text-center">{{getReportName(favorite.url)}}</td>
-            <td class="text-center"><p-button pTooltip="Consultar reporte" tooltipPosition="bottom" icon="pi pi-search"
-                class="mr-1" (onClick)="handleShowReport(favorite.url)" styleClass="p-button-rounded"></p-button>
+            <td class="text-center">{{ getReportName(favorite.url) }}</td>
+            <td class="text-center">
+              <p-button
+                pTooltip="Consultar reporte"
+                tooltipPosition="bottom"
+                icon="pi pi-search"
+                class="mr-1"
+                (onClick)="handleShowReport(favorite.url)"
+                styleClass="p-button-rounded"
+              ></p-button>
             </td>
           </tr>
         </ng-template>

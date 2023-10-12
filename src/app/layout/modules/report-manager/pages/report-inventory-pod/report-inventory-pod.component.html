@@ -1,102 +1,220 @@
 <div *ngIf="!showDetail">
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-left breport-round mb-3">
       <div class="report-title">Reporte de recepción de mercancía (POD)</div>
-      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
-        animationDuration=".5s"></p-progressSpinner>
+      <p-progressSpinner
+        *ngIf="isLoading"
+        styleClass="w-4rem h-4rem spinner-position"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
-        [showFavorite]="reportState.reportState.inventory.pod.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+      <app-options
+        [showSearch]="true"
+        [showRefresh]="true"
+        [showDownload]="true"
+        [showFavorite]="
+          _report.state.inventory.pod.list.data.length > 0 ? true : false
+        "
+      ></app-options>
+      <div
+        class="text-left mb-4"
+        *ngIf="_optionServices.optionsState.OptionsEntity.onSearch"
+      >
         <div class="mb-2 p-2">Búsqueda por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start"
+        >
           <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
-              <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-                (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
-                placeholder="Seleccionar tienda"></p-autoComplete>
-
+            <div class="flex flex-column p-2">
+              <label htmlFor="order_id" class="font-bold">{{
+                searchFormEntityLabels.store
+              }}</label>
+              <p-autoComplete
+                [(ngModel)]="selectedStore"
+                [dropdown]="true"
+                [suggestions]="suggestions"
+                (completeMethod)="filterStores($event)"
+                field="storeInfoName"
+                [style]="{ width: '100%' }"
+                placeholder="Seleccionar tienda"
+              ></p-autoComplete>
             </div>
           </div>
           <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.days}}</label>
-              <p-inputNumber inputId="integeronly" placeholder="Dias" [(ngModel)]="days" [style]="{'width':'100%'}">
+            <div class="flex flex-column p-2">
+              <label htmlFor="order_id" class="font-bold">{{
+                searchFormEntityLabels.days
+              }}</label>
+              <p-inputNumber
+                inputId="integeronly"
+                placeholder="Dias"
+                [(ngModel)]="days"
+                [style]="{ width: '100%' }"
+              >
               </p-inputNumber>
             </div>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start p-2">
-          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button (onClick)="handleSearch()" class="search-buttom">Buscar</p-button></p>
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start p-2"
+        >
+          <p class="mt-4">
+            <p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3"
+              >Restaurar filtros</p-button
+            ><p-button (onClick)="handleSearch()" class="search-buttom"
+              >Buscar</p-button
+            >
+          </p>
         </div>
-
       </div>
     </div>
   </div>
   <div ng-if>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.inventory.pod.list.data.length>0">
-        <div class=" col-12 text-left">
+      <div
+        class="grid"
+        *ngIf="_report.state.inventory.pod.list.data.length > 0"
+      >
+        <div class="col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-              (ngModelChange)="handleSearchRecords()" />
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar..."
+              [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()"
+            />
           </span>
         </div>
       </div>
-      <p-table #dt2
-        [value]="searchText === '' ? reportState.reportState.inventory.pod.list.data : reportState.reportState.inventory.pod.filter.data"
-        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+      <p-table
+        #dt2
+        [value]="
+          searchText === ''
+            ? _report.state.inventory.pod.list.data
+            : _report.state.inventory.pod.filter.data
+        "
+        [paginator]="true"
+        [rows]="15"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{inventoryPodLabels.T_ORIGEN}}">{{inventoryPodLabels.T_ORIGEN}}</th>
-            <th class="text-center" id="{{inventoryPodLabels.NOMBRE_TDA_ORIGEN}}">
-              {{inventoryPodLabels.NOMBRE_TDA_ORIGEN}}</th>
-            <th class="text-center" id="{{inventoryPodLabels.T_DESTINO}}">{{inventoryPodLabels.T_DESTINO}}
+            <th class="text-center" id="{{ inventoryPodLabels.T_ORIGEN }}">
+              {{ inventoryPodLabels.T_ORIGEN }}
             </th>
-            <th class="text-center" id="{{inventoryPodLabels.L_EMBARQUE}}">
-              {{inventoryPodLabels.L_EMBARQUE}}
+            <th
+              class="text-center"
+              id="{{ inventoryPodLabels.NOMBRE_TDA_ORIGEN }}"
+            >
+              {{ inventoryPodLabels.NOMBRE_TDA_ORIGEN }}
             </th>
-            <th class="text-center" id="{{inventoryPodLabels.TIPO_EMBARQUE}}">
-              {{inventoryPodLabels.TIPO_EMBARQUE}}</th>
-            <th class="text-center" id="{{inventoryPodLabels.FEC_CREA_SISTEMA}}">{{inventoryPodLabels.FEC_CREA_SISTEMA}}
+            <th class="text-center" id="{{ inventoryPodLabels.T_DESTINO }}">
+              {{ inventoryPodLabels.T_DESTINO }}
             </th>
-            <th class="text-center" id="{{inventoryPodLabels.FEC_HORA_POD}}">{{inventoryPodLabels.FEC_HORA_POD}}</th>
-            <th class="text-center" id="{{inventoryPodLabels.FEC_HORA_CIERRE}}">{{inventoryPodLabels.FEC_HORA_CIERRE}}
+            <th class="text-center" id="{{ inventoryPodLabels.L_EMBARQUE }}">
+              {{ inventoryPodLabels.L_EMBARQUE }}
             </th>
-            <th class="text-center" id="{{inventoryPodLabels.TIEMPO_HRS}}">{{inventoryPodLabels.TIEMPO_HRS}}</th>
-            <th class="text-center" id="{{inventoryPodLabels.ESTATUS}}">{{inventoryPodLabels.ESTATUS}}</th>
+            <th class="text-center" id="{{ inventoryPodLabels.TIPO_EMBARQUE }}">
+              {{ inventoryPodLabels.TIPO_EMBARQUE }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ inventoryPodLabels.FEC_CREA_SISTEMA }}"
+            >
+              {{ inventoryPodLabels.FEC_CREA_SISTEMA }}
+            </th>
+            <th class="text-center" id="{{ inventoryPodLabels.FEC_HORA_POD }}">
+              {{ inventoryPodLabels.FEC_HORA_POD }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ inventoryPodLabels.FEC_HORA_CIERRE }}"
+            >
+              {{ inventoryPodLabels.FEC_HORA_CIERRE }}
+            </th>
+            <th class="text-center" id="{{ inventoryPodLabels.TIEMPO_HRS }}">
+              {{ inventoryPodLabels.TIEMPO_HRS }}
+            </th>
+            <th class="text-center" id="{{ inventoryPodLabels.ESTATUS }}">
+              {{ inventoryPodLabels.ESTATUS }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="9" class="text-center">
-              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+              {{
+                isLoading ? "Por favor espere..." : "No hay datos para mostrar"
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.T_ORIGEN)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.NOMBRE_TDA_ORIGEN)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.T_DESTINO)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.L_EMBARQUE)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TIPO_EMBARQUE)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.FEC_CREA_SISTEMA)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.FEC_HORA_POD)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.FEC_HORA_CIERRE)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.TIEMPO_HRS)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.ESTATUS)"></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.T_ORIGEN)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.NOMBRE_TDA_ORIGEN)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.T_DESTINO)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.L_EMBARQUE)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.TIPO_EMBARQUE)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.FEC_CREA_SISTEMA)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.FEC_HORA_POD)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.FEC_HORA_CIERRE)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.TIEMPO_HRS)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.ESTATUS)"
+            ></td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
-  <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
+  <p-dialog
+    header="{{ titleModal }}"
+    [(visible)]="showModal"
+    [ngStyle]="{ width: widthModal }"
+  >
     <p>
-      {{textModal}}
+      {{ textModal }}
     </p>
   </p-dialog>
+</div>

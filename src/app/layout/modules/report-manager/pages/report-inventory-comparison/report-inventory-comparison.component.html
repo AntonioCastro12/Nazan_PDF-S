@@ -1,92 +1,185 @@
 <div *ngIf="!showDetail">
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-left breport-round mb-3">
-      <div class="report-title">Comparación de inventarios ATG, Order Broker, xStore y xCenter</div>
-      <div class="report-subtitle">Comparacion ATG, Order Broker, xStore y xCenter</div>
-      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
-        animationDuration=".5s"></p-progressSpinner>
+      <div class="report-title">
+        Comparación de inventarios ATG, Order Broker, xStore y xCenter
+      </div>
+      <div class="report-subtitle">
+        Comparacion ATG, Order Broker, xStore y xCenter
+      </div>
+      <p-progressSpinner
+        *ngIf="isLoading"
+        styleClass="w-4rem h-4rem spinner-position"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showRefresh]="true" [showDownload]="true"
-        [showFavorite]="reportState.reportState.inventory.comparison.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+      <app-options
+        [showSearch]="true"
+        [showRefresh]="true"
+        [showDownload]="true"
+        [showFavorite]="
+          _report.state.inventory.comparison.list.data.length > 0 ? true : false
+        "
+      ></app-options>
+      <div
+        class="text-left mb-4"
+        *ngIf="_optionServices.optionsState.OptionsEntity.onSearch"
+      >
         <div class="mb-2 p-2">Búsqueda por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start"
+        >
           <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
-              <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-                (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
-                placeholder="Seleccionar tienda"></p-autoComplete>
-
+            <div class="flex flex-column p-2">
+              <label htmlFor="order_id" class="font-bold">{{
+                searchFormEntityLabels.store
+              }}</label>
+              <p-autoComplete
+                [(ngModel)]="selectedStore"
+                [dropdown]="true"
+                [suggestions]="suggestions"
+                (completeMethod)="filterStores($event)"
+                field="storeInfoName"
+                [style]="{ width: '100%' }"
+                placeholder="Seleccionar tienda"
+              ></p-autoComplete>
             </div>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start p-2">
-          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button (onClick)="handleSearch()" class="search-buttom">Buscar</p-button></p>
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start p-2"
+        >
+          <p class="mt-4">
+            <p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3"
+              >Restaurar filtros</p-button
+            ><p-button (onClick)="handleSearch()" class="search-buttom"
+              >Buscar</p-button
+            >
+          </p>
         </div>
-
       </div>
     </div>
   </div>
   <div>
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.inventory.comparison.list.data.length>0">
-        <div class=" col-12 text-left">
+      <div
+        class="grid"
+        *ngIf="_report.state.inventory.comparison.list.data.length > 0"
+      >
+        <div class="col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-              (ngModelChange)="handleSearchRecords()" />
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar..."
+              [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()"
+            />
           </span>
         </div>
       </div>
       <p-table
-        [value]="searchText === '' ? reportState.reportState.inventory.comparison.list.data : reportState.reportState.inventory.comparison.filter.data"
-        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+        [value]="
+          searchText === ''
+            ? _report.state.inventory.comparison.list.data
+            : _report.state.inventory.comparison.filter.data
+        "
+        [paginator]="true"
+        [rows]="15"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{inventoryComparisonLabels.productId}}">
-              {{inventoryComparisonLabels.productId}}
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.productId }}"
+            >
+              {{ inventoryComparisonLabels.productId }}
             </th>
-            <th class="text-center" id="{{inventoryComparisonLabels.storeId}}">
-              {{inventoryComparisonLabels.storeId}}</th>
-            <th class="text-center" id="{{inventoryComparisonLabels.xstore_qty}}">
-              {{inventoryComparisonLabels.xstore_qty}}
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.storeId }}"
+            >
+              {{ inventoryComparisonLabels.storeId }}
             </th>
-            <th class="text-center" id="{{inventoryComparisonLabels.xcenter_qty}}">
-              {{inventoryComparisonLabels.xcenter_qty}}
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.xstore_qty }}"
+            >
+              {{ inventoryComparisonLabels.xstore_qty }}
             </th>
-            <th class="text-center" id="{{inventoryComparisonLabels.atg_qty}}">
-              {{inventoryComparisonLabels.atg_qty}}</th>
-            <th class="text-center" id="{{inventoryComparisonLabels.orderbroker_qty}}">
-              {{inventoryComparisonLabels.orderbroker_qty}}
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.xcenter_qty }}"
+            >
+              {{ inventoryComparisonLabels.xcenter_qty }}
             </th>
-
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.atg_qty }}"
+            >
+              {{ inventoryComparisonLabels.atg_qty }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ inventoryComparisonLabels.orderbroker_qty }}"
+            >
+              {{ inventoryComparisonLabels.orderbroker_qty }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="6" class="text-center">
-              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+              {{
+                isLoading ? "Por favor espere..." : "No hay datos para mostrar"
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.productId)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.storeId)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.xstore_qty)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.xcenter_qty)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.atg_qty)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText,report.orderbroker_qty)"></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.productId)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.storeId)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.xstore_qty)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.xcenter_qty)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="highlightSearchText(searchText, report.atg_qty)"
+            ></td>
+            <td
+              class="text-center"
+              [innerHTML]="
+                highlightSearchText(searchText, report.orderbroker_qty)
+              "
+            ></td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
-  <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
+  <p-dialog
+    header="{{ titleModal }}"
+    [(visible)]="showModal"
+    [ngStyle]="{ width: widthModal }"
+  >
     <p>
-      {{textModal}}
+      {{ textModal }}
     </p>
   </p-dialog>
+</div>

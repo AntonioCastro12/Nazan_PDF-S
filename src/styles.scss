@@ -1,14 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
-@import "assets/styles/template/template.scss";
-
+//@import "styles/layout/layout.scss";
 @import "../node_modules/primeng/resources/primeng.min.css";
 @import "../node_modules/primeflex/primeflex.scss";
 @import "../node_modules/primeicons/primeicons.css";
 
 @import "assets/styles/custom/custom.scss";
 
-.logo {
-  height: 10vh;
+// @import "styles/custom/width.scss";
+// @import "styles/custom/align-grid.scss";
+
+/* Demos */
+// @import "styles/flags/flags.css";
+// @import "styles/badges.scss";
+// @import "styles/code.scss";
+
+// @import "./styles/custom/dropdown.scss";
+// @import "./styles/custom/input.scss";
+
+.card-height {
+  min-height: 100px;
+  max-height: auto;
 }
 
 // .logo {

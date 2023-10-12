@@ -1,131 +1,289 @@
 <div *ngIf="!showDetail">
-  <div class="card" style="margin-bottom: 30px;">
+  <div class="card" style="margin-bottom: 30px">
     <div class="block font-bold text-left breport-round mb-3">
       <div class="report-title">Totales de facturación</div>
-      <p-progressSpinner *ngIf="isLoading" styleClass="w-4rem h-4rem spinner-position" fill="var(--surface-ground)"
-        animationDuration=".5s"></p-progressSpinner>
+      <p-progressSpinner
+        *ngIf="isLoading"
+        styleClass="w-4rem h-4rem spinner-position"
+        fill="var(--surface-ground)"
+        animationDuration=".5s"
+      ></p-progressSpinner>
     </div>
     <div class="card-container yellow-container">
-      <app-options [showSearch]="true" [showChart]="true" [showRefresh]="true" [showDownload]="true"
-        [showFavorite]="reportState.reportState.sales.invoiceTotal.list.data.length>0?true:false"></app-options>
-      <div class="text-left mb-4" *ngIf="_optionServices.optionsState.OptionsEntity.onSearch">
+      <app-options
+        [showSearch]="true"
+        [showChart]="true"
+        [showRefresh]="true"
+        [showDownload]="true"
+        [showFavorite]="
+          _report.state.sales.invoiceTotal.list.data.length > 0 ? true : false
+        "
+      ></app-options>
+      <div
+        class="text-left mb-4"
+        *ngIf="_optionServices.optionsState.OptionsEntity.onSearch"
+      >
         <div class="mb-2 p-2">Búsqueda por:</div>
-        <div class="card-container blue-container flex align-items-center justify-content-start">
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start"
+        >
           <div class="flex-1 h-4rem">
-            <div class="flex flex-column  p-2">
-              <label htmlFor="order_id" class="font-bold">{{searchFormEntityLabels.store}}</label>
-              <p-autoComplete [(ngModel)]="selectedStore" [dropdown]="true" [suggestions]="suggestions"
-                (completeMethod)="filterStores($event)" field="storeInfoName" [style]="{'width':'100%'}"
-                placeholder="Seleccionar tienda"></p-autoComplete>
-
+            <div class="flex flex-column p-2">
+              <label htmlFor="order_id" class="font-bold">{{
+                searchFormEntityLabels.store
+              }}</label>
+              <p-autoComplete
+                [(ngModel)]="selectedStore"
+                [dropdown]="true"
+                [suggestions]="suggestions"
+                (completeMethod)="filterStores($event)"
+                field="storeInfoName"
+                [style]="{ width: '100%' }"
+                placeholder="Seleccionar tienda"
+              ></p-autoComplete>
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="from" class="font-bold">Desde</label>
-              <p-calendar [(ngModel)]="from" [readonlyInput]="true" dateFormat="dd/mm/yy"
-                [style]="{'width':'100%'}"></p-calendar>
+              <p-calendar
+                [(ngModel)]="from"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+              ></p-calendar>
             </div>
           </div>
           <div class="flex-1 h-4rem">
             <div class="flex flex-column p-2">
               <label htmlFor="to" class="font-bold">Hasta</label>
-              <p-calendar [(ngModel)]="to" [readonlyInput]="true" dateFormat="dd/mm/yy"
-                [style]="{'width':'100%'}"></p-calendar>
+              <p-calendar
+                [(ngModel)]="to"
+                [readonlyInput]="true"
+                dateFormat="dd/mm/yy"
+                [style]="{ width: '100%' }"
+              ></p-calendar>
             </div>
           </div>
         </div>
-        <div class="card-container blue-container flex align-items-center justify-content-start p-2">
-          <p class="mt-4"><p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3">Restaurar
-              filtros</p-button><p-button (onClick)="handleSearch()" class="search-buttom">Buscar</p-button></p>
+        <div
+          class="card-container blue-container flex align-items-center justify-content-start p-2"
+        >
+          <p class="mt-4">
+            <p-button tooltip="Buscar" (onClick)="resetFilters()" class="mr-3"
+              >Restaurar filtros</p-button
+            ><p-button (onClick)="handleSearch()" class="search-buttom"
+              >Buscar</p-button
+            >
+          </p>
         </div>
-
       </div>
     </div>
   </div>
   <div *ngIf="!showChart">
     <div class="card">
-      <div class="grid" *ngIf="reportState.reportState.sales.invoiceTotal.list.data.length>0">
-        <div class=" col-12 text-left">
+      <div
+        class="grid"
+        *ngIf="_report.state.sales.invoiceTotal.list.data.length > 0"
+      >
+        <div class="col-12 text-left">
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
-            <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-              (ngModelChange)="handleSearchRecords()" />
+            <input
+              pInputText
+              type="text"
+              placeholder="Buscar..."
+              [(ngModel)]="searchText"
+              (ngModelChange)="handleSearchRecords()"
+            />
           </span>
         </div>
       </div>
-      <p-table #dt2
-        [value]="searchText === '' ? reportState.reportState.sales.invoiceTotal.list.data : reportState.reportState.sales.invoiceTotal.filter.data"
-        [paginator]="true" [rows]="15" styleClass="mt-3 p-datatable-sm">
+      <p-table
+        #dt2
+        [value]="
+          searchText === ''
+            ? _report.state.sales.invoiceTotal.list.data
+            : _report.state.sales.invoiceTotal.filter.data
+        "
+        [paginator]="true"
+        [rows]="15"
+        styleClass="mt-3 p-datatable-sm"
+      >
         <ng-template pTemplate="header">
           <tr class="text-sm">
-            <th class="text-center" id="{{salesInvoiceTotalLabels.storeId}}">{{salesInvoiceTotalLabels.storeId}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.businessDate}}">
-              {{salesInvoiceTotalLabels.businessDate}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.countInvoiceSale}}">
-              {{salesInvoiceTotalLabels.countInvoiceSale}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitSale}}">
-              {{salesInvoiceTotalLabels.totalUnitSale}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitReturn}}">
-              {{salesInvoiceTotalLabels.totalUnitReturn}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.unitPercentReturn}}">
-              {{salesInvoiceTotalLabels.unitPercentReturn}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalUnitFreight}}">
-              {{salesInvoiceTotalLabels.totalUnitFreight}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneySale}}">
-              {{salesInvoiceTotalLabels.totalMoneySale}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneyFreight}}">
-              {{salesInvoiceTotalLabels.totalMoneyFreight}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalMoneyReturn}}">
-              {{salesInvoiceTotalLabels.totalMoneyReturn}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.totalPercentReturn}}">
-              {{salesInvoiceTotalLabels.totalPercentReturn}}</th>
-            <th class="text-center" id="{{salesInvoiceTotalLabels.avgSales}}">{{salesInvoiceTotalLabels.avgSales}}</th>
-
+            <th class="text-center" id="{{ salesInvoiceTotalLabels.storeId }}">
+              {{ salesInvoiceTotalLabels.storeId }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.businessDate }}"
+            >
+              {{ salesInvoiceTotalLabels.businessDate }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.countInvoiceSale }}"
+            >
+              {{ salesInvoiceTotalLabels.countInvoiceSale }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalUnitSale }}"
+            >
+              {{ salesInvoiceTotalLabels.totalUnitSale }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalUnitReturn }}"
+            >
+              {{ salesInvoiceTotalLabels.totalUnitReturn }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.unitPercentReturn }}"
+            >
+              {{ salesInvoiceTotalLabels.unitPercentReturn }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalUnitFreight }}"
+            >
+              {{ salesInvoiceTotalLabels.totalUnitFreight }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalMoneySale }}"
+            >
+              {{ salesInvoiceTotalLabels.totalMoneySale }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalMoneyFreight }}"
+            >
+              {{ salesInvoiceTotalLabels.totalMoneyFreight }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalMoneyReturn }}"
+            >
+              {{ salesInvoiceTotalLabels.totalMoneyReturn }}
+            </th>
+            <th
+              class="text-center"
+              id="{{ salesInvoiceTotalLabels.totalPercentReturn }}"
+            >
+              {{ salesInvoiceTotalLabels.totalPercentReturn }}
+            </th>
+            <th class="text-center" id="{{ salesInvoiceTotalLabels.avgSales }}">
+              {{ salesInvoiceTotalLabels.avgSales }}
+            </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
           <tr>
             <td [attr.colspan]="12" class="text-center">
-              {{isLoading ? 'Por favor espere...' : 'No hay datos para mostrar'}}
+              {{
+                isLoading ? "Por favor espere..." : "No hay datos para mostrar"
+              }}
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-report>
           <tr class="text-sm">
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.storeId)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.businessDate)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.countInvoiceSale)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalUnitSale)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalUnitReturn)">asda</td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.unitPercentReturn)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalUnitFreight)"></td>
-            <td class="text-center text-green" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalMoneySale)"></td>
-            <td class="text-center text-blue" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalMoneyFreight)">
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="highlightSearchText(searchText, report.storeId)"
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="highlightSearchText(searchText, report.businessDate)"
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.countInvoiceSale)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalUnitSale)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalUnitReturn)
+              "
+            >
+              asda
             </td>
-            <td class="text-center text-red" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalMoneyReturn)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.totalPercentReturn)"></td>
-            <td class="text-center" [style]="{'min-width':'100px'}"
-              [innerHTML]="highlightSearchText(searchText,report.avgSales)"></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.unitPercentReturn)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalUnitFreight)
+              "
+            ></td>
+            <td
+              class="text-center text-green"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalMoneySale)
+              "
+            ></td>
+            <td
+              class="text-center text-blue"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalMoneyFreight)
+              "
+            ></td>
+            <td
+              class="text-center text-red"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalMoneyReturn)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="
+                highlightSearchText(searchText, report.totalPercentReturn)
+              "
+            ></td>
+            <td
+              class="text-center"
+              [style]="{ 'min-width': '100px' }"
+              [innerHTML]="highlightSearchText(searchText, report.avgSales)"
+            ></td>
           </tr>
         </ng-template>
       </p-table>
     </div>
   </div>
   <div *ngIf="showChart" [chart]="chart"></div>
-  <p-dialog header={{titleModal}} [(visible)]="showModal" [ngStyle]="{ 'width': widthModal }">
+  <p-dialog
+    header="{{ titleModal }}"
+    [(visible)]="showModal"
+    [ngStyle]="{ width: widthModal }"
+  >
     <p>
-      {{textModal}}
+      {{ textModal }}
     </p>
   </p-dialog>
+</div>

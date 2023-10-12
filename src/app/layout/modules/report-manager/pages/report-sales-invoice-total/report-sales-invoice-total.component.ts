@@ -24,7 +24,7 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 import { Chart } from 'angular-highcharts';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-sales-invoice-total',
@@ -65,22 +65,19 @@ export class ReportSalesInvoiceTotal {
   };
   chart = new Chart();
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    private _commonApi: CommonApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -89,8 +86,8 @@ export class ReportSalesInvoiceTotal {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.sales.invoiceTotal.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.sales.invoiceTotal.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -127,16 +124,16 @@ export class ReportSalesInvoiceTotal {
         this.route.snapshot.queryParamMap.get('historic')
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
-          ? this.commonState.commonState.favorites.find(
+          ? this._common.state.favorites.find(
               (item) => item.url === '/inventories/kardex'
             )
-          : this.commonState.commonState.historic.find(
+          : this._common.state.historic.find(
               (item) =>
                 item.index ===
                 Number(this.route.snapshot.queryParamMap.get('index'))
             );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(
+          const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
           );
           this.selectedStore = selectedStore || null;
@@ -163,7 +160,7 @@ export class ReportSalesInvoiceTotal {
       },
       url: '/sales/invoice-total',
     };
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -190,7 +187,7 @@ export class ReportSalesInvoiceTotal {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    for (const store of this._common.state.stores) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {
@@ -202,9 +199,9 @@ export class ReportSalesInvoiceTotal {
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this._commonApiService.getStores().subscribe({
+      this._commonApi.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data;
+          this._common.state.stores = data;
           resolve();
         },
         error: (e) => {
@@ -218,12 +215,12 @@ export class ReportSalesInvoiceTotal {
     });
   }
   getList() {
-    this.reportState.reportState.sales.invoiceTotal.list.data = [];
+    this._report.state.sales.invoiceTotal.list.data = [];
     this.isLoading = true;
-    this._reportApiService.salesInvoiceTotal(this.filter).subscribe({
+    this._reportApi.salesInvoiceTotal(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.sales.invoiceTotal.original = {
+        this._report.state.sales.invoiceTotal.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -239,7 +236,7 @@ export class ReportSalesInvoiceTotal {
           },
           unitPercentReturn: { type: 'number', format: 'percent', suffix: '%' },
         });
-        this.reportState.reportState.sales.invoiceTotal.list = {
+        this._report.state.sales.invoiceTotal.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -278,26 +275,23 @@ export class ReportSalesInvoiceTotal {
 
   async handleChart() {
     if (this.lastOptionsEntity.onChart) {
-      if (
-        this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0
-      ) {
+      if (this._report.state.sales.invoiceTotal.list.data.length <= 0) {
         await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
         this._optionServices.setChart();
         return;
       }
       let list =
-        this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0
-          ? this.reportState.reportState.sales.invoiceTotal.filter.data
-          : this.reportState.reportState.sales.invoiceTotal.list.data;
+        this._report.state.sales.invoiceTotal.filter.data.length > 0
+          ? this._report.state.sales.invoiceTotal.filter.data
+          : this._report.state.sales.invoiceTotal.list.data;
       const ids = list.map((item) => item[ID_DATA_NAME]);
-      list =
-        this.reportState.reportState.sales.invoiceTotal.original.data.filter(
-          (item) => {
-            if (ids.includes(item[ID_DATA_NAME])) {
-              return item;
-            }
+      list = this._report.state.sales.invoiceTotal.original.data.filter(
+        (item) => {
+          if (ids.includes(item[ID_DATA_NAME])) {
+            return item;
           }
-        );
+        }
+      );
 
       this.chart = new Chart({
         credits: {
@@ -355,9 +349,9 @@ export class ReportSalesInvoiceTotal {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.sales.invoiceTotal.list.data;
-    this.reportState.reportState.sales.invoiceTotal.filter.data = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
+    const list = this._report.state.sales.invoiceTotal.list.data;
+    this._report.state.sales.invoiceTotal.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
     );
   }
 
@@ -369,16 +363,16 @@ export class ReportSalesInvoiceTotal {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.sales.invoiceTotal.list.data.length <= 0) {
+    if (this._report.state.sales.invoiceTotal.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a graficar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.sales.invoiceTotal.filter.data.length > 0
-        ? this.reportState.reportState.sales.invoiceTotal.filter.data
-        : this.reportState.reportState.sales.invoiceTotal.list.data;
+      this._report.state.sales.invoiceTotal.filter.data.length > 0
+        ? this._report.state.sales.invoiceTotal.filter.data
+        : this._report.state.sales.invoiceTotal.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list = this.reportState.reportState.sales.invoiceTotal.original.data.filter(
+    list = this._report.state.sales.invoiceTotal.original.data.filter(
       (item) => {
         if (ids.includes(item[ID_DATA_NAME])) {
           return item;
