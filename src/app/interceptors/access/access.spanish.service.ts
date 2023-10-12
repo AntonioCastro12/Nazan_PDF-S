@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorModel } from '@shared/models';
 import { errorListHttp } from '../errors';
+import { SharedStateService } from 'src/app/core/shared-manager/services';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AccessSpanishService {
-  stateTemp;
-  constructor(private stateService: SharedStateService) {
-    this.stateTemp = this.stateService.stateTemp;
-  }
+  constructor(private _shared: SharedStateService) {}
 
   /***************************************************
    * TRANSLATE TO SPANISH ERROR MESSAGES
@@ -33,7 +31,7 @@ export class AccessSpanishService {
 
     translation[0] ? (result = translation[0]) : result;
 
-    return this.stateTemp.currentControl.currentLanguage === 'es'
+    return this._shared.state.currentLanguage === 'es'
       ? (result.errorSpanishTranslation as string)
       : '';
   }

@@ -2,21 +2,20 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularError } from '@shared/models';
 
+import { SharedStateService } from 'src/app/core/shared-manager/services';
+
 @Injectable({
   providedIn: 'root',
 })
 export class AccessDirectusService {
-  stateTemp;
-  constructor(private stateService: SharedStateService) {
-    this.stateTemp = this.stateService.stateTemp;
-  }
+  constructor(private _shared: SharedStateService) {}
 
   handleSuccess(event?: any) {
-    this.stateTemp.angularError = new AngularError();
+    this._shared.state.angularError = new AngularError();
     if (event instanceof HttpResponse) {
-      this.stateTemp.accessControl.isLoading = false;
+      this._shared.state.isLoading = false;
     }
-    this.stateTemp.accessControl.isTokenActive = true;
+    this._shared.state.isTokenActive = true;
     return event;
   }
 

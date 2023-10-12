@@ -31,97 +31,97 @@ export class DirectusErrorArrayResponse {
 }
 
 
-export class AngularErrorEntity {
-  active!: boolean;
-  locale!: string;
-  code!: string | number;
-  originalError!: any;
-  originalMessage!: any;
-  translatedMessage!: string;
-  angularMessage!: string;
+// export class AngularErrorEntity {
+//   active!: boolean;
+//   locale!: string;
+//   code!: string | number;
+//   originalError!: any;
+//   originalMessage!: any;
+//   translatedMessage!: string;
+//   angularMessage!: string;
 
-  constructor(error?: any) {
-    !error || error == '' ? this.onEmpyError() : null;
+//   constructor(error?: any) {
+//     !error || error == '' ? this.onEmpyError() : null;
 
-    if (error) {
-      let myError: any = this.onFullError(error);
-      this.active = myError.active;
-      this.locale = myError.locale;
-      this.code = myError.code;
-      this.originalError = myError.originalError;
-      this.originalMessage = myError.originalMessage;
-      this.translatedMessage = myError.translatedMessage;
-      this.angularMessage = myError.angularMessage;
-    }
-
-
-  }
+//     if (error) {
+//       let myError: any = this.onFullError(error);
+//       this.active = myError.active;
+//       this.locale = myError.locale;
+//       this.code = myError.code;
+//       this.originalError = myError.originalError;
+//       this.originalMessage = myError.originalMessage;
+//       this.translatedMessage = myError.translatedMessage;
+//       this.angularMessage = myError.angularMessage;
+//     }
 
 
-  clearError(){
-    this.active = true;
-    this.locale = 'es';
-    this.code = '';
-    this.originalError = null;
-    this.originalMessage = null;
-    this.translatedMessage = '';
-    this.angularMessage = '';
-  }
+//   }
 
-  onEmpyError() {
-    this.active = true;
-    this.locale = 'es';
-    this.code = '';
-    this.originalError = null;
-    this.originalMessage = null;
-    this.translatedMessage = '';
-    this.angularMessage = '';
-  }
 
-  onFullError(error: any) {
-    if (error instanceof DOMException) {
-      console.warn({ DOMException });
-      this.originalMessage = error.message;
-      this.translatedMessage = error.message;
-      this.angularMessage = error.message;
-      this.active = true;
-      return;
-    }
+//   clearError(){
+//     this.active = true;
+//     this.locale = 'es';
+//     this.code = '';
+//     this.originalError = null;
+//     this.originalMessage = null;
+//     this.translatedMessage = '';
+//     this.angularMessage = '';
+//   }
 
-    if (error instanceof HttpErrorResponse) {
-      console.warn({ HttpErrorResponse });
+//   onEmpyError() {
+//     this.active = true;
+//     this.locale = 'es';
+//     this.code = '';
+//     this.originalError = null;
+//     this.originalMessage = null;
+//     this.translatedMessage = '';
+//     this.angularMessage = '';
+//   }
 
-      let thisError: any;
+//   onFullError(error: any) {
+//     if (error instanceof DOMException) {
+//       console.warn({ DOMException });
+//       this.originalMessage = error.message;
+//       this.translatedMessage = error.message;
+//       this.angularMessage = error.message;
+//       this.active = true;
+//       return;
+//     }
 
-      thisError.active = true;
-      thisError.locale = 'es';
-      thisError.code = error.status;
-      thisError.originalMessage = error.statusText;
-      thisError.translatedMessage = this.httpErrorToSpanish(error.status);
-      this.angularMessage =
-        thisError.originalError.error.message[0].messages[0].message;
-      return thisError;
-    }
-  }
+//     if (error instanceof HttpErrorResponse) {
+//       console.warn({ HttpErrorResponse });
 
-  httpErrorToSpanish(error?: string | number | null): string {
-    let result: HttpErrorEntity = {
-      errorCode: 0,
-      errorName: 'Unknown',
-      errorSpanishTranslation:
-        'Error desconocido. Revise la conexion con el servidor',
-      errorDef:
-        'Error que no se puede traducir o el servidor está desconectado',
-    };
+//       let thisError: any;
 
-    const translation: HttpErrorEntity[] = errorListHttp.filter(
-      (x: HttpErrorEntity) => {
-        return x.errorCode === error ? x : null;
-      }
-    );
-    translation[0] ? (result = translation[0]) : result;
-    return result.errorSpanishTranslation as string;
-  }
-}
+//       thisError.active = true;
+//       thisError.locale = 'es';
+//       thisError.code = error.status;
+//       thisError.originalMessage = error.statusText;
+//       thisError.translatedMessage = this.httpErrorToSpanish(error.status);
+//       this.angularMessage =
+//         thisError.originalError.error.message[0].messages[0].message;
+//       return thisError;
+//     }
+//   }
+
+//   httpErrorToSpanish(error?: string | number | null): string {
+//     let result: HttpErrorEntity = {
+//       errorCode: 0,
+//       errorName: 'Unknown',
+//       errorSpanishTranslation:
+//         'Error desconocido. Revise la conexion con el servidor',
+//       errorDef:
+//         'Error que no se puede traducir o el servidor está desconectado',
+//     };
+
+//     const translation: HttpErrorEntity[] = errorListHttp.filter(
+//       (x: HttpErrorEntity) => {
+//         return x.errorCode === error ? x : null;
+//       }
+//     );
+//     translation[0] ? (result = translation[0]) : result;
+//     return result.errorSpanishTranslation as string;
+//   }
+// }
 
 

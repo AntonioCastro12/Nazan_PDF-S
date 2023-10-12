@@ -14,7 +14,7 @@ export class UserState {
   isSearchVisible: boolean = false;
   showFitlerDialog: boolean = false;
   isProcessing: boolean = false;
-  angularError = new AngularError();
+
 
   userForm!: UntypedFormGroup;
 

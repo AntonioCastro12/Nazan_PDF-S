@@ -8,6 +8,7 @@ import { AngularError } from '@shared/models/system';
 import { StoreStateService } from 'src/app/layout/config/store-manager/services';
 import { SharedEnvironmentService } from '@shared/services';
 import { StoreEntity } from 'src/app/layout/config/store-manager/models';
+import { SharedStateService } from 'src/app/core/shared-manager/services';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class UserApiService {
     private http: HttpClient,
     private _user: UserStateService,
     private _store: StoreStateService,
-    private env: SharedEnvironmentService
+    private env: SharedEnvironmentService,
+    private _shared: SharedStateService
   ) {}
 
   postUserItem(user: UserEntity): Observable<UserEntity> {
@@ -86,7 +88,7 @@ export class UserApiService {
   }
 
   deleteUserList(itemList: UserEntity[]): Observable<UserEntity> {
-    this._user.state.angularError = new AngularError();
+    this._shared.state.angularError = new AngularError();
     const url = `${this.env.apiUrl}/api/user-module/deleteAll`;
     let response = this.http.post<any>(url, itemList).pipe(
       map((response: any) => response.data),

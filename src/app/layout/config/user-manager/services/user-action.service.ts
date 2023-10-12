@@ -7,6 +7,7 @@ import { AngularError } from '@shared/models/system';
 import { UserApiService } from './user-api.service';
 import { UntypedFormGroup } from '@angular/forms';
 import { UserHydraService } from './user-hydra.service';
+import { SharedStateService } from 'src/app/core/shared-manager/services';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,8 @@ export class UserActionService {
     private router: Router,
     private _ngxSpinner: NgxSpinnerService,
     private _userCrud: UserApiService,
-    private _userHydra: UserHydraService
+    private _userHydra: UserHydraService,
+    private _shared: SharedStateService
   ) {}
 
   onScrollScreenTop() {
@@ -30,7 +32,7 @@ export class UserActionService {
 
   goUserList(user?: any): void {
     this._ngxSpinner.show();
-    this._user.state.angularError = new AngularError();
+    this._shared.state.angularError = new AngularError();
     this._userCrud.getUserList().subscribe({
       next: (response) => {
         this._user.state.userList = [];
@@ -39,7 +41,7 @@ export class UserActionService {
       },
       error: (error: AngularError) => {
         console.error(error);
-        this._user.state.angularError = error;
+        this._shared.state.angularError = error;
         this._ngxSpinner.hide();
       },
       complete: () => {

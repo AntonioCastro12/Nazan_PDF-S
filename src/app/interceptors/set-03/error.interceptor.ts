@@ -13,6 +13,7 @@ import { AccessDirectusService } from '../access';
 import { ToastrService } from 'ngx-toastr';
 import { AngularError } from '../../shared/models/system/shared-system.error';
 import { SharedEnvironmentService } from '@shared/services';
+import { DirectusLoginResponse } from 'src/app/core/shared-manager/models';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -40,14 +41,16 @@ export class ErrorInterceptor implements HttpInterceptor {
             '401 Unauthorized​'
           );
           this.refreshAccessToken().subscribe({
-            next: (token: DirectusLoginResponse) => {
+            next: (token) => {
+              let result: DirectusLoginResponse =
+                token as DirectusLoginResponse;
               const updated_access_token = sessionStorage.setItem(
                 'access_token',
-                JSON.stringify(token.data?.access_token)
+                JSON.stringify(result.data?.access_token)
               );
               sessionStorage.setItem(
                 'refresh_token',
-                JSON.stringify(token.data?.refresh_token)
+                JSON.stringify(result.data?.refresh_token)
               );
               const reAuthReq = req.clone({
                 headers: req.headers.set(
@@ -99,6 +102,6 @@ export class ErrorInterceptor implements HttpInterceptor {
     };
     return this.http
       .post(`${this.env.apiUrl}/auth/refresh`, refreshToken)
-      .pipe(map((data: DirectusLoginResponse) => data));
+      .pipe(map((data) => data));
   }
 }
