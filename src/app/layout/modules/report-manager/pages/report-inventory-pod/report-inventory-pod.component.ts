@@ -23,7 +23,7 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-inventory-pod',
@@ -65,22 +65,19 @@ export class ReportInventoryPodComponent {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    private _commonApi: CommonApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -89,8 +86,8 @@ export class ReportInventoryPodComponent {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.inventory.pod.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.inventory.pod.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -120,16 +117,16 @@ export class ReportInventoryPodComponent {
         this.route.snapshot.queryParamMap.get('historic')
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
-          ? this.commonState.commonState.favorites.find(
+          ? this._common.state.favorites.find(
               (item) => item.url === '/inventories/pod'
             )
-          : this.commonState.commonState.historic.find(
+          : this._common.state.historic.find(
               (item) =>
                 item.index ===
                 Number(this.route.snapshot.queryParamMap.get('index'))
             );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(
+          const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
           );
           this.selectedStore = selectedStore || null;
@@ -151,7 +148,7 @@ export class ReportInventoryPodComponent {
       url: '/inventories/pod',
     };
 
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -170,7 +167,7 @@ export class ReportInventoryPodComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    for (const store of this._common.state.stores) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {
@@ -182,9 +179,9 @@ export class ReportInventoryPodComponent {
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this._commonApiService.getStores().subscribe({
+      this._commonApi.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data;
+          this._common.state.stores = data;
           resolve();
         },
         error: (e) => {
@@ -198,12 +195,12 @@ export class ReportInventoryPodComponent {
     });
   }
   getList() {
-    this.reportState.reportState.inventory.pod.list.data = [];
+    this._report.state.inventory.pod.list.data = [];
     this.isLoading = true;
-    this._reportApiService.inventoryPod(this.filter).subscribe({
+    this._reportApi.inventoryPod(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.inventory.pod.original = {
+        this._report.state.inventory.pod.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -213,7 +210,7 @@ export class ReportInventoryPodComponent {
           FEC_HORA_POD: { type: 'date', format: 'dd-MM-yyyy HH:mm:ss' },
           FEC_HORA_CIERRE: { type: 'date', format: 'dd-MM-yyyy HH:mm:ss' },
         });
-        this.reportState.reportState.inventory.pod.list = {
+        this._report.state.inventory.pod.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -253,9 +250,9 @@ export class ReportInventoryPodComponent {
   }
 
   handleSearchRecords() {
-    const list = this.reportState.reportState.inventory.pod.list.data;
-    this.reportState.reportState.inventory.pod.filter.data = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
+    const list = this._report.state.inventory.pod.list.data;
+    this._report.state.inventory.pod.filter.data = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
     );
   }
 
@@ -267,22 +264,20 @@ export class ReportInventoryPodComponent {
   }
 
   async exportExcel() {
-    if (this.reportState.reportState.inventory.pod.list.data.length <= 0) {
+    if (this._report.state.inventory.pod.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.inventory.pod.filter.data.length > 0
-        ? this.reportState.reportState.inventory.pod.filter.data
-        : this.reportState.reportState.inventory.pod.list.data;
+      this._report.state.inventory.pod.filter.data.length > 0
+        ? this._report.state.inventory.pod.filter.data
+        : this._report.state.inventory.pod.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list = this.reportState.reportState.inventory.pod.original.data.filter(
-      (item) => {
-        if (ids.includes(item[ID_DATA_NAME])) {
-          return item;
-        }
+    list = this._report.state.inventory.pod.original.data.filter((item) => {
+      if (ids.includes(item[ID_DATA_NAME])) {
+        return item;
       }
-    );
+    });
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

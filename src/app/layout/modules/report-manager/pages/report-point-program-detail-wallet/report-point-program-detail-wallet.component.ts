@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { ReportApiService } from '../../services/report-api.service';
-import { ReportStateService } from '../../services/report-state.service';
 import { DateTime } from 'luxon';
 import { ExcelService } from '../../services/excel.service';
 import { OptionsStateService } from 'src/app/shared/components/options/models/options-state.service';
@@ -22,7 +21,8 @@ import {
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
+import { ReportStateService } from '../../services/report-state.service';
 
 @Component({
   selector: 'app-report-point-program-detail-wallet',
@@ -57,21 +57,18 @@ export class ReportPointProgramDetailWalletComponent {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
     private _reportApiService: ReportApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
     public authStateService: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
     this.authStateService.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -80,8 +77,8 @@ export class ReportPointProgramDetailWalletComponent {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.pointProgram.detailWallet.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.pointProgram.detailWallet.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -110,10 +107,10 @@ export class ReportPointProgramDetailWalletComponent {
       this.route.snapshot.queryParamMap.get('historic')
     ) {
       const report: any = this.route.snapshot.queryParamMap.get('favorite')
-        ? this.commonState.commonState.favorites.find(
+        ? this._common.state.favorites.find(
             (item) => item.url === '/point-program/detail-wallet'
           )
-        : this.commonState.commonState.historic.find(
+        : this._common.state.historic.find(
             (item) =>
               item.index ===
               Number(this.route.snapshot.queryParamMap.get('index'))
@@ -162,7 +159,7 @@ export class ReportPointProgramDetailWalletComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this.commonState.commonState.stores) {
+    for (const store of this._common.state.stores) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {
@@ -173,12 +170,12 @@ export class ReportPointProgramDetailWalletComponent {
   }
 
   getList() {
-    this.reportState.reportState.pointProgram.detailWallet.list.data = [];
+    this._report.state.pointProgram.detailWallet.list.data = [];
     this.isLoading = true;
     this._reportApiService.pointProgramDetailWallet(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.pointProgram.detailWallet.original = {
+        this._report.state.pointProgram.detailWallet.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -186,7 +183,7 @@ export class ReportPointProgramDetailWalletComponent {
         dataFormatted = formatArrayValues(dataFormatted, {
           'FECHA ACTIVIDAD': { type: 'date', format: 'dd-MM-yyyy' },
         });
-        this.reportState.reportState.pointProgram.detailWallet.list = {
+        this._report.state.pointProgram.detailWallet.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -215,10 +212,10 @@ export class ReportPointProgramDetailWalletComponent {
   }
 
   handleSearchRecords() {
-    const list =
-      this.reportState.reportState.pointProgram.detailWallet.list.data;
-    this.reportState.reportState.pointProgram.detailWallet.filter.data =
-      list.filter((item) => objectContainsValue(item, this.searchText));
+    const list = this._report.state.pointProgram.detailWallet.list.data;
+    this._report.state.pointProgram.detailWallet.filter.data = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
+    );
   }
 
   async setErrorModal(title: string, text: string, width: string) {
@@ -282,27 +279,22 @@ export class ReportPointProgramDetailWalletComponent {
   }
 
   async exportExcel() {
-    if (
-      this.reportState.reportState.pointProgram.detailWallet.list.data.length <=
-      0
-    ) {
+    if (this._report.state.pointProgram.detailWallet.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.pointProgram.detailWallet.filter.data
-        .length > 0
-        ? this.reportState.reportState.pointProgram.detailWallet.filter.data
-        : this.reportState.reportState.pointProgram.detailWallet.list.data;
+      this._report.state.pointProgram.detailWallet.filter.data.length > 0
+        ? this._report.state.pointProgram.detailWallet.filter.data
+        : this._report.state.pointProgram.detailWallet.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list =
-      this.reportState.reportState.pointProgram.detailWallet.original.data.filter(
-        (item) => {
-          if (ids.includes(item[ID_DATA_NAME])) {
-            return item;
-          }
+    list = this._report.state.pointProgram.detailWallet.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
         }
-      );
+      }
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

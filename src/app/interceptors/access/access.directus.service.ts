@@ -1,6 +1,5 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SharedStateService } from '@shared/modules';
 import { AngularError } from '@shared/models';
 
 @Injectable({

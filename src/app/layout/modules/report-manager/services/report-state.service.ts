@@ -3,15 +3,15 @@ import { BehaviorSubject } from 'rxjs';
 import { ReportState } from '../models/report.state';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ReportStateService {
   private subject = new BehaviorSubject<ReportState>(new ReportState());
-  private state = this.subject.asObservable();
+  private state$ = this.subject.asObservable();
 
-  reportState = new ReportState();
+  state = new ReportState();
 
   constructor() {
-    this.state.subscribe((state) => (this.reportState = state));
+    this.state$.subscribe((state) => (this.state = state));
   }
 }

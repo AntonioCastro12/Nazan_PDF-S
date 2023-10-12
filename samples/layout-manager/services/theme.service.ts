@@ -1,8 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Inject, Injectable } from '@angular/core';
-import { ThemeConfig } from 'src/app/layout/config/layout-manager/models/theme.config';
-
 import { LayoutStateService } from './layout.state.service';
+import { ThemeConfig } from '../models/theme.config';
 
 @Injectable({
   providedIn: 'root',

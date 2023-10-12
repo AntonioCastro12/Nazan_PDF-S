@@ -23,7 +23,7 @@ import {
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-segment-affiliated-kipon',
@@ -62,22 +62,19 @@ export class ReportSegmentAffiliatedKipon {
     onFavorite: false,
   };
 
-  layoutState;
-
   constructor(
     public _optionServices: OptionsStateService,
-    private _reportApiService: ReportApiService,
-    private _commonApiService: CommonApiService,
-    public reportState: ReportStateService,
-    public commonState: CommonStateService,
+    private _reportApi: ReportApiService,
+    private _commonApi: CommonApiService,
+    public _report: ReportStateService,
+    public _common: CommonStateService,
     public _excelService: ExcelService,
-    public authStateService: AuthStateService,
+    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    this._auth.loadUserInfo();
     _optionServices.initState();
-    this.layoutState = this.layoutStateService.layoutState;
   }
 
   ngOnDestroy(): void {
@@ -86,8 +83,8 @@ export class ReportSegmentAffiliatedKipon {
     }
   }
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = false;
-    this.reportState.reportState.segments.affiliatedKipon.list.data = [];
+    this._template.state.sidebarMainVisible = false;
+    this._report.state.segments.affiliatedKipon.list.data = [];
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -117,16 +114,16 @@ export class ReportSegmentAffiliatedKipon {
         this.route.snapshot.queryParamMap.get('historic')
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
-          ? this.commonState.commonState.favorites.find(
+          ? this._common.state.favorites.find(
               (item) => item.url === '/segments/affiliated-kipon'
             )
-          : this.commonState.commonState.historic.find(
+          : this._common.state.historic.find(
               (item) =>
                 item.index ===
                 Number(this.route.snapshot.queryParamMap.get('index'))
             );
         if (report) {
-          const selectedStore = this.commonState.commonState.stores.find(
+          const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
           );
           this.selectedStore = selectedStore || null;
@@ -154,7 +151,7 @@ export class ReportSegmentAffiliatedKipon {
       url: '/segments/affiliated-kipon',
     };
 
-    this._reportApiService.favorite(data).subscribe({
+    this._reportApi.favorite(data).subscribe({
       next: async () => {
         await this.setErrorModal(
           'Completado',
@@ -177,10 +174,9 @@ export class ReportSegmentAffiliatedKipon {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
-      this.authStateService.stateTemp.userInfo.privileges
-        .reportesadministrativos;
-    const userStore = this.authStateService.stateTemp.userInfo.tienda;
-    const kiponStores = this.commonState.commonState.stores.filter(
+      this._auth.state.userInfo.privileges.reportesadministrativos;
+    const userStore = this._auth.state.userInfo.tienda;
+    const kiponStores = this._common.state.stores.filter(
       (x) => x.storeInfoType === 'K'
     );
 
@@ -205,9 +201,9 @@ export class ReportSegmentAffiliatedKipon {
 
   getStores(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-      this._commonApiService.getStores().subscribe({
+      this._commonApi.getStores().subscribe({
         next: (data) => {
-          this.commonState.commonState.stores = data;
+          this._common.state.stores = data;
           resolve();
         },
         error: (e) => {
@@ -221,12 +217,12 @@ export class ReportSegmentAffiliatedKipon {
     });
   }
   getList() {
-    this.reportState.reportState.segments.affiliatedKipon.list.data = [];
+    this._report.state.segments.affiliatedKipon.list.data = [];
     this.isLoading = true;
-    this._reportApiService.segmentsAffiliatedKipon(this.filter).subscribe({
+    this._reportApi.segmentsAffiliatedKipon(this.filter).subscribe({
       next: (data) => {
         const dataOriginal = addIdToData(data);
-        this.reportState.reportState.segments.affiliatedKipon.original = {
+        this._report.state.segments.affiliatedKipon.original = {
           data: dataOriginal,
           total: dataOriginal.length,
         };
@@ -235,7 +231,7 @@ export class ReportSegmentAffiliatedKipon {
           signup_date: { type: 'date', format: 'dd-MM-yyyy' },
           birthday: { type: 'date', format: 'dd-MM-yyyy' },
         });
-        this.reportState.reportState.segments.affiliatedKipon.list = {
+        this._report.state.segments.affiliatedKipon.list = {
           data: dataFormatted,
           total: dataFormatted.length,
         };
@@ -275,10 +271,10 @@ export class ReportSegmentAffiliatedKipon {
   }
 
   handleSearchRecords() {
-    const list =
-      this.reportState.reportState.segments.affiliatedKipon.list.data;
-    this.reportState.reportState.segments.affiliatedKipon.filter.data =
-      list.filter((item) => objectContainsValue(item, this.searchText));
+    const list = this._report.state.segments.affiliatedKipon.list.data;
+    this._report.state.segments.affiliatedKipon.filter.data = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
+    );
   }
 
   async setErrorModal(title: string, text: string, width: string) {
@@ -289,27 +285,22 @@ export class ReportSegmentAffiliatedKipon {
   }
 
   async exportExcel() {
-    if (
-      this.reportState.reportState.segments.affiliatedKipon.list.data.length <=
-      0
-    ) {
+    if (this._report.state.segments.affiliatedKipon.list.data.length <= 0) {
       await this.setErrorModal('Error', 'No hay datos a exportar', '50px');
       return;
     }
     let list =
-      this.reportState.reportState.segments.affiliatedKipon.filter.data.length >
-      0
-        ? this.reportState.reportState.segments.affiliatedKipon.filter.data
-        : this.reportState.reportState.segments.affiliatedKipon.list.data;
+      this._report.state.segments.affiliatedKipon.filter.data.length > 0
+        ? this._report.state.segments.affiliatedKipon.filter.data
+        : this._report.state.segments.affiliatedKipon.list.data;
     const ids = list.map((item) => item[ID_DATA_NAME]);
-    list =
-      this.reportState.reportState.segments.affiliatedKipon.original.data.filter(
-        (item) => {
-          if (ids.includes(item[ID_DATA_NAME])) {
-            return item;
-          }
+    list = this._report.state.segments.affiliatedKipon.original.data.filter(
+      (item) => {
+        if (ids.includes(item[ID_DATA_NAME])) {
+          return item;
         }
-      );
+      }
+    );
     const blob = await this._excelService.generateExcel(list);
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');

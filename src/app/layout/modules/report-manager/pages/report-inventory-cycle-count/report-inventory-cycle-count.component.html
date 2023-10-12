@@ -15,9 +15,7 @@
         [showRefresh]="true"
         [showDownload]="true"
         [showFavorite]="
-          reportState.reportState.inventory.cycleCount.list.data.length > 0
-            ? true
-            : false
+          _report.state.inventory.cycleCount.list.data.length > 0 ? true : false
         "
       ></app-options>
 
@@ -99,7 +97,7 @@
   <div class="card">
     <div
       class="grid"
-      *ngIf="reportState.reportState.inventory.cycleCount.list.data.length > 0"
+      *ngIf="_report.state.inventory.cycleCount.list.data.length > 0"
     >
       <div class="col-4 text-left">
         <span class="p-input-icon-left">
@@ -117,8 +115,8 @@
     <p-table
       [value]="
         searchText === ''
-          ? reportState.reportState.inventory.cycleCount.list.data
-          : reportState.reportState.inventory.cycleCount.filter.data
+          ? _report.state.inventory.cycleCount.list.data
+          : _report.state.inventory.cycleCount.filter.data
       "
       [paginator]="true"
       [rows]="15"

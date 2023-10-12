@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorModel } from '@shared/models';
-
-import { SharedStateService } from '@shared/modules';
-
-import { errorListHttp } from '@interceptors/errors';
+import { errorListHttp } from '../errors';
 
 @Injectable({
   providedIn: 'root',

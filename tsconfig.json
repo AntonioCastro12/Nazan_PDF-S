@@ -24,14 +24,27 @@
       "dom"
     ],
     "paths": {
+      "@store-manager": [
+        "src/app/layout/config/store-manager/*"
+      ],
       "@user-manager/*": [
         "src/app/layout/config/user-manager/*"
+      ],
+
+      "@auth-manager/*": [
+        "src/app/layout/module/auth-manager/*"
+      ],
+      "@home-manager/*": [
+        "src/app/layout/module/home-manager/*"
+      ],
+      "@report-manager/*": [
+        "src/app/layout/module/report-manager/*"
       ],
       "@shared/*": [
         "src/app/shared/*"
       ],
-      "@store-manager": [
-        "src/app/layout/config/store-manager/*"
+      "@template-manager/*": [
+        "src/app/template-manager/*"
       ]
     }
   },

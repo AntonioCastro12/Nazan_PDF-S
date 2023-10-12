@@ -10,13 +10,13 @@ const routes: Routes = [
         (m) => m.TemplateManagerModule
       ),
   },
-  {
-    path: 'layout-old',
-    loadChildren: () =>
-      import('src/app/layout/config/layout-manager/layout-manager.module').then(
-        (m) => m.LayoutManagerModule
-      ),
-  },
+  // {
+  //   path: 'layout-old',
+  //   loadChildren: () =>
+  //     import('src/app/layout/config/layout-manager/layout-manager.module').then(
+  //       (m) => m.LayoutManagerModule
+  //     ),
+  // },
   {
     path: 'reports',
     loadChildren: () =>

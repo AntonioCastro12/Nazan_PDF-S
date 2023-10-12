@@ -15,9 +15,7 @@
         [showRefresh]="true"
         [showDownload]="true"
         [showFavorite]="
-          reportState.reportState.inventory.kardex.list.data.length > 0
-            ? true
-            : false
+          _report.state.inventory.kardex.list.data.length > 0 ? true : false
         "
       ></app-options>
       <div
@@ -117,7 +115,7 @@
     <div class="card">
       <div
         class="grid"
-        *ngIf="reportState.reportState.inventory.kardex.list.data.length > 0"
+        *ngIf="_report.state.inventory.kardex.list.data.length > 0"
       >
         <div class="col-4"></div>
         <div class="col-4 text-left">
@@ -137,8 +135,8 @@
         #dt2
         [value]="
           searchText === ''
-            ? reportState.reportState.inventory.kardex.list.data
-            : reportState.reportState.inventory.kardex.filter.data
+            ? _report.state.inventory.kardex.list.data
+            : _report.state.inventory.kardex.filter.data
         "
         [paginator]="true"
         [rows]="15"

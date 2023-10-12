@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Identity } from './sso/identity.interface';
 import { SsoService } from './sso/sso.service';
 import { $Loading } from 'src/app/shared/popups';
-import { AuthStateService } from './layout/modules/auth-manager/services/auth-state.service';
-import { LayoutState } from './layout/config/layout-manager/models/layout.state';
-import { LayoutStateService } from './layout/config/layout-manager';
 
 @Component({
   selector: 'app-root',

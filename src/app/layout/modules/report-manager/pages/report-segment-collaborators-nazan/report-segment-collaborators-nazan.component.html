@@ -15,8 +15,7 @@
         [showRefresh]="true"
         [showDownload]="true"
         [showFavorite]="
-          reportState.reportState.segments.collaboratorsNazan.list.data.length >
-          0
+          _report.state.segments.collaboratorsNazan.list.data.length > 0
             ? true
             : false
         "
@@ -74,10 +73,7 @@
     <div class="card">
       <div
         class="grid"
-        *ngIf="
-          reportState.reportState.segments.collaboratorsNazan.list.data.length >
-          0
-        "
+        *ngIf="_report.state.segments.collaboratorsNazan.list.data.length > 0"
       >
         <div class="col-12 text-left">
           <span class="p-input-icon-left">
@@ -97,8 +93,8 @@
         [autoLayout]="true"
         [value]="
           searchText === ''
-            ? reportState.reportState.segments.collaboratorsNazan.list.data
-            : reportState.reportState.segments.collaboratorsNazan.filter.data
+            ? _report.state.segments.collaboratorsNazan.list.data
+            : _report.state.segments.collaboratorsNazan.filter.data
         "
         [paginator]="true"
         [rows]="15"

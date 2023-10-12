@@ -2,38 +2,35 @@ import { Component } from '@angular/core';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { CommonStateService } from '../../../report-manager/services/common-state.service';
 import { ReportApiService } from '../../../report-manager/services/report-api.service';
+import { Router } from '@angular/router';
+import { TemplateStateService } from 'src/app/template';
 import {
-  ListHistoric,
   labelsListFavorites,
   labelsListHistoric,
   mapUrlReport,
-} from 'src/app/layout/config/layout-manager/models/bookmarks.model';
-import { Router } from '@angular/router';
-import { LayoutStateService } from 'src/app/layout/config/layout-manager';
+} from '../../models/bookmarks.model';
+
 @Component({
   selector: 'app-home-page-compomnent',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
 export class HomePageComponent {
-  layoutState;
-
   constructor(
-    public authStateService: AuthStateService,
-    public commonState: CommonStateService,
-    private _reportApiService: ReportApiService,
+    public _auth: AuthStateService,
+    public _common: CommonStateService,
+    private _reportApi: ReportApiService,
     private router: Router,
-    private layoutStateService: LayoutStateService
+    private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
-    this.layoutState = this.layoutStateService.layoutState;
+    this._auth.loadUserInfo();
   }
   labelsListFavorites = labelsListFavorites;
   labelsListHistoric = labelsListHistoric;
   index: number | null = null;
 
   getHistoric() {
-    this._reportApiService.getHistoric().subscribe({
+    this._reportApi.getHistoric().subscribe({
       next: (data) => {
         const temp = data.map((item, index) => {
           return {
@@ -44,7 +41,7 @@ export class HomePageComponent {
             updatedAt: item.updatedAt,
           };
         });
-        this.commonState.commonState.historic = temp.slice(0, 5);
+        this._common.state.historic = temp.slice(0, 5);
       },
       error: (e) => {
         console.error('error loading data', e);
@@ -56,9 +53,9 @@ export class HomePageComponent {
   }
 
   getFavorites() {
-    this._reportApiService.getFavorites().subscribe({
+    this._reportApi.getFavorites().subscribe({
       next: (data) => {
-        this.commonState.commonState.favorites = data;
+        this._common.state.favorites = data;
       },
       error: (e) => {
         console.error('error loading data', e);
@@ -70,7 +67,7 @@ export class HomePageComponent {
   }
 
   ngOnInit() {
-    this.layoutState.config.layoutConfig.sidebarActive = true;
+    this._template.state.sidebarMainVisible = true;
     this.getHistoric();
     this.getFavorites();
   }

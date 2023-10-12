@@ -9,11 +9,10 @@ import {
 import { catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { DirectusLoginResponse } from '@shared/models';
-import { SharedEnvironmentService } from '@shared/modules';
 import { AccessDirectusService } from '../access';
 import { ToastrService } from 'ngx-toastr';
 import { AngularError } from '../../shared/models/system/shared-system.error';
+import { SharedEnvironmentService } from '@shared/services';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -42,7 +41,6 @@ export class ErrorInterceptor implements HttpInterceptor {
           );
           this.refreshAccessToken().subscribe({
             next: (token: DirectusLoginResponse) => {
-
               const updated_access_token = sessionStorage.setItem(
                 'access_token',
                 JSON.stringify(token.data?.access_token)
