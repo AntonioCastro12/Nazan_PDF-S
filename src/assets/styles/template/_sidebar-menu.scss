@@ -1,0 +1,108 @@
+.p-panelmenu {
+  width: 100%;
+  font-size: medium;
+  .p-menuitem-text {
+    color: white;
+    font-size: medium;
+    line-height: 1;
+  }
+
+  .p-menuitem-icon {
+    font-size: medium;
+    line-height: 1;
+    margin-right: 1rem;
+    color: white !important;
+  }
+
+  .p-submenu-icon {
+    color: white;
+    font-size: medium;
+    line-height: 1;
+    margin-right: 1rem;
+  }
+
+  .p-panelmenu-header-action {
+    width: 100%;
+    //background-color: rgba(0, 0, 0, 0.8) !important;
+    padding: 0.5rem 0.3rem;
+    border-radius: 25px;
+  }
+
+  .p-toggleable-content {
+    width: 100%;
+    //background-color: rgb(212, 148, 148);
+  }
+
+  .p-panelmenu-content {
+    width: 100%;
+    //background-color: var(--gray-400);
+    background-color: transparent;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .p-menuitem-link {
+    border-radius: 25px !important;
+  }
+
+  .p-menuitem-text {
+    color: white !important;
+  }
+
+  .p-menuitem-link-active {
+    background: linear-gradient(90deg, rgba(255,209,0,1) 0%, rgba(255,158,0,1) 100%);
+    .p-menuitem-text {
+      color: black !important;
+    }
+    .p-menuitem-icon{
+      color: black !important;
+    }
+    .p-submenu-icon {
+      color: black;
+    }
+  }
+
+
+
+
+  ////// Hover
+  ///
+
+  .p-panelmenu-header-action:hover {
+    color: black;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(255,209,0,1) 0%, rgba(255,158,0,1) 100%);
+    .p-menuitem-text {
+      color: black !important;
+    }
+    .p-menuitem-icon{
+      color: black !important;
+    }
+    .p-submenu-icon {
+      color: black;
+    }
+    .p-menuitem-link {
+      background: linear-gradient(90deg, rgba(255,209,0,1) 0%, rgba(255,158,0,1) 100%) !important;
+    }
+  }
+
+  // .p-menuitem-text:hover {
+  //   color: black;
+  // }
+
+  .p-panelmenu-header-content:hover {
+    width: 100%;
+  }
+
+  .p-menuitem-link:hover {
+    background: linear-gradient(90deg, rgba(255,209,0,1) 0%, rgba(255,158,0,1) 100%) !important;
+    .p-menuitem-text {
+      color: black !important;
+    }
+    .p-menuitem-icon{
+      color: black !important;
+    }
+  }
+}
+// .p-panelmenu:hover {
+//   //background-color: var(--gray-400);
+// }

@@ -30,7 +30,7 @@
       "@shared/*": [
         "src/app/shared/*"
       ],
-      "@store-manager": [
+      "@store-manager/*": [
         "src/app/layout/config/store-manager/*"
       ]
     }

@@ -1,5 +1,5 @@
 export * from './components';
-export * from './menus';
+
 export * from './models';
 export * from './pages';
 export * from './services';

@@ -2,7 +2,9 @@
   <template-topbar></template-topbar>
 </article>
 
-<article
+<router-outlet></router-outlet>
+
+<!-- <article
   class="layout-fixed-content"
   [ngClass]="
     _template.state.sidebarMainVisible
@@ -21,15 +23,4 @@
   <div class="">
     <router-outlet></router-outlet>
   </div>
-</article>
-
-<!--
-<div class="item2" *ngIf="_template.state.sidebarMainVisible">
-  <template-sidebar-left></template-sidebar-left>
-</div>
-<div class="item3" [ngClass]="columnChange()">
-  <router-outlet></router-outlet>
-</div>
-<div class="item5">
-  <template-footer></template-footer>
-</div> -->
+</article> -->
