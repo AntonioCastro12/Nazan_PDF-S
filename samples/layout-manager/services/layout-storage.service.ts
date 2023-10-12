@@ -15,16 +15,18 @@ export class LayoutStorageService {
 
     templateState ? (templateState = new TemplateState()) : templateState;
 
-    localStorage.setItem('layoutState', JSON.stringify(templateState));
+    sessionStorage.setItem('layoutState', JSON.stringify(templateState));
     this._template.state = templateState;
   }
 
   getLayoutState(): LayoutState {
     // let layoutState = new LayoutState();
-    let layoutState = JSON.parse(localStorage.getItem('layoutState') as string);
+    let layoutState = JSON.parse(
+      sessionStorage.getItem('layoutState') as string
+    );
 
     this._template.state;
-    localStorage.setItem('layoutState', JSON.stringify(layoutState));
+    sessionStorage.setItem('layoutState', JSON.stringify(layoutState));
 
     return layoutState;
   }

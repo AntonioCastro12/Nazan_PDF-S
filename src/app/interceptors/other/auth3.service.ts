@@ -27,7 +27,6 @@ export class Auth3Service {
     document.cookie = `access_token=${token}`;
   }
 
-
   setRefreshToken(token: string) {
     this.refreshToken = token;
     sessionStorage.setItem('refresh_token', token);
@@ -36,7 +35,7 @@ export class Auth3Service {
 
   logout() {
     sessionStorage.clear();
-    localStorage.clear();
+    sessionStorage.clear();
 
     sessionStorage.removeItem('access_token');
     sessionStorage.removeItem('refresh_token');

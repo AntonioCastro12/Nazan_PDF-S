@@ -1,4 +1,3 @@
-
 import {
   HttpEvent,
   HttpHandler,
@@ -10,9 +9,7 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor() {
-
-  }
+  constructor() {}
 
   intercept(
     req: HttpRequest<any>,
@@ -35,4 +32,25 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request);
   }
+
+  // intercept(
+  //   req: HttpRequest<any>,
+  //   next: HttpHandler
+  // ): Observable<HttpEvent<any>> {
+  //   let token: string = '';
+
+  //   if (!sessionStorage.getItem('access_token')) {
+  //     return next.handle(req);
+  //   } else {
+  //     token = sessionStorage.getItem('access_token') as string;
+  //   }
+
+  //   const authReq = req.clone({
+  //     headers: req.headers.set(
+  //       'Authorization',
+  //       `Bearer ${sessionStorage.getItem('access_token') ?? ''}`
+  //     ),
+  //   });
+  //   return next.handle(authReq);
+  // }
 }

@@ -25,25 +25,26 @@ export class AuthStateService {
     this.state.userInfo = new UserInfoEntity();
   }
 
-  loadUserInfo(): void {
-    this.authApiService.getUserInfo().subscribe({
-      next: (data) => {
-        this.state.userInfo = data;
-        this.setInfoUser();
-      },
-      error: (e) => {
-        console.error('error loading data', e);
-        this.resetUserInfo();
-      },
-      complete: () => {
-        return;
-      },
-    });
-  }
+  // loadUserInfo(): void {
+  //   let access_token = sessionStorage.getItem('access_token') as string;
+  //   this.authApiService.getUserInfo(access_token).subscribe({
+  //     next: (data) => {
+  //       this.state.userInfo = data;
+  //       this.setInfoUser();
+  //     },
+  //     error: (e) => {
+  //       console.error('error loading data', e);
+  //       this.resetUserInfo();
+  //     },
+  //     complete: () => {
+  //       return;
+  //     },
+  //   });
+  // }
 
   setInfoUser(user?: UserInfoEntity) {
     const layout = this.injector.get(TemplateStateService);
-    layout.state.toogleSidebarMainVisible();
+    //layout.state.toogleSidebarMainVisible();
     // this.userInfo = { ...user };
     // this.subject.next(this.userInfo);
   }

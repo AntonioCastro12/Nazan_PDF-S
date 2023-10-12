@@ -73,7 +73,7 @@ export class ReportSegmentCollaboratorsNazan {
     private route: ActivatedRoute,
     public _template: TemplateStateService
   ) {
-    this._auth.loadUserInfo();
+    // this._auth.loadUserInfo();
     _optionServices.initState();
   }
 

@@ -73,7 +73,7 @@ export class ReportSegmentAffiliatedKipon {
     private route: ActivatedRoute,
     private _template: TemplateStateService
   ) {
-    this._auth.loadUserInfo();
+    //this._auth.loadUserInfo();
     _optionServices.initState();
   }
 

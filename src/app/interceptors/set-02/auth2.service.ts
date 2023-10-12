@@ -35,7 +35,7 @@ export class Auth2Service {
 
   logout() {
     sessionStorage.clear();
-    localStorage.clear();
+    sessionStorage.clear();
 
     sessionStorage.removeItem('access_token');
     sessionStorage.removeItem('refresh_token');

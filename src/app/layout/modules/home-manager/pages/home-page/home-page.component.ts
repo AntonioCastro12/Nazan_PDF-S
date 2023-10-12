@@ -32,7 +32,8 @@ export class HomePageComponent {
     private _store: StoreStateService,
     private _user: UserStateService
   ) {
-    this._auth.loadUserInfo();
+    // this._auth.loadUserInfo();
+    this.getUserInfo();
   }
   labelsListFavorites = labelsListFavorites;
   labelsListHistoric = labelsListHistoric;
@@ -127,7 +128,7 @@ export class HomePageComponent {
   }
 
   getUserInfo() {
-    let access_token = localStorage.getItem('access_token') as string;
+    let access_token = sessionStorage.getItem('access_token') as string;
     this._userHydra.getUserInfo(access_token).subscribe({
       next: (data: UserEntity) => {
         console.log({ DATA_HIDRA: data });

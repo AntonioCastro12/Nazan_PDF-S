@@ -77,7 +77,7 @@ export class ReportInventoryKardexComponent {
     private _template: TemplateStateService
   ) {
     _optionServices.initState();
-    this._auth.loadUserInfo();
+    //this._auth.loadUserInfo();
   }
 
   ngOnDestroy(): void {

@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     clearIdentity: boolean = false
   ) => {
     if (clearIdentity) {
-      localStorage.removeItem('access_token');
+      sessionStorage.removeItem('access_token');
       this._sso.setToken(null);
       this.identity = null;
       return;
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     if (!data || !data.token) return $Loading.close();
 
     if (refresh) {
-      localStorage.setItem('access_token', data.token);
+      sessionStorage.setItem('access_token', data.token);
       this._sso.setToken(data.token);
       return;
     }
@@ -50,7 +50,7 @@ export class AppComponent implements OnInit {
     // this.router.navigate([route]);
 
     // guardar token
-    localStorage.setItem('access_token', data.token);
+    sessionStorage.setItem('access_token', data.token);
     this._sso.setToken(data.token);
     $Loading.close();
   };

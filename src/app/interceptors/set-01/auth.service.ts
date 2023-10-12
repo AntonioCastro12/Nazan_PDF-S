@@ -60,7 +60,7 @@ export class AuthService {
   // implement logout functionality
   logout() {
     sessionStorage.clear();
-    localStorage.clear();
+    sessionStorage.clear();
     this.cookieService.delete('access_token');
     this.cookieService.delete('refresh_token');
     sessionStorage.removeItem('access_token');

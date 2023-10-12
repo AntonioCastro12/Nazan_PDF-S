@@ -22,7 +22,7 @@ export class ThemeService {
 
       this.layoutStateService.layoutState.config.themeConfig = themeSelected;
 
-      localStorage.setItem(
+      sessionStorage.setItem(
         'layoutState',
         JSON.stringify(this.layoutStateService.layoutState)
       );

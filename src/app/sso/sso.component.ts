@@ -187,7 +187,7 @@ export class SsoComponent implements OnInit {
       },
       '*'
     );
-    localStorage.removeItem('access_token');
+    sessionStorage.removeItem('access_token');
     this.ssoService.setToken(null);
     this.ssoService.identity = null;
     this.viewIframe(true);

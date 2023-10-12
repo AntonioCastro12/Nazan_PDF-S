@@ -67,7 +67,7 @@ export class ReportPointProgramDetailWalletComponent {
     private route: ActivatedRoute,
     private _template: TemplateStateService
   ) {
-    this.authStateService.loadUserInfo();
+    //this.authStateService.loadUserInfo();
     _optionServices.initState();
   }
 

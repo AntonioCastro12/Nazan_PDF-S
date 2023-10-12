@@ -15,7 +15,6 @@ export class UserState {
   showFitlerDialog: boolean = false;
   isProcessing: boolean = false;
 
-
   userForm!: UntypedFormGroup;
 
   getScreenWidth = window.innerWidth;

@@ -71,7 +71,7 @@ export class ReportInventoryComparisonComponent {
     public _auth: AuthStateService,
     private route: ActivatedRoute
   ) {
-    this._auth.loadUserInfo();
+    //this._auth.loadUserInfo();
     _optionServices.initState();
   }
 
