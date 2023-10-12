@@ -7,4 +7,5 @@ export const environment = {
   apiSecurity: 'https://hydra.impuls.com.mx',
   utilityUrl: 'https://utilityapi.impuls.com.mx',
   dashboardUrl: 'https://dashboard.impuls.com.mx',
+  hydraUrl: 'https://hydra.impuls.com.mx',
 };

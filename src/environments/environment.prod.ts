@@ -5,4 +5,5 @@ export const environment = {
   apiUrl: 'http://localhost:3151',
   utilityUrl: 'https://utilityapi.impuls.com.mx',
   dashboardUrl: 'https://dashboard.impuls.com.mx',
+  hydraUrl: 'https://hydra.impuls.com.mx',
 };
