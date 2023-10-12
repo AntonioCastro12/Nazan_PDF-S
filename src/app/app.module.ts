@@ -11,6 +11,7 @@ import { AuthStateService } from './layout/modules/auth-manager/services/auth-st
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/set-03';
+import { WINDOW_PROVIDERS } from './window.provider';
 
 @NgModule({
   declarations: [AppComponent, SsoComponent],
@@ -26,7 +27,12 @@ import { AuthInterceptor } from './interceptors/set-03';
   ],
   providers: [
     AuthStateService,
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+    WINDOW_PROVIDERS,
   ],
   bootstrap: [AppComponent],
 })
