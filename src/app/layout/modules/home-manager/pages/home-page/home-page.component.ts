@@ -12,6 +12,8 @@ import {
 import { UserHydraService } from '@user-manager/services/user-hydra.service';
 import { StoreApiService } from '@store-manager/services';
 import { StoreStateService } from '@store-manager/services';
+import { UserEntity } from '@user-manager/models';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'app-home-page-compomnent',
@@ -27,7 +29,8 @@ export class HomePageComponent {
     private _template: TemplateStateService,
     private _userHydra: UserHydraService,
     private _storeApi: StoreApiService,
-    private _store: StoreStateService
+    private _store: StoreStateService,
+    private _user: UserStateService
   ) {
     this._auth.loadUserInfo();
   }
