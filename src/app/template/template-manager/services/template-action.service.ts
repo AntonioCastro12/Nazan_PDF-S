@@ -84,4 +84,11 @@ export class TemplateActionService {
   goExitPage() {
     this.router.navigate(['/exit']);
   }
+
+  onCheckAccess() {
+    let token = sessionStorage.getItem('access_token');
+    if (token == null) {
+      this.goExitPage();
+    }
+  }
 }

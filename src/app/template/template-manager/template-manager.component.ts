@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
-import { TemplateStateService } from './services';
+import { TemplateActionService, TemplateStateService } from './services';
 
 @Component({
   selector: 'app-template-manager',
   templateUrl: './template-manager.component.html',
 })
 export class TemplateManagerComponent {
-  constructor(public _template: TemplateStateService) {
+  constructor(
+    public _template: TemplateStateService,
+    private _templateAction: TemplateActionService
+  ) {
+    this._templateAction.onCheckAccess();
     const currentMenu = JSON.parse(
       sessionStorage.getItem('configMenu') as string
     );

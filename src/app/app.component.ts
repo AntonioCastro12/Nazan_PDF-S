@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Identity } from './sso/identity.interface';
 import { SsoService } from './sso/sso.service';
 import { $Loading } from 'src/app/shared/popups';
-import { TemplateStateService } from './template';
+import { TemplateActionService, TemplateStateService } from './template';
 
 @Component({
   selector: 'app-root',
@@ -14,8 +14,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly _sso: SsoService,
-    public _template: TemplateStateService
-  ) {}
+    public _template: TemplateStateService,
+    private _templateAction: TemplateActionService
+  ) {
+    this._templateAction.onCheckAccess();
+  }
 
   ngOnInit(): void {
     $Loading.open();

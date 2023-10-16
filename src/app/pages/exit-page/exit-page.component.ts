@@ -38,6 +38,6 @@ export class ExitPageComponent implements OnInit {
     localStorage.removeItem('ssoTryCounts');
   }
   ngOnInit() {
-    this._template.state.identity = null;
+    //this._template.state.identity = null;
   }
 }
