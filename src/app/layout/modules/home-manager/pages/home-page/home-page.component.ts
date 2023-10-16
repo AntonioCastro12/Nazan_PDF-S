@@ -135,17 +135,17 @@ export class HomePageComponent {
         //console.log({ DATA_HIDRA: data });
         this._user.state.userSelected = data;
         this._user.state.setStorageUser(data);
-        this._template.state.roleList = [
-          'staff_ingresos',
-          'staff_inventario_ost',
-          'staff_kipon',
-          'staff_marketing',
-          'staff_mayoreo',
-          'staff_menudeo',
-          'staff_planeacion',
-          'tienda',
-        ];
-        //this._template.state.roleList = data.privileges.reportesadministrativos;
+        // this._template.state.roleList = [
+        //   'staff_ingresos',
+        //   'staff_inventario_ost',
+        //   'staff_kipon',
+        //   'staff_marketing',
+        //   'staff_mayoreo',
+        //   'staff_menudeo',
+        //   'staff_planeacion',
+        //   'tienda',
+        // ];
+        this._template.state.roleList = data.privileges.reportesadministrativos;
         this.onSelectMenu(data.privileges.reportesadministrativos[0]);
 
         let temp = {
