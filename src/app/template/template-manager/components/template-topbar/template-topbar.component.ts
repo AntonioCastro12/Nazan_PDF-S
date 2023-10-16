@@ -20,7 +20,7 @@ export class TemplateTopbarComponent {
   }
 
   changeRol(event: any) {
-    console.log(event.value);
+    this.router.navigate(['/']);
     this._templateAction.onMenu(event.value);
   }
 }

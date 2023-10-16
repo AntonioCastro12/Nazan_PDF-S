@@ -78,7 +78,7 @@ export class HomePageComponent {
   }
 
   ngOnInit() {
-    this._template.state.sidebarMainVisible = true;
+    this._template.state.sidebarOverlayVisible = true;
     this.getHistoric();
     this.getFavorites();
   }

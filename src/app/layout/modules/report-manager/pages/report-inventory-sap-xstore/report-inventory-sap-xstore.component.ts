@@ -81,7 +81,7 @@ export class ReportInventorySapXtoreComponent {
     }
   }
   ngOnInit() {
-    this._template.state.sidebarMainVisible = false;
+    this._template.state.sidebarOverlayVisible = false;
     this._report.state.inventory.sapXstore.list.data = [];
     // this.getList();
     this.subscription = this._optionServices.state.subscribe((optionsState) => {

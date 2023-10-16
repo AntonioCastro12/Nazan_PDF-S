@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { TemplateStateService } from '../../services';
 import { UserStateService } from '@user-manager/services';
 import { StoreStateService } from 'src/app/layout/config/store-manager/services';
+import { SystemEnvironmentService } from '@shared/services';
 
 @Component({
   selector: 'template-sidebar-overlay',
@@ -13,6 +14,7 @@ export class TemplateSidebarOverlayComponent {
     // public _store: StoreStateService,
     public _template: TemplateStateService,
     public _user: UserStateService,
-    public _store: StoreStateService
+    public _store: StoreStateService,
+    public env: SystemEnvironmentService
   ) {}
 }
