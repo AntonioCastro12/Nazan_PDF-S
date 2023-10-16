@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
     public _template: TemplateStateService,
     private _templateAction: TemplateActionService
   ) {
-    this._templateAction.onCheckAccess();
+    //this._templateAction.onCheckAccess();
   }
 
   ngOnInit(): void {

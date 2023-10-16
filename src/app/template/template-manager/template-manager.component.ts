@@ -10,7 +10,7 @@ export class TemplateManagerComponent {
     public _template: TemplateStateService,
     private _templateAction: TemplateActionService
   ) {
-    this._templateAction.onCheckAccess();
+    //this._templateAction.onCheckAccess();
     const currentMenu = JSON.parse(
       sessionStorage.getItem('configMenu') as string
     );
