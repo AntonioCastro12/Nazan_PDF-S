@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ExitPageComponent } from './pages/exit-page/exit-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'layout', pathMatch: 'full' },
@@ -31,6 +32,8 @@ const routes: Routes = [
         (m) => m.HomeManagerModule
       ),
   },
+
+  { path: 'exit', component: ExitPageComponent },
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 .template-sidebar {
   .p-sidebar {
     margin-top: 4rem;
-    background-color: rgba(0, 0, 0, 0.5) !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
 
     .p-button {
       background: black !important;
@@ -22,6 +22,7 @@
   width: 310px;
   display: flex;
   justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.8) !important;
 }
 
 .template-sidebar-overlay {
@@ -32,9 +33,10 @@
 
   .p-sidebar {
     width: 310px;
-    background-color: rgba(0, 0, 0, 0.7) !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
     display: flex;
     justify-content: space-between;
+
   }
 
   .p-sidebar-content {

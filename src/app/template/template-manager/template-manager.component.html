@@ -2,17 +2,15 @@
   <template-topbar></template-topbar>
 </article>
 
-<article
-  class="layout-fixed-content"
-  [ngClass]="
+<article class="layout-fixed-content">
+  <!--  [ngClass]="
     _template.state.sidebarMainVisible
       ? 'layout-sidebar-true'
       : 'layout-sidebar-false'
   "
->
-  <div class="" *ngIf="_template.state.sidebarMainVisible">
+    <div class="" *ngIf="_template.state.sidebarMainVisible">
     <template-sidebar-left></template-sidebar-left>
-  </div>
+  </div> -->
 
   <div class="" *ngIf="_template.state.sidebarOverlayVisible">
     <template-sidebar-overlay></template-sidebar-overlay>

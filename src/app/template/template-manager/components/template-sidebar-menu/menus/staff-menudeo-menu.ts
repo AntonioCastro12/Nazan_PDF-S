@@ -52,4 +52,9 @@ export const staffMenudeoMenu = [
       },
     ],
   },
+  {
+    label: 'Salir',
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
+  },
 ];

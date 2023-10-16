@@ -32,8 +32,13 @@ export const staffMarketingMenu = [
 
             routerLink: ['/layout/reports/point-program/detail-wallet'],
           },
-        ]
+        ],
       },
     ],
+  },
+  {
+    label: 'Salir',
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
   },
 ];

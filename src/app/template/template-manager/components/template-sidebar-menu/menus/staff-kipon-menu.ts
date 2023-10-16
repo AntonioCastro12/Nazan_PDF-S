@@ -22,8 +22,13 @@ export const staffKiponMenu = [
 
             routerLink: ['/layout/reports/segments/affiliated-kipon'],
           },
-        ]
+        ],
       },
     ],
+  },
+  {
+    label: 'Salir',
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
   },
 ];

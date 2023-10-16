@@ -34,16 +34,22 @@ export const tiendaMenu = [
           },
         ],
       },
+      {
+        label: 'Segmentos',
+
+        items: [
+          {
+            label: 'Afiliados KIPON SHOE CLUB',
+
+            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+          },
+        ],
+      },
     ],
   },
   {
     label: 'Salir',
-    items: [
-      {
-        label: 'Salir',
-        icon: 'pi pi-fw pi-sign-out',
-        routerLink: ['/layout/welcome/logout'],
-      },
-    ],
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
   },
 ];

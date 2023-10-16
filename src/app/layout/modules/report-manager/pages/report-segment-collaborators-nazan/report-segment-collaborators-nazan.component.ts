@@ -145,7 +145,7 @@ export class ReportSegmentCollaboratorsNazan {
           resolve();
         },
         error: (e) => {
-          console.log('error loading data', e);
+          console.error('error loading data', e);
           reject(e);
         },
         complete: () => {
@@ -187,7 +187,7 @@ export class ReportSegmentCollaboratorsNazan {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {},
@@ -215,7 +215,7 @@ export class ReportSegmentCollaboratorsNazan {
         };
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;

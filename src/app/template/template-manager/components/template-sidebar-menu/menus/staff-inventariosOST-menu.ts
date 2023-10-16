@@ -26,9 +26,13 @@ export const staffInventariosOSTMenu = [
             label: 'Existencia de inventario',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
-        ]
+        ],
       },
     ],
   },
-
+  {
+    label: 'Salir',
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
+  },
 ];

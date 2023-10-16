@@ -3,7 +3,7 @@ import { AuthStateService } from '../../../auth-manager/services/auth-state.serv
 import { CommonStateService } from '../../../report-manager/services/common-state.service';
 import { ReportApiService } from '../../../report-manager/services/report-api.service';
 import { Router } from '@angular/router';
-import { TemplateStateService } from 'src/app/template';
+import { TemplateActionService, TemplateStateService } from 'src/app/template';
 import {
   labelsListFavorites,
   labelsListHistoric,
@@ -30,7 +30,8 @@ export class HomePageComponent {
     private _userHydra: UserHydraService,
     private _storeApi: StoreApiService,
     private _store: StoreStateService,
-    private _user: UserStateService
+    private _user: UserStateService,
+    private _templateAction: TemplateActionService
   ) {
     // this._auth.loadUserInfo();
     this.getUserInfo();
@@ -131,9 +132,22 @@ export class HomePageComponent {
     let access_token = sessionStorage.getItem('access_token') as string;
     this._userHydra.getUserInfo(access_token).subscribe({
       next: (data: UserEntity) => {
-        console.log({ DATA_HIDRA: data });
+        //console.log({ DATA_HIDRA: data });
         this._user.state.userSelected = data;
         this._user.state.setStorageUser(data);
+        this._template.state.roleList = [
+          'staff_ingresos',
+          'staff_inventario_ost',
+          'staff_kipon',
+          'staff_marketing',
+          'staff_mayoreo',
+          'staff_menudeo',
+          'staff_planeacion',
+          'tienda',
+        ];
+        //this._template.state.roleList = data.privileges.reportesadministrativos;
+        this.onSelectMenu(data.privileges.reportesadministrativos[0]);
+
         let temp = {
           id: data.tienda,
           name: data.tiendaNombre,
@@ -143,7 +157,14 @@ export class HomePageComponent {
         this._store.state.setStoreSelected(temp);
       },
       error: (error) => console.error(error),
-      complete: () => console.log('getUserInfo'),
+      complete: () => {
+        //console.log('getUserInfo')
+      },
     });
+  }
+
+  onSelectMenu(rol: string) {
+    this._templateAction.onMenu(rol);
+    this._template.state.sidebarRol = false;
   }
 }

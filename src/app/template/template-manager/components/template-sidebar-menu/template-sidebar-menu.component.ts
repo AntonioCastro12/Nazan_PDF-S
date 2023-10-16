@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { TemplateActionService } from '../../services';
+import { TemplateActionService, TemplateStateService } from '../../services';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'template-sidebar-menu',
@@ -9,9 +10,16 @@ import { TemplateActionService } from '../../services';
 export class TemplateSidebarMenuComponent implements OnInit {
   items!: MenuItem[];
 
-  constructor(private _templateAction: TemplateActionService) {}
+  constructor(
+    public _template: TemplateStateService,
+    private _templateAction: TemplateActionService,
+    private _user: UserStateService
+  ) {}
 
   ngOnInit() {
-    this.items = this._templateAction.onMenu();
+    // let rol = this._user.state.getStorageUser();
+    // this.items = this._templateAction.onMenu(
+    //   rol.privileges.reportesadministrativos
+    // );
   }
 }

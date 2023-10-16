@@ -148,7 +148,7 @@ export class ReportPointProgramDetailWalletComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {
@@ -189,7 +189,7 @@ export class ReportPointProgramDetailWalletComponent {
         };
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {
         this.isLoading = false;

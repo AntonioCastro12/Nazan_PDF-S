@@ -1,8 +1,5 @@
 <main class="template-sidebar-overlay">
-  <p-sidebar
-    [modal]="false"
-    [(visible)]="_template.state.sidebarOverlayVisible"
-  >
+  <p-sidebar [modal]="true" [(visible)]="_template.state.sidebarOverlayVisible">
     <div class="mt-5">
       <article class="w-full">
         <div class="text-right">
@@ -12,6 +9,9 @@
         </div>
 
         <template-sidebar-menu></template-sidebar-menu>
+        <div class="mt-5">
+          <span class="mt-5 text-white">Version: 2.0.1-0d4011d </span>
+        </div>
       </article>
     </div>
   </p-sidebar>

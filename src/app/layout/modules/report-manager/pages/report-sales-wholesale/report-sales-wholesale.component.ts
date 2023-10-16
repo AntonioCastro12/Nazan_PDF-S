@@ -159,7 +159,7 @@ export class ReportSalesWholesaleComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {
@@ -188,7 +188,7 @@ export class ReportSalesWholesaleComponent {
           resolve();
         },
         error: (e) => {
-          console.log('error loading data', e);
+          console.error('error loading data', e);
           reject(e);
         },
         complete: () => {
@@ -215,11 +215,11 @@ export class ReportSalesWholesaleComponent {
           data: dataFormatted,
           total: dataFormatted.length,
         };
-        console.log('complete');
+        //console.log('complete');
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {},
     });

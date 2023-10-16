@@ -39,17 +39,22 @@ export const staffMayoreoMenu = [
           },
         ],
       },
-      {
-        label: 'Segmentos',
+      // {
+      //   label: 'Segmentos',
 
-        items: [
-          {
-            label: 'Colaboradores Nazan',
+      //   items: [
+      //     {
+      //       label: 'Colaboradores Nazan',
 
-            routerLink: ['/layout/reports/segments/collaborators-nazan'],
-          },
-        ],
-      },
+      //       routerLink: ['/layout/reports/segments/collaborators-nazan'],
+      //     },
+      //   ],
+      // },
     ],
+  },
+  {
+    label: 'Salir',
+    icon: 'pi pi-sign-out',
+    routerLink: ['/exit'],
   },
 ];

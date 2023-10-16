@@ -12,10 +12,13 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptor } from './interceptors/set-03';
 import { WINDOW_PROVIDERS } from './window.provider';
+import { ExitPageComponent } from './pages/exit-page/exit-page.component';
+import { PrimeNgModule } from '@shared/vendor/prime-ng';
 
 @NgModule({
-  declarations: [AppComponent, SsoComponent],
+  declarations: [AppComponent, SsoComponent, ExitPageComponent],
   imports: [
+    PrimeNgModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

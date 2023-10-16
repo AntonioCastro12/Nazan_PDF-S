@@ -147,7 +147,7 @@ export class ReportPointProgramTotalMovementComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
         this.isLoading = false;
       },
       complete: () => {
@@ -177,7 +177,7 @@ export class ReportPointProgramTotalMovementComponent {
         this.isLoading = false;
       },
       error: (e) => {
-        console.log('error loading data', e);
+        console.error('error loading data', e);
       },
       complete: () => {},
     });

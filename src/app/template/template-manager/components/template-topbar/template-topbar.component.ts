@@ -18,4 +18,9 @@ export class TemplateTopbarComponent {
   goStartPage() {
     this.router.navigate(['/']);
   }
+
+  changeRol(event: any) {
+    console.log(event.value);
+    this._templateAction.onMenu(event.value);
+  }
 }

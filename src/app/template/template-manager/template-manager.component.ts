@@ -10,7 +10,7 @@ export class TemplateManagerComponent {
     const currentMenu = JSON.parse(
       sessionStorage.getItem('configMenu') as string
     );
-    this._template.state.sidebarMainVisible = true;
+    this._template.state.sidebarOverlayVisible = true;
   }
 
   columnChange() {

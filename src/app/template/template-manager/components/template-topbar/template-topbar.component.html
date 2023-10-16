@@ -14,12 +14,20 @@
 
     <article
       class="text-4xl pointer flex justify-content-between align-items-center gap-5"
-      (click)="_template.state.toogleSidebarOverlayVisible()"
     >
       <div class="font-bold text-2xl">
         {{ _user.state.userSelected.nombre }}
       </div>
-      <i class="pi pi-bars"></i>
+      <div>
+        <p-dropdown
+          [options]="_template.state.roleList"
+          (onChange)="changeRol($event)"
+        ></p-dropdown>
+      </div>
+      <i
+        class="pi pi-bars"
+        (click)="_template.state.toogleSidebarOverlayVisible()"
+      ></i>
     </article>
 
     <!-- <article class="flex justify-content-between align-items-center gap-5">
