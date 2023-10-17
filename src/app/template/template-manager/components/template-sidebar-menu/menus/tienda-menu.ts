@@ -48,8 +48,21 @@ export const tiendaMenu = [
     ],
   },
   {
-    label: 'Salir',
+    label: 'SALIR',
     icon: 'pi pi-sign-out',
-    routerLink: ['/exit'],
+    expanded: true,
+    disabled: true,
+    items: [
+      {
+        label: 'Salir',
+        command: () => {
+          goMap();
+        },
+      },
+    ],
   },
 ];
+
+function goMap() {
+  window.location.href = 'https://dashboard.impuls.com.mx/';
+}

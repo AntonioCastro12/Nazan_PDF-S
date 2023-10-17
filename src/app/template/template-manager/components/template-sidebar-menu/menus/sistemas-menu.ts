@@ -160,8 +160,14 @@ export const sistemasMenu = [
     items: [
       {
         label: 'Salir',
-        url: ['https://dashboard.impuls.com.mx/'],
+        command: () => {
+          goMap();
+        },
       },
     ],
   },
 ];
+
+function goMap() {
+  window.location.href = 'https://dashboard.impuls.com.mx/';
+}
