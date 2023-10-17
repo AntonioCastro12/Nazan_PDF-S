@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
   hostname: 'localhost',
-  host: 'http://:4200',
-  apiUrl: 'http://localhost:3151',
+  host: 'https://preprod-front.impuls.com.mx',
+  apiUrl: 'https://preprod-api.impuls.com.mx',
   utilityUrl: 'https://utilityapi.impuls.com.mx',
   dashboardUrl: 'https://dashboard.impuls.com.mx',
   hydraUrl: 'https://hydra.impuls.com.mx',
