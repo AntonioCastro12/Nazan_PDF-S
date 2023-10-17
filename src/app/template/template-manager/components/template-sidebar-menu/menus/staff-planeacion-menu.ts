@@ -26,18 +26,11 @@ export const staffPlaneacionMenu = [
     ],
   },
   {
-    label: 'SALIR',
+    label: 'Salir',
     icon: 'pi pi-sign-out',
-    expanded: true,
-    disabled: true,
-    items: [
-      {
-        label: 'Salir',
-        command: () => {
-          goMap();
-        },
-      },
-    ],
+    command: () => {
+      goMap();
+    },
   },
 ];
 
