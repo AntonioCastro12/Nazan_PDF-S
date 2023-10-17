@@ -160,7 +160,7 @@ export const sistemasMenu = [
     items: [
       {
         label: 'Salir',
-        routerLink: ['/exit'],
+        url: ['https://dashboard.impuls.com.mx/'],
       },
     ],
   },
