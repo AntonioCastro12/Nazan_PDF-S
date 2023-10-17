@@ -158,5 +158,6 @@ export const welcomeMenu = [
 ];
 
 function goMap() {
+  localStorage.clear();
   window.location.href = 'https://dashboard.impuls.com.mx/';
 }

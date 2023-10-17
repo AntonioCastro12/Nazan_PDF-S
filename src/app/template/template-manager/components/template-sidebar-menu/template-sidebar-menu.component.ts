@@ -22,4 +22,6 @@ export class TemplateSidebarMenuComponent implements OnInit {
     //   rol.privileges.reportesadministrativos
     // );
   }
+
+  onLogout() {}
 }
