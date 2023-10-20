@@ -48,7 +48,7 @@ export class TemplateActionService {
     if (rol == 'staff-ingresos') {
       this._template.state.currentMenu = staffIngresosMenu;
     }
-    if (rol == 'staff-inventario_ost') {
+    if (rol == 'staff-inventario-ost') {
       this._template.state.currentMenu = staffInventariosOSTMenu;
     }
     if (rol == 'staff-kipon') {
