@@ -45,25 +45,25 @@ export class TemplateActionService {
   }
 
   onMenu(rol: string) {
-    if (rol == 'staff_ingresos') {
+    if (rol == 'staff-ingresos') {
       this._template.state.currentMenu = staffIngresosMenu;
     }
-    if (rol == 'staff_inventario_ost') {
+    if (rol == 'staff-inventario_ost') {
       this._template.state.currentMenu = staffInventariosOSTMenu;
     }
-    if (rol == 'staff_kipon') {
+    if (rol == 'staff-kipon') {
       this._template.state.currentMenu = staffKiponMenu;
     }
-    if (rol == 'staff_marketing') {
+    if (rol == 'staff-marketing') {
       this._template.state.currentMenu = staffMarketingMenu;
     }
-    if (rol == 'staff_mayoreo') {
+    if (rol == 'staff-mayoreo') {
       this._template.state.currentMenu = staffMayoreoMenu;
     }
-    if (rol == 'staff_menudeo') {
+    if (rol == 'staff-menudeo') {
       this._template.state.currentMenu = staffMenudeoMenu;
     }
-    if (rol == 'staff_planeacion') {
+    if (rol == 'staff-planeacion') {
       this._template.state.currentMenu = staffPlaneacionMenu;
     }
     if (rol == 'tienda') {
