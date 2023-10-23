@@ -35,13 +35,6 @@ export const staffInventariosOSTMenu = [
       },
     ],
   },
-  {
-    label: 'Salir',
-    icon: 'pi pi-sign-out',
-    command: () => {
-      goMap();
-    },
-  },
 ];
 
 function goMap() {

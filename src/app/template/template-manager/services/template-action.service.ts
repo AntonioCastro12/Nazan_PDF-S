@@ -12,6 +12,7 @@ import { staffMenudeoMenu } from '../components/template-sidebar-menu/menus/staf
 import { staffPlaneacionMenu } from '../components/template-sidebar-menu/menus/staff-planeacion-menu';
 import { tiendaMenu } from '../components/template-sidebar-menu/menus/tienda-menu';
 import { sistemasMenu } from '../components/template-sidebar-menu/menus/sistemas-menu';
+import { exitMenu } from '../components/template-sidebar-menu/menus/exit-menu';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class TemplateActionService {
   staffPlaneacionMenu = staffPlaneacionMenu;
   tiendaMenu = tiendaMenu;
   sistemasMenu = sistemasMenu;
+  exitMenu = exitMenu;
   constructor(private _template: TemplateStateService, private router: Router) {
     const routeParts = this.router.url.split('/');
     const section = routeParts[2];
@@ -46,35 +48,48 @@ export class TemplateActionService {
 
   onMenu(rol: string) {
     if (rol == 'staff-ingresos') {
+      let menu: any = staffIngresosMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffIngresosMenu;
-    }
-    if (rol == 'staff-inventarios-ost') {
+    } else if (rol == 'staff-inventarios-ost') {
+      let menu: any = staffInventariosOSTMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffInventariosOSTMenu;
-    }
-    if (rol == 'staff-kipon') {
+    } else if (rol == 'staff-kipon') {
+      let menu: any = staffKiponMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffKiponMenu;
-    }
-    if (rol == 'staff-marketing') {
+    } else if (rol == 'staff-marketing') {
+      let menu: any = staffMarketingMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffMarketingMenu;
-    }
-    if (rol == 'staff-mayoreo') {
+    } else if (rol == 'staff-mayoreo') {
+      let menu: any = staffMayoreoMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffMayoreoMenu;
-    }
-    if (rol == 'staff-menudeo') {
+    } else if (rol == 'staff-menudeo') {
+      let menu: any = staffMenudeoMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffMenudeoMenu;
-    }
-    if (rol == 'staff-planeacion') {
+    } else if (rol == 'staff-planeacion') {
+      let menu: any = staffPlaneacionMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = staffPlaneacionMenu;
-    }
-    if (rol == 'tienda') {
+    } else if (rol == 'tienda') {
+      let menu: any = tiendaMenu;
+      menu.push(exitMenu);
       this._template.state.currentMenu = tiendaMenu;
+    } else if (rol == 'sistemas') {
+      let menu: any = sistemasMenu;
+      menu.push(exitMenu);
+      this._template.state.currentMenu = menu;
+    } else {
+      let menu: any = [];
+      menu.push(exitMenu);
+      this._template.state.currentMenu = menu;
     }
-    if (rol == 'sistemas') {
-      this._template.state.currentMenu = sistemasMenu;
-    }
+
     // No se usan admin, operaciones, marketing, admin_finanzas, plan_compras,
-    //this.mainMenu = sistemasMenu;
-    //return this.mainMenu;
   }
 
   goStartPage() {
