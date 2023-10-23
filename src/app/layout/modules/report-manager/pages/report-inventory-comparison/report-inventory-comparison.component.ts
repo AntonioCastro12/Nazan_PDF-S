@@ -112,13 +112,13 @@ export class ReportInventoryComparisonComponent {
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
           ? this._common.state.favorites.find(
-              (item) => item.url === '/sales/wholesale-sales'
-            )
+            (item) => item.url === '/inventories/inventory-comparison'
+          )
           : this._common.state.historic.find(
-              (item) =>
-                item.index ===
-                Number(this.route.snapshot.queryParamMap.get('index'))
-            );
+            (item) =>
+              item.index ===
+              Number(this.route.snapshot.queryParamMap.get('index'))
+          );
         if (report) {
           const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
@@ -280,9 +280,8 @@ export class ReportInventoryComparisonComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${
-      ReportsExcelNames.COMPARACION_DE_INVENTARIOS_
-    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${ReportsExcelNames.COMPARACION_DE_INVENTARIOS_
+      }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

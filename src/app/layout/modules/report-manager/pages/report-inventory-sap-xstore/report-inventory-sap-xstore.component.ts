@@ -23,6 +23,7 @@ import { DateTime } from 'luxon';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateStateService } from 'src/app/template';
 import { UserStateService } from '@user-manager/services';
+import { CommonApiService } from '../../services/common-api.service';
 
 @Component({
   selector: 'app-report-inventory-sap-xstore',
@@ -69,7 +70,8 @@ export class ReportInventorySapXtoreComponent {
     public _excelService: ExcelService,
     private _user: UserStateService,
     private route: ActivatedRoute,
-    private _template: TemplateStateService
+    private _template: TemplateStateService,
+    private _commonApi: CommonApiService,
   ) {
     //this._auth.loadUserInfo();
     _optionServices.initState();
@@ -83,7 +85,6 @@ export class ReportInventorySapXtoreComponent {
   ngOnInit() {
     this._template.state.sidebarOverlayVisible = false;
     this._report.state.inventory.sapXstore.list.data = [];
-    // this.getList();
     this.subscription = this._optionServices.state.subscribe((optionsState) => {
       if (optionsState.OptionsEntity !== this.lastOptionsEntity) {
         const { onChart, onDownload, onRefresh, onSearch, onShow, onFavorite } =
@@ -107,28 +108,48 @@ export class ReportInventorySapXtoreComponent {
         };
       }
     });
-    if (
-      this.route.snapshot.queryParamMap.get('favorite') ||
-      this.route.snapshot.queryParamMap.get('historic')
-    ) {
-      const report: any = this.route.snapshot.queryParamMap.get('favorite')
-        ? this._common.state.favorites.find(
+    this.getStores().then(() => {
+      if (
+        this.route.snapshot.queryParamMap.get('favorite') ||
+        this.route.snapshot.queryParamMap.get('historic')
+      ) {
+        const report: any = this.route.snapshot.queryParamMap.get('favorite')
+          ? this._common.state.favorites.find(
             (item) => item.url === '/inventories/sap-xstore'
           )
-        : this._common.state.historic.find(
+          : this._common.state.historic.find(
             (item) =>
               item.index ===
               Number(this.route.snapshot.queryParamMap.get('index'))
           );
-      if (report) {
-        const selectedStore = this._common.state.stores.find(
-          (item) => item.storeInfoId === report.searchCriteria.storeId
-        );
-        this.selectedStore = selectedStore || null;
-        this._optionServices.setSearch();
-        this.handleSearch();
+        if (report) {
+          const selectedStore = this._common.state.stores.find(
+            (item) => item.storeInfoId === report.searchCriteria.storeId
+          );
+          this.selectedStore = selectedStore || null;
+          this._optionServices.setSearch();
+          this.handleSearch();
+        }
       }
-    }
+    });
+  }
+
+  getStores(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this._commonApi.getStores().subscribe({
+        next: (data) => {
+          this._common.state.stores = data;
+          resolve();
+        },
+        error: (e) => {
+          console.error('error loading data', e);
+          reject(e);
+        },
+        complete: () => {
+          resolve();
+        },
+      });
+    });
   }
 
   handleFavorite() {
@@ -275,9 +296,8 @@ export class ReportInventorySapXtoreComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${
-      ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_
-    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_
+      }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
