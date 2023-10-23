@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { TemplateActionService, TemplateStateService } from './services';
 
 @Component({
@@ -8,13 +8,25 @@ import { TemplateActionService, TemplateStateService } from './services';
 export class TemplateManagerComponent {
   constructor(
     public _template: TemplateStateService,
-    private _templateAction: TemplateActionService
+    private _templateAction: TemplateActionService,
+    private cd: ChangeDetectorRef
   ) {
     //this._templateAction.onCheckAccess();
     const currentMenu = JSON.parse(
       sessionStorage.getItem('configMenu') as string
     );
-    //this._template.state.sidebarOverlayVisible = true;
+
+    if (_template.state.roleList == undefined) {
+      let userSelected = JSON.parse(
+        sessionStorage.getItem('userSelected') as string
+      );
+      _template.state.roleList =
+        userSelected.privileges.reportesadministrativos;
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
   }
 
   columnChange() {

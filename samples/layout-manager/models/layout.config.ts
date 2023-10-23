@@ -1,11 +1,11 @@
 export class LayoutConfig {
   sidebarActive: boolean = false;
-  staticMenuDesktopInactive: boolean = true;
-  overlayMenuActive: boolean = true;
+  staticMenuDesktopInactive: boolean = false;
+  overlayMenuActive: boolean = false;
   profileSidebarVisible: boolean = false;
-  configSidebarVisible: boolean = true;
-  staticMenuMobileActive: boolean = true;
-  menuHoverActive: boolean = true;
+  configSidebarVisible: boolean = false;
+  staticMenuMobileActive: boolean = false;
+  menuHoverActive: boolean = false;
 }
 
 export const layoutConfigLabels = {

@@ -88,7 +88,10 @@ export class TemplateActionService {
       menu.push(exitMenu);
       this._template.state.currentMenu = menu;
     }
-
+    sessionStorage.setItem(
+      'currentMenu',
+      JSON.stringify(this._template.state.currentMenu)
+    );
     // No se usan admin, operaciones, marketing, admin_finanzas, plan_compras,
   }
 

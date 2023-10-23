@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { CommonStateService } from '../../../report-manager/services/common-state.service';
 import { ReportApiService } from '../../../report-manager/services/report-api.service';
@@ -20,7 +20,7 @@ import { UserStateService } from '@user-manager/services';
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss'],
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnDestroy {
   constructor(
     public _auth: AuthStateService,
     public _common: CommonStateService,
@@ -31,14 +31,20 @@ export class HomePageComponent {
     private _storeApi: StoreApiService,
     private _store: StoreStateService,
     private _user: UserStateService,
-    private _templateAction: TemplateActionService
+    private _templateAction: TemplateActionService,
+    private cd: ChangeDetectorRef
   ) {
+    this._template.state.sidebarOverlayVisible = true;
     // this._auth.loadUserInfo();
     this.getUserInfo();
   }
   labelsListFavorites = labelsListFavorites;
   labelsListHistoric = labelsListHistoric;
   index: number | null = null;
+
+  ngAfterViewInit(): void {
+    this.cd.detectChanges();
+  }
 
   getHistoric() {
     this._reportApi.getHistoric().subscribe({
@@ -78,9 +84,12 @@ export class HomePageComponent {
   }
 
   ngOnInit() {
-    this._template.state.sidebarOverlayVisible = true;
     this.getHistoric();
     this.getFavorites();
+  }
+
+  ngOnDestroy() {
+    this._template.state.sidebarOverlayVisible = false;
   }
 
   getReportName(data: string) {
@@ -135,6 +144,7 @@ export class HomePageComponent {
         //console.log({ DATA_HIDRA: data });
         this._user.state.userSelected = data;
         this._user.state.setStorageUser(data);
+        sessionStorage.setItem('userSelected', JSON.stringify(data));
         // this._template.state.roleList = [
         //   'staff_ingresos',
         //   'staff_inventario_ost',

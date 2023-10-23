@@ -21,6 +21,16 @@ export class TemplateSidebarMenuComponent implements OnInit {
     // this.items = this._templateAction.onMenu(
     //   rol.privileges.reportesadministrativos
     // );
+    // let currentMenu = JSON.parse(
+    //   sessionStorage.getItem('currentMenu') as string
+    // );
+
+    if (this._template.state.currentMenu == undefined) {
+      let currentMenu = JSON.parse(
+        sessionStorage.getItem('currentMenu') as string
+      );
+      this._template.state.currentMenu = currentMenu;
+    }
   }
 
   onLogout() {}

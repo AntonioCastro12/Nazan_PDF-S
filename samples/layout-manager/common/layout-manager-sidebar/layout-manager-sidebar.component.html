@@ -1,4 +1,9 @@
-<p-sidebar [(visible)]="layoutStateService.layoutState.config.layoutConfig.sidebarActive" class="custom-sidebar">
+<p-sidebar
+  [(visible)]="layoutStateService.layoutState.config.layoutConfig.sidebarActive"
+  class="custom-sidebar"
+>
   <layout-manager-menu></layout-manager-menu>
-  <span class="block version">Version: {{ env.VERSION.version }}-{{ env.VERSION.hash }}</span>
+  <span class="block version"
+    >Version: {{ env.VERSION.version }}-{{ env.VERSION.hash }}</span
+  >
 </p-sidebar>

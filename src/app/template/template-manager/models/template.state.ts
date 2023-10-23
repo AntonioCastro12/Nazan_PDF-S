@@ -7,7 +7,7 @@ export class TemplateState {
   /* Sidebar */
   // sidebarActive: boolean = true;
   sidebarMainVisible: boolean = false;
-  sidebarOverlayVisible: boolean = true;
+  sidebarOverlayVisible: boolean = false;
   /* Menu */
   menuSelected: any;
 
