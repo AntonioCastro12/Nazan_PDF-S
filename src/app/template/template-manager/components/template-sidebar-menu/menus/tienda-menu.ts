@@ -27,11 +27,6 @@ export const tiendaMenu = [
 
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
-          {
-            label: 'Cumplimiento de Conteo',
-
-            routerLink: ['/layout/reports/inventories/cycle-count'],
-          },
         ],
       },
       {

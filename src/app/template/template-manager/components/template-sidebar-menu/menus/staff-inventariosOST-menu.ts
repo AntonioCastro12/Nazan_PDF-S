@@ -26,6 +26,11 @@ export const staffInventariosOSTMenu = [
             label: 'Existencia de inventario',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
+          {
+            label: 'Diferencia de inventario SAP vs Xstore',
+
+            routerLink: ['/layout/reports/inventories/sap-xstore'],
+          },
         ],
       },
     ],

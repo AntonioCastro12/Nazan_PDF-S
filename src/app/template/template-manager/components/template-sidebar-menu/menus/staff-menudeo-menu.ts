@@ -48,6 +48,11 @@ export const staffMenudeoMenu = [
 
             routerLink: ['/layout/reports/segments/collaborators-nazan'],
           },
+          {
+            label: 'Afiliados KIPON SHOE CLUB',
+
+            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+          },
         ],
       },
       {

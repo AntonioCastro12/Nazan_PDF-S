@@ -32,15 +32,6 @@ export const staffIngresosMenu = [
           },
         ],
       },
-      // {
-      //   label: 'Inventarios',
-      //   items: [
-      //     {
-      //       label: 'Existencia de inventario',
-      //       routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
-      //     },
-      //   ]
-      // },
     ],
   },
   {
