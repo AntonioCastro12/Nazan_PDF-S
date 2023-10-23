@@ -71,7 +71,7 @@ export class ReportInventorySapXtoreComponent {
     private _user: UserStateService,
     private route: ActivatedRoute,
     private _template: TemplateStateService,
-    private _commonApi: CommonApiService,
+    private _commonApi: CommonApiService
   ) {
     //this._auth.loadUserInfo();
     _optionServices.initState();
@@ -115,13 +115,13 @@ export class ReportInventorySapXtoreComponent {
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
           ? this._common.state.favorites.find(
-            (item) => item.url === '/inventories/sap-xstore'
-          )
+              (item) => item.url === '/inventories/sap-xstore'
+            )
           : this._common.state.historic.find(
-            (item) =>
-              item.index ===
-              Number(this.route.snapshot.queryParamMap.get('index'))
-          );
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
           const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
@@ -181,15 +181,11 @@ export class ReportInventorySapXtoreComponent {
   }
 
   filterStores(event: { query: string }) {
-    console.log('ACTIVE');
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
       this._user.state.userSelected.privileges.reportesadministrativos;
     const userStore = this._user.state.userSelected.tienda;
-
-    console.log({ userRol });
-    console.log({ tiendas: this._common.state.stores });
 
     if (userRol.includes('staff-menudeo')) {
       const temp = this._common.state.stores.filter(
@@ -208,7 +204,7 @@ export class ReportInventorySapXtoreComponent {
     if (userRol.includes('sistemas')) {
       storeList.push(...this._common.state.stores);
     }
-    console.log({ storeList });
+
     for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
@@ -217,8 +213,6 @@ export class ReportInventorySapXtoreComponent {
       }
     }
     this.suggestions = filteredStores;
-    console.log({ filteredStores });
-    console.log({ suggestions: this.suggestions });
   }
 
   getList() {
@@ -252,7 +246,7 @@ export class ReportInventorySapXtoreComponent {
   }
 
   async handleSearch() {
-    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`;
     this.getList();
   }
   resetFilters() {
@@ -297,8 +291,9 @@ export class ReportInventorySapXtoreComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_
-      }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
