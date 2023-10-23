@@ -125,13 +125,13 @@ export class ReportSalesInvoiceTotal {
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
           ? this._common.state.favorites.find(
-              (item) => item.url === '/inventories/kardex'
-            )
+            (item) => item.url === '/sales/invoice-total'
+          )
           : this._common.state.historic.find(
-              (item) =>
-                item.index ===
-                Number(this.route.snapshot.queryParamMap.get('index'))
-            );
+            (item) =>
+              item.index ===
+              Number(this.route.snapshot.queryParamMap.get('index'))
+          );
         if (report) {
           const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
@@ -263,13 +263,12 @@ export class ReportSalesInvoiceTotal {
       );
       return;
     }
-    this.filter = `?storeId=${
-      this.selectedStore?.storeInfoId
-    }&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat(
-      'yyyy-MM-dd'
-    )}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat(
-      'yyyy-MM-dd'
-    )}`;
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId
+      }&startDate=${DateTime.fromJSDate(new Date(this.from)).toFormat(
+        'yyyy-MM-dd'
+      )}&endDate=${DateTime.fromJSDate(new Date(this.to)).toFormat(
+        'yyyy-MM-dd'
+      )}`;
     this.getList();
   }
 
@@ -384,9 +383,8 @@ export class ReportSalesInvoiceTotal {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${
-      ReportsExcelNames.TOTALES_DE_FACTURACION_
-    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${ReportsExcelNames.TOTALES_DE_FACTURACION_
+      }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);
