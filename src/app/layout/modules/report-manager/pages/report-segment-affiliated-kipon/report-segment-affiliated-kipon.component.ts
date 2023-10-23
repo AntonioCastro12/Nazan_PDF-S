@@ -21,9 +21,9 @@ import {
   ID_DATA_NAME,
 } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
-import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateStateService } from 'src/app/template';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'app-report-segment-affiliated-kipon',
@@ -69,7 +69,7 @@ export class ReportSegmentAffiliatedKipon {
     public _report: ReportStateService,
     public _common: CommonStateService,
     public _excelService: ExcelService,
-    public _auth: AuthStateService,
+    private _user: UserStateService,
     private route: ActivatedRoute,
     private _template: TemplateStateService
   ) {
@@ -174,8 +174,8 @@ export class ReportSegmentAffiliatedKipon {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
-      this._auth.state.userInfo.privileges.reportesadministrativos;
-    const userStore = this._auth.state.userInfo.tienda;
+      this._user.state.userSelected.privileges.reportesadministrativos;
+    const userStore = this._user.state.userSelected.tienda;
     const kiponStores = this._common.state.stores.filter(
       (x) => x.storeInfoType === 'K'
     );

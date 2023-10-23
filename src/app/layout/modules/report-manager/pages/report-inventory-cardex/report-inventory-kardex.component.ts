@@ -21,9 +21,9 @@ import {
   ID_DATA_NAME,
 } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
-import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateStateService } from 'src/app/template';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'app-report-inventory-kardex',
@@ -72,9 +72,9 @@ export class ReportInventoryKardexComponent {
     public _report: ReportStateService,
     public _common: CommonStateService,
     public _excelService: ExcelService,
-    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private _template: TemplateStateService
+    private _template: TemplateStateService,
+    private _user: UserStateService
   ) {
     _optionServices.initState();
     //this._auth.loadUserInfo();
@@ -181,9 +181,9 @@ export class ReportInventoryKardexComponent {
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
-    const userStore = this._auth.state.userInfo.tienda;
     const userRol =
-      this._auth.state.userInfo.privileges.reportesadministrativos;
+      this._user.state.userSelected.privileges.reportesadministrativos;
+    const userStore = this._user.state.userSelected.tienda;
 
     if (userRol.includes('tienda')) {
       const temp = this._common.state.stores.filter(

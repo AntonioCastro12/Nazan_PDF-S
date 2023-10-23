@@ -141,7 +141,6 @@ export const welcomeMenu = [
           },
           {
             label: 'Existencia de inventario',
-            icon: 'pi pi›-fw pi-minus',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
         ],

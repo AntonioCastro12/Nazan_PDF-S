@@ -50,6 +50,17 @@ export const staffMenudeoMenu = [
           },
         ],
       },
+      {
+        label: 'Ventas',
+
+        items: [
+          {
+            label: 'Venta de Mayoreos',
+
+            routerLink: ['/layout/reports/sales/wholesale-sales'],
+          },
+        ],
+      },
     ],
   },
   {

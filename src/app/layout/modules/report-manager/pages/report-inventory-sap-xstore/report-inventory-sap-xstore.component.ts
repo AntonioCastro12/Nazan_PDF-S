@@ -20,9 +20,9 @@ import {
 } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
 import { DateTime } from 'luxon';
-import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateStateService } from 'src/app/template';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'app-report-inventory-sap-xstore',
@@ -67,7 +67,7 @@ export class ReportInventorySapXtoreComponent {
     public _report: ReportStateService,
     public _common: CommonStateService,
     public _excelService: ExcelService,
-    public _auth: AuthStateService,
+    private _user: UserStateService,
     private route: ActivatedRoute,
     private _template: TemplateStateService
   ) {
@@ -160,26 +160,34 @@ export class ReportInventorySapXtoreComponent {
   }
 
   filterStores(event: { query: string }) {
+    console.log('ACTIVE');
     const filteredStores: Store[] = [];
     const storeList: Store[] = [];
     const userRol =
-      this._auth.state.userInfo.privileges.reportesadministrativos;
-    const userStore = this._auth.state.userInfo.tienda;
+      this._user.state.userSelected.privileges.reportesadministrativos;
+    const userStore = this._user.state.userSelected.tienda;
+
+    console.log({ userRol });
+    console.log({ tiendas: this._common.state.stores });
 
     if (userRol.includes('staff-menudeo')) {
       const temp = this._common.state.stores.filter(
-        (x) => x.storeInfoType === 'R'
+        (x) => x.storeInfoType === 'R' || x.storeInfoType === 'K'
       );
       storeList.push(...temp);
-    } else if (userRol.includes('staff-mayoreo')) {
+    }
+
+    if (userRol.includes('staff-mayoreo')) {
       const temp = this._common.state.stores.filter(
         (x) => x.storeInfoType === 'W'
       );
       storeList.push(...temp);
-    } else {
-      storeList.push(...this._common.state.stores);
     }
 
+    if (userRol.includes('sistemas')) {
+      storeList.push(...this._common.state.stores);
+    }
+    console.log({ storeList });
     for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
@@ -188,6 +196,8 @@ export class ReportInventorySapXtoreComponent {
       }
     }
     this.suggestions = filteredStores;
+    console.log({ filteredStores });
+    console.log({ suggestions: this.suggestions });
   }
 
   getList() {

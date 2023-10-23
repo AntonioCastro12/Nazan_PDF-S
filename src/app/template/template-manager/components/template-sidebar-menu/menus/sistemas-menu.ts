@@ -53,6 +53,17 @@ export const sistemasMenu = [
           },
         ],
       },
+      {
+        label: 'Ventas',
+
+        items: [
+          {
+            label: 'Venta de Mayoreos',
+
+            routerLink: ['/layout/reports/sales/wholesale-sales'],
+          },
+        ],
+      },
     ],
   },
   {
@@ -120,11 +131,6 @@ export const sistemasMenu = [
 
             routerLink: ['/layout/reports/sales/general-sales'],
           },
-          {
-            label: 'Venta de Mayoreos',
-
-            routerLink: ['/layout/reports/sales/wholesale-sales'],
-          },
         ],
       },
     ],
@@ -145,7 +151,6 @@ export const sistemasMenu = [
           },
           {
             label: 'Existencia de inventario',
-            icon: 'pi pi›-fw pi-minus',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
         ],

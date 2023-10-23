@@ -21,9 +21,9 @@ import {
   ID_DATA_NAME,
 } from 'src/app/shared/functions/functions';
 import { OptionsEntity } from 'src/app/shared/components/options/models/options.entity';
-import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
 import { TemplateStateService } from 'src/app/template';
+import { UserStateService } from '@user-manager/services';
 
 @Component({
   selector: 'app-report-sales-wholesale',
@@ -66,12 +66,11 @@ export class ReportSalesWholesaleComponent {
     public _report: ReportStateService,
     public _common: CommonStateService,
     public _excelService: ExcelService,
-    public _auth: AuthStateService,
     private route: ActivatedRoute,
-    private _template: TemplateStateService
+    private _template: TemplateStateService,
+    private _user: UserStateService
   ) {
     _optionServices.initState();
-    //this._auth.loadUserInfo();
   }
 
   ngOnDestroy(): void {
@@ -170,7 +169,30 @@ export class ReportSalesWholesaleComponent {
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];
-    for (const store of this._common.state.stores) {
+    const storeList: Store[] = [];
+    const userRol =
+      this._user.state.userSelected.privileges.reportesadministrativos;
+    const userStore = this._user.state.userSelected.tienda;
+
+    if (userRol.includes('staff-menudeo')) {
+      const temp = this._common.state.stores.filter(
+        (x) => x.storeInfoType === 'R'
+      );
+      storeList.push(...temp);
+    }
+
+    if (userRol.includes('sistemas')) {
+      storeList.push(...this._common.state.stores);
+    }
+
+    if (userRol.includes('tienda')) {
+      const temp = this._common.state.stores.filter(
+        (store) => store.storeInfoId === userStore
+      );
+      storeList.push(...temp);
+    }
+
+    for (const store of storeList) {
       if (
         store.storeInfoName.toLowerCase().includes(event.query.toLowerCase())
       ) {

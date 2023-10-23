@@ -30,11 +30,6 @@ export const staffIngresosMenu = [
 
             routerLink: ['/layout/reports/sales/general-sales'],
           },
-          {
-            label: 'Venta de Mayoreos',
-
-            routerLink: ['/layout/reports/sales/wholesale-sales'],
-          },
         ],
       },
       // {
@@ -42,7 +37,6 @@ export const staffIngresosMenu = [
       //   items: [
       //     {
       //       label: 'Existencia de inventario',
-      //       icon: 'pi pi›-fw pi-minus',
       //       routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
       //     },
       //   ]
