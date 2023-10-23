@@ -252,6 +252,7 @@ export class ReportInventorySapXtoreComponent {
   }
 
   async handleSearch() {
+    this.filter = `?storeId=${this.selectedStore?.storeInfoId}`
     this.getList();
   }
   resetFilters() {
