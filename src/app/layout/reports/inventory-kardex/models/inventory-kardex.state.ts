@@ -5,8 +5,12 @@ import {
   inventoryKardexLabels,
   searchFormEntityLabels,
 } from 'samples/report-manager/models';
+import { KardexProductDTO } from './inventory-kardex.dto';
+import { KardexProductResponse } from './inventory-kardex.response';
 
 export class InventoryKardexState {
+  kardexProductDTO: KardexProductDTO = new KardexProductDTO();
+  kardexProductResponse: KardexProductResponse[] = [];
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

@@ -1,2 +1,6 @@
-<app-inventory-kardex-form></app-inventory-kardex-form>
-<main></main>
+<main>
+  <h1>Reporte de Inventario</h1>
+  <app-inventory-kardex-form></app-inventory-kardex-form>
+
+  {{ this._inventoryKardex.state.kardexProductResponse | json }}
+</main>

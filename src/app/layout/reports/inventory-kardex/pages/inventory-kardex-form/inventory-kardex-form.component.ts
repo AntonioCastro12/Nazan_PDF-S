@@ -6,6 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { kardexProductDTOname } from '../../models';
+import { InventoryKardexStateService } from '../../services';
+import { InventoryKardexApiService } from '../../services/inventory-kardex-api.service';
 
 @Component({
   selector: 'app-inventory-kardex-form',
@@ -35,7 +37,11 @@ export class InventoryKardexFormComponent implements OnInit {
 
   form!: UntypedFormGroup;
 
-  constructor(private _formBuilder: UntypedFormBuilder) {
+  constructor(
+    private _formBuilder: UntypedFormBuilder,
+    public _inventoryKardex: InventoryKardexStateService,
+    public _inventoryKardexApi: InventoryKardexApiService
+  ) {
     this.TEMPLATE_TXT = this.TEMPLATE_TXT_ES;
   }
 
@@ -55,7 +61,21 @@ export class InventoryKardexFormComponent implements OnInit {
   get fg(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
-  onSubmit() {}
+  onSubmit() {
+    this._inventoryKardex.state.kardexProductDTO = this.form.value;
+
+    this._inventoryKardexApi
+      .inventoryKardexProduct(this._inventoryKardex.state.kardexProductDTO)
+      .subscribe({
+        next: (data) => {
+          this._inventoryKardex.state.kardexProductResponse = data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {},
+      });
+  }
 
   onReset() {}
 

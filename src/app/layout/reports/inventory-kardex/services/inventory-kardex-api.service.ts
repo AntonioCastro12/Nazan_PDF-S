@@ -8,7 +8,7 @@ import { KardexProductDTO } from '../models/inventory-kardex.dto';
 @Injectable({
   providedIn: 'root',
 })
-export class ReportApiService {
+export class InventoryKardexApiService {
   constructor(private _http: HttpClient) {}
 
   inventoryKardexProduct(
