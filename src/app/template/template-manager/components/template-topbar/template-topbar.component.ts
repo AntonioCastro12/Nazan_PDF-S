@@ -14,16 +14,16 @@ export class TemplateTopbarComponent {
     public router: Router,
     public _template: TemplateStateService
   ) {
-    // if (_user.state.userSelected.nombre == '') {
-    //   let userSelected = JSON.parse(
-    //     sessionStorage.getItem('userSelected') as string
-    //   );
-    //   if (userSelected == null) {
-    //     this.goStartPage();
-    //   } else {
-    //     _user.state.userSelected = userSelected;
-    //   }
-    // }
+    if (_user.state.userSelected.nombre == '') {
+      let userSelected = JSON.parse(
+        sessionStorage.getItem('userSelected') as string
+      );
+      if (userSelected == null) {
+        this.goStartPage();
+      } else {
+        _user.state.userSelected = userSelected;
+      }
+    }
     // if (_template.state.roleList == undefined) {
     //   let userSelected = JSON.parse(
     //     sessionStorage.getItem('userSelected') as string

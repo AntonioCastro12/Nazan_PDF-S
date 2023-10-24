@@ -23,6 +23,7 @@ import { OptionsEntity } from 'src/app/shared/components/options/models/options.
 import { DateTime } from 'luxon';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
 import { ActivatedRoute } from '@angular/router';
+import { TemplateStateService } from 'src/app/template';
 
 @Component({
   selector: 'app-report-inventory-comparison',
@@ -69,10 +70,18 @@ export class ReportInventoryComparisonComponent {
     public _common: CommonStateService,
     public _excelService: ExcelService,
     public _auth: AuthStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _template: TemplateStateService
   ) {
     //this._auth.loadUserInfo();
     _optionServices.initState();
+    if (_template.state.roleList == undefined) {
+      let userSelected = JSON.parse(
+        sessionStorage.getItem('userSelected') as string
+      );
+      _template.state.roleList =
+        userSelected.privileges.reportesadministrativos;
+    }
   }
 
   ngOnDestroy(): void {
@@ -112,13 +121,13 @@ export class ReportInventoryComparisonComponent {
       ) {
         const report: any = this.route.snapshot.queryParamMap.get('favorite')
           ? this._common.state.favorites.find(
-            (item) => item.url === '/inventories/inventory-comparison'
-          )
+              (item) => item.url === '/inventories/inventory-comparison'
+            )
           : this._common.state.historic.find(
-            (item) =>
-              item.index ===
-              Number(this.route.snapshot.queryParamMap.get('index'))
-          );
+              (item) =>
+                item.index ===
+                Number(this.route.snapshot.queryParamMap.get('index'))
+            );
         if (report) {
           const selectedStore = this._common.state.stores.find(
             (item) => item.storeInfoId === report.searchCriteria.storeId
@@ -280,8 +289,9 @@ export class ReportInventoryComparisonComponent {
     const a = document.createElement('a');
     document.body.appendChild(a);
     a.href = url;
-    a.download = `${ReportsExcelNames.COMPARACION_DE_INVENTARIOS_
-      }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    a.download = `${
+      ReportsExcelNames.COMPARACION_DE_INVENTARIOS_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     a.click();
     window.URL.revokeObjectURL(url);
     document.body.removeChild(a);

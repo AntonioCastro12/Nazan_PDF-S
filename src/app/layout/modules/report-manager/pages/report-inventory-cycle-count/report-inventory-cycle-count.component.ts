@@ -77,6 +77,13 @@ export class ReportInventoryCycleCountComponent {
   ) {
     //this._auth.loadUserInfo();
     this._optionServices.initState();
+    if (_template.state.roleList == undefined) {
+      let userSelected = JSON.parse(
+        sessionStorage.getItem('userSelected') as string
+      );
+      _template.state.roleList =
+        userSelected.privileges.reportesadministrativos;
+    }
   }
 
   ngOnDestroy(): void {
