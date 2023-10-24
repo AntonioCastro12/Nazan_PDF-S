@@ -1,0 +1,135 @@
+<!-- Form ******************************************************* -->
+<section class="container">
+  <form [formGroup]="form" [autocomplete]="'off'" *ngIf="form" class="w-full">
+    <article class="formgrid grid row">
+      <!-- ************************************************* -->
+      <section #storeId class="mb-1 col-12 col-md-12 col-lg-12">
+        <div class="form-field--container">
+          <label class="crud-label" for="storeId">{{
+            kardexProductDTOname.storeId
+          }}</label>
+          <input
+            pInputText
+            class="full"
+            type="text"
+            id="storeId"
+            autofocus
+            formControlName="storeId"
+          />
+
+          <div *ngIf="fg['storeId'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['storeId'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+      <!-- ************************************************* -->
+      <section #origin class="mb-1 col-12 col-md-12 col-lg-12">
+        <div class="form-field--container">
+          <label class="crud-label" for="origin">{{
+            kardexProductDTOname.origin
+          }}</label>
+          <input
+            pInputText
+            class="full"
+            type="text"
+            id="origin"
+            formControlName="origin"
+          />
+          <div *ngIf="fg['origin'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['origin'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+      <!-- ************************************************* -->
+      <section #startDate class="mb-1 col-12 col-md-12 col-lg-12">
+        <div class="form-field--container">
+          <label class="crud-label" for="startDate">{{
+            kardexProductDTOname.startDate
+          }}</label>
+          <input
+            pInputText
+            class="full"
+            type="text"
+            id="startDate"
+            formControlName="startDate"
+          />
+          <div *ngIf="fg['startDate'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['startDate'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+      <!-- ************************************************* -->
+      <section #endDate class="mb-1 col-12 col-md-12 col-lg-12">
+        <div class="form-field--container">
+          <label class="crud-label" for="endDate">{{
+            kardexProductDTOname.endDate
+          }}</label>
+          <input
+            pInputText
+            class="full"
+            type="text"
+            id="endDate"
+            formControlName="endDate"
+          />
+          <div *ngIf="fg['endDate'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['endDate'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&  formgrid grid row mt-5 sticky top-0 -->
+
+    <article class="button-area mt-3 mb-2">
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          label="{{ TEMPLATE_TXT.labelReset }}"
+          icon="pi pi-refresh"
+          class="p-button-secondary"
+          (click)="onReset()"
+        ></button>
+      </div>
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          label="{{ TEMPLATE_TXT.labelCancel }}"
+          icon="pi pi-times"
+          class="p-button-danger"
+          (click)="onCancel()"
+        ></button>
+      </div>
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          label="{{ TEMPLATE_TXT.lavelSave }}"
+          icon="pi pi-check"
+          class="p-button-success"
+          (click)="onSubmit()"
+          [disabled]="!form.valid"
+        ></button>
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>

@@ -31,13 +31,13 @@
         "src/app/layout/config/user-manager/*"
       ],
       "@auth-manager/*": [
-        "src/app/layout/module/auth-manager/*"
+        "src/app/layout/modules/auth-manager/*"
       ],
       "@home-manager/*": [
-        "src/app/layout/module/home-manager/*"
+        "src/app/layout/modules/home-manager/*"
       ],
       "@report-manager/*": [
-        "src/app/layout/module/report-manager/*"
+        "samples/report-manager/*"
       ],
       "@shared/*": [
         "src/app/shared/*"

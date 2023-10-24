@@ -18,13 +18,13 @@ const routes: Routes = [
   //       (m) => m.LayoutManagerModule
   //     ),
   // },
-  {
-    path: 'reports',
-    loadChildren: () =>
-      import(
-        'src/app/layout/modules/report-manager/report-manager.module'
-      ).then((m) => m.ReportManagerModule),
-  },
+  // {
+  //   path: 'reports',
+  //   loadChildren: () =>
+  //     import('samples/report-manager/report-manager.module').then(
+  //       (m) => m.ReportManagerModule
+  //     ),
+  // },
   {
     path: 'home',
     loadChildren: () =>

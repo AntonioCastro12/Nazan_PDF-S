@@ -11,14 +11,14 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('src/app/layout/modules/home-manager/home-manager.module').then(
-            (m) => m.HomeManagerModule
-          ),
+          import(
+            'src/app/layout/modules/home-manager/home-manager.module'
+          ).then((m) => m.HomeManagerModule),
       },
       {
         path: 'reports',
         loadChildren: () =>
-          import('src/app/layout/modules/report-manager/report-manager.module').then(
+          import('samples/report-manager/report-manager.module').then(
             (m) => m.ReportManagerModule
           ),
       },
@@ -31,4 +31,4 @@ const routes: Routes = [
 
   exports: [RouterModule],
 })
-export class LayoutManagerRoutingModule { }
+export class LayoutManagerRoutingModule {}
