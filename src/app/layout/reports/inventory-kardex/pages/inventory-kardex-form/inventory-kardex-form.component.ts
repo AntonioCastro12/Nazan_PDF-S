@@ -10,28 +10,20 @@ import { InventoryKardexStateService } from '../../services';
 import { InventoryKardexApiService } from '../../services/inventory-kardex-api.service';
 
 @Component({
-  selector: 'app-inventory-kardex-form',
+  selector: 'inventory-kardex-form',
   templateUrl: './inventory-kardex-form.component.html',
   styleUrls: ['./inventory-kardex-form.component.scss'],
 })
 export class InventoryKardexFormComponent implements OnInit {
-  TEMPLATE_TXT_EN = {
-    pTooltipReturn: 'Return to users',
-    labelReset: 'Reset',
-    labelCancel: 'Cancel',
-    labelSave: 'Save',
-    required: 'This field is required',
-  };
-
-  TEMPLATE_TXT_ES = {
+  TEMPLATE_TXT = {
     labelReturn: 'Volver a usuarios',
     labelReset: 'Reiniciar',
-    pTooltipCancel: 'Cancelar',
     labelSave: 'Guardar',
+    labelCancel: 'Cancelar',
+    tooltipCancel: 'Cancelar',
     required: 'Este campo es obligatorio',
+    selectStore: 'Seleccionar tienda',
   };
-
-  TEMPLATE_TXT: any;
 
   kardexProductDTOname = kardexProductDTOname;
 
@@ -41,9 +33,7 @@ export class InventoryKardexFormComponent implements OnInit {
     private _formBuilder: UntypedFormBuilder,
     public _inventoryKardex: InventoryKardexStateService,
     public _inventoryKardexApi: InventoryKardexApiService
-  ) {
-    this.TEMPLATE_TXT = this.TEMPLATE_TXT_ES;
-  }
+  ) {}
 
   ngOnInit(): void {
     this.onFillForm();

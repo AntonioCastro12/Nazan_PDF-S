@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InventoryKardexListComponent } from './pages/inventory-kardex-list/inventory-kardex-list.component';
+
 import { InventoryKardexComponent } from './inventory-kardex.component';
+import { InventoryKardexReportComponent } from './pages';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'list', pathMatch: 'full' },
+  { path: '', redirectTo: 'report', pathMatch: 'full' },
 
   {
     path: '',
     component: InventoryKardexComponent,
     children: [
       {
-        path: 'list',
-        component: InventoryKardexListComponent,
+        path: 'report',
+        component: InventoryKardexReportComponent,
       },
     ],
   },

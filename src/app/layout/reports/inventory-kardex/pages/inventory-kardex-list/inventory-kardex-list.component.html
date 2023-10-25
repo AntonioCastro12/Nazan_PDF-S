@@ -1,6 +1,109 @@
-<main>
-  <h1>Reporte de Inventario</h1>
-  <app-inventory-kardex-form></app-inventory-kardex-form>
+<main class="p-5">
+  <p-table
+    #dt2
+    [value]="this._inventoryKardex.state.kardexProductResponse"
+    [paginator]="true"
+    [rows]="15"
+    styleClass="mt-3 p-datatable-sm"
+    [loading]="isLoading"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" id="{{ KardexProductResponseName.store_id }}">
+          {{ KardexProductResponseName.store_id }}
+        </th>
+        <th class="text-center" id="{{ KardexProductResponseName.trans_seq }}">
+          {{ KardexProductResponseName.trans_seq }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ KardexProductResponseName.create_date }}"
+        >
+          {{ KardexProductResponseName.create_date }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ KardexProductResponseName.origin_bucket }}"
+        >
+          {{ KardexProductResponseName.origin_bucket }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ KardexProductResponseName.destiny_bucket }}"
+        >
+          {{ KardexProductResponseName.destiny_bucket }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ KardexProductResponseName.action_code }}"
+        >
+          {{ KardexProductResponseName.action_code }}
+        </th>
+        <th class="text-center" id="{{ KardexProductResponseName.item_id }}">
+          {{ KardexProductResponseName.item_id }}
+        </th>
+        <th class="text-center" id="{{ KardexProductResponseName.document }}">
+          {{ KardexProductResponseName.document }}
+        </th>
+        <th class="text-center" id="{{ KardexProductResponseName.qty }}">
+          {{ KardexProductResponseName.qty }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="9" class="text-center">
+          {{
+            isLoading ? TEMPLATE_TEXT.isLoadingOn : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.store_id)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.trans_seq)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.create_date)"
+          [style]="{
+            '
+        width': '100px'
+          }"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.origin_bucket)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.destiny_bucket)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.action_code)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.item_id)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.document)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.qty)"
+        ></td>
+      </tr>
+    </ng-template>
+  </p-table>
 
   {{ this._inventoryKardex.state.kardexProductResponse | json }}
 </main>
