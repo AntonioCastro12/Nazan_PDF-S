@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { AuthStateService } from '../../../auth-manager/services/auth-state.service';
-import { CommonStateService } from '../../../report-manager/services/common-state.service';
-import { ReportApiService } from '../../../report-manager/services/report-api.service';
+import { CommonStateService } from '../../../../../../../samples/report-manager/services/common-state.service';
+import { ReportApiService } from '../../../../../../../samples/report-manager/services/report-api.service';
 import { Router } from '@angular/router';
 import { TemplateActionService, TemplateStateService } from 'src/app/template';
 import {

@@ -84,4 +84,8 @@ export default {
     var el = document.querySelector(id);
     el && el.remove();
   },
+
+  open() {},
+
+  close() {},
 };

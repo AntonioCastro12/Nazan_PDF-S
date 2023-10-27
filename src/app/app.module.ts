@@ -14,6 +14,7 @@ import { AuthInterceptor } from './interceptors/set-03';
 import { WINDOW_PROVIDERS } from './window.provider';
 import { ExitPageComponent } from './pages/exit-page/exit-page.component';
 import { PrimeNgModule } from '@shared/vendor/prime-ng';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent, SsoComponent, ExitPageComponent],
@@ -29,6 +30,8 @@ import { PrimeNgModule } from '@shared/vendor/prime-ng';
     ToastrModule.forRoot(),
   ],
   providers: [
+    ConfirmationService,
+    MessageService,
     AuthStateService,
     {
       provide: HTTP_INTERCEPTORS,

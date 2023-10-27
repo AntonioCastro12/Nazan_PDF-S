@@ -6,6 +6,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { ChartModule } from 'primeng/chart';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
@@ -42,9 +43,10 @@ import { DividerModule } from 'primeng/divider';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PrimeNGConfig } from 'primeng/api';
-import { StepsModule } from 'primeng/steps';
-import { PaginatorModule } from 'primeng/paginator';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
+// import { ErrorMessageComponent } from './pages/error-message';
+
+// import { PrettyPrintPipe } from './pipes/preatty-json.pipe';
 
 const primeModules = [
   ConfirmPopupModule,
@@ -58,6 +60,7 @@ const primeModules = [
   DataViewModule,
   PanelMenuModule,
   InputTextModule,
+  ChartModule,
   ButtonModule,
   ToolbarModule,
   SidebarModule,
@@ -91,14 +94,9 @@ const primeModules = [
   DividerModule,
   CardModule,
   CheckboxModule,
-
-  TabViewModule,
-  ToggleButtonModule,
-  StepsModule,
-  PaginatorModule,
-  ProgressSpinnerModule,
-  MultiSelectModule,
 ];
+
+// const components = [ErrorMessageComponent, PrettyPrintPipe];
 
 @NgModule({
   declarations: [],
