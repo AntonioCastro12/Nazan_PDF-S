@@ -9,16 +9,7 @@
         icon="pi pi-search"
         class="mr-1"
         (onClick)="handleSearch()"
-        styleClass="p-button-rounded"
-      ></p-button>
-      <p-button
-        *ngIf="showChart"
-        (onClick)="handleChart()"
-        pTooltip="{{ TEMPLATE_TEXT.showChart }}"
-        tooltipPosition="bottom"
-        icon="pi pi-chart-bar"
-        class="mr-1"
-        styleClass="p-button-rounded"
+        [rounded]="true"
       ></p-button>
       <p-button
         *ngIf="showRefresh"
@@ -27,7 +18,7 @@
         icon="pi pi-refresh"
         class="mr-1"
         (onClick)="handleRefresh()"
-        styleClass="p-button-rounded"
+        [rounded]="true"
       ></p-button>
       <p-button
         *ngIf="showDownload"
@@ -36,7 +27,16 @@
         tooltipPosition="bottom"
         icon="pi pi-cloud-download"
         class="mr-1"
-        styleClass="p-button-rounded"
+        [rounded]="true"
+      ></p-button>
+      <p-button
+        *ngIf="showChart"
+        (onClick)="handleChart()"
+        pTooltip="{{ TEMPLATE_TEXT.showChart }}"
+        tooltipPosition="bottom"
+        icon="pi pi-chart-bar"
+        class="mr-1"
+        [rounded]="true"
       ></p-button>
       <p-button
         *ngIf="showEye"
@@ -44,7 +44,7 @@
         tooltipPosition="bottom"
         icon="pi pi-eye"
         class="mr-1"
-        styleClass="p-button-rounded"
+        [rounded]="true"
       ></p-button>
       <p-button
         *ngIf="showFavorite"
@@ -52,7 +52,7 @@
         tooltipPosition="bottom"
         icon="pi pi-heart"
         class="mr-1"
-        styleClass="p-button-rounded"
+        [rounded]="true"
         (onClick)="handleFavorite()"
       ></p-button>
     </div>

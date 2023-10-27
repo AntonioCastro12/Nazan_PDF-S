@@ -17,12 +17,13 @@ import { InventoryKardexApiService } from '../../services/inventory-kardex-api.s
 export class InventoryKardexFormComponent implements OnInit {
   TEMPLATE_TXT = {
     labelReturn: 'Volver a usuarios',
-    labelReset: 'Reiniciar',
-    labelSave: 'Guardar',
+    labelReset: 'Restaurar filtros',
+    labelSave: 'Buscar',
     labelCancel: 'Cancelar',
     tooltipCancel: 'Cancelar',
     required: 'Este campo es obligatorio',
     selectStore: 'Seleccionar tienda',
+    title: 'Búsqueda por',
   };
 
   kardexProductDTOname = kardexProductDTOname;

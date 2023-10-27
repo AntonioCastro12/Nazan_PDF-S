@@ -1,27 +1,21 @@
 <!-- Form ******************************************************* -->
 <section class="container">
+  <div class="mt-5 mb-2">
+    <span>{{ TEMPLATE_TXT.title }}:</span>
+  </div>
   <form [formGroup]="form" [autocomplete]="'off'" *ngIf="form" class="w-full">
-    <article class="formgrid grid row">
+    <article class="formgrid grid">
       <!-- ************************************************* -->
-      <section #storeId class="mb-1 col-12 col-md-12 col-lg-12">
+      <section #storeId class="mb-1 col-12 md:col-12 lg:col-3">
         <div class="form-field--container">
-          <label class="crud-label" for="storeId">{{
-            kardexProductDTOname.storeId
-          }}</label>
-          <input
-            pInputText
-            class="full"
-            type="text"
-            id="storeId"
-            autofocus
-            formControlName="storeId"
-          />
+          <label for="storeId">{{ kardexProductDTOname.storeId }}</label>
 
           <p-autoComplete
+            styleClass="full"
+            inputId="storeId"
             formControlName="storeId"
             [dropdown]="true"
             field="storeInfoName"
-            [style]="{ width: '100%' }"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
           ></p-autoComplete>
 
@@ -35,11 +29,9 @@
         </div>
       </section>
       <!-- ************************************************* -->
-      <section #origin class="mb-1 col-12 col-md-12 col-lg-12">
+      <section #origin class="mb-1 col-12 md:col-12 lg:col-3">
         <div class="form-field--container">
-          <label class="crud-label" for="origin">{{
-            kardexProductDTOname.origin
-          }}</label>
+          <label for="origin">{{ kardexProductDTOname.origin }}</label>
           <input
             pInputText
             class="full"
@@ -57,11 +49,9 @@
         </div>
       </section>
       <!-- ************************************************* -->
-      <section #startDate class="mb-1 col-12 col-md-12 col-lg-12">
+      <section #startDate class="mb-1 col-12 md:col-12 lg:col-2">
         <div class="form-field--container">
-          <label class="crud-label" for="startDate">{{
-            kardexProductDTOname.startDate
-          }}</label>
+          <label for="startDate">{{ kardexProductDTOname.startDate }}</label>
 
           <p-calendar
             formControlName="startDate"
@@ -79,11 +69,9 @@
         </div>
       </section>
       <!-- ************************************************* -->
-      <section #endDate class="mb-1 col-12 col-md-12 col-lg-12">
+      <section #endDate class="mb-1 col-12 md:col-12 lg:col-2">
         <div class="form-field--container">
-          <label class="crud-label" for="endDate">{{
-            kardexProductDTOname.endDate
-          }}</label>
+          <label for="endDate">{{ kardexProductDTOname.endDate }}</label>
 
           <p-calendar
             formControlName="endDate"
@@ -102,9 +90,9 @@
       </section>
     </article>
 
-    <!-- &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&  formgrid grid row mt-5 sticky top-0 -->
+    <!-- Buttons -->
 
-    <article class="flex align-items-center justify-content-end">
+    <article class="flex align-items-center justify-content-start mt-5">
       <div class="ml-3">
         <button
           pButton
@@ -119,19 +107,9 @@
         <button
           pButton
           pRipple
-          label="{{ TEMPLATE_TXT.labelCancel }}"
-          icon="pi pi-times"
-          class="p-button-danger"
-          (click)="onCancel()"
-        ></button>
-      </div>
-      <div class="ml-3">
-        <button
-          pButton
-          pRipple
           label="{{ TEMPLATE_TXT.labelSave }}"
           icon="pi pi-check"
-          class="p-button-success"
+          class="p-button-warning"
           (click)="onSubmit()"
           [disabled]="!form.valid"
         ></button>
