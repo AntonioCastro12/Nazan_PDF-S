@@ -23,12 +23,12 @@ export const staffIngresosMenu = [
           {
             label: 'Totales de facturación',
 
-            routerLink: ['/layout/reports/sales/invoice-total'],
+            routerLink: ['sales-invoice-total'],
           },
           {
             label: 'Informe general de ventas',
 
-            routerLink: ['/layout/reports/sales/general-sales'],
+            routerLink: ['sales-general-sales'],
           },
         ],
       },

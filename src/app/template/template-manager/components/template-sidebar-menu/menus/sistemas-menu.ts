@@ -23,17 +23,17 @@ export const sistemasMenu = [
           {
             label: 'Kardex de artículo',
 
-            routerLink: ['/layout/reports/inventories/kardex'],
+            routerLink: ['inventory-kardex'],
           },
           {
             label: 'Cumplimiento de Conteo',
 
-            routerLink: ['/layout/reports/inventories/cycle-count'],
+            routerLink: ['inventory-cycle-count'],
           },
           {
             label: 'Diferencia de inventario SAP vs Xstore',
 
-            routerLink: ['/layout/reports/inventories/sap-xstore'],
+            routerLink: ['inventory-sap-xstore'],
           },
         ],
       },
@@ -44,12 +44,12 @@ export const sistemasMenu = [
           {
             label: 'Colaboradores Nazan',
 
-            routerLink: ['/layout/reports/segments/collaborators-nazan'],
+            routerLink: ['segment-collaborators-nazan'],
           },
           {
             label: 'Afiliados KIPON SHOE CLUB',
 
-            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+            routerLink: ['segment-affiliated-kipon'],
           },
         ],
       },
@@ -60,7 +60,7 @@ export const sistemasMenu = [
           {
             label: 'Venta de Mayoreos',
 
-            routerLink: ['/layout/reports/sales/wholesale-sales'],
+            routerLink: ['sales-wholesale'],
           },
         ],
       },
@@ -79,17 +79,17 @@ export const sistemasMenu = [
           {
             label: 'General mov. puntos y monedero',
 
-            routerLink: ['/layout/reports/point-program/total-movement'],
+            routerLink: ['point-program-total-movement'],
           },
           {
             label: 'Detalle mov. puntos y monedero',
 
-            routerLink: ['/layout/reports/point-program/detail-points'],
+            routerLink: ['point-program-detail'],
           },
           {
             label: 'Detalle movimientos monedero',
 
-            routerLink: ['/layout/reports/point-program/detail-wallet'],
+            routerLink: ['point-program-detail-wallet'],
           },
         ],
       },
@@ -100,12 +100,12 @@ export const sistemasMenu = [
           {
             label: 'Colaboradores Nazan',
 
-            routerLink: ['/layout/reports/segments/collaborators-nazan'],
+            routerLink: ['segment-collaborators-nazan'],
           },
           {
             label: 'Afiliados KIPON SHOE CLUB',
 
-            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+            routerLink: ['segment-affiliated-kipon'],
           },
         ],
       },
@@ -124,12 +124,12 @@ export const sistemasMenu = [
           {
             label: 'Totales de facturación',
 
-            routerLink: ['/layout/reports/sales/invoice-total'],
+            routerLink: ['sales-invoice-total'],
           },
           {
             label: 'Informe general de ventas',
 
-            routerLink: ['/layout/reports/sales/general-sales'],
+            routerLink: ['sales-general-sales'],
           },
         ],
       },
@@ -147,11 +147,11 @@ export const sistemasMenu = [
         items: [
           {
             label: 'Reporte de recepción de mercancía (POD)',
-            routerLink: ['/layout/reports/inventories/pod'],
+            routerLink: ['inventory-pod'],
           },
           {
             label: 'Existencia de inventario',
-            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+            routerLink: ['inventory-stock-resume'],
           },
         ],
       },

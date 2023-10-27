@@ -20,17 +20,17 @@ export const staffMarketingMenu = [
           {
             label: 'General mov. puntos y monedero',
 
-            routerLink: ['/layout/reports/point-program/total-movement'],
+            routerLink: ['point-program-total-movement'],
           },
           {
             label: 'Detalle mov. puntos y monedero',
 
-            routerLink: ['/layout/reports/point-program/detail-points'],
+            routerLink: ['point-program-detail'],
           },
           {
             label: 'Detalle movimientos monedero',
 
-            routerLink: ['/layout/reports/point-program/detail-wallet'],
+            routerLink: ['point-program-detail-wallet'],
           },
         ],
       },

@@ -20,12 +20,12 @@ export const tiendaMenu = [
           {
             label: 'Kardex de artículo',
 
-            routerLink: ['/layout/reports/inventories/kardex'],
+            routerLink: ['inventory-kardex'],
           },
           {
             label: 'Existencia de inventario',
 
-            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+            routerLink: ['inventory-stock-resume'],
           },
         ],
       },
@@ -36,7 +36,7 @@ export const tiendaMenu = [
           {
             label: 'Afiliados KIPON SHOE CLUB',
 
-            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+            routerLink: ['segment-affiliated-kipon'],
           },
         ],
       },
@@ -47,7 +47,7 @@ export const tiendaMenu = [
           {
             label: 'Venta de Mayoreos',
 
-            routerLink: ['/layout/reports/sales/wholesale-sales'],
+            routerLink: ['sales-wholesale'],
           },
         ],
       },

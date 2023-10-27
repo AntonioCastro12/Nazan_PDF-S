@@ -20,7 +20,7 @@ export const staffKiponMenu = [
           {
             label: 'Afiliados KIPON SHOE CLUB',
 
-            routerLink: ['/layout/reports/segments/affiliated-kipon'],
+            routerLink: ['segment-affiliated-kipon'],
           },
         ],
       },

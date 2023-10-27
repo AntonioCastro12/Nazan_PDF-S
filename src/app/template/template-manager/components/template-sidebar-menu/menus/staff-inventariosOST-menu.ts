@@ -20,16 +20,16 @@ export const staffInventariosOSTMenu = [
           {
             label: 'Kardex de articulo',
 
-            routerLink: ['/layout/reports/inventories/kardex'],
+            routerLink: ['inventory-kardex'],
           },
           {
             label: 'Existencia de inventario',
-            routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
+            routerLink: ['inventory-stock-resume'],
           },
           {
             label: 'Diferencia de inventario SAP vs Xstore',
 
-            routerLink: ['/layout/reports/inventories/sap-xstore'],
+            routerLink: ['inventory-sap-xstore'],
           },
         ],
       },
