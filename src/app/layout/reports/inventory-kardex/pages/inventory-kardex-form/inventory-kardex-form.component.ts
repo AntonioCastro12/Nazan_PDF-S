@@ -5,7 +5,11 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import { kardexProductDTOname, originOptions } from '../../models';
+import {
+  KardexProductDTO,
+  kardexProductDTOname,
+  originOptions,
+} from '../../models';
 import { InventoryKardexStateService } from '../../services';
 import { InventoryKardexApiService } from '../../services/inventory-kardex-api.service';
 import { DateTime } from 'luxon';
@@ -32,7 +36,7 @@ export class InventoryKardexFormComponent implements OnInit {
 
   kardexProductDTOname = kardexProductDTOname;
   originOptions = originOptions;
-  today = DateTime.now().toFormat('dd/LL/yyyy');
+  today = DateTime.now().toFormat('yyyy-LL-dd');
   storeList: any;
   results: any;
 
@@ -62,7 +66,17 @@ export class InventoryKardexFormComponent implements OnInit {
     return this._inventoryKardex.state.form.controls;
   }
   onSubmit() {
-    this._inventoryKardex.state.kardexProductDTO = this._inventoryKardex.state.form.value;
+    this._inventoryKardex.state.isLoadingList = true;
+    let item: KardexProductDTO = new KardexProductDTO();
+    let formItems = this._inventoryKardex.state.form.value;
+    item = {
+      storeId: formItems.storeId.id,
+      productId: formItems.productId,
+      origin: formItems.origin.value,
+      startDate: formItems.startDate,
+      endDate: formItems.endDate,
+    };
+    this._inventoryKardex.state.kardexProductDTO = item;
 
     this._inventoryKardexApi
       .inventoryKardexProduct(this._inventoryKardex.state.kardexProductDTO)
@@ -73,7 +87,9 @@ export class InventoryKardexFormComponent implements OnInit {
         error: (error) => {
           console.log(error);
         },
-        complete: () => {},
+        complete: () => {
+          this._inventoryKardex.state.isLoadingList = false;
+        },
       });
   }
 

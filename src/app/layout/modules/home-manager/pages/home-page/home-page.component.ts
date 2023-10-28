@@ -37,6 +37,7 @@ export class HomePageComponent implements OnDestroy {
     this._template.state.sidebarOverlayVisible = true;
     // this._auth.loadUserInfo();
     this.getUserInfo();
+    this.onGetStoreList();
   }
   labelsListFavorites = labelsListFavorites;
   labelsListHistoric = labelsListHistoric;

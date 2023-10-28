@@ -36,8 +36,7 @@ export class InventoryKardexOptionsComponent {
   }
   handleChart() {}
   handleRefresh() {
-    this._inventoryKardex.state.kardexProductDTO =
-      this._inventoryKardex.state.form.value;
+    this._inventoryKardex.state.isLoadingList = true;
 
     this._inventoryKardexApi
       .inventoryKardexProduct(this._inventoryKardex.state.kardexProductDTO)
@@ -48,7 +47,9 @@ export class InventoryKardexOptionsComponent {
         error: (error) => {
           console.log(error);
         },
-        complete: () => {},
+        complete: () => {
+          this._inventoryKardex.state.isLoadingList = false;
+        },
       });
   }
   handleDownload() {}

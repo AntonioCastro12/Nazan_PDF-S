@@ -89,7 +89,8 @@
           <p-calendar
             formControlName="startDate"
             [readonlyInput]="true"
-            dateFormat="dd/mm/yy"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
           ></p-calendar>
 
           <div *ngIf="fg['startDate'].dirty">
@@ -109,7 +110,8 @@
           <p-calendar
             formControlName="endDate"
             [readonlyInput]="true"
-            dateFormat="dd/mm/yy"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
           ></p-calendar>
 
           <div *ngIf="fg['endDate'].dirty">

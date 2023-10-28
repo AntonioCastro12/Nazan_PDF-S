@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { KardexProductResponse } from '../models/inventory-kardex.response';
 import { KardexProductDTO } from '../models/inventory-kardex.dto';
@@ -14,15 +14,18 @@ export class InventoryKardexApiService {
   inventoryKardexProduct(
     dto: KardexProductDTO
   ): Observable<KardexProductResponse[]> {
-    let params = new HttpParams({
-      fromObject: {
-        obj: JSON.stringify(dto),
-      },
-    });
+    const url = `${environment.apiUrl}/api/inventories/kardex-product`;
+    const params: any = {};
 
-    return this._http.get<KardexProductResponse[]>(
-      `${environment.apiUrl}/api/inventories/kardex-product`,
-      { params }
-    );
+    params['storeId'] = dto.storeId;
+    params['productId'] = dto.productId;
+    params['origin'] = dto.origin;
+    params['startDate'] = dto.startDate;
+    params['endDate'] = dto.endDate;
+
+    let response$: any = this._http
+      .get<KardexProductResponse[]>(url, { params })
+      .pipe(map((data: any) => data));
+    return response$;
   }
 }
