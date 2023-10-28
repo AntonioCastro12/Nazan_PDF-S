@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { InventoryKardexStateService } from '../../services';
+import { InventoryKardexApiService } from '../../services/inventory-kardex-api.service';
 
 @Component({
   selector: 'inventory-kardex-options',
@@ -14,6 +15,7 @@ export class InventoryKardexOptionsComponent {
     showDownload: 'Exportar registros',
     showEye: 'Mostrar registro',
     showFavorite: 'Agregar a favoritos',
+    title: 'Herramientas de reporte',
   };
 
   showSearch: any = true;
@@ -23,11 +25,32 @@ export class InventoryKardexOptionsComponent {
   showEye: any = true;
   showFavorite: any = true;
 
-  constructor(public _inventoryKardex: InventoryKardexStateService) {}
+  constructor(
+    public _inventoryKardex: InventoryKardexStateService,
+    private _inventoryKardexApi: InventoryKardexApiService
+  ) {}
 
-  handleSearch() {}
+  handleSearch() {
+    this._inventoryKardex.state.isVisibleForm =
+      !this._inventoryKardex.state.isVisibleForm;
+  }
   handleChart() {}
-  handleRefresh() {}
+  handleRefresh() {
+    this._inventoryKardex.state.kardexProductDTO =
+      this._inventoryKardex.state.form.value;
+
+    this._inventoryKardexApi
+      .inventoryKardexProduct(this._inventoryKardex.state.kardexProductDTO)
+      .subscribe({
+        next: (data) => {
+          this._inventoryKardex.state.kardexProductResponse = data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {},
+      });
+  }
   handleDownload() {}
   handleFavorite() {}
 }

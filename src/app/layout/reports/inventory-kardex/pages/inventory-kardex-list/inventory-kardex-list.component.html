@@ -5,7 +5,7 @@
     [paginator]="true"
     [rows]="15"
     styleClass="mt-3 p-datatable-sm"
-    [loading]="isLoading"
+    [loading]="_inventoryKardex.state.isLoadingList"
   >
     <ng-template pTemplate="header">
       <tr class="text-sm">
@@ -54,7 +54,9 @@
       <tr>
         <td [attr.colspan]="9" class="text-center">
           {{
-            isLoading ? TEMPLATE_TEXT.isLoadingOn : TEMPLATE_TEXT.isResultEmpty
+            _inventoryKardex.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
           }}
         </td>
       </tr>

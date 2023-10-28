@@ -1,9 +1,14 @@
 <!-- Form ******************************************************* -->
-<section class="container">
+<section class="container" *ngIf="_inventoryKardex.state.isVisibleForm">
   <div class="mt-5 mb-2">
     <span>{{ TEMPLATE_TXT.title }}:</span>
   </div>
-  <form [formGroup]="form" [autocomplete]="'off'" *ngIf="form" class="w-full">
+  <form
+    [formGroup]="_inventoryKardex.state.form"
+    [autocomplete]="'off'"
+    *ngIf="_inventoryKardex.state.form"
+    class="w-full"
+  >
     <article class="formgrid grid">
       <!-- ************************************************* -->
       <section #storeId class="mb-1 col-12 md:col-12 lg:col-3">
@@ -11,12 +16,13 @@
           <label for="storeId">{{ kardexProductDTOname.storeId }}</label>
 
           <p-autoComplete
-            styleClass="full"
             inputId="storeId"
             formControlName="storeId"
             [dropdown]="true"
-            field="storeInfoName"
+            field="name"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
+            [suggestions]="results"
+            (completeMethod)="filterCountry($event)"
           ></p-autoComplete>
 
           <div *ngIf="fg['storeId'].dirty">
@@ -29,16 +35,43 @@
         </div>
       </section>
       <!-- ************************************************* -->
-      <section #origin class="mb-1 col-12 md:col-12 lg:col-3">
+      <section #productId class="mb-1 col-12 md:col-12 lg:col-3">
         <div class="form-field--container">
-          <label for="origin">{{ kardexProductDTOname.origin }}</label>
+          <label for="productId">{{ kardexProductDTOname.productId }}</label>
           <input
             pInputText
-            class="full"
+            class="w-full"
             type="text"
-            id="origin"
-            formControlName="origin"
+            id="productId"
+            formControlName="productId"
+            placeholder="{{ TEMPLATE_TXT.placeholderProductId }}"
           />
+          <div *ngIf="fg['productId'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['productId'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+      <!-- ************************************************* -->
+      <section #origin class="mb-1 col-12 md:col-12 lg:col-2">
+        <div class="form-field--container">
+          <label for="origin">{{ kardexProductDTOname.origin }}</label>
+
+          <p-dropdown
+            [options]="originOptions"
+            formControlName="origin"
+            optionLabel="name"
+            [filter]="true"
+            filterBy="name"
+            [showClear]="true"
+            styleClass="w-full"
+            placeholder="{{ TEMPLATE_TXT.placeholderProductId }}"
+          >
+          </p-dropdown>
+
           <div *ngIf="fg['origin'].dirty">
             <small
               class="p-error block"
@@ -97,21 +130,24 @@
         <button
           pButton
           pRipple
-          label="{{ TEMPLATE_TXT.labelReset }}"
-          icon="pi pi-refresh"
-          class="p-button-secondary"
+          icon="pi pi-filter-slash"
+          class="p-button-secondary p-button-rounded"
+          pTooltip="{{ TEMPLATE_TXT.labelReset }}"
+          tooltipPosition="top"
           (click)="onReset()"
+          [disabled]="!_inventoryKardex.state.form.dirty"
         ></button>
       </div>
       <div class="ml-3">
         <button
           pButton
           pRipple
-          label="{{ TEMPLATE_TXT.labelSave }}"
           icon="pi pi-check"
-          class="p-button-warning"
+          class="p-button-warning p-button-rounded"
           (click)="onSubmit()"
-          [disabled]="!form.valid"
+          [disabled]="!_inventoryKardex.state.form.valid"
+          pTooltip="{{ TEMPLATE_TXT.labelSave }}"
+          tooltipPosition="top"
         ></button>
       </div>
     </article>

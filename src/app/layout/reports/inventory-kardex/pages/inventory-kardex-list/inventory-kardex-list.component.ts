@@ -16,7 +16,6 @@ export class InventoryKardexListComponent {
 
   KardexProductResponseName = KardexProductResponseName;
 
-  isLoading = true;
   searchText = '';
 
   constructor(public _inventoryKardex: InventoryKardexStateService) {}

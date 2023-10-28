@@ -1,5 +1,5 @@
 <article class="card">
-  <h4>Herramientas de reporte</h4>
+  <h4>{{ TEMPLATE_TEXT.title }}</h4>
   <section class="flex">
     <div class="card-container">
       <p-button
@@ -19,6 +19,7 @@
         class="mr-1"
         (onClick)="handleRefresh()"
         [rounded]="true"
+        [disabled]="_inventoryKardex.state.kardexProductResponse.length == 0"
       ></p-button>
       <p-button
         *ngIf="showDownload"
@@ -29,7 +30,7 @@
         class="mr-1"
         [rounded]="true"
       ></p-button>
-      <p-button
+      <!-- <p-button
         *ngIf="showChart"
         (onClick)="handleChart()"
         pTooltip="{{ TEMPLATE_TEXT.showChart }}"
@@ -45,7 +46,7 @@
         icon="pi pi-eye"
         class="mr-1"
         [rounded]="true"
-      ></p-button>
+      ></p-button> -->
       <p-button
         *ngIf="showFavorite"
         pTooltip="{{ TEMPLATE_TEXT.showFavorite }}"
@@ -54,6 +55,7 @@
         class="mr-1"
         [rounded]="true"
         (onClick)="handleFavorite()"
+        [disabled]="_inventoryKardex.state.kardexProductResponse.length == 0"
       ></p-button>
     </div>
   </section>

@@ -7,10 +7,16 @@ import {
 } from 'samples/report-manager/models';
 import { KardexProductDTO } from './inventory-kardex.dto';
 import { KardexProductResponse } from './inventory-kardex.response';
+import { UntypedFormGroup } from '@angular/forms';
 
 export class InventoryKardexState {
   kardexProductDTO: KardexProductDTO = new KardexProductDTO();
   kardexProductResponse: KardexProductResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

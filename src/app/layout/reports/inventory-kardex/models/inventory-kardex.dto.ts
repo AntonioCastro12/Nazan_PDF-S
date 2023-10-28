@@ -8,8 +8,8 @@ export class KardexProductDTO {
 
 export const kardexProductDTOname = {
   storeId: 'Tienda',
-  productId: 'Producto',
-  origin: 'Origen',
-  startDate: 'Fecha de inicio',
-  endDate: 'Fecha final',
+  productId: 'Código de producto',
+  origin: 'Tipo de conteo',
+  startDate: 'Desde',
+  endDate: 'Hasta',
 };
