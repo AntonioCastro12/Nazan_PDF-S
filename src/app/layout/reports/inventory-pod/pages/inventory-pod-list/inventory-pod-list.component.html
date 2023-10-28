@@ -1,1 +1,121 @@
-<p>inventory-pod-list works!</p>
+<main class="p-5">
+  <p-table
+    #dt2
+    [value]="this._inventoryPod.state.inventoryPodResponse"
+    [paginator]="true"
+    [rows]="15"
+    styleClass="mt-3 p-datatable-sm"
+    [loading]="_inventoryPod.state.isLoadingList"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" id="{{ inventoryPodResponseName.T_ORIGEN }}">
+          {{ inventoryPodResponseName.T_ORIGEN }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryPodResponseName.NOMBRE_TDA_ORIGEN }}"
+        >
+          {{ inventoryPodResponseName.NOMBRE_TDA_ORIGEN }}
+        </th>
+        <th class="text-center" id="{{ inventoryPodResponseName.T_DESTINO }}">
+          {{ inventoryPodResponseName.T_DESTINO }}
+        </th>
+        <th class="text-center" id="{{ inventoryPodResponseName.L_EMBARQUE }}">
+          {{ inventoryPodResponseName.L_EMBARQUE }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryPodResponseName.TIPO_EMBARQUE }}"
+        >
+          {{ inventoryPodResponseName.TIPO_EMBARQUE }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryPodResponseName.FEC_CREA_SISTEMA }}"
+        >
+          {{ inventoryPodResponseName.FEC_CREA_SISTEMA }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryPodResponseName.FEC_HORA_POD }}"
+        >
+          {{ inventoryPodResponseName.FEC_HORA_POD }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryPodResponseName.FEC_HORA_CIERRE }}"
+        >
+          {{ inventoryPodResponseName.FEC_HORA_CIERRE }}
+        </th>
+        <th class="text-center" id="{{ inventoryPodResponseName.TIEMPO_HRS }}">
+          {{ inventoryPodResponseName.TIEMPO_HRS }}
+        </th>
+        <th class="text-center" id="{{ inventoryPodResponseName.ESTATUS }}">
+          {{ inventoryPodResponseName.ESTATUS }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="9" class="text-center">
+          {{
+            _inventoryPod.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.T_ORIGEN)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="
+            highlightSearchText(searchText, report.NOMBRE_TDA_ORIGEN)
+          "
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.T_DESTINO)"
+          [style]="{
+            '
+          width': '100px'
+          }"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.L_EMBARQUE)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.TIPO_EMBARQUE)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.FEC_CREA_SISTEMA)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.FEC_HORA_POD)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.FEC_HORA_CIERRE)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.TIEMPO_HRS)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.ESTATUS)"
+        ></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>

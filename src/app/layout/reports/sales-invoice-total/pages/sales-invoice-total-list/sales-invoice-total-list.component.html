@@ -1,1 +1,124 @@
-<p>sales-invoice-total-list works!</p>
+<main class="p-5">
+  <p-table
+    #dt2
+    [value]="this._salesInvoiceTotal.state.salesInvoiceTotalResponse"
+    [paginator]="true"
+    [rows]="15"
+    styleClass="mt-3 p-datatable-sm"
+    [loading]="_salesInvoiceTotal.state.isLoadingList"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.storeId }}"
+        >
+          {{ salesInvoiceTotalResponseName.storeId }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.businessDate }}"
+        >
+          {{ salesInvoiceTotalResponseName.businessDate }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.saleTypeSale }}"
+        >
+          {{ salesInvoiceTotalResponseName.saleTypeSale }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalMoneySale }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalMoneySale }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalUnitSale }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalUnitSale }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.countInvoiceSale }}"
+        >
+          {{ salesInvoiceTotalResponseName.countInvoiceSale }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.saleTypeReturn }}"
+        >
+          {{ salesInvoiceTotalResponseName.saleTypeReturn }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalMoneyReturn }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalMoneyReturn }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalUnitReturn }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalUnitReturn }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="9" class="text-center">
+          {{
+            _salesInvoiceTotal.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.storeId)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.businessDate)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.saleTypeSale)"
+          [style]="{
+            '
+          width': '100px'
+          }"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.totalMoneySale)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.totalUnitSale)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.countInvoiceSale)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.saleTypeReturn)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.totalMoneyReturn)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.totalUnitReturn)"
+        ></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>

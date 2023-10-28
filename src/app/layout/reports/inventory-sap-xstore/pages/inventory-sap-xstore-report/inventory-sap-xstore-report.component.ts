@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class InventorySapXstoreReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Diferencia de inventario SAP vs Xstore',
   };
 }

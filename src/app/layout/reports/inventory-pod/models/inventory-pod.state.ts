@@ -1,9 +1,15 @@
-import { InventoryPodDTO } from "./inventory-pod.dto";
-import { InventoryPodResponse } from "./inventory-pod.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { InventoryPodDTO } from './inventory-pod.dto';
+import { InventoryPodResponse } from './inventory-pod.response';
 
 export class InventoryPodState {
   inventoryPodDTO: InventoryPodDTO = new InventoryPodDTO();
   inventoryPodResponse: InventoryPodResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

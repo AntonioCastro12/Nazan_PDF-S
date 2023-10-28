@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class InventoryStockResumeReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Existencia en Inventario',
   };
 }

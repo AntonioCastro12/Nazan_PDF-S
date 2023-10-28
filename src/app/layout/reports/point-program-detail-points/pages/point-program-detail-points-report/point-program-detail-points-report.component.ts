@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class PointProgramDetailPointsReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Detalle mov. puntos y monedero',
   };
 }

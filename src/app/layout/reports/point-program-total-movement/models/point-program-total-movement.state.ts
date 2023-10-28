@@ -1,9 +1,16 @@
-import { PointProgramTotalMovementDTO } from "./point-program-total-movement.dto";
-import { PointProgramTotalMovementResponse } from "./point-program-total-movement.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { PointProgramTotalMovementDTO } from './point-program-total-movement.dto';
+import { PointProgramTotalMovementResponse } from './point-program-total-movement.response';
 
 export class PointProgramTotalMovementState {
-  pointProgramTotalMovementDTO: PointProgramTotalMovementDTO = new PointProgramTotalMovementDTO();
+  pointProgramTotalMovementDTO: PointProgramTotalMovementDTO =
+    new PointProgramTotalMovementDTO();
   pointProgramTotalMovementResponse: PointProgramTotalMovementResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

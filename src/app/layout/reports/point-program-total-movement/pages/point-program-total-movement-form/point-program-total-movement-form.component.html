@@ -1,1 +1,101 @@
-<p>point-program-total-movement-form works!</p>
+<!-- Form ******************************************************* -->
+<section
+  class="container"
+  *ngIf="_pointProgramTotalMovement.state.isVisibleForm"
+>
+  <div class="mt-5 mb-2">
+    <span>{{ TEMPLATE_TXT.title }}:</span>
+  </div>
+  <div class="mt-2 mb-2">
+    <span>{{ TEMPLATE_TXT.subtitle }}:</span>
+  </div>
+
+  <form
+    [formGroup]="_pointProgramTotalMovement.state.form"
+    [autocomplete]="'off'"
+    *ngIf="_pointProgramTotalMovement.state.form"
+    class="w-full"
+  >
+    <article class="formgrid grid">
+      <!-- ************************************************* -->
+      <section #startDate class="mb-1 col-12 md:col-12 lg:col-6">
+        <div class="form-field--container">
+          <label for="startDate">{{
+            pointProgramTotalMovementLabels.startDate
+          }}</label>
+
+          <p-calendar
+            formControlName="startDate"
+            [readonlyInput]="true"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
+            styleClass="w-full"
+          ></p-calendar>
+
+          <div *ngIf="fg['startDate'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['startDate'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+      <!-- ************************************************* -->
+      <section #endDate class="mb-1 col-12 md:col-12 lg:col-6">
+        <div class="form-field--container">
+          <label for="endDate">{{
+            pointProgramTotalMovementLabels.endDate
+          }}</label>
+
+          <p-calendar
+            formControlName="endDate"
+            [readonlyInput]="true"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
+            styleClass="w-full"
+          ></p-calendar>
+
+          <div *ngIf="fg['endDate'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['endDate'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- Buttons -->
+
+    <article class="flex align-items-center justify-content-start mt-5">
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-filter-slash"
+          class="p-button-secondary p-button-rounded"
+          pTooltip="{{ TEMPLATE_TXT.labelReset }}"
+          tooltipPosition="top"
+          (click)="onReset()"
+          [disabled]="!_pointProgramTotalMovement.state.form.dirty"
+        ></button>
+      </div>
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-check"
+          class="p-button-warning p-button-rounded"
+          (click)="onSubmit()"
+          [disabled]="!_pointProgramTotalMovement.state.form.valid"
+          pTooltip="{{ TEMPLATE_TXT.labelSave }}"
+          tooltipPosition="top"
+        ></button>
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>

@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SalesInvoiceTotalReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Totales de facturación',
   };
 }

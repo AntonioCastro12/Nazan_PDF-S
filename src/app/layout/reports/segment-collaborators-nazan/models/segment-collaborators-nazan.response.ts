@@ -1,33 +1,33 @@
 export class SegmentCollaboratorsNazanResponse {
-  // store_id: number | null = null;
-  // trans_seq: string | null = null;
-  // ws_id: string | null = null;
-  // create_date: string | null = null;
-  // origin_bucket: string | null = null;
-  // destiny_bucket: string | null = null;
-  // action_code: string | null = null;
-  // item_id: string | null = null;
-  // description: string | null = null;
-  // document: string | null = null;
-  // qty: number | null = null;
-  // on_hand: number | null = null;
-  // time_trans: string | null = null;
-  // on_order: number | null = null;
+  store_id: string | null = null;
+  segment: number | null = null;
+  membership: string | null = null;
+  client_id: string | null = null;
+  first_name: string | null = null;
+  second_name: string | null = null;
+  last_name: string | null = null;
+  second_last_name: string | null = null;
+  cellphone_number: string | null = null;
+  mail: string | null = null;
+  birthday: string | null = null;
+  gender: string | null = null;
+  marital_status: string | null = null;
+  signup_date: string | null = null;
 }
 
 export const segmentCollaboratorsNazanResponseName = {
-  // store_id: 'Tienda',
-  // trans_seq: 'Transacción',
-  // ws_id: 'Caja',
-  // create_date: 'Fecha creación',
-  // origin_bucket: 'Bloque origen',
-  // destiny_bucket: 'Bloque destino',
-  // action_code: 'Acción',
-  // item_id: 'Artículo',
-  // description: 'Descripción',
-  // document: 'Documento',
-  // qty: 'Cantidad',
-  // on_hand: 'Disponibles',
-  // time_trans: 'Hora transacción',
-  // on_order: 'En orden',
+  store_id: 'Tienda',
+  segment: '',
+  membership: 'Numero socio',
+  client_id: 'Id cliente',
+  first_name: 'Primer nombre',
+  second_name: 'Segundo nombre',
+  last_name: 'Primer apellido',
+  second_last_name: 'Segundo apellido',
+  cellphone_number: 'Numero celular',
+  mail: 'Email ',
+  birthday: 'Fecha nacimiento',
+  gender: 'Género',
+  marital_status: 'Estado civil',
+  signup_date: 'Fecha de registro ',
 };

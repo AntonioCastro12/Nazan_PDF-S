@@ -1,9 +1,16 @@
-import { PointProgramDetailWalletDTO } from "./point-program-detail-wallet.dto";
-import { PointProgramDetailWalletResponse } from "./point-program-detail-wallet.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { PointProgramDetailWalletDTO } from './point-program-detail-wallet.dto';
+import { PointProgramDetailWalletResponse } from './point-program-detail-wallet.response';
 
 export class PointProgramDetailWalletState {
-  pointProgramDetailWalletDTO: PointProgramDetailWalletDTO = new PointProgramDetailWalletDTO();
+  pointProgramDetailWalletDTO: PointProgramDetailWalletDTO =
+    new PointProgramDetailWalletDTO();
   pointProgramDetailWalletResponse: PointProgramDetailWalletResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

@@ -1,9 +1,15 @@
-import { SalesWholesaleDTO } from "./sales-wholesale.dto";
-import { SalesWholesaleResponse } from "./sales-wholesale.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { SalesWholesaleDTO } from './sales-wholesale.dto';
+import { SalesWholesaleResponse } from './sales-wholesale.response';
 
 export class SalesWholesaleState {
   salesWholesaleDTO: SalesWholesaleDTO = new SalesWholesaleDTO();
   salesWholesaleResponse: SalesWholesaleResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

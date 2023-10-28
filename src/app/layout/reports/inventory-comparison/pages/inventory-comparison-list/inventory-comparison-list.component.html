@@ -1,1 +1,94 @@
-<p>inventory-comparison-list works!</p>
+<main class="p-5">
+  <p-table
+    #dt2
+    [value]="this._inventoryComparison.state.inventoryComparisonResponse"
+    [paginator]="true"
+    [rows]="15"
+    styleClass="mt-3 p-datatable-sm"
+    [loading]="_inventoryComparison.state.isLoadingList"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.productId }}"
+        >
+          {{ inventoryComparisonResponseName.productId }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.storeId }}"
+        >
+          {{ inventoryComparisonResponseName.storeId }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.xstore_qty }}"
+        >
+          {{ inventoryComparisonResponseName.xstore_qty }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.xcenter_qty }}"
+        >
+          {{ inventoryComparisonResponseName.xcenter_qty }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.atg_qty }}"
+        >
+          {{ inventoryComparisonResponseName.atg_qty }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ inventoryComparisonResponseName.orderbroker_qty }}"
+        >
+          {{ inventoryComparisonResponseName.orderbroker_qty }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="9" class="text-center">
+          {{
+            _inventoryComparison.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.productId)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.storeId)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.xstore_qty)"
+          [style]="{
+            '
+          width': '100px'
+          }"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.xcenter_qty)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.atg_qty)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.orderbroker_qty)"
+        ></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>

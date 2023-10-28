@@ -1,10 +1,9 @@
+import { identifierName } from '@angular/compiler';
+
 export class InventoryStockResumeDTO {
-  line: string = '';
-  qty: number = 0;
+  storeId: string = '';
 }
 
 export const inventoryStockResumeLabels = {
-  store_id: 'Tienda',
-  line: 'Linea',
-  qty: 'Cantidad',
+  storeId: 'Tienda',
 };

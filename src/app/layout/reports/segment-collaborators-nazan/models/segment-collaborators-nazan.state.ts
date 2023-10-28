@@ -1,9 +1,16 @@
-import { SegmentCollaboratorsNazanDTO } from "./segment-collaborators-nazan.dto";
-import { SegmentCollaboratorsNazanResponse } from "./segment-collaborators-nazan.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { SegmentCollaboratorsNazanDTO } from './segment-collaborators-nazan.dto';
+import { SegmentCollaboratorsNazanResponse } from './segment-collaborators-nazan.response';
 
 export class SegmentCollaboratorsNazanState {
-  segmentCollaboratorsNazanDTO: SegmentCollaboratorsNazanDTO = new SegmentCollaboratorsNazanDTO();
+  segmentCollaboratorsNazanDTO: SegmentCollaboratorsNazanDTO =
+    new SegmentCollaboratorsNazanDTO();
   segmentCollaboratorsNazanResponse: SegmentCollaboratorsNazanResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

@@ -1,1 +1,124 @@
-<p>segment-affiliated-kipon-list works!</p>
+<main class="p-5">
+  <p-table
+    #dt2
+    [value]="this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponse"
+    [paginator]="true"
+    [rows]="15"
+    styleClass="mt-3 p-datatable-sm"
+    [loading]="_segmentAffiliatedKipon.state.isLoadingList"
+  >
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.store_id }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.store_id }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.membership }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.membership }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.cust_id }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.cust_id }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.first_name }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.first_name }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.second_name }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.second_name }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.surname }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.surname }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.lastname }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.lastname }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.home_phone }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.home_phone }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ segmentAffiliatedKiponResponseName.cel_phone }}"
+        >
+          {{ segmentAffiliatedKiponResponseName.cel_phone }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="9" class="text-center">
+          {{
+            _segmentAffiliatedKipon.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.store_id)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.membership)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.cust_id)"
+          [style]="{
+            '
+          width': '100px'
+          }"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.first_name)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.second_name)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.surname)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.lastname)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.home_phone)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.cel_phone)"
+        ></td>
+      </tr>
+    </ng-template>
+  </p-table>
+</main>

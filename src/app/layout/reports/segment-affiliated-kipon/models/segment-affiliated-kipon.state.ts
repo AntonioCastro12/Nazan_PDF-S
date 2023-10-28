@@ -1,9 +1,16 @@
-import { SegmentAffiliatedKiponDTO } from "./segment-affiliated-kipon.dto";
-import { SegmentAffiliatedKiponResponse } from "./segment-affiliated-kipon.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { SegmentAffiliatedKiponDTO } from './segment-affiliated-kipon.dto';
+import { SegmentAffiliatedKiponResponse } from './segment-affiliated-kipon.response';
 
 export class SegmentAffiliatedKiponState {
-  segmentAffiliatedKiponDTO: SegmentAffiliatedKiponDTO = new SegmentAffiliatedKiponDTO();
+  segmentAffiliatedKiponDTO: SegmentAffiliatedKiponDTO =
+    new SegmentAffiliatedKiponDTO();
   segmentAffiliatedKiponResponse: SegmentAffiliatedKiponResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

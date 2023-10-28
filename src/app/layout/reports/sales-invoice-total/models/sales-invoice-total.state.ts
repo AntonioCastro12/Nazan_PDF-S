@@ -1,9 +1,15 @@
+import { UntypedFormGroup } from '@angular/forms';
 import { SalesInvoiceTotalDTO } from './sales-invoice-total.dto';
 import { SalesInvoiceTotalResponse } from './sales-invoice-total.response';
 
 export class SalesInvoiceTotalState {
   salesInvoiceTotalDTO: SalesInvoiceTotalDTO = new SalesInvoiceTotalDTO();
   salesInvoiceTotalResponse: SalesInvoiceTotalResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

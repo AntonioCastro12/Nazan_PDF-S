@@ -1,9 +1,16 @@
+import { UntypedFormGroup } from '@angular/forms';
 import { InventoryCycleCountDTO } from './inventory-cycle-count.dto';
 import { InventoryCycleCountResponse } from './inventory-cycle-count.response';
 
 export class InventoryCycleCountState {
   inventoryCycleCountDTO: InventoryCycleCountDTO = new InventoryCycleCountDTO();
   inventoryCycleCountResponse: InventoryCycleCountResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
+
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

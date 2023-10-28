@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SegmentCollaboratorsNazanReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Colaboradores Nazan',
   };
 }

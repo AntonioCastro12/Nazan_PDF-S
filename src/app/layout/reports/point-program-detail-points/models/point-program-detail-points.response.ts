@@ -1,33 +1,25 @@
 export class PointProgramDetailPointsResponse {
-  // store_id: number | null = null;
-  // trans_seq: string | null = null;
-  // ws_id: string | null = null;
-  // create_date: string | null = null;
-  // origin_bucket: string | null = null;
-  // destiny_bucket: string | null = null;
-  // action_code: string | null = null;
-  // item_id: string | null = null;
-  // description: string | null = null;
-  // document: string | null = null;
-  // qty: number | null = null;
-  // on_hand: number | null = null;
-  // time_trans: string | null = null;
-  // on_order: number | null = null;
+  NUM_SOCIO: string | null = null;
+  NOM_CORTO: string | null = null;
+  NOMBRE_SOCIO: string | null = null;
+  NIVEL: string | null = null;
+  PUNTOS_OTROGADOS: number | null = null;
+  TIENDA: number | null = null;
+  TRANSACCION: number | null = null;
+  CAJA: number | null = null;
+  FECHA_ACTIVIDAD: string | null = null;
+  ACTIVIDAD: string | null = null;
 }
 
 export const pointProgramDetailPointsResponseName = {
-  // store_id: 'Tienda',
-  // trans_seq: 'Transacción',
-  // ws_id: 'Caja',
-  // create_date: 'Fecha creación',
-  // origin_bucket: 'Bloque origen',
-  // destiny_bucket: 'Bloque destino',
-  // action_code: 'Acción',
-  // item_id: 'Artículo',
-  // description: 'Descripción',
-  // document: 'Documento',
-  // qty: 'Cantidad',
-  // on_hand: 'Disponibles',
-  // time_trans: 'Hora transacción',
-  // on_order: 'En orden',
+  NUM_SOCIO: 'Socio',
+  NOM_CORTO: 'Nombre corto',
+  NOMBRE_SOCIO: 'Nombre',
+  NIVEL: 'Nivel',
+  PUNTOS_OTROGADOS: 'Puntos otorgados',
+  TIENDA: 'Tienda',
+  TRANSACCION: 'Transacción',
+  CAJA: 'Caja',
+  FECHA_ACTIVIDAD: 'Fecha',
+  ACTIVIDAD: 'Actividad',
 };

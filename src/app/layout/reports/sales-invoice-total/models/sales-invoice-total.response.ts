@@ -1,33 +1,37 @@
 export class SalesInvoiceTotalResponse {
-  // store_id: number | null = null;
-  // trans_seq: string | null = null;
-  // ws_id: string | null = null;
-  // create_date: string | null = null;
-  // origin_bucket: string | null = null;
-  // destiny_bucket: string | null = null;
-  // action_code: string | null = null;
-  // item_id: string | null = null;
-  // description: string | null = null;
-  // document: string | null = null;
-  // qty: number | null = null;
-  // on_hand: number | null = null;
-  // time_trans: string | null = null;
-  // on_order: number | null = null;
+  storeId: string | null = null;
+  businessDate: string | null = null;
+  saleTypeSale: string | null = null;
+  totalMoneySale: number | null = null;
+  totalUnitSale: number | null = null;
+  countInvoiceSale: number | null = null;
+  saleTypeReturn: string | null = null;
+  totalMoneyReturn: number | null = null;
+  totalUnitReturn: number | null = null;
+  countInvoiceReturn: number | null = null;
+  unitPercentReturn: number | null = null;
+  totalPercentReturn: number | null = null;
+  saleTypeFreight: string | null = null;
+  totalMoneyFreight: number | null = null;
+  totalUnitFreight: number | null = null;
+  countInvoiceFreight: number | null = null;
 }
 
 export const salesInvoiceTotalResponseName = {
-  // store_id: 'Tienda',
-  // trans_seq: 'Transacción',
-  // ws_id: 'Caja',
-  // create_date: 'Fecha creación',
-  // origin_bucket: 'Bloque origen',
-  // destiny_bucket: 'Bloque destino',
-  // action_code: 'Acción',
-  // item_id: 'Artículo',
-  // description: 'Descripción',
-  // document: 'Documento',
-  // qty: 'Cantidad',
-  // on_hand: 'Disponibles',
-  // time_trans: 'Hora transacción',
-  // on_order: 'En orden',
+  storeId: 'Tienda',
+  businessDate: 'Fecha',
+  saleTypeSale: 'Tipo de venta',
+  totalMoneySale: '$ Ventas ',
+  totalUnitSale: 'Ventas unidades',
+  countInvoiceSale: 'Cantidad facturas',
+  saleTypeReturn: 'Tipo de devolución',
+  totalMoneyReturn: 'Devolución total del dinero',
+  totalUnitReturn: 'Devoluciones unidades',
+  countInvoiceReturn: 'Cantidad devolución de factura',
+  unitPercentReturn: 'Devolución unidad Porcentaje',
+  totalPercentReturn: '% Devoluciones unidades ',
+  saleTypeFreight: 'Tipo de carga de la venta',
+  totalMoneyFreight: 'Dinero total del flete',
+  totalUnitFreight: 'Carga unitaria total',
+  countInvoiceFreight: 'Cantidad fletes ',
 };

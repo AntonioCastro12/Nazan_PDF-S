@@ -1,11 +1,9 @@
 export class SalesGeneralSalesDTO {
-  titleLine: string = '';
-  countTransactions: number = 0;
-  totalMoney: number = 0;
+  storeId: string = '';
+  businessDate: string = '';
 }
 
 export const salesGeneralSalesLabels = {
-  titleLine: 'Texto',
-  countTransactions: 'Cantidad transacciones',
-  totalMoney: 'Valor',
+  storeId: 'Tienda',
+  businessDate: 'Fecha',
 };

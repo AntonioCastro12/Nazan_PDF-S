@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class InventoryPodReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Reporte de recepción de mercancía (POD)',
   };
 }

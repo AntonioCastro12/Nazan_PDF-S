@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SalesGeneralSalesReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Informe general de ventas',
   };
 }

@@ -1,9 +1,16 @@
-import { InventoryStockResumeDTO } from "./inventory-stock-resume.dto";
-import { InventoryStockResumeResponse } from "./inventory-stock-resume.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { InventoryStockResumeDTO } from './inventory-stock-resume.dto';
+import { InventoryStockResumeResponse } from './inventory-stock-resume.response';
 
 export class InventoryStockResumeState {
-  inventoryStockResumeDTO: InventoryStockResumeDTO = new InventoryStockResumeDTO();
+  inventoryStockResumeDTO: InventoryStockResumeDTO =
+    new InventoryStockResumeDTO();
   inventoryStockResumeResponse: InventoryStockResumeResponse[] = [];
+  currentStore!: string;
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

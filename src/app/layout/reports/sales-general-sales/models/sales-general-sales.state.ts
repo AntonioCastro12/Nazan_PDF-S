@@ -1,9 +1,15 @@
-import { SalesGeneralSalesDTO } from "./sales-general-sales.dto";
-import { SalesGeneralSalesResponse } from "./sales-general-sales.response";
+import { UntypedFormGroup } from '@angular/forms';
+import { SalesGeneralSalesDTO } from './sales-general-sales.dto';
+import { SalesGeneralSalesResponse } from './sales-general-sales.response';
 
 export class SalesGeneralSalesState {
   salesGeneralSalesDTO: SalesGeneralSalesDTO = new SalesGeneralSalesDTO();
   salesGeneralSalesResponse: SalesGeneralSalesResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

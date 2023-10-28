@@ -1,9 +1,15 @@
+import { UntypedFormGroup } from '@angular/forms';
 import { InventoryComparisonDTO } from './inventory-comparison.dto';
 import { InventoryComparisonResponse } from './inventory-comparison.response';
 
 export class InventoryComparisonState {
   inventoryComparisonDTO: InventoryComparisonDTO = new InventoryComparisonDTO();
   inventoryComparisonResponse: InventoryComparisonResponse[] = [];
+
+  form!: UntypedFormGroup;
+
+  isVisibleForm: boolean = false;
+  isLoadingList: boolean = false;
   // searchText: string = '';
   // selectedStatus!: string;
   // selectedStore: Store | null = null;

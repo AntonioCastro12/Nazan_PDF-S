@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class InventoryCycleCountReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Cumplimiento de Conteo',
   };
 }

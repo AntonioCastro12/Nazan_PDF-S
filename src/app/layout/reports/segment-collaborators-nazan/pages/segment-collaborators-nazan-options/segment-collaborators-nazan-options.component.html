@@ -1,1 +1,68 @@
-<p>segment-collaborators-nazan-options works!</p>
+<article class="card">
+  <h4>{{ TEMPLATE_TEXT.title }}</h4>
+  <section class="flex">
+    <div class="card-container">
+      <p-button
+        *ngIf="showSearch"
+        pTooltip="{{ TEMPLATE_TEXT.showSearch }}"
+        tooltipPosition="bottom"
+        icon="pi pi-search"
+        class="mr-1"
+        (onClick)="handleSearch()"
+        [rounded]="true"
+      ></p-button>
+      <p-button
+        *ngIf="showRefresh"
+        pTooltip="{{ TEMPLATE_TEXT.showRefresh }}"
+        tooltipPosition="bottom"
+        icon="pi pi-refresh"
+        class="mr-1"
+        (onClick)="handleRefresh()"
+        [rounded]="true"
+        [disabled]="
+          _segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse
+            .length == 0
+        "
+      ></p-button>
+      <p-button
+        *ngIf="showDownload"
+        (onClick)="handleDownload()"
+        pTooltip="{{ TEMPLATE_TEXT.showDownload }}"
+        tooltipPosition="bottom"
+        icon="pi pi-cloud-download"
+        class="mr-1"
+        [rounded]="true"
+      ></p-button>
+      <!-- <p-button
+          *ngIf="showChart"
+          (onClick)="handleChart()"
+          pTooltip="{{ TEMPLATE_TEXT.showChart }}"
+          tooltipPosition="bottom"
+          icon="pi pi-chart-bar"
+          class="mr-1"
+          [rounded]="true"
+        ></p-button>
+        <p-button
+          *ngIf="showEye"
+          pTooltip="{{ TEMPLATE_TEXT.showEye }}"
+          tooltipPosition="bottom"
+          icon="pi pi-eye"
+          class="mr-1"
+          [rounded]="true"
+        ></p-button> -->
+      <p-button
+        *ngIf="showFavorite"
+        pTooltip="{{ TEMPLATE_TEXT.showFavorite }}"
+        tooltipPosition="bottom"
+        icon="pi pi-heart"
+        class="mr-1"
+        [rounded]="true"
+        (onClick)="handleFavorite()"
+        [disabled]="
+          _segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse
+            .length == 0
+        "
+      ></p-button>
+    </div>
+  </section>
+</article>

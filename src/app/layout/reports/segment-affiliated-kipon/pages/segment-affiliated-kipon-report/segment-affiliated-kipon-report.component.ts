@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class SegmentAffiliatedKiponReportComponent {
   TEMPLATE_TEXT = {
-    title: 'Kardex de artículo',
+    title: 'Afiliados KIPON SHOE CLUB',
   };
 }
