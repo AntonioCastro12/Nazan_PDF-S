@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { SegmentAffiliatedKiponApiService, SegmentAffiliatedKiponStateService } from '../../services';
+import {
+  SegmentAffiliatedKiponApiService,
+  SegmentAffiliatedKiponStateService,
+} from '../../services';
 
 @Component({
   selector: 'segment-affiliated-kipon-options',
@@ -38,10 +41,15 @@ export class SegmentAffiliatedKiponOptionsComponent {
     this._segmentAffiliatedKipon.state.isLoadingList = true;
 
     this._segmentAffiliatedKiponApi
-      .inventoryKardexProduct(this._segmentAffiliatedKipon.state.segmentAffiliatedKiponDTO)
+      .inventoryKardexProduct(
+        this._segmentAffiliatedKipon.state.segmentAffiliatedKiponDTO
+      )
       .subscribe({
         next: (data) => {
-          this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponse = data;
+          this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponse =
+            data;
+          this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

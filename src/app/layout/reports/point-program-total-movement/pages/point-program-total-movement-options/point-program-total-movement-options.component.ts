@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { PointProgramTotalMovementApiService, PointProgramTotalMovementStateService } from '../../services';
+import {
+  PointProgramTotalMovementApiService,
+  PointProgramTotalMovementStateService,
+} from '../../services';
 
 @Component({
   selector: 'point-program-total-movement-options',
@@ -38,10 +41,15 @@ export class PointProgramTotalMovementOptionsComponent {
     this._pointProgramTotalMovement.state.isLoadingList = true;
 
     this._pointProgramTotalMovementApi
-      .pointProgramTotalMovement(this._pointProgramTotalMovement.state.pointProgramTotalMovementDTO)
+      .pointProgramTotalMovement(
+        this._pointProgramTotalMovement.state.pointProgramTotalMovementDTO
+      )
       .subscribe({
         next: (data) => {
-          this._pointProgramTotalMovement.state.pointProgramTotalMovementResponse = data;
+          this._pointProgramTotalMovement.state.pointProgramTotalMovementResponse =
+            data;
+          this._pointProgramTotalMovement.state.pointProgramTotalMovementResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

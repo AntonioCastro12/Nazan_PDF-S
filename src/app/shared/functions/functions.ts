@@ -1,13 +1,10 @@
 import { InventoryKardex } from 'samples/report-manager/models/report.entity';
 import { DateTime } from 'luxon';
 
-export function objectContainsValue(
-  object: InventoryKardex,
-  searchText: string
-): boolean {
+export function objectContainsValue(object: any, searchText: string): boolean {
   for (const key in object) {
     if (object.hasOwnProperty(key)) {
-      const value = object[key as keyof InventoryKardex]; // Indicar el tipo de "key"
+      const value = object[key as keyof any]; // Indicar el tipo de "key"
       if (typeof value === 'string' || typeof value === 'number') {
         if (value.toString().toLowerCase().includes(searchText.toLowerCase())) {
           return true;

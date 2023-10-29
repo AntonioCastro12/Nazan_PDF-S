@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { SalesInvoiceTotalApiService, SalesInvoiceTotalStateService } from '../../services';
+import {
+  SalesInvoiceTotalApiService,
+  SalesInvoiceTotalStateService,
+} from '../../services';
 
 @Component({
   selector: 'sales-invoice-total-options',
@@ -38,10 +41,13 @@ export class SalesInvoiceTotalOptionsComponent {
     this._salesInvoiceTotal.state.isLoadingList = true;
 
     this._salesInvoiceTotalApi
-      .inventoryKardexProduct(this._salesInvoiceTotal.state.salesInvoiceTotalDTO)
+      .inventoryKardexProduct(
+        this._salesInvoiceTotal.state.salesInvoiceTotalDTO
+      )
       .subscribe({
         next: (data) => {
           this._salesInvoiceTotal.state.salesInvoiceTotalResponse = data;
+          this._salesInvoiceTotal.state.salesInvoiceTotalResponseList = data;
         },
         error: (error) => {
           console.log(error);

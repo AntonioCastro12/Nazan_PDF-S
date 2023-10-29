@@ -76,6 +76,7 @@ export class SalesWholesaleFormComponent {
       .subscribe({
         next: (data) => {
           this._salesWholesale.state.salesWholesaleResponse = data;
+          this._salesWholesale.state.salesWholesaleResponseList = data;
         },
         error: (error) => {
           console.log(error);

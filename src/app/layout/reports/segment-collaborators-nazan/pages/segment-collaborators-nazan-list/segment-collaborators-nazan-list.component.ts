@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { segmentCollaboratorsNazanResponseName } from '../../models';
 import { SegmentCollaboratorsNazanStateService } from '../../services';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'segment-collaborators-nazan-list',
@@ -18,7 +19,9 @@ export class SegmentCollaboratorsNazanListComponent {
 
   searchText = '';
 
-  constructor(public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService) {}
+  constructor(
+    public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService
+  ) {}
 
   handleSearch() {}
   handleChart() {}
@@ -29,5 +32,12 @@ export class SegmentCollaboratorsNazanListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list =
+      this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse;
+    this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

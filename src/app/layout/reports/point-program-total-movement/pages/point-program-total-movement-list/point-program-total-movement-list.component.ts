@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PointProgramTotalMovementStateService } from '../../services';
 import { pointProgramTotalMovementResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'point-program-total-movement-list',
@@ -31,5 +32,12 @@ export class PointProgramTotalMovementListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list =
+      this._pointProgramTotalMovement.state.pointProgramTotalMovementResponse;
+    this._pointProgramTotalMovement.state.pointProgramTotalMovementResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

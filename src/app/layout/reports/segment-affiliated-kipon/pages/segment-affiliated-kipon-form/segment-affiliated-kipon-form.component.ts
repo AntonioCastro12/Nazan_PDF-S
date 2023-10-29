@@ -82,6 +82,8 @@ export class SegmentAffiliatedKiponFormComponent {
         next: (data) => {
           this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponse =
             data;
+          this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

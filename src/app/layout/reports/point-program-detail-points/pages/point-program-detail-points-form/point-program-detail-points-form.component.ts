@@ -80,6 +80,8 @@ export class PointProgramDetailPointsFormComponent {
           console.log(data[0].NOM_CORTO);
           this._pointProgramDetailPoints.state.pointProgramDetailPointsResponse =
             data;
+          this._pointProgramDetailPoints.state.pointProgramDetailPointsResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

@@ -78,6 +78,8 @@ export class InventoryStockResumeFormComponent {
         next: (data) => {
           console.log(data);
           this._inventoryStockResume.state.inventoryStockResumeResponse = data;
+          this._inventoryStockResume.state.inventoryStockResumeResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

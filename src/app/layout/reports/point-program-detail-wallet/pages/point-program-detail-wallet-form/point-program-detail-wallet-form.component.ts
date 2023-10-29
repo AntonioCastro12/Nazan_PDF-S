@@ -81,6 +81,8 @@ export class PointProgramDetailWalletFormComponent {
           console.log(data[0]);
           this._pointProgramDetailWallet.state.pointProgramDetailWalletResponse =
             data;
+          this._pointProgramDetailWallet.state.pointProgramDetailWalletResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

@@ -48,6 +48,8 @@ export class PointProgramDetailPointsOptionsComponent {
         next: (data) => {
           this._pointProgramDetailPoints.state.pointProgramDetailPointsResponse =
             data;
+          this._pointProgramDetailPoints.state.pointProgramDetailPointsResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

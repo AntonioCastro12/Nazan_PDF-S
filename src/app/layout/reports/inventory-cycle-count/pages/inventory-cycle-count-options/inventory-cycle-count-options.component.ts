@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { InventoryCycleCountApiService, InventoryCycleCountStateService } from '../../services';
+import {
+  InventoryCycleCountApiService,
+  InventoryCycleCountStateService,
+} from '../../services';
 
 @Component({
   selector: 'inventory-cycle-count-options',
@@ -38,10 +41,14 @@ export class InventoryCycleCountOptionsComponent {
     this._inventoryCycleCount.state.isLoadingList = true;
 
     this._inventoryCycleCountApi
-      .inventoryCycleCountDTO(this._inventoryCycleCount.state.inventoryCycleCountDTO)
+      .inventoryCycleCountDTO(
+        this._inventoryCycleCount.state.inventoryCycleCountDTO
+      )
       .subscribe({
         next: (data) => {
           this._inventoryCycleCount.state.inventoryCycleCountResponse = data;
+          this._inventoryCycleCount.state.inventoryCycleCountResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

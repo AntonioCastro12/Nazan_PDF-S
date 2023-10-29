@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { InventoryStockResumeApiService, InventoryStockResumeStateService } from '../../services';
+import {
+  InventoryStockResumeApiService,
+  InventoryStockResumeStateService,
+} from '../../services';
 
 @Component({
   selector: 'inventory-stock-resume-options',
@@ -43,7 +46,8 @@ export class InventoryStockResumeOptionsComponent {
       )
       .subscribe({
         next: (data) => {
-          this._inventoryStockResume.state.inventoryStockResumeResponse =
+          this._inventoryStockResume.state.inventoryStockResumeResponse = data;
+          this._inventoryStockResume.state.inventoryStockResumeResponseList =
             data;
         },
         error: (error) => {

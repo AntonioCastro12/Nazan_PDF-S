@@ -76,6 +76,8 @@ export class SegmentCollaboratorsNazanFormComponent {
         next: (data) => {
           this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse =
             data;
+          this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

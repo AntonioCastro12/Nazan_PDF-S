@@ -6,6 +6,8 @@ export class InventoryStockResumeState {
   inventoryStockResumeDTO: InventoryStockResumeDTO =
     new InventoryStockResumeDTO();
   inventoryStockResumeResponse: InventoryStockResumeResponse[] = [];
+  inventoryStockResumeResponseList: InventoryStockResumeResponse[] = [];
+
   currentStore!: string;
   form!: UntypedFormGroup;
 

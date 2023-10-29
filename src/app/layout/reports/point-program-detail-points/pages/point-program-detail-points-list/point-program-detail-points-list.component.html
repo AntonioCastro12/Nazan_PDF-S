@@ -1,8 +1,23 @@
 <main class="p-5">
+  <div
+    class="col-4 text-left"
+    *ngIf="_pointProgramDetailPoints.state.pointProgramDetailPointsResponse.length > 0"
+  >
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="searchText"
+        (ngModelChange)="handleSearchRecords()"
+      />
+    </span>
+  </div>
   <p-table
     #dt2
     [value]="
-      this._pointProgramDetailPoints.state.pointProgramDetailPointsResponse
+      _pointProgramDetailPoints.state.pointProgramDetailPointsResponseList
     "
     [paginator]="true"
     [rows]="15"

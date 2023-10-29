@@ -5,6 +5,7 @@ import { InventoryCycleCountResponse } from './inventory-cycle-count.response';
 export class InventoryCycleCountState {
   inventoryCycleCountDTO: InventoryCycleCountDTO = new InventoryCycleCountDTO();
   inventoryCycleCountResponse: InventoryCycleCountResponse[] = [];
+  inventoryCycleCountResponseList: InventoryCycleCountResponse[] = [];
 
   form!: UntypedFormGroup;
 

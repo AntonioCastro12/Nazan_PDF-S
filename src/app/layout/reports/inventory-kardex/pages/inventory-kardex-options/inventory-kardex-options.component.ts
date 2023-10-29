@@ -43,6 +43,7 @@ export class InventoryKardexOptionsComponent {
       .subscribe({
         next: (data) => {
           this._inventoryKardex.state.kardexProductResponse = data;
+          this._inventoryKardex.state.kardexProductResponseList = data;
         },
         error: (error) => {
           console.log(error);

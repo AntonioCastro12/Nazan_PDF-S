@@ -5,6 +5,7 @@ import { InventoryComparisonResponse } from './inventory-comparison.response';
 export class InventoryComparisonState {
   inventoryComparisonDTO: InventoryComparisonDTO = new InventoryComparisonDTO();
   inventoryComparisonResponse: InventoryComparisonResponse[] = [];
+  inventoryComparisonResponseList: InventoryComparisonResponse[] = [];
 
   form!: UntypedFormGroup;
 

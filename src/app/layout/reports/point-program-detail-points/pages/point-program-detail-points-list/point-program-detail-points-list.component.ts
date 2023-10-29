@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PointProgramDetailPointsStateService } from '../../services';
 import { pointProgramDetailPointsResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'point-program-detail-points-list',
@@ -31,5 +32,12 @@ export class PointProgramDetailPointsListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list =
+      this._pointProgramDetailPoints.state.pointProgramDetailPointsResponse;
+    this._pointProgramDetailPoints.state.pointProgramDetailPointsResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

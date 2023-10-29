@@ -82,6 +82,8 @@ export class PointProgramTotalMovementFormComponent {
         next: (data) => {
           this._pointProgramTotalMovement.state.pointProgramTotalMovementResponse =
             data;
+          this._pointProgramTotalMovement.state.pointProgramTotalMovementResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

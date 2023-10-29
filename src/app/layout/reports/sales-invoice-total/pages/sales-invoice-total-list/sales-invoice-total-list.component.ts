@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SalesInvoiceTotalStateService } from '../../services';
 import { salesInvoiceTotalResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'sales-invoice-total-list',
@@ -29,5 +30,12 @@ export class SalesInvoiceTotalListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list = this._salesInvoiceTotal.state.salesInvoiceTotalResponse;
+    this._salesInvoiceTotal.state.salesInvoiceTotalResponseList = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
+    );
   }
 }

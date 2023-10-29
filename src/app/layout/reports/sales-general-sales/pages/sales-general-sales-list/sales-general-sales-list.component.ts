@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { SalesGeneralSalesStateService } from '../../services';
 import { salesGeneralSalesResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'sales-general-sales-list',
@@ -29,5 +30,12 @@ export class SalesGeneralSalesListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list = this._salesGeneralSales.state.salesGeneralSalesResponse;
+    this._salesGeneralSales.state.salesGeneralSalesResponseList = list.filter(
+      (item) => objectContainsValue(item, this.searchText)
+    );
   }
 }

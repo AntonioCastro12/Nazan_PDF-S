@@ -84,6 +84,8 @@ export class InventoryCycleCountFormComponent {
       .subscribe({
         next: (data) => {
           this._inventoryCycleCount.state.inventoryCycleCountResponse = data;
+          this._inventoryCycleCount.state.inventoryCycleCountResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

@@ -5,6 +5,7 @@ import { SalesWholesaleResponse } from './sales-wholesale.response';
 export class SalesWholesaleState {
   salesWholesaleDTO: SalesWholesaleDTO = new SalesWholesaleDTO();
   salesWholesaleResponse: SalesWholesaleResponse[] = [];
+  salesWholesaleResponseList: SalesWholesaleResponse[] = [];
 
   form!: UntypedFormGroup;
 

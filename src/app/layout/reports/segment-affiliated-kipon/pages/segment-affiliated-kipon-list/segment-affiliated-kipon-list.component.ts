@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { segmentAffiliatedKiponResponseName } from '../../models';
 import { SegmentAffiliatedKiponStateService } from '../../services';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'segment-affiliated-kipon-list',
@@ -18,7 +19,9 @@ export class SegmentAffiliatedKiponListComponent {
 
   searchText = '';
 
-  constructor(public _segmentAffiliatedKipon: SegmentAffiliatedKiponStateService) {}
+  constructor(
+    public _segmentAffiliatedKipon: SegmentAffiliatedKiponStateService
+  ) {}
 
   handleSearch() {}
   handleChart() {}
@@ -29,5 +32,12 @@ export class SegmentAffiliatedKiponListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list =
+      this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponse;
+    this._segmentAffiliatedKipon.state.segmentAffiliatedKiponResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

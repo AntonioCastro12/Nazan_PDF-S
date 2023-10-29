@@ -6,6 +6,7 @@ export class PointProgramDetailWalletState {
   pointProgramDetailWalletDTO: PointProgramDetailWalletDTO =
     new PointProgramDetailWalletDTO();
   pointProgramDetailWalletResponse: PointProgramDetailWalletResponse[] = [];
+  pointProgramDetailWalletResponseList: PointProgramDetailWalletResponse[] = [];
 
   form!: UntypedFormGroup;
 

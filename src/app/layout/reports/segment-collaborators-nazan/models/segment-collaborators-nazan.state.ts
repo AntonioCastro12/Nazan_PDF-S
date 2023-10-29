@@ -6,6 +6,8 @@ export class SegmentCollaboratorsNazanState {
   segmentCollaboratorsNazanDTO: SegmentCollaboratorsNazanDTO =
     new SegmentCollaboratorsNazanDTO();
   segmentCollaboratorsNazanResponse: SegmentCollaboratorsNazanResponse[] = [];
+  segmentCollaboratorsNazanResponseList: SegmentCollaboratorsNazanResponse[] =
+    [];
 
   form!: UntypedFormGroup;
 

@@ -6,6 +6,7 @@ export class SegmentAffiliatedKiponState {
   segmentAffiliatedKiponDTO: SegmentAffiliatedKiponDTO =
     new SegmentAffiliatedKiponDTO();
   segmentAffiliatedKiponResponse: SegmentAffiliatedKiponResponse[] = [];
+  segmentAffiliatedKiponResponseList: SegmentAffiliatedKiponResponse[] = [];
 
   form!: UntypedFormGroup;
 

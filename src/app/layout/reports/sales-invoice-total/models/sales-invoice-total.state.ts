@@ -5,6 +5,7 @@ import { SalesInvoiceTotalResponse } from './sales-invoice-total.response';
 export class SalesInvoiceTotalState {
   salesInvoiceTotalDTO: SalesInvoiceTotalDTO = new SalesInvoiceTotalDTO();
   salesInvoiceTotalResponse: SalesInvoiceTotalResponse[] = [];
+  salesInvoiceTotalResponseList: SalesInvoiceTotalResponse[] = [];
 
   form!: UntypedFormGroup;
 

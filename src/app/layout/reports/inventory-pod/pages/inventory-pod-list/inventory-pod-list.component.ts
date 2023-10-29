@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InventoryPodStateService } from '../../services';
 import { inventoryPodResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'inventory-pod-list',
@@ -29,5 +30,12 @@ export class InventoryPodListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list = this._inventoryPod.state.inventoryPodResponse;
+    this._inventoryPod.state.inventoryPodResponseList = list.filter((item) =>
+      objectContainsValue(item, this.searchText)
+    );
   }
 }

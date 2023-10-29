@@ -12,6 +12,7 @@ import { UntypedFormGroup } from '@angular/forms';
 export class InventoryKardexState {
   kardexProductDTO: KardexProductDTO = new KardexProductDTO();
   kardexProductResponse: KardexProductResponse[] = [];
+  kardexProductResponseList: KardexProductResponse[] = [];
 
   form!: UntypedFormGroup;
 

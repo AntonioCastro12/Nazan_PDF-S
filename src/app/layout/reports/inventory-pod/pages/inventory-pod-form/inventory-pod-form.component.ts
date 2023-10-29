@@ -74,6 +74,7 @@ export class InventoryPodFormComponent {
       .subscribe({
         next: (data) => {
           this._inventoryPod.state.inventoryPodResponse = data;
+          this._inventoryPod.state.inventoryPodResponseList = data;
         },
         error: (error) => {
           console.log(error);

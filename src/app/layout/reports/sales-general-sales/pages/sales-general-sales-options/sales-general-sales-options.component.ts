@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { SalesGeneralSalesApiService, SalesGeneralSalesStateService } from '../../services';
+import {
+  SalesGeneralSalesApiService,
+  SalesGeneralSalesStateService,
+} from '../../services';
 
 @Component({
   selector: 'sales-general-sales-options',
@@ -38,10 +41,13 @@ export class SalesGeneralSalesOptionsComponent {
     this._salesGeneralSales.state.isLoadingList = true;
 
     this._salesGeneralSalesApi
-      .inventoryKardexProduct(this._salesGeneralSales.state.salesGeneralSalesDTO)
+      .inventoryKardexProduct(
+        this._salesGeneralSales.state.salesGeneralSalesDTO
+      )
       .subscribe({
         next: (data) => {
           this._salesGeneralSales.state.salesGeneralSalesResponse = data;
+          this._salesGeneralSales.state.salesGeneralSalesResponseList = data;
         },
         error: (error) => {
           console.log(error);

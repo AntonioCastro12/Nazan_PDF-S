@@ -6,6 +6,8 @@ export class PointProgramTotalMovementState {
   pointProgramTotalMovementDTO: PointProgramTotalMovementDTO =
     new PointProgramTotalMovementDTO();
   pointProgramTotalMovementResponse: PointProgramTotalMovementResponse[] = [];
+  pointProgramTotalMovementResponseList: PointProgramTotalMovementResponse[] =
+    [];
 
   form!: UntypedFormGroup;
 

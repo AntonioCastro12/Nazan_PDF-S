@@ -48,6 +48,8 @@ export class PointProgramDetailWalletOptionsComponent {
         next: (data) => {
           this._pointProgramDetailWallet.state.pointProgramDetailWalletResponse =
             data;
+          this._pointProgramDetailWallet.state.pointProgramDetailWalletResponseList =
+            data;
         },
         error: (error) => {
           console.log(error);

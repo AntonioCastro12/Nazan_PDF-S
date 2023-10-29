@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PointProgramDetailWalletStateService } from '../../services';
 import { pointProgramDetailWalletResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'point-program-detail-wallet-list',
@@ -31,5 +32,12 @@ export class PointProgramDetailWalletListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list =
+      this._pointProgramDetailWallet.state.pointProgramDetailWalletResponse;
+    this._pointProgramDetailWallet.state.pointProgramDetailWalletResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

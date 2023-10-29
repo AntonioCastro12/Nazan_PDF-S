@@ -1,7 +1,22 @@
 <main class="p-5">
+  <div
+    class="col-4 text-left"
+    *ngIf="_inventoryPod.state.inventoryPodResponse.length > 0"
+  >
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        type="text"
+        placeholder="Buscar..."
+        [(ngModel)]="searchText"
+        (ngModelChange)="handleSearchRecords()"
+      />
+    </span>
+  </div>
   <p-table
     #dt2
-    [value]="this._inventoryPod.state.inventoryPodResponse"
+    [value]="_inventoryPod.state.inventoryPodResponseList"
     [paginator]="true"
     [rows]="15"
     styleClass="mt-3 p-datatable-sm"

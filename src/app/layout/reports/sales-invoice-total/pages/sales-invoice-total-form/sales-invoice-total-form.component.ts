@@ -77,6 +77,7 @@ export class SalesInvoiceTotalFormComponent {
       .subscribe({
         next: (data) => {
           this._salesInvoiceTotal.state.salesInvoiceTotalResponse = data;
+          this._salesInvoiceTotal.state.salesInvoiceTotalResponseList = data;
         },
         error: (error) => {
           console.log(error);

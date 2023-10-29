@@ -64,10 +64,11 @@ export class InventorySapXstoreFormComponent {
   }
   onSubmit() {
     this._inventorySapXstoreAp.state.isLoadingList = true;
- 
+
     this._inventorySapXstoreApi.inventorySapXstore().subscribe({
       next: (data) => {
         this._inventorySapXstoreAp.state.inventorySapXstoreResponse = data;
+        this._inventorySapXstoreAp.state.inventorySapXstoreResponseList = data;
       },
       error: (error) => {
         console.log(error);

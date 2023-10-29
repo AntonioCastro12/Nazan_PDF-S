@@ -75,8 +75,9 @@ export class SalesGeneralSalesFormComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log(data.sales.data);
           this._salesGeneralSales.state.salesGeneralSalesResponse =
+            data.sales.data;
+          this._salesGeneralSales.state.salesGeneralSalesResponseList =
             data.sales.data;
         },
         error: (error) => {

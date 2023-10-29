@@ -43,6 +43,8 @@ export class InventorySapXstoreOptionsComponent {
     this._inventorySapXstoreApi.inventorySapXstore().subscribe({
       next: (data) => {
         this._inventorySapXstoreApstate.state.inventorySapXstoreResponse = data;
+        this._inventorySapXstoreApstate.state.inventorySapXstoreResponseList =
+          data;
       },
       error: (error) => {
         console.log(error);

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { SalesWholesaleApiService, SalesWholesaleStateService } from '../../services';
+import {
+  SalesWholesaleApiService,
+  SalesWholesaleStateService,
+} from '../../services';
 
 @Component({
   selector: 'sales-wholesale-options',
@@ -42,6 +45,7 @@ export class SalesWholesaleOptionsComponent {
       .subscribe({
         next: (data) => {
           this._salesWholesale.state.salesWholesaleResponse = data;
+          this._salesWholesale.state.salesWholesaleResponseList = data;
         },
         error: (error) => {
           console.log(error);

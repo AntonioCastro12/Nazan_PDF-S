@@ -5,6 +5,7 @@ import { InventoryPodResponse } from './inventory-pod.response';
 export class InventoryPodState {
   inventoryPodDTO: InventoryPodDTO = new InventoryPodDTO();
   inventoryPodResponse: InventoryPodResponse[] = [];
+  inventoryPodResponseList: InventoryPodResponse[] = [];
 
   form!: UntypedFormGroup;
 

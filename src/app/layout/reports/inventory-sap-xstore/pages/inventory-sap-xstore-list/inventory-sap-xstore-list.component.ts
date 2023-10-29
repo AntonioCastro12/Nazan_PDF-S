@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { InventorySapXstoreApstateService } from '../../services';
 import { inventorySapXstoreResponseName } from '../../models';
+import { objectContainsValue } from '@shared/functions';
 
 @Component({
   selector: 'inventory-sap-xstore-list',
@@ -29,5 +30,11 @@ export class InventorySapXstoreListComponent {
 
   highlightSearchText(searchText: string, field: any) {
     return field;
+  }
+
+  handleSearchRecords() {
+    const list = this._inventorySapXstoreAp.state.inventorySapXstoreResponse;
+    this._inventorySapXstoreAp.state.inventorySapXstoreResponseList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }
