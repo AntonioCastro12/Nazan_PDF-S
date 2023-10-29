@@ -24,13 +24,13 @@ export class TemplateTopbarComponent {
         _user.state.userSelected = userSelected;
       }
     }
-    if (_template.state.roleList == undefined) {
-      let userSelected = JSON.parse(
-        sessionStorage.getItem('userSelected') as string
-      );
-      _template.state.roleList =
-        userSelected.privileges.reportesadministrativos;
-    }
+    // if (_template.state.roleList == undefined) {
+    //   let userSelected = JSON.parse(
+    //     sessionStorage.getItem('userSelected') as string
+    //   );
+    //   _template.state.roleList =
+    //     userSelected.privileges.reportesadministrativos;
+    // }
   }
 
   goStartPage() {
