@@ -11,19 +11,20 @@
   >
     <article class="formgrid grid">
       <!-- ************************************************* -->
-      <!-- <section #storeId class="mb-1 col-12 md:col-12 lg:col-3">
+      <section #storeId class="mb-1 col-12 md:col-12 lg:col-3">
         <div class="form-field--container">
           <label for="storeId">{{ inventorySapXstoreLabels.storeId }}</label>
 
-          <p-autoComplete
+          <p-multiSelect
+            fullwidth
+            [style]="{ width: '100%' }"
             inputId="storeId"
+            optionLabel="name"
             formControlName="storeId"
-            [dropdown]="true"
-            field="name"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
-            [suggestions]="results"
-            (completeMethod)="filterCountry($event)"
-          ></p-autoComplete>
+            [options]="suggestions"
+            (onPanelShow)="onFilterStores()"
+          ></p-multiSelect>
 
           <div *ngIf="fg['storeId'].dirty">
             <small
@@ -33,7 +34,7 @@
             >
           </div>
         </div>
-      </section> -->
+      </section>
       <!-- ************************************************* -->
       <!-- <section #productId class="mb-1 col-12 md:col-12 lg:col-3">
         <div class="form-field--container">

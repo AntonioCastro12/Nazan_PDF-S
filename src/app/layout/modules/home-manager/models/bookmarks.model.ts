@@ -55,6 +55,7 @@ export const mapUrlReport = [
   {
     url: 'inventories/sap-xstore',
     name: 'Diferencia de inventario SAP vs Xstore',
+    showPath: 'inventory-sap-xstore/report',
   },
   {
     url: 'inventories/pod',

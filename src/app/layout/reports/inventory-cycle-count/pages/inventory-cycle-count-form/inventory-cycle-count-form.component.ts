@@ -85,7 +85,6 @@ export class InventoryCycleCountFormComponent {
     this._inventoryCycleCount.state.isLoadingList = true;
     let item: InventoryCycleCountDTO = new InventoryCycleCountDTO();
     let formItems = this._inventoryCycleCount.state.form.value;
-    console.log({ submit: this._inventoryCycleCount.state.form.value });
 
     const storesSelected = formItems.storeId
       .map((s: Store) => s.id)
@@ -128,11 +127,6 @@ export class InventoryCycleCountFormComponent {
     const stores: Store[] = [];
     const userRol = this.userSelected.privileges.reportesadministrativos;
     const userStore = this.userSelected.tienda;
-
-    if (userRol.includes('tienda')) {
-      const temp = this.storeList.filter((store) => store.id === userStore);
-      stores.push(...temp);
-    }
 
     if (userRol.includes('staff-menudeo')) {
       const temp = this.storeList.filter((x) => x.type === 'R');

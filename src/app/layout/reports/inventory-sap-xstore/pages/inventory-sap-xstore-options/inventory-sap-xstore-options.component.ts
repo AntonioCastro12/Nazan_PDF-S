@@ -3,6 +3,9 @@ import {
   InventorySapXstoreApiService,
   InventorySapXstoreApstateService,
 } from '../../services';
+import * as XLSX from 'xlsx';
+import { DateTime } from 'luxon';
+import { ReportsExcelNames } from '@report-manager/models';
 
 @Component({
   selector: 'inventory-sap-xstore-options',
@@ -26,6 +29,7 @@ export class InventorySapXstoreOptionsComponent {
   showDownload: any = true;
   showEye: any = true;
   showFavorite: any = true;
+  isLoading: boolean = false;
 
   constructor(
     public _inventorySapXstoreApstate: InventorySapXstoreApstateService,
@@ -37,23 +41,74 @@ export class InventorySapXstoreOptionsComponent {
       !this._inventorySapXstoreApstate.state.isVisibleForm;
   }
   handleChart() {}
+
   handleRefresh() {
     this._inventorySapXstoreApstate.state.isLoadingList = true;
 
-    this._inventorySapXstoreApi.inventorySapXstore().subscribe({
-      next: (data) => {
-        this._inventorySapXstoreApstate.state.inventorySapXstoreResponse = data;
-        this._inventorySapXstoreApstate.state.inventorySapXstoreResponseList =
-          data;
+    this._inventorySapXstoreApi
+      .inventorySapXstore(
+        this._inventorySapXstoreApstate.state.inventorySapXstoreDTO
+      )
+      .subscribe({
+        next: (data) => {
+          this._inventorySapXstoreApstate.state.inventorySapXstoreResponse =
+            data;
+          this._inventorySapXstoreApstate.state.inventorySapXstoreResponseList =
+            data;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+        complete: () => {
+          this._inventorySapXstoreApstate.state.isLoadingList = false;
+        },
+      });
+  }
+
+  handleDownload() {
+    const filename = `${
+      ReportsExcelNames.DIFERENCIA_DE_INVENTARIO_SAP_VS_XSTORE_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+
+    /* pass here the table id */
+    let element =
+      this._inventorySapXstoreApstate.state.inventorySapXstoreResponseList;
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, filename);
+  }
+
+  handleFavorite() {
+    this.isLoading = true;
+    const data: any = {
+      searchCriteria: {
+        storeId:
+          this._inventorySapXstoreApstate.state.inventorySapXstoreDTO.storeId,
       },
-      error: (error) => {
-        console.log(error);
+      url: '/inventories/sap-xstore',
+    };
+
+    this._inventorySapXstoreApi.favorite(data).subscribe({
+      next: async () => {
+        // await this.setErrorModal(
+        //   'Completado',
+        //   'Reporte agregado a favorito',
+        //   '50px'
+        // );
+        this.isLoading = false;
+      },
+      error: (e: any) => {
+        console.error('error loading data', e);
+        this.isLoading = false;
       },
       complete: () => {
-        this._inventorySapXstoreApstate.state.isLoadingList = false;
+        this.isLoading = false;
       },
     });
   }
-  handleDownload() {}
-  handleFavorite() {}
 }
