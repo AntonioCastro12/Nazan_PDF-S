@@ -13,25 +13,25 @@
       <!-- ************************************************* -->
       <section #store_id class="mb-1 col-12 md:col-12 lg:col-4">
         <div class="form-field--container">
-          <label for="store_id">{{
-            segmentAffiliatedKiponLabels.store_id
+          <label for="storeId">{{
+            segmentAffiliatedKiponLabels.storeId
           }}</label>
 
-          <p-autoComplete
-            inputId="store_id"
-            formControlName="store_id"
-            [dropdown]="true"
-            field="name"
+          <p-multiSelect
+            fullwidth
+            [style]="{ width: '100%' }"
+            inputId="storeId"
+            optionLabel="name"
+            formControlName="storeId"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
-            [suggestions]="results"
-            (completeMethod)="filterCountry($event)"
-            styleClass="w-full"
-          ></p-autoComplete>
+            [options]="suggestions"
+            (onPanelShow)="onFilterStores()"
+          ></p-multiSelect>
 
-          <div *ngIf="fg['store_id'].dirty">
+          <div *ngIf="fg['storeId'].dirty">
             <small
               class="p-error block"
-              *ngIf="fg['store_id'].errors?.['required']"
+              *ngIf="fg['storeId'].errors?.['required']"
               >{{ TEMPLATE_TXT.required }}</small
             >
           </div>

@@ -1,11 +1,11 @@
 export class SegmentAffiliatedKiponDTO {
-  store_id: string = '';
+  storeId: string = '';
   startDate: string = '';
   endDate: string = '';
 }
 
 export const segmentAffiliatedKiponLabels = {
-  store_id: 'Tienda',
+  storeId: 'Tienda',
   startDate: 'Desde',
   endDate: 'Hasta',
 };

@@ -15,6 +15,10 @@ import {
   SegmentAffiliatedKiponStateService,
 } from '../../services';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'segment-affiliated-kipon-form',
@@ -38,26 +42,38 @@ export class SegmentAffiliatedKiponFormComponent {
   segmentAffiliatedKiponLabels = segmentAffiliatedKiponLabels;
   //originOptions = originOptions;
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _segmentAffiliatedKipon: SegmentAffiliatedKiponStateService,
     public _segmentAffiliatedKiponApi: SegmentAffiliatedKiponApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
-    this.storeList = this.storeList.filter((v: any) => v.type == 'K');
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
     this._segmentAffiliatedKipon.state.form = this._formBuilder.group({
-      store_id: ['', [Validators.required], []],
+      storeId: ['', [Validators.required], []],
       startDate: [this.today, [Validators.required], []],
       endDate: [this.today, [Validators.required], []],
     });
@@ -66,19 +82,24 @@ export class SegmentAffiliatedKiponFormComponent {
   get fg(): { [key: string]: AbstractControl } {
     return this._segmentAffiliatedKipon.state.form.controls;
   }
+
   onSubmit() {
     this._segmentAffiliatedKipon.state.isLoadingList = true;
     let item: SegmentAffiliatedKiponDTO = new SegmentAffiliatedKiponDTO();
     let formItems = this._segmentAffiliatedKipon.state.form.value;
+    const storesSelected = formItems.storeId
+      .map((s: Store) => s.id)
+      .join("','");
+
     item = {
-      store_id: formItems.store_id.id,
+      storeId: "'" + storesSelected + "'",
       startDate: formItems.startDate,
       endDate: formItems.endDate,
     };
     this._segmentAffiliatedKipon.state.segmentAffiliatedKiponDTO = item;
 
     this._segmentAffiliatedKiponApi
-      .inventoryKardexProduct(
+      .segmentAffiliatedKiponList(
         this._segmentAffiliatedKipon.state.segmentAffiliatedKiponDTO
       )
       .subscribe({
@@ -102,13 +123,54 @@ export class SegmentAffiliatedKiponFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
-      );
+  onFilterStores() {
+    const filteredStores: Store[] = [];
+    const storeList: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+    const kiponStores = this.storeList.filter((x) => x.type === 'K');
+
+    if (userRol.includes('tienda')) {
+      const temp = kiponStores.filter((store) => store.id === userStore);
+      storeList.push(...temp);
+    }
+
+    if (userRol.includes('sistemas') || userRol.includes('staff-kipon')) {
+      storeList.push(...kiponStores);
+    }
+
+    this.suggestions = storeList;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/segments/affiliated-kipon'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      let storeSelected = [];
+      const stores = report.searchCriteria.storeId
+        .replace(/["']/g, '')
+        .split(',');
+
+      for (const store of stores) {
+        const temp = this.storeList.find((s) => s.id === store);
+        if (temp !== undefined) storeSelected.push(temp);
+      }
+
+      this._segmentAffiliatedKipon.state.form = this._formBuilder.group({
+        storeId: [storeSelected],
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+      });
+
+      this.onSubmit();
     }
   }
 }

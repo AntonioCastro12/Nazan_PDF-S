@@ -93,5 +93,6 @@ export const mapUrlReport = [
   {
     url: 'segments/affiliated-kipon',
     name: 'Afiliados Club KIPON',
+    showPath: 'segment-affiliated-kipon/report',
   },
 ];

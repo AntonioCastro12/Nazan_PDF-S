@@ -6,6 +6,7 @@ import {
   SegmentAffiliatedKiponDTO,
   SegmentAffiliatedKiponResponse,
 } from '../models';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,13 +14,13 @@ import {
 export class SegmentAffiliatedKiponApiService {
   constructor(private _http: HttpClient) {}
 
-  inventoryKardexProduct(
+  segmentAffiliatedKiponList(
     dto: SegmentAffiliatedKiponDTO
   ): Observable<SegmentAffiliatedKiponResponse[]> {
     const url = `${environment.apiUrl}/api/segments/affiliated-kipon`;
     const params: any = {};
 
-    params['store_id'] = dto.store_id;
+    params['storeId'] = dto.storeId;
     params['startDate'] = dto.startDate;
     params['endDate'] = dto.endDate;
 
@@ -27,5 +28,12 @@ export class SegmentAffiliatedKiponApiService {
       .get<SegmentAffiliatedKiponResponse[]>(url, { params })
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }
