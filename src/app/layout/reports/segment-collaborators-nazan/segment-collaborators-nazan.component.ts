@@ -14,11 +14,7 @@ export class SegmentCollaboratorsNazanComponent {
     _template.state.roleList = userSelected.privileges.reportesadministrativos;
   }
 
-<<<<<<< HEAD
   ngOnInit(): void {
-=======
-  ngOnDestroy() {
->>>>>>> c76eb247992031fc835fcda7a44e9c8c0b1d3549
     this._template.state.sidebarOverlayVisible = false;
   }
 }

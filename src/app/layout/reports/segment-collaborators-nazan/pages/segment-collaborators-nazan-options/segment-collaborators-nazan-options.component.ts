@@ -96,7 +96,7 @@ export class SegmentCollaboratorsNazanOptionsComponent {
         //   '50px'
         // );
         this.isLoading = false;
-        this._toastr.error('Opps ha ocurrido un error';
+        this._toastr.error('Opps ha ocurrido un error');
       },
       error: (e) => {
         console.error('error loading data', e);

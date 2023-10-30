@@ -104,25 +104,13 @@ export class InventorySapXstoreFormComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {
           this._inventorySapXstoreAp.state.isLoadingList = false;
         },
       });
-    this._inventorySapXstoreApi.inventorySapXstore().subscribe({
-      next: (data) => {
-        this._inventorySapXstoreAp.state.inventorySapXstoreResponse = data;
-        this._inventorySapXstoreAp.state.inventorySapXstoreResponseList = data;
-      },
-      error: (error) => {
-        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-        console.error(error);
-      },
-      complete: () => {
-        this._inventorySapXstoreAp.state.isLoadingList = false;
-      },
-    });
   }
 
   onReset() {
