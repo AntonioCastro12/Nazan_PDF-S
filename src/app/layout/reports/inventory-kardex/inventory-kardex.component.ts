@@ -17,4 +17,8 @@ export class InventoryKardexComponent {
   ngOnInit(): void {
     this._template.state.sidebarOverlayVisible = false;
   }
+
+  ngOnDestroy() {
+    this._template.state.sidebarOverlayVisible = false;
+  }
 }

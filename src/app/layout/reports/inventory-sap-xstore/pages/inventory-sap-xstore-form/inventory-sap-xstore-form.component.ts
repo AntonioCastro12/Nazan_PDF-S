@@ -15,6 +15,7 @@ import { Store } from '@report-manager/models';
 import { UserEntity } from '@user-manager/models';
 import { ActivatedRoute } from '@angular/router';
 import { CommonStateService } from '@report-manager/services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-sap-xstore-form',
@@ -46,7 +47,8 @@ export class InventorySapXstoreFormComponent {
     public _inventorySapXstoreAp: InventorySapXstoreApstateService,
     public _inventorySapXstoreApi: InventorySapXstoreApiService,
     private route: ActivatedRoute,
-    public _common: CommonStateService
+    public _common: CommonStateService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
     this.userSelected = JSON.parse(
@@ -108,6 +110,19 @@ export class InventorySapXstoreFormComponent {
           this._inventorySapXstoreAp.state.isLoadingList = false;
         },
       });
+    this._inventorySapXstoreApi.inventorySapXstore().subscribe({
+      next: (data) => {
+        this._inventorySapXstoreAp.state.inventorySapXstoreResponse = data;
+        this._inventorySapXstoreAp.state.inventorySapXstoreResponseList = data;
+      },
+      error: (error) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.error(error);
+      },
+      complete: () => {
+        this._inventorySapXstoreAp.state.isLoadingList = false;
+      },
+    });
   }
 
   onReset() {

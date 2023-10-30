@@ -15,6 +15,7 @@ import {
   PointProgramTotalMovementApiService,
   PointProgramTotalMovementStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'point-program-total-movement-form',
@@ -36,6 +37,11 @@ export class PointProgramTotalMovementFormComponent {
     placeholderOrigin: 'Seleccionar origen',
   };
 
+  showModal: boolean = false;
+  titleModal: string = '';
+  textModal: string = '';
+  widthModal: string = '';
+
   pointProgramTotalMovementLabels = pointProgramTotalMovementLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
@@ -45,7 +51,8 @@ export class PointProgramTotalMovementFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _pointProgramTotalMovement: PointProgramTotalMovementStateService,
-    public _pointProgramTotalMovementApi: PointProgramTotalMovementApiService
+    public _pointProgramTotalMovementApi: PointProgramTotalMovementApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -86,7 +93,8 @@ export class PointProgramTotalMovementFormComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._pointProgramTotalMovement.state.isLoadingList = false;
@@ -106,5 +114,36 @@ export class PointProgramTotalMovementFormComponent {
         objectContainsValue(item, event.query)
       );
     }
+  }
+
+  async onSelectRange() {
+    let formItems = this._pointProgramTotalMovement.state.form.value;
+    let from = DateTime.fromISO(formItems.startDate);
+    let to = DateTime.fromISO(formItems.endDate);
+    let diffDays = 0;
+    if (from && to) {
+      diffDays = from.diff(to, 'days').days;
+      if (diffDays < -90) {
+        await this.setErrorModal(
+          'Error',
+          'El rango supera el limite de 90 dias',
+          '50px'
+        );
+      }
+      if (diffDays > 0) {
+        await this.setErrorModal(
+          'Error',
+          'La fecha final no puede ser menor a la fecha final',
+          '50px'
+        );
+      }
+    }
+  }
+
+  async setErrorModal(title: string, text: string, width: string) {
+    this.titleModal = title;
+    this.textModal = text;
+    this.widthModal = width;
+    this.showModal = true;
   }
 }

@@ -6,6 +6,7 @@ import {
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
 import { ReportsExcelNames } from '@report-manager/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-cycle-count-options',
@@ -33,7 +34,8 @@ export class InventoryCycleCountOptionsComponent {
 
   constructor(
     public _inventoryCycleCount: InventoryCycleCountStateService,
-    private _inventoryCycleCountApi: InventoryCycleCountApiService
+    private _inventoryCycleCountApi: InventoryCycleCountApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -55,6 +57,7 @@ export class InventoryCycleCountOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {
@@ -101,10 +104,14 @@ export class InventoryCycleCountOptionsComponent {
         //   'Reporte agregado a favorito',
         //   '50px'
         // );
+        this._toastr.success(
+          'El reporte se ha agregado a favoritos sastifactoriamente'
+        );
         this.isLoading = false;
       },
       error: (e) => {
         console.error('error loading data', e);
+        this._toastr.error('Opps ha ocurrido un error', e.erros.message);
         this.isLoading = false;
       },
       complete: () => {

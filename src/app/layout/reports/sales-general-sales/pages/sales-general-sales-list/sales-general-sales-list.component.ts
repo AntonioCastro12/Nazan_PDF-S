@@ -13,6 +13,8 @@ export class SalesGeneralSalesListComponent {
     isLoadingOn: 'Por favor espere...',
     isLoadingOff: 'Tenemos resultados',
     isResultEmpty: 'No hay datos para mostrar',
+    headerSales: 'Ventas',
+    headerPayForms: 'Formas de pago',
   };
 
   salesGeneralSalesResponseName = salesGeneralSalesResponseName;
@@ -34,8 +36,9 @@ export class SalesGeneralSalesListComponent {
 
   handleSearchRecords() {
     const list = this._salesGeneralSales.state.salesGeneralSalesResponse;
-    this._salesGeneralSales.state.salesGeneralSalesResponseList = list.filter(
-      (item) => objectContainsValue(item, this.searchText)
-    );
+    this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
+    this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
+      list.filter((item) => objectContainsValue(item, this.searchText));
   }
 }

@@ -11,6 +11,7 @@ import {
   SalesWholesaleStateService,
 } from '../../services';
 import { SalesWholesaleDTO, salesWholesaleLabels } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-wholesale-form',
@@ -40,7 +41,8 @@ export class SalesWholesaleFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _salesWholesale: SalesWholesaleStateService,
-    public _salesWholesaleApi: SalesWholesaleApiService
+    public _salesWholesaleApi: SalesWholesaleApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -79,7 +81,8 @@ export class SalesWholesaleFormComponent {
           this._salesWholesale.state.salesWholesaleResponseList = data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._salesWholesale.state.isLoadingList = false;

@@ -73,6 +73,7 @@
             [readonlyInput]="true"
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
+            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['startDate'].dirty">
@@ -94,6 +95,7 @@
             [readonlyInput]="true"
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
+            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['endDate'].dirty">
@@ -139,3 +141,13 @@
 </section>
 
 <p-toast></p-toast>
+
+<p-dialog
+  header="{{ titleModal }}"
+  [(visible)]="showModal"
+  [ngStyle]="{ width: widthModal }"
+>
+  <p>
+    {{ textModal }}
+  </p>
+</p-dialog>

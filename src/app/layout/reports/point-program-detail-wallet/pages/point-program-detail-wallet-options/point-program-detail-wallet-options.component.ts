@@ -3,6 +3,7 @@ import {
   PointProgramDetailWalletApiService,
   PointProgramDetailWalletStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'point-program-detail-wallet-options',
@@ -29,7 +30,8 @@ export class PointProgramDetailWalletOptionsComponent {
 
   constructor(
     public _pointProgramDetailWallet: PointProgramDetailWalletStateService,
-    private _pointProgramDetailWalletApi: PointProgramDetailWalletApiService
+    private _pointProgramDetailWalletApi: PointProgramDetailWalletApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -52,6 +54,7 @@ export class PointProgramDetailWalletOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

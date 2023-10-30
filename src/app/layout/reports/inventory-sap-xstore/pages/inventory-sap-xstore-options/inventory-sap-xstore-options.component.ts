@@ -6,6 +6,7 @@ import {
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
 import { ReportsExcelNames } from '@report-manager/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-sap-xstore-options',
@@ -33,7 +34,8 @@ export class InventorySapXstoreOptionsComponent {
 
   constructor(
     public _inventorySapXstoreApstate: InventorySapXstoreApstateService,
-    private _inventorySapXstoreApi: InventorySapXstoreApiService
+    private _inventorySapXstoreApi: InventorySapXstoreApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -102,9 +104,9 @@ export class InventorySapXstoreOptionsComponent {
         // );
         this.isLoading = false;
       },
-      error: (e: any) => {
-        console.error('error loading data', e);
-        this.isLoading = false;
+      error: (error) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.log(error);
       },
       complete: () => {
         this.isLoading = false;

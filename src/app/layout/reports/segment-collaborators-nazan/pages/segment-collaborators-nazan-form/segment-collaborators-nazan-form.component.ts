@@ -14,6 +14,7 @@ import {
   SegmentCollaboratorsNazanApiService,
   SegmentCollaboratorsNazanStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'segment-collaborators-nazan-form',
@@ -42,7 +43,8 @@ export class SegmentCollaboratorsNazanFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService,
-    public _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService
+    public _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -72,6 +74,7 @@ export class SegmentCollaboratorsNazanFormComponent {
       },
       error: (error) => {
         console.log(error);
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
       },
       complete: () => {
         this._segmentCollaboratorsNazan.state.isLoadingList = false;

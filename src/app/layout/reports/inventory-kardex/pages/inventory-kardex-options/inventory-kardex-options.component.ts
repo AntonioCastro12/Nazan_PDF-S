@@ -4,6 +4,7 @@ import { InventoryKardexApiService } from '../../services/inventory-kardex-api.s
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
 import { ReportsExcelNames } from '@report-manager/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-kardex-options',
@@ -31,7 +32,8 @@ export class InventoryKardexOptionsComponent {
 
   constructor(
     public _inventoryKardex: InventoryKardexStateService,
-    private _inventoryKardexApi: InventoryKardexApiService
+    private _inventoryKardexApi: InventoryKardexApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -50,7 +52,8 @@ export class InventoryKardexOptionsComponent {
           this._inventoryKardex.state.kardexProductResponseList = data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._inventoryKardex.state.isLoadingList = false;
@@ -96,9 +99,13 @@ export class InventoryKardexOptionsComponent {
         //   '50px'
         // );
         this.isLoading = false;
+        this._toastr.success(
+          'El reporte se ha agregado a favoritos sastifactoriamente'
+        );
       },
       error: (e) => {
         console.error('error loading data', e);
+        this._toastr.error('Opps ha ocurrido un error', e.erros.message);
         this.isLoading = false;
       },
       complete: () => {

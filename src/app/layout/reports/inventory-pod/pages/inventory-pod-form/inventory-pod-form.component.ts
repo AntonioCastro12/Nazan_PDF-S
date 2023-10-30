@@ -11,6 +11,7 @@ import {
   InventoryPodApiService,
   InventoryPodStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-pod-form',
@@ -40,7 +41,8 @@ export class InventoryPodFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryPod: InventoryPodStateService,
-    public _inventoryPodApi: InventoryPodApiService
+    public _inventoryPodApi: InventoryPodApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -77,7 +79,8 @@ export class InventoryPodFormComponent {
           this._inventoryPod.state.inventoryPodResponseList = data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._inventoryPod.state.isLoadingList = false;

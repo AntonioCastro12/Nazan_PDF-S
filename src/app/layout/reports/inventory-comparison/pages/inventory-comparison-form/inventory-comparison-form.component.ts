@@ -14,6 +14,7 @@ import {
   InventoryComparisonDTO,
   inventoryComparisonLabels,
 } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-comparison-form',
@@ -43,7 +44,8 @@ export class InventoryComparisonFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryComparison: InventoryComparisonStateService,
-    public _inventoryComparisonApi: InventoryComparisonApiService
+    public _inventoryComparisonApi: InventoryComparisonApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }

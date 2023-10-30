@@ -3,6 +3,7 @@ import {
   SalesWholesaleApiService,
   SalesWholesaleStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-wholesale-options',
@@ -29,7 +30,8 @@ export class SalesWholesaleOptionsComponent {
 
   constructor(
     public _salesWholesale: SalesWholesaleStateService,
-    private _salesWholesaleApi: SalesWholesaleApiService
+    private _salesWholesaleApi: SalesWholesaleApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -48,6 +50,7 @@ export class SalesWholesaleOptionsComponent {
           this._salesWholesale.state.salesWholesaleResponseList = data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

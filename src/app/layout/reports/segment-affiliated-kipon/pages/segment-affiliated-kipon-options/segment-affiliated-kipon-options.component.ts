@@ -3,6 +3,7 @@ import {
   SegmentAffiliatedKiponApiService,
   SegmentAffiliatedKiponStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'segment-affiliated-kipon-options',
@@ -29,7 +30,8 @@ export class SegmentAffiliatedKiponOptionsComponent {
 
   constructor(
     public _segmentAffiliatedKipon: SegmentAffiliatedKiponStateService,
-    private _segmentAffiliatedKiponApi: SegmentAffiliatedKiponApiService
+    private _segmentAffiliatedKiponApi: SegmentAffiliatedKiponApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -52,6 +54,7 @@ export class SegmentAffiliatedKiponOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

@@ -6,6 +6,7 @@ import {
 import * as XLSX from 'xlsx';
 import { DateTime } from 'luxon';
 import { ReportsExcelNames } from '@report-manager/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'segment-collaborators-nazan-options',
@@ -33,7 +34,8 @@ export class SegmentCollaboratorsNazanOptionsComponent {
 
   constructor(
     public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService,
-    private _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService
+    private _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -94,10 +96,11 @@ export class SegmentCollaboratorsNazanOptionsComponent {
         //   '50px'
         // );
         this.isLoading = false;
+        this._toastr.error('Opps ha ocurrido un error';
       },
       error: (e) => {
         console.error('error loading data', e);
-        this.isLoading = false;
+        this._toastr.error('Opps ha ocurrido un error', e.erros.message);
       },
       complete: () => {
         this.isLoading = false;

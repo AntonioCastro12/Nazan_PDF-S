@@ -14,6 +14,7 @@ import {
   SegmentAffiliatedKiponApiService,
   SegmentAffiliatedKiponStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'segment-affiliated-kipon-form',
@@ -43,9 +44,11 @@ export class SegmentAffiliatedKiponFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _segmentAffiliatedKipon: SegmentAffiliatedKiponStateService,
-    public _segmentAffiliatedKiponApi: SegmentAffiliatedKiponApiService
+    public _segmentAffiliatedKiponApi: SegmentAffiliatedKiponApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.storeList = this.storeList.filter((v: any) => v.type == 'K');
   }
 
   ngOnInit(): void {
@@ -86,7 +89,8 @@ export class SegmentAffiliatedKiponFormComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._segmentAffiliatedKipon.state.isLoadingList = false;
