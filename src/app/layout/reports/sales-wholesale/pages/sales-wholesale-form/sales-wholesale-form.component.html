@@ -15,16 +15,16 @@
         <div class="form-field--container">
           <label for="storeId">{{ salesWholesaleLabels.storeId }}</label>
 
-          <p-autoComplete
+          <p-multiSelect
+            fullwidth
+            [style]="{ width: '100%' }"
             inputId="storeId"
+            optionLabel="name"
             formControlName="storeId"
-            [dropdown]="true"
-            field="name"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
-            [suggestions]="results"
-            (completeMethod)="filterCountry($event)"
-            styleClass="w-full"
-          ></p-autoComplete>
+            [options]="suggestions"
+            (onPanelShow)="onFilterStores()"
+          ></p-multiSelect>
 
           <div *ngIf="fg['storeId'].dirty">
             <small

@@ -33,6 +33,7 @@ export const mapUrlReport = [
   {
     url: 'sales/wholesale-sales',
     name: 'Venta de Mayoreos',
+    showPath: 'sales-wholesale/report',
   },
   {
     url: 'inventories/kardex-product',
@@ -80,10 +81,6 @@ export const mapUrlReport = [
   {
     url: 'sales/invoice-total',
     name: 'Totales de facturación',
-  },
-  {
-    url: 'sales/wholesale-sales',
-    name: 'Ventas al mayoreo',
   },
   {
     url: 'segments/collaborators-nazan',
