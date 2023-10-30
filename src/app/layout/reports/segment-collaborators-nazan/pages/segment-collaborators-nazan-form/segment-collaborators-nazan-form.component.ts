@@ -35,7 +35,6 @@ export class SegmentCollaboratorsNazanFormComponent {
   };
 
   segmentCollaboratorsNazanLabels = segmentCollaboratorsNazanLabels;
-  //originOptions = originOptions;
   today = DateTime.now().toFormat('yyyy-LL-dd');
   storeList: any;
   results: any;
@@ -55,10 +54,6 @@ export class SegmentCollaboratorsNazanFormComponent {
   onFillForm() {
     this._segmentCollaboratorsNazan.state.form = this._formBuilder.group({
       storeId: ['', [Validators.required], []],
-      productId: ['', [Validators.required], []],
-      origin: ['', [Validators.required], []],
-      startDate: [this.today, [Validators.required], []],
-      endDate: [this.today, [Validators.required], []],
     });
   }
 
@@ -68,37 +63,23 @@ export class SegmentCollaboratorsNazanFormComponent {
   onSubmit() {
     this._segmentCollaboratorsNazan.state.isLoadingList = true;
 
-    this._segmentCollaboratorsNazanApi
-      .inventoryKardexProduct(
-        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanDTO
-      )
-      .subscribe({
-        next: (data) => {
-          this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse =
-            data;
-          this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
-            data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          this._segmentCollaboratorsNazan.state.isLoadingList = false;
-        },
-      });
+    this._segmentCollaboratorsNazanApi.SegmentCollaboratorsList().subscribe({
+      next: (data) => {
+        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse =
+          data;
+        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
+          data;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        this._segmentCollaboratorsNazan.state.isLoadingList = false;
+      },
+    });
   }
 
   onReset() {
     this.onFillForm();
-  }
-
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
-      );
-    }
   }
 }

@@ -1,7 +1,10 @@
 <main class="p-5">
   <div
     class="col-4 text-left"
-    *ngIf="_segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse.length > 0"
+    *ngIf="
+      _segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse
+        .length > 0
+    "
   >
     <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
@@ -28,81 +31,63 @@
       <tr class="text-sm">
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.store_id }}"
+          id="{{ segmentCollaboratorsNazanResponseName.ORGANIZATION_ID }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.store_id }}
+          {{ segmentCollaboratorsNazanResponseName.ORGANIZATION_ID }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.membership }}"
+          id="{{ segmentCollaboratorsNazanResponseName.CUST_ID }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.membership }}
+          {{ segmentCollaboratorsNazanResponseName.CUST_ID }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.client_id }}"
+          id="{{ segmentCollaboratorsNazanResponseName.CARD_NUM }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.client_id }}
+          {{ segmentCollaboratorsNazanResponseName.CARD_NUM }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.first_name }}"
+          id="{{ segmentCollaboratorsNazanResponseName.FIRST_NAME }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.first_name }}
+          {{ segmentCollaboratorsNazanResponseName.FIRST_NAME }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.second_name }}"
+          id="{{ segmentCollaboratorsNazanResponseName.MIDDLE_NAME }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.second_name }}
+          {{ segmentCollaboratorsNazanResponseName.MIDDLE_NAME }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.last_name }}"
+          id="{{ segmentCollaboratorsNazanResponseName.LAST_NAME }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.last_name }}
+          {{ segmentCollaboratorsNazanResponseName.LAST_NAME }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.second_last_name }}"
+          id="{{ segmentCollaboratorsNazanResponseName.last_name2 }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.second_last_name }}
+          {{ segmentCollaboratorsNazanResponseName.last_name2 }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.cellphone_number }}"
+          id="{{ segmentCollaboratorsNazanResponseName.PARTY_TYPE_CODE }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.cellphone_number }}
+          {{ segmentCollaboratorsNazanResponseName.PARTY_TYPE_CODE }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.mail }}"
+          id="{{ segmentCollaboratorsNazanResponseName.CUSTOMER_GROUPS }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.mail }}
+          {{ segmentCollaboratorsNazanResponseName.CUSTOMER_GROUPS }}
         </th>
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.birthday }}"
+          id="{{ segmentCollaboratorsNazanResponseName.CUSTOMER_TYPE }}"
         >
-          {{ segmentCollaboratorsNazanResponseName.birthday }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.gender }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.gender }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.marital_status }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.marital_status }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.signup_date }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.signup_date }}
+          {{ segmentCollaboratorsNazanResponseName.CUSTOMER_TYPE }}
         </th>
       </tr>
     </ng-template>
@@ -121,15 +106,15 @@
       <tr class="text-sm">
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.store_id)"
+          [innerHTML]="highlightSearchText(searchText, report.ORGANIZATION_ID)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.membership)"
+          [innerHTML]="highlightSearchText(searchText, report.CUST_ID)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.client_id)"
+          [innerHTML]="highlightSearchText(searchText, report.CARD_NUM)"
           [style]="{
             '
           width': '100px'
@@ -137,43 +122,31 @@
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.first_name)"
+          [innerHTML]="highlightSearchText(searchText, report.FIRST_NAME)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.second_name)"
+          [innerHTML]="highlightSearchText(searchText, report.MIDDLE_NAME)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.last_name)"
+          [innerHTML]="highlightSearchText(searchText, report.LAST_NAME)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.second_last_name)"
+          [innerHTML]="highlightSearchText(searchText, report.last_name2)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.cellphone_number)"
+          [innerHTML]="highlightSearchText(searchText, report.PARTY_TYPE_CODE)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.mail)"
+          [innerHTML]="highlightSearchText(searchText, report.CUSTOMER_GROUPS)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.birthday)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.gender)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.marital_status)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.signup_date)"
+          [innerHTML]="highlightSearchText(searchText, report.CUSTOMER_TYPE)"
         ></td>
       </tr>
     </ng-template>

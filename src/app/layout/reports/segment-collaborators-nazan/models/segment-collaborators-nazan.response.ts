@@ -1,33 +1,25 @@
 export class SegmentCollaboratorsNazanResponse {
-  store_id: string | null = null;
-  segment: number | null = null;
-  membership: string | null = null;
-  client_id: string | null = null;
-  first_name: string | null = null;
-  second_name: string | null = null;
-  last_name: string | null = null;
-  second_last_name: string | null = null;
-  cellphone_number: string | null = null;
-  mail: string | null = null;
-  birthday: string | null = null;
-  gender: string | null = null;
-  marital_status: string | null = null;
-  signup_date: string | null = null;
+  ORGANIZATION_ID: number | null = null;
+  CUST_ID: string | null = null;
+  CARD_NUM: string | null = null;
+  FIRST_NAME: string | null = null;
+  MIDDLE_NAME: string | null = null;
+  LAST_NAME: string | null = null;
+  last_name2: string | null = null;
+  PARTY_TYPE_CODE: string | null = null;
+  CUSTOMER_GROUPS: string | null = null;
+  CUSTOMER_TYPE: string | null = null;
 }
 
 export const segmentCollaboratorsNazanResponseName = {
-  store_id: 'Tienda',
-  segment: '',
-  membership: 'Numero socio',
-  client_id: 'Id cliente',
-  first_name: 'Primer nombre',
-  second_name: 'Segundo nombre',
-  last_name: 'Primer apellido',
-  second_last_name: 'Segundo apellido',
-  cellphone_number: 'Numero celular',
-  mail: 'Email ',
-  birthday: 'Fecha nacimiento',
-  gender: 'Género',
-  marital_status: 'Estado civil',
-  signup_date: 'Fecha de registro ',
+  ORGANIZATION_ID: 'Organización',
+  CUST_ID: 'Id cliente',
+  CARD_NUM: 'Membresía',
+  FIRST_NAME: 'Primer nombre',
+  MIDDLE_NAME: 'Segundo nombre',
+  LAST_NAME: 'Primer apellido',
+  last_name2: 'Segundo apellido',
+  PARTY_TYPE_CODE: 'Tipo',
+  CUSTOMER_GROUPS: 'Grupo',
+  CUSTOMER_TYPE: 'Atributo',
 };

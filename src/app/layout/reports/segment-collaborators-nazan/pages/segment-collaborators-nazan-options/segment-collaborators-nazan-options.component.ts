@@ -3,6 +3,9 @@ import {
   SegmentCollaboratorsNazanApiService,
   SegmentCollaboratorsNazanStateService,
 } from '../../services';
+import * as XLSX from 'xlsx';
+import { DateTime } from 'luxon';
+import { ReportsExcelNames } from '@report-manager/models';
 
 @Component({
   selector: 'segment-collaborators-nazan-options',
@@ -26,6 +29,7 @@ export class SegmentCollaboratorsNazanOptionsComponent {
   showDownload: any = true;
   showEye: any = true;
   showFavorite: any = true;
+  isLoading: boolean = false;
 
   constructor(
     public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService,
@@ -40,25 +44,64 @@ export class SegmentCollaboratorsNazanOptionsComponent {
   handleRefresh() {
     this._segmentCollaboratorsNazan.state.isLoadingList = true;
 
-    this._segmentCollaboratorsNazanApi
-      .inventoryKardexProduct(
-        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanDTO
-      )
-      .subscribe({
-        next: (data) => {
-          this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse =
-            data;
-          this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
-            data;
-        },
-        error: (error) => {
-          console.log(error);
-        },
-        complete: () => {
-          this._segmentCollaboratorsNazan.state.isLoadingList = false;
-        },
-      });
+    this._segmentCollaboratorsNazanApi.SegmentCollaboratorsList().subscribe({
+      next: (data) => {
+        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponse =
+          data;
+        this._segmentCollaboratorsNazan.state.segmentCollaboratorsNazanResponseList =
+          data;
+      },
+      error: (error) => {
+        console.log(error);
+      },
+      complete: () => {
+        this._segmentCollaboratorsNazan.state.isLoadingList = false;
+      },
+    });
   }
-  handleDownload() {}
-  handleFavorite() {}
+
+  handleDownload() {
+    const filename = `${
+      ReportsExcelNames.SEGMENTOS_COLABORADORES_NAZAN_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+
+    /* pass here the table id */
+    let element =
+      this._segmentCollaboratorsNazan.state
+        .segmentCollaboratorsNazanResponseList;
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, filename);
+  }
+
+  handleFavorite() {
+    this.isLoading = true;
+    const data: any = {
+      searchCriteria: {},
+      url: '/segments/collaborators-nazan',
+    };
+
+    this._segmentCollaboratorsNazanApi.favorite(data).subscribe({
+      next: async () => {
+        // await this.setErrorModal(
+        //   'Completado',
+        //   'Reporte agregado a favorito',
+        //   '50px'
+        // );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.error('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
 }

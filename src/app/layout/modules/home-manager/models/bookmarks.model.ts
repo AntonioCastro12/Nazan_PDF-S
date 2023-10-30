@@ -88,6 +88,7 @@ export const mapUrlReport = [
   {
     url: 'segments/collaborators-nazan',
     name: 'Colaboradores Nazan',
+    showPath: 'segment-collaborators-nazan/report',
   },
   {
     url: 'segments/affiliated-kipon',

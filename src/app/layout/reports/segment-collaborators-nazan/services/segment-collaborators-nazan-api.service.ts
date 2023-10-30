@@ -6,6 +6,7 @@ import {
   SegmentCollaboratorsNazanDTO,
   SegmentCollaboratorsNazanResponse,
 } from '../models';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,21 +14,19 @@ import {
 export class SegmentCollaboratorsNazanApiService {
   constructor(private _http: HttpClient) {}
 
-  inventoryKardexProduct(
-    dto: SegmentCollaboratorsNazanDTO
-  ): Observable<SegmentCollaboratorsNazanResponse[]> {
+  SegmentCollaboratorsList(): Observable<SegmentCollaboratorsNazanResponse[]> {
     const url = `${environment.apiUrl}/api/segments/collaborators-nazan`;
-    const params: any = {};
-
-    // params['storeId'] = dto.storeId;
-    // params['productId'] = dto.productId;
-    // params['origin'] = dto.origin;
-    // params['startDate'] = dto.startDate;
-    // params['endDate'] = dto.endDate;
 
     let response$: any = this._http
-      .get<SegmentCollaboratorsNazanResponse[]>(url, { params })
+      .get<SegmentCollaboratorsNazanResponse[]>(url)
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }

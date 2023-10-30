@@ -13,4 +13,8 @@ export class SegmentCollaboratorsNazanComponent {
     );
     _template.state.roleList = userSelected.privileges.reportesadministrativos;
   }
+
+  ngOnInit(): void {
+    this._template.state.sidebarOverlayVisible = false;
+  }
 }
