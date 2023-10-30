@@ -6,6 +6,7 @@ import {
   PointProgramTotalMovementDTO,
   PointProgramTotalMovementResponse,
 } from '../models';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,12 @@ export class PointProgramTotalMovementApiService {
       .get<PointProgramTotalMovementResponse[]>(url, { params })
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }

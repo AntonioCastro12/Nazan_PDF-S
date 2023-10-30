@@ -16,6 +16,10 @@ import {
   PointProgramTotalMovementStateService,
 } from '../../services';
 import { ToastrService } from 'ngx-toastr';
+import { UserEntity } from '@user-manager/models';
+import { Store } from '@report-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'point-program-total-movement-form',
@@ -45,20 +49,33 @@ export class PointProgramTotalMovementFormComponent {
   pointProgramTotalMovementLabels = pointProgramTotalMovementLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _pointProgramTotalMovement: PointProgramTotalMovementStateService,
     public _pointProgramTotalMovementApi: PointProgramTotalMovementApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -87,6 +104,7 @@ export class PointProgramTotalMovementFormComponent {
       )
       .subscribe({
         next: (data) => {
+          console.log({ data });
           this._pointProgramTotalMovement.state.pointProgramTotalMovementResponse =
             data;
           this._pointProgramTotalMovement.state.pointProgramTotalMovementResponseList =
@@ -104,16 +122,6 @@ export class PointProgramTotalMovementFormComponent {
 
   onReset() {
     this.onFillForm();
-  }
-
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
-      );
-    }
   }
 
   async onSelectRange() {
@@ -145,5 +153,26 @@ export class PointProgramTotalMovementFormComponent {
     this.textModal = text;
     this.widthModal = width;
     this.showModal = true;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/point-program/total-movement'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      this._pointProgramTotalMovement.state.form = this._formBuilder.group({
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+      });
+
+      this.onSubmit();
+    }
   }
 }

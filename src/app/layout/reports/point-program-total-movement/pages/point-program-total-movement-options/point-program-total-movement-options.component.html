@@ -32,6 +32,10 @@
         icon="pi pi-cloud-download"
         class="mr-1"
         [rounded]="true"
+        [disabled]="
+          _pointProgramTotalMovement.state.pointProgramTotalMovementResponse
+            .length <= 0
+        "
       ></p-button>
       <!-- <p-button
           *ngIf="showChart"

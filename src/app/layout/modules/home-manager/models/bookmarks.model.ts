@@ -65,6 +65,7 @@ export const mapUrlReport = [
   {
     url: 'point-program/total-movement',
     name: 'General mov. puntos y monedero',
+    showPath: 'point-program-total-movement/report',
   },
   {
     url: 'point-program/detail-points',
