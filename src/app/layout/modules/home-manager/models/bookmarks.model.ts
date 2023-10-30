@@ -50,6 +50,7 @@ export const mapUrlReport = [
   {
     url: 'inventories/cycle-count',
     name: 'Cumplimiento de Conteo',
+    showPath: 'inventory-cycle-count/report',
   },
   {
     url: 'inventories/sap-xstore',

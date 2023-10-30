@@ -3,6 +3,9 @@ import {
   InventoryCycleCountApiService,
   InventoryCycleCountStateService,
 } from '../../services';
+import * as XLSX from 'xlsx';
+import { DateTime } from 'luxon';
+import { ReportsExcelNames } from '@report-manager/models';
 
 @Component({
   selector: 'inventory-cycle-count-options',
@@ -26,6 +29,7 @@ export class InventoryCycleCountOptionsComponent {
   showDownload: any = true;
   showEye: any = true;
   showFavorite: any = true;
+  isLoading: boolean = false;
 
   constructor(
     public _inventoryCycleCount: InventoryCycleCountStateService,
@@ -58,6 +62,54 @@ export class InventoryCycleCountOptionsComponent {
         },
       });
   }
-  handleDownload() {}
-  handleFavorite() {}
+
+  handleDownload() {
+    const filename = `${
+      ReportsExcelNames.CUMPLIMIENTO_CONTEOS_CICLICOS_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+
+    /* pass here the table id */
+    let element =
+      this._inventoryCycleCount.state.inventoryCycleCountResponseList;
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, filename);
+  }
+
+  handleFavorite() {
+    this.isLoading = true;
+    const data: any = {
+      searchCriteria: {
+        storeId: this._inventoryCycleCount.state.inventoryCycleCountDTO.storeId,
+        type: this._inventoryCycleCount.state.inventoryCycleCountDTO.type,
+        startDate:
+          this._inventoryCycleCount.state.inventoryCycleCountDTO.startDate,
+        endDate: this._inventoryCycleCount.state.inventoryCycleCountDTO.endDate,
+      },
+      url: '/inventories/cycle-count',
+    };
+
+    this._inventoryCycleCountApi.favorite(data).subscribe({
+      next: async () => {
+        // await this.setErrorModal(
+        //   'Completado',
+        //   'Reporte agregado a favorito',
+        //   '50px'
+        // );
+        this.isLoading = false;
+      },
+      error: (e) => {
+        console.error('error loading data', e);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
+  }
 }

@@ -15,6 +15,10 @@ import {
   InventoryCycleCountStateService,
 } from '../../services';
 import { objectContainsValue } from '@shared/functions';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
 
 @Component({
   selector: 'inventory-cycle-count-form',
@@ -31,26 +35,38 @@ export class InventoryCycleCountFormComponent {
     required: 'Este campo es obligatorio',
     selectStore: 'Seleccionar tienda',
     title: 'Búsqueda por',
-    placeholderProductId: 'Código de producto',
-    placeholderOrigin: 'Seleccionar origen',
+    placeholderCountType: 'Tipo de conteo',
   };
 
   inventoryCycleCountLabels = inventoryCycleCountLabels;
   countTypeOptions = countTypeOptions;
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryCycleCount: InventoryCycleCountStateService,
-    public _inventoryCycleCountApi: InventoryCycleCountApiService
+    public _inventoryCycleCountApi: InventoryCycleCountApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -69,12 +85,19 @@ export class InventoryCycleCountFormComponent {
     this._inventoryCycleCount.state.isLoadingList = true;
     let item: InventoryCycleCountDTO = new InventoryCycleCountDTO();
     let formItems = this._inventoryCycleCount.state.form.value;
+    console.log({ submit: this._inventoryCycleCount.state.form.value });
+
+    const storesSelected = formItems.storeId
+      .map((s: Store) => s.id)
+      .join("','");
+
     item = {
-      storeId: formItems.storeId.id,
+      storeId: "'" + storesSelected + "'",
       startDate: formItems.startDate,
       endDate: formItems.endDate,
       type: formItems.type.value,
     };
+
     this._inventoryCycleCount.state.inventoryCycleCountDTO = item;
 
     this._inventoryCycleCountApi
@@ -100,13 +123,68 @@ export class InventoryCycleCountFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
+  onFilterStores() {
+    const filteredStores: Store[] = [];
+    const stores: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+
+    if (userRol.includes('tienda')) {
+      const temp = this.storeList.filter((store) => store.id === userStore);
+      stores.push(...temp);
+    }
+
+    if (userRol.includes('staff-menudeo')) {
+      const temp = this.storeList.filter((x) => x.type === 'R');
+      stores.push(...temp);
+    }
+
+    if (userRol.includes('staff-mayoreo')) {
+      const temp = this.storeList.filter((x) => x.type === 'W');
+      stores.push(...temp);
+    }
+
+    if (userRol.includes('sistemas')) {
+      stores.push(...this.storeList);
+    }
+
+    this.suggestions = stores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/inventories/cycle-count'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      const typeSelect = countTypeOptions.filter(
+        (o) => o.value === report.searchCriteria.type
       );
+
+      let storeSelected = [];
+      const stores = report.searchCriteria.storeId
+        .replace(/["']/g, '')
+        .split(',');
+
+      for (const store of stores) {
+        const temp = this.storeList.find((s) => s.id === store);
+        if (temp !== undefined) storeSelected.push(temp);
+      }
+
+      this._inventoryCycleCount.state.form = this._formBuilder.group({
+        storeId: [storeSelected],
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+        type: typeSelect[0],
+      });
+
+      this.onSubmit();
     }
   }
 }

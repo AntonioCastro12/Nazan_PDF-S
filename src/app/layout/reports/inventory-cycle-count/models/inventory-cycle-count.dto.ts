@@ -9,5 +9,5 @@ export const inventoryCycleCountLabels = {
   storeId: 'Tienda',
   startDate: 'Desde',
   endDate: 'Hasta',
-  type: 'Tipo',
+  type: 'Tipo de conteo',
 };

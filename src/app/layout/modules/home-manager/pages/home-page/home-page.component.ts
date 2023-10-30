@@ -94,7 +94,6 @@ export class HomePageComponent implements OnDestroy {
   }
 
   getReportName(data: string) {
-    console.log({ data });
     const report = mapUrlReport.find((item) => data.includes(item.url));
     return report ? report.name : data;
   }
