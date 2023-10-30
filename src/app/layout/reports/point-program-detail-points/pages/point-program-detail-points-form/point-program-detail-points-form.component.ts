@@ -15,6 +15,10 @@ import {
   PointProgramDetailPointsStateService,
 } from '../../services';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
 
 @Component({
   selector: 'point-program-detail-points-form',
@@ -37,20 +41,33 @@ export class PointProgramDetailPointsFormComponent {
 
   pointProgramDetailPointsLabels = pointProgramDetailPointsLabels;
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _pointProgramDetailPoints: PointProgramDetailPointsStateService,
     public _pointProgramDetailPointsApi: PointProgramDetailPointsApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -63,6 +80,7 @@ export class PointProgramDetailPointsFormComponent {
   get fg(): { [key: string]: AbstractControl } {
     return this._pointProgramDetailPoints.state.form.controls;
   }
+
   onSubmit() {
     this._pointProgramDetailPoints.state.isLoadingList = true;
     let item: PointProgramDetailPointsDTO = new PointProgramDetailPointsDTO();
@@ -74,7 +92,7 @@ export class PointProgramDetailPointsFormComponent {
     this._pointProgramDetailPoints.state.pointProgramDetailPointsDTO = item;
 
     this._pointProgramDetailPointsApi
-      .inventoryKardexProduct(
+      .detailPointsList(
         this._pointProgramDetailPoints.state.pointProgramDetailPointsDTO
       )
       .subscribe({
@@ -99,13 +117,24 @@ export class PointProgramDetailPointsFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
-      );
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/point-program/detail-points'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      this._pointProgramDetailPoints.state.form = this._formBuilder.group({
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+      });
+
+      this.onSubmit();
     }
   }
 }

@@ -70,6 +70,7 @@ export const mapUrlReport = [
   {
     url: 'point-program/detail-points',
     name: 'Detalle mov. puntos y monedero',
+    showPath: 'point-program-detail/report',
   },
   {
     url: 'point-program/detail-wallet',
