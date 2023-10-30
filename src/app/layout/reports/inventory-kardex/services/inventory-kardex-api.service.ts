@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { KardexProductResponse } from '../models/inventory-kardex.response';
 import { KardexProductDTO } from '../models/inventory-kardex.dto';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -27,5 +28,12 @@ export class InventoryKardexApiService {
       .get<KardexProductResponse[]>(url, { params })
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }

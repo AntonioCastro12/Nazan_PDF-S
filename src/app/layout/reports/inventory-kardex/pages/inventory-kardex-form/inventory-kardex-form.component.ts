@@ -14,6 +14,10 @@ import { InventoryKardexStateService } from '../../services';
 import { InventoryKardexApiService } from '../../services/inventory-kardex-api.service';
 import { DateTime } from 'luxon';
 import { objectContainsValue } from '@shared/functions';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'inventory-kardex-form',
@@ -37,19 +41,32 @@ export class InventoryKardexFormComponent implements OnInit {
   kardexProductDTOname = kardexProductDTOname;
   originOptions = originOptions;
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryKardex: InventoryKardexStateService,
-    public _inventoryKardexApi: InventoryKardexApiService
+    public _inventoryKardexApi: InventoryKardexApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -65,6 +82,7 @@ export class InventoryKardexFormComponent implements OnInit {
   get fg(): { [key: string]: AbstractControl } {
     return this._inventoryKardex.state.form.controls;
   }
+
   onSubmit() {
     this._inventoryKardex.state.isLoadingList = true;
     let item: KardexProductDTO = new KardexProductDTO();
@@ -98,13 +116,69 @@ export class InventoryKardexFormComponent implements OnInit {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
+  onFilterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    const stores: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+
+    if (userRol.includes('tienda')) {
+      const temp = this.storeList.filter((store) => store.id === userStore);
+      stores.push(...temp);
+    }
+    if (userRol.includes('staff-menudeo')) {
+      const temp = this.storeList.filter((store) => store.type === 'R');
+      stores.push(...temp);
+    }
+    if (userRol.includes('staff-mayoreo')) {
+      const temp = this.storeList.filter((store) => store.type === 'W');
+      stores.push(...temp);
+    }
+
+    if (
+      userRol.includes('sistemas') ||
+      userRol.includes('staff-inventarios-ost')
+    ) {
+      stores.push(...this.storeList);
+    }
+
+    for (const store of stores) {
+      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
+      }
+    }
+    this.suggestions = filteredStores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/inventories/kardex-product'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      const selectedStore = this.storeList.find(
+        (item) => item.id === report.searchCriteria.storeId
       );
+
+      const originSelect = originOptions.filter(
+        (o) => o.value === report.searchCriteria.origin
+      );
+
+      this._inventoryKardex.state.form = this._formBuilder.group({
+        storeId: selectedStore,
+        productId: report.searchCriteria.productId,
+        origin: originSelect[0],
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+      });
+
+      this.onSubmit();
     }
   }
 }

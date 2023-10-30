@@ -43,8 +43,17 @@ export class HomePageComponent implements OnDestroy {
   labelsListHistoric = labelsListHistoric;
   index: number | null = null;
 
+  ngOnInit() {
+    this.getHistoric();
+    this.getFavorites();
+  }
+
   ngAfterViewInit(): void {
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this._template.state.sidebarOverlayVisible = false;
   }
 
   getHistoric() {
@@ -84,16 +93,8 @@ export class HomePageComponent implements OnDestroy {
     });
   }
 
-  ngOnInit() {
-    this.getHistoric();
-    this.getFavorites();
-  }
-
-  ngOnDestroy() {
-    this._template.state.sidebarOverlayVisible = false;
-  }
-
   getReportName(data: string) {
+    console.log({ data });
     const report = mapUrlReport.find((item) => data.includes(item.url));
     return report ? report.name : data;
   }
@@ -108,7 +109,7 @@ export class HomePageComponent implements OnDestroy {
     } else {
       params = { favorite: true };
     }
-    this.router.navigate([`/layout/reports/${report.url}`], {
+    this.router.navigate([`/layout/${report.showPath}`], {
       queryParams: { ...params },
     });
   }

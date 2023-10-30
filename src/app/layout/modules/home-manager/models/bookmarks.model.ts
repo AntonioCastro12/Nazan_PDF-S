@@ -1,93 +1,94 @@
 export class Favorite {
   id: number = 0;
-  userId: string = "";
-  url: string = "";
+  userId: string = '';
+  url: string = '';
   searchCriteria: object = {};
-  createdAt: string = "";
-  updatedAt: string = "";
+  createdAt: string = '';
+  updatedAt: string = '';
 }
 export class ListFavorites {
-  url: string = "";
+  url: string = '';
   searchCriteria: object = {};
 }
 export const labelsListFavorites = {
-  url: "Reporte",
-  searchCriteria: "Criterio de búsqueda",
-  actions: "Acciones"
-}
+  url: 'Reporte',
+  searchCriteria: 'Criterio de búsqueda',
+  actions: 'Acciones',
+};
 
 export class ListHistoric {
   index: number = 0;
-  url: string = "";
+  url: string = '';
   searchCriteria: object = {};
-  createdAt: string = "";
-  updatedAt: string = "";
+  createdAt: string = '';
+  updatedAt: string = '';
 }
 export const labelsListHistoric = {
-  url: "Reporte",
-  createdAt: "Fecha de consulta",
-  actions: "Acciones"
-}
+  url: 'Reporte',
+  createdAt: 'Fecha de consulta',
+  actions: 'Acciones',
+};
 
 export const mapUrlReport = [
   {
     url: 'sales/wholesale-sales',
-    name: "Venta de Mayoreos"
+    name: 'Venta de Mayoreos',
   },
   {
-    url: 'inventories/kardex',
-    name: "Kardex de inventario"
+    url: 'inventories/kardex-product',
+    name: 'Kardex de inventario',
+    showPath: 'inventory-kardex/report',
   },
   {
     url: 'inventories/inventory-stock/resume',
-    name: "Existencia en Inventario (resumen)"
+    name: 'Existencia en Inventario (resumen)',
   },
   {
     url: 'inventories/inventory-stock/detail',
-    name: "Existencia en Inventario (detalle)"
+    name: 'Existencia en Inventario (detalle)',
   },
   {
     url: 'inventories/cycle-count',
-    name: "Cumplimiento de Conteo"
+    name: 'Cumplimiento de Conteo',
   },
   {
     url: 'inventories/sap-xstore',
-    name: "Diferencia de inventario SAP vs Xstore"
+    name: 'Diferencia de inventario SAP vs Xstore',
   },
   {
     url: 'inventories/pod',
-    name: "Reporte de Recepción de mercancía"
+    name: 'Reporte de Recepción de mercancía',
   },
   {
     url: 'point-program/total-movement',
-    name: "General mov. puntos y monedero"
+    name: 'General mov. puntos y monedero',
   },
   {
     url: 'point-program/detail-points',
-    name: "Detalle mov. puntos y monedero"
+    name: 'Detalle mov. puntos y monedero',
   },
   {
     url: 'point-program/detail-wallet',
-    name: "Detalle mov. puntos y monedero"
+    name: 'Detalle mov. puntos y monedero',
   },
   {
     url: 'sales/general-sales',
-    name: "Informe general de ventas"
+    name: 'Informe general de ventas',
   },
   {
     url: 'sales/invoice-total',
-    name: "Totales de facturación"
+    name: 'Totales de facturación',
   },
   {
     url: 'sales/wholesale-sales',
-    name: "Ventas al mayoreo"
+    name: 'Ventas al mayoreo',
   },
   {
     url: 'segments/collaborators-nazan',
-    name: "Colaboradores Nazan"
+    name: 'Colaboradores Nazan',
   },
   {
     url: 'segments/affiliated-kipon',
-    name: "Afiliados Club KIPON"
+    name: 'Afiliados Club KIPON',
   },
-]
+];
