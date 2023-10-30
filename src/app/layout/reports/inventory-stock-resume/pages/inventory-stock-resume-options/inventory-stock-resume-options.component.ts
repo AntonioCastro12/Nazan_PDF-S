@@ -3,6 +3,7 @@ import {
   InventoryStockResumeApiService,
   InventoryStockResumeStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-stock-resume-options',
@@ -29,7 +30,8 @@ export class InventoryStockResumeOptionsComponent {
 
   constructor(
     public _inventoryStockResume: InventoryStockResumeStateService,
-    private _inventoryStockResumeApi: InventoryStockResumeApiService
+    private _inventoryStockResumeApi: InventoryStockResumeApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -51,6 +53,7 @@ export class InventoryStockResumeOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

@@ -3,6 +3,7 @@ import {
   SalesGeneralSalesApiService,
   SalesGeneralSalesStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-general-sales-options',
@@ -29,7 +30,8 @@ export class SalesGeneralSalesOptionsComponent {
 
   constructor(
     public _salesGeneralSales: SalesGeneralSalesStateService,
-    private _salesGeneralSalesApi: SalesGeneralSalesApiService
+    private _salesGeneralSalesApi: SalesGeneralSalesApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -47,9 +49,13 @@ export class SalesGeneralSalesOptionsComponent {
       .subscribe({
         next: (data) => {
           this._salesGeneralSales.state.salesGeneralSalesResponse = data;
-          this._salesGeneralSales.state.salesGeneralSalesResponseList = data;
+          this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
+            data;
+          this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
+            data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

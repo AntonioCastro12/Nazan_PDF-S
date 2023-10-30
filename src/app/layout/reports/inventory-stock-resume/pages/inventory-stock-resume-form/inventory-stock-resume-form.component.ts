@@ -14,6 +14,7 @@ import {
   InventoryStockResumeStateService,
 } from '../../services';
 import { objectContainsValue } from '@shared/functions';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-stock-resume-form',
@@ -43,7 +44,8 @@ export class InventoryStockResumeFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryStockResume: InventoryStockResumeStateService,
-    public _inventoryStockResumeApi: InventoryStockResumeApiService
+    public _inventoryStockResumeApi: InventoryStockResumeApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -82,7 +84,8 @@ export class InventoryStockResumeFormComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._inventoryStockResume.state.isLoadingList = false;

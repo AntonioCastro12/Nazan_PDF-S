@@ -3,6 +3,7 @@ import {
   SegmentCollaboratorsNazanApiService,
   SegmentCollaboratorsNazanStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'segment-collaborators-nazan-options',
@@ -29,7 +30,8 @@ export class SegmentCollaboratorsNazanOptionsComponent {
 
   constructor(
     public _segmentCollaboratorsNazan: SegmentCollaboratorsNazanStateService,
-    private _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService
+    private _segmentCollaboratorsNazanApi: SegmentCollaboratorsNazanApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -52,6 +54,7 @@ export class SegmentCollaboratorsNazanOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

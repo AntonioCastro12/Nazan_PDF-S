@@ -17,4 +17,8 @@ export class InventoryCycleCountComponent {
   ngOnInit(): void {
     this._template.state.sidebarOverlayVisible = false;
   }
+
+  ngOnDestroy() {
+    this._template.state.sidebarOverlayVisible = false;
+  }
 }

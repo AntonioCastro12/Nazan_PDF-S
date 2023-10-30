@@ -19,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonStateService } from '@report-manager/services';
 import { Store } from '@report-manager/models';
 import { UserEntity } from '@user-manager/models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-cycle-count-form',
@@ -38,6 +39,11 @@ export class InventoryCycleCountFormComponent {
     placeholderCountType: 'Tipo de conteo',
   };
 
+  showModal: boolean = false;
+  titleModal: string = '';
+  textModal: string = '';
+  widthModal: string = '';
+
   inventoryCycleCountLabels = inventoryCycleCountLabels;
   countTypeOptions = countTypeOptions;
   today = DateTime.now().toFormat('yyyy-LL-dd');
@@ -50,7 +56,8 @@ export class InventoryCycleCountFormComponent {
     public _inventoryCycleCount: InventoryCycleCountStateService,
     public _inventoryCycleCountApi: InventoryCycleCountApiService,
     private route: ActivatedRoute,
-    public _common: CommonStateService
+    public _common: CommonStateService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
     this.userSelected = JSON.parse(
@@ -111,7 +118,8 @@ export class InventoryCycleCountFormComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._inventoryCycleCount.state.isLoadingList = false;
@@ -186,5 +194,37 @@ export class InventoryCycleCountFormComponent {
 
       this.onSubmit();
     }
+  }
+
+  async onSelectRange() {
+    let formItems = this._inventoryCycleCount.state.form.value;
+    let from = DateTime.fromISO(formItems.startDate);
+    let to = DateTime.fromISO(formItems.endDate);
+    console.log(from.diff(to, 'days'));
+    let diffDays = 0;
+    if (from && to) {
+      diffDays = from.diff(to, 'days').days;
+      if (diffDays < -90) {
+        await this.setErrorModal(
+          'Error',
+          'El rango supera el limite de 90 dias',
+          '50px'
+        );
+      }
+      if (diffDays > 0) {
+        await this.setErrorModal(
+          'Error',
+          'La fecha final no puede ser menor a la fecha final',
+          '50px'
+        );
+      }
+    }
+  }
+
+  async setErrorModal(title: string, text: string, width: string) {
+    this.titleModal = title;
+    this.textModal = text;
+    this.widthModal = width;
+    this.showModal = true;
   }
 }

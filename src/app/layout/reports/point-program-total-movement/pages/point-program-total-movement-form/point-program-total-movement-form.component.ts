@@ -15,6 +15,7 @@ import {
   PointProgramTotalMovementApiService,
   PointProgramTotalMovementStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'point-program-total-movement-form',
@@ -45,7 +46,8 @@ export class PointProgramTotalMovementFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _pointProgramTotalMovement: PointProgramTotalMovementStateService,
-    public _pointProgramTotalMovementApi: PointProgramTotalMovementApiService
+    public _pointProgramTotalMovementApi: PointProgramTotalMovementApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -86,7 +88,8 @@ export class PointProgramTotalMovementFormComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._pointProgramTotalMovement.state.isLoadingList = false;

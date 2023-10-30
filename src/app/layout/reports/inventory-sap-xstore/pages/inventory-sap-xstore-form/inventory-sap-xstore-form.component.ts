@@ -11,6 +11,7 @@ import {
   InventorySapXstoreApstateService,
 } from '../../services';
 import { InventorySapXstoreDTO, inventorySapXstoreLabels } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-sap-xstore-form',
@@ -40,7 +41,8 @@ export class InventorySapXstoreFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventorySapXstoreAp: InventorySapXstoreApstateService,
-    public _inventorySapXstoreApi: InventorySapXstoreApiService
+    public _inventorySapXstoreApi: InventorySapXstoreApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -71,7 +73,8 @@ export class InventorySapXstoreFormComponent {
         this._inventorySapXstoreAp.state.inventorySapXstoreResponseList = data;
       },
       error: (error) => {
-        console.log(error);
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.error(error);
       },
       complete: () => {
         this._inventorySapXstoreAp.state.isLoadingList = false;

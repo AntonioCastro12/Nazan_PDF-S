@@ -3,6 +3,7 @@ import {
   InventoryPodApiService,
   InventoryPodStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-pod-options',
@@ -29,7 +30,8 @@ export class InventoryPodOptionsComponent {
 
   constructor(
     public _inventoryPod: InventoryPodStateService,
-    private _inventoryPodApi: InventoryPodApiService
+    private _inventoryPodApi: InventoryPodApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -48,6 +50,7 @@ export class InventoryPodOptionsComponent {
           this._inventoryPod.state.inventoryPodResponseList = data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

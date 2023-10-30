@@ -3,6 +3,7 @@ import {
   PointProgramDetailPointsApiService,
   PointProgramDetailPointsStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'point-program-detail-points-options',
@@ -29,7 +30,8 @@ export class PointProgramDetailPointsOptionsComponent {
 
   constructor(
     public _pointProgramDetailPoints: PointProgramDetailPointsStateService,
-    private _pointProgramDetailPointsApi: PointProgramDetailPointsApiService
+    private _pointProgramDetailPointsApi: PointProgramDetailPointsApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -52,6 +54,7 @@ export class PointProgramDetailPointsOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

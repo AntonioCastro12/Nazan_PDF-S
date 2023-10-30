@@ -3,6 +3,7 @@ import {
   PointProgramTotalMovementApiService,
   PointProgramTotalMovementStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'point-program-total-movement-options',
@@ -29,7 +30,8 @@ export class PointProgramTotalMovementOptionsComponent {
 
   constructor(
     public _pointProgramTotalMovement: PointProgramTotalMovementStateService,
-    private _pointProgramTotalMovementApi: PointProgramTotalMovementApiService
+    private _pointProgramTotalMovementApi: PointProgramTotalMovementApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -52,6 +54,7 @@ export class PointProgramTotalMovementOptionsComponent {
             data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

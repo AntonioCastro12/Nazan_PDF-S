@@ -3,6 +3,7 @@ import {
   SalesInvoiceTotalApiService,
   SalesInvoiceTotalStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-invoice-total-options',
@@ -29,7 +30,8 @@ export class SalesInvoiceTotalOptionsComponent {
 
   constructor(
     public _salesInvoiceTotal: SalesInvoiceTotalStateService,
-    private _salesInvoiceTotalApi: SalesInvoiceTotalApiService
+    private _salesInvoiceTotalApi: SalesInvoiceTotalApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -50,6 +52,7 @@ export class SalesInvoiceTotalOptionsComponent {
           this._salesInvoiceTotal.state.salesInvoiceTotalResponseList = data;
         },
         error: (error) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
           console.log(error);
         },
         complete: () => {

@@ -3,6 +3,7 @@ import {
   InventoryComparisonApiService,
   InventoryComparisonStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-comparison-options',
@@ -29,7 +30,8 @@ export class InventoryComparisonOptionsComponent {
 
   constructor(
     public _inventoryComparison: InventoryComparisonStateService,
-    private _inventoryComparisonApi: InventoryComparisonApiService
+    private _inventoryComparisonApi: InventoryComparisonApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {

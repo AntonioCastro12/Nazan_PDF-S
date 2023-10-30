@@ -18,6 +18,7 @@ import { Store } from '@report-manager/models';
 import { UserEntity } from '@user-manager/models';
 import { ActivatedRoute } from '@angular/router';
 import { CommonStateService } from '@report-manager/services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-kardex-form',
@@ -50,7 +51,8 @@ export class InventoryKardexFormComponent implements OnInit {
     public _inventoryKardex: InventoryKardexStateService,
     public _inventoryKardexApi: InventoryKardexApiService,
     private route: ActivatedRoute,
-    public _common: CommonStateService
+    public _common: CommonStateService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
     this.userSelected = JSON.parse(
@@ -104,7 +106,8 @@ export class InventoryKardexFormComponent implements OnInit {
           this._inventoryKardex.state.kardexProductResponseList = data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._inventoryKardex.state.isLoadingList = false;

@@ -5,7 +5,8 @@ import { SalesGeneralSalesResponse } from './sales-general-sales.response';
 export class SalesGeneralSalesState {
   salesGeneralSalesDTO: SalesGeneralSalesDTO = new SalesGeneralSalesDTO();
   salesGeneralSalesResponse: SalesGeneralSalesResponse[] = [];
-  salesGeneralSalesResponseList: SalesGeneralSalesResponse[] = [];
+  salesGeneralSalesResponseSalesList: SalesGeneralSalesResponse[] = [];
+  salesGeneralSalesResponsePayFormsList: SalesGeneralSalesResponse[] = [];
 
   form!: UntypedFormGroup;
 

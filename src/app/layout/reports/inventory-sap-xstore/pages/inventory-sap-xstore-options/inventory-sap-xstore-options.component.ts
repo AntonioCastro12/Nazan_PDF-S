@@ -3,6 +3,7 @@ import {
   InventorySapXstoreApiService,
   InventorySapXstoreApstateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'inventory-sap-xstore-options',
@@ -29,7 +30,8 @@ export class InventorySapXstoreOptionsComponent {
 
   constructor(
     public _inventorySapXstoreApstate: InventorySapXstoreApstateService,
-    private _inventorySapXstoreApi: InventorySapXstoreApiService
+    private _inventorySapXstoreApi: InventorySapXstoreApiService,
+    private _toastr: ToastrService
   ) {}
 
   handleSearch() {
@@ -47,6 +49,7 @@ export class InventorySapXstoreOptionsComponent {
           data;
       },
       error: (error) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
         console.log(error);
       },
       complete: () => {

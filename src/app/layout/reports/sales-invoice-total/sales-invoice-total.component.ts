@@ -13,4 +13,8 @@ export class SalesInvoiceTotalComponent {
     );
     _template.state.roleList = userSelected.privileges.reportesadministrativos;
   }
+
+  ngOnDestroy() {
+    this._template.state.sidebarOverlayVisible = false;
+  }
 }

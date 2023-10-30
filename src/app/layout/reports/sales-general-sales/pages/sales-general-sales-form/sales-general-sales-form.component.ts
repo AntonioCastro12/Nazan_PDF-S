@@ -11,6 +11,7 @@ import {
   SalesGeneralSalesApiService,
   SalesGeneralSalesStateService,
 } from '../../services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-general-sales-form',
@@ -40,7 +41,8 @@ export class SalesGeneralSalesFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _salesGeneralSales: SalesGeneralSalesStateService,
-    public _salesGeneralSalesApi: SalesGeneralSalesApiService
+    public _salesGeneralSalesApi: SalesGeneralSalesApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -75,13 +77,17 @@ export class SalesGeneralSalesFormComponent {
       )
       .subscribe({
         next: (data) => {
+          console.log(data);
           this._salesGeneralSales.state.salesGeneralSalesResponse =
             data.sales.data;
-          this._salesGeneralSales.state.salesGeneralSalesResponseList =
+          this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
             data.sales.data;
+          this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
+            data.paymentMethod.data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._salesGeneralSales.state.isLoadingList = false;

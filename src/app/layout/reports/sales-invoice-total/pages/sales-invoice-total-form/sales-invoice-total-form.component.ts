@@ -11,6 +11,7 @@ import {
   SalesInvoiceTotalStateService,
 } from '../../services';
 import { objectContainsValue } from '@shared/functions';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'sales-invoice-total-form',
@@ -39,7 +40,8 @@ export class SalesInvoiceTotalFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _salesInvoiceTotal: SalesInvoiceTotalStateService,
-    public _salesInvoiceTotalApi: SalesInvoiceTotalApiService
+    public _salesInvoiceTotalApi: SalesInvoiceTotalApiService,
+    private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
   }
@@ -80,7 +82,8 @@ export class SalesInvoiceTotalFormComponent {
           this._salesInvoiceTotal.state.salesInvoiceTotalResponseList = data;
         },
         error: (error) => {
-          console.log(error);
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
         },
         complete: () => {
           this._salesInvoiceTotal.state.isLoadingList = false;
