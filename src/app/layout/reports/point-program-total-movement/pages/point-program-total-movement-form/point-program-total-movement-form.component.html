@@ -30,6 +30,7 @@
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
             styleClass="w-full"
+            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['startDate'].dirty">
@@ -54,6 +55,7 @@
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
             styleClass="w-full"
+            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['endDate'].dirty">

@@ -200,7 +200,6 @@ export class InventoryCycleCountFormComponent {
     let formItems = this._inventoryCycleCount.state.form.value;
     let from = DateTime.fromISO(formItems.startDate);
     let to = DateTime.fromISO(formItems.endDate);
-    console.log(from.diff(to, 'days'));
     let diffDays = 0;
     if (from && to) {
       diffDays = from.diff(to, 'days').days;

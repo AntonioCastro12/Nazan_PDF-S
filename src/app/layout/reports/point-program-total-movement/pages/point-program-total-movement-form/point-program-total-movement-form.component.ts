@@ -37,6 +37,11 @@ export class PointProgramTotalMovementFormComponent {
     placeholderOrigin: 'Seleccionar origen',
   };
 
+  showModal: boolean = false;
+  titleModal: string = '';
+  textModal: string = '';
+  widthModal: string = '';
+
   pointProgramTotalMovementLabels = pointProgramTotalMovementLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
@@ -109,5 +114,36 @@ export class PointProgramTotalMovementFormComponent {
         objectContainsValue(item, event.query)
       );
     }
+  }
+
+  async onSelectRange() {
+    let formItems = this._pointProgramTotalMovement.state.form.value;
+    let from = DateTime.fromISO(formItems.startDate);
+    let to = DateTime.fromISO(formItems.endDate);
+    let diffDays = 0;
+    if (from && to) {
+      diffDays = from.diff(to, 'days').days;
+      if (diffDays < -90) {
+        await this.setErrorModal(
+          'Error',
+          'El rango supera el limite de 90 dias',
+          '50px'
+        );
+      }
+      if (diffDays > 0) {
+        await this.setErrorModal(
+          'Error',
+          'La fecha final no puede ser menor a la fecha final',
+          '50px'
+        );
+      }
+    }
+  }
+
+  async setErrorModal(title: string, text: string, width: string) {
+    this.titleModal = title;
+    this.textModal = text;
+    this.widthModal = width;
+    this.showModal = true;
   }
 }
