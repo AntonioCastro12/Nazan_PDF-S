@@ -84,6 +84,7 @@ export const mapUrlReport = [
   {
     url: 'sales/invoice-total',
     name: 'Totales de facturación',
+    showPath: 'sales-invoice-total/report',
   },
   {
     url: 'segments/collaborators-nazan',

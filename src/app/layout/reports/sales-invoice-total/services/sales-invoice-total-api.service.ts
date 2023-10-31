@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments';
 import { SalesInvoiceTotalDTO, SalesInvoiceTotalResponse } from '../models';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { SalesInvoiceTotalDTO, SalesInvoiceTotalResponse } from '../models';
 export class SalesInvoiceTotalApiService {
   constructor(private _http: HttpClient) {}
 
-  inventoryKardexProduct(
+  invoiceTotalList(
     dto: SalesInvoiceTotalDTO
   ): Observable<SalesInvoiceTotalResponse[]> {
     const url = `${environment.apiUrl}/api/sales/invoice-total`;
@@ -24,5 +25,12 @@ export class SalesInvoiceTotalApiService {
       .get<SalesInvoiceTotalResponse[]>(url, { params })
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }

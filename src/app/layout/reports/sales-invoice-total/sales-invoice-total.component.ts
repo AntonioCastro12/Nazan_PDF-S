@@ -14,7 +14,7 @@ export class SalesInvoiceTotalComponent {
     _template.state.roleList = userSelected.privileges.reportesadministrativos;
   }
 
-  ngOnDestroy() {
+  ngOnInit() {
     this._template.state.sidebarOverlayVisible = false;
   }
 }

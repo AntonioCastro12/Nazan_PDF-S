@@ -38,15 +38,9 @@
         </th>
         <th
           class="text-center"
-          id="{{ salesInvoiceTotalResponseName.saleTypeSale }}"
+          id="{{ salesInvoiceTotalResponseName.countInvoiceSale }}"
         >
-          {{ salesInvoiceTotalResponseName.saleTypeSale }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ salesInvoiceTotalResponseName.totalMoneySale }}"
-        >
-          {{ salesInvoiceTotalResponseName.totalMoneySale }}
+          {{ salesInvoiceTotalResponseName.countInvoiceSale }}
         </th>
         <th
           class="text-center"
@@ -56,27 +50,39 @@
         </th>
         <th
           class="text-center"
-          id="{{ salesInvoiceTotalResponseName.countInvoiceSale }}"
+          id="{{ salesInvoiceTotalResponseName.totalUnitReturn }}"
         >
-          {{ salesInvoiceTotalResponseName.countInvoiceSale }}
+          {{ salesInvoiceTotalResponseName.totalUnitReturn }}
         </th>
         <th
           class="text-center"
-          id="{{ salesInvoiceTotalResponseName.saleTypeReturn }}"
+          id="{{ salesInvoiceTotalResponseName.countInvoiceFreight }}"
         >
-          {{ salesInvoiceTotalResponseName.saleTypeReturn }}
+          {{ salesInvoiceTotalResponseName.countInvoiceFreight }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalPercentReturn }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalPercentReturn }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalMoneySale }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalMoneySale }}
+        </th>
+        <th
+          class="text-center"
+          id="{{ salesInvoiceTotalResponseName.totalMoneyFreight }}"
+        >
+          {{ salesInvoiceTotalResponseName.totalMoneyFreight }}
         </th>
         <th
           class="text-center"
           id="{{ salesInvoiceTotalResponseName.totalMoneyReturn }}"
         >
           {{ salesInvoiceTotalResponseName.totalMoneyReturn }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ salesInvoiceTotalResponseName.totalUnitReturn }}"
-        >
-          {{ salesInvoiceTotalResponseName.totalUnitReturn }}
         </th>
       </tr>
     </ng-template>
@@ -103,7 +109,7 @@
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.saleTypeSale)"
+          [innerHTML]="highlightSearchText(searchText, report.countInvoiceSale)"
           [style]="{
             '
           width': '100px'
@@ -111,27 +117,37 @@
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.totalMoneySale)"
-        ></td>
-        <td
-          class="text-center"
           [innerHTML]="highlightSearchText(searchText, report.totalUnitSale)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.countInvoiceSale)"
+          [innerHTML]="highlightSearchText(searchText, report.totalUnitReturn)"
         ></td>
         <td
           class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.saleTypeReturn)"
+          [innerHTML]="
+            highlightSearchText(searchText, report.countInvoiceFreight)
+          "
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="
+            highlightSearchText(searchText, report.totalPercentReturn)
+          "
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="highlightSearchText(searchText, report.totalMoneySale)"
+        ></td>
+        <td
+          class="text-center"
+          [innerHTML]="
+            highlightSearchText(searchText, report.totalMoneyFreight)
+          "
         ></td>
         <td
           class="text-center"
           [innerHTML]="highlightSearchText(searchText, report.totalMoneyReturn)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.totalUnitReturn)"
         ></td>
       </tr>
     </ng-template>

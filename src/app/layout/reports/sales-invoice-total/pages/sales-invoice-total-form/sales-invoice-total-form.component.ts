@@ -12,6 +12,10 @@ import {
 } from '../../services';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'sales-invoice-total-form',
@@ -34,20 +38,33 @@ export class SalesInvoiceTotalFormComponent {
 
   salesInvoiceTotalLabels = salesInvoiceTotalLabels;
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _salesInvoiceTotal: SalesInvoiceTotalStateService,
     public _salesInvoiceTotalApi: SalesInvoiceTotalApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -73,9 +90,7 @@ export class SalesInvoiceTotalFormComponent {
     this._salesInvoiceTotal.state.salesInvoiceTotalDTO = item;
 
     this._salesInvoiceTotalApi
-      .inventoryKardexProduct(
-        this._salesInvoiceTotal.state.salesInvoiceTotalDTO
-      )
+      .invoiceTotalList(this._salesInvoiceTotal.state.salesInvoiceTotalDTO)
       .subscribe({
         next: (data) => {
           this._salesInvoiceTotal.state.salesInvoiceTotalResponse = data;
@@ -95,13 +110,39 @@ export class SalesInvoiceTotalFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
+  filterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    for (const store of this.storeList) {
+      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
+      }
+    }
+    this.suggestions = filteredStores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/sales/invoice-total'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      const selectedStore = this.storeList.find(
+        (item) => item.id === report.searchCriteria.storeId
       );
+
+      this._salesInvoiceTotal.state.form = this._formBuilder.group({
+        storeId: selectedStore,
+        startDate: report.searchCriteria.startDate,
+        endDate: report.searchCriteria.endDate,
+      });
+
+      this.onSubmit();
     }
   }
 }
