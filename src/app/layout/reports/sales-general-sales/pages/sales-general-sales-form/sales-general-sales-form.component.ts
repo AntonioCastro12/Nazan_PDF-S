@@ -11,7 +11,11 @@ import {
   SalesGeneralSalesApiService,
   SalesGeneralSalesStateService,
 } from '../../services';
-import { ToastrService } from 'ngx-toastr';
+import { SalesGeneralSalesActionService } from '../../services/sales-general-sales-action.service';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'sales-general-sales-form',
@@ -35,20 +39,32 @@ export class SalesGeneralSalesFormComponent {
   salesGeneralSalesLabels = salesGeneralSalesLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _salesGeneralSales: SalesGeneralSalesStateService,
-    public _salesGeneralSalesApi: SalesGeneralSalesApiService,
-    private _toastr: ToastrService
+    public _salesGeneralSalesAction: SalesGeneralSalesActionService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -61,6 +77,7 @@ export class SalesGeneralSalesFormComponent {
   get fg(): { [key: string]: AbstractControl } {
     return this._salesGeneralSales.state.form.controls;
   }
+
   onSubmit() {
     this._salesGeneralSales.state.isLoadingList = true;
     let item: SalesGeneralSalesDTO = new SalesGeneralSalesDTO();
@@ -71,41 +88,53 @@ export class SalesGeneralSalesFormComponent {
     };
     this._salesGeneralSales.state.salesGeneralSalesDTO = item;
 
-    this._salesGeneralSalesApi
-      .inventoryKardexProduct(
-        this._salesGeneralSales.state.salesGeneralSalesDTO
-      )
-      .subscribe({
-        next: (data) => {
-          console.log(data);
-          this._salesGeneralSales.state.salesGeneralSalesResponse =
-            data.sales.data;
-          this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
-            data.sales.data;
-          this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
-            data.paymentMethod.data;
-        },
-        error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-          console.error(error);
-        },
-        complete: () => {
-          this._salesGeneralSales.state.isLoadingList = false;
-        },
-      });
+    this._salesGeneralSalesAction.onGetList(item);
   }
 
   onReset() {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
+  onFilterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    const stores: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+
+    if (userRol.includes('sistemas') || userRol.includes('staff-ingresos')) {
+      stores.push(...this.storeList);
+    }
+
+    for (const store of stores) {
+      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
+      }
+    }
+    this.suggestions = filteredStores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/sales/general-sales'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      const selectedStore = this.storeList.find(
+        (item) => item.id === report.searchCriteria.storeId
       );
+
+      this._salesGeneralSales.state.form = this._formBuilder.group({
+        storeId: selectedStore,
+        businessDate: report.searchCriteria.businessDate,
+      });
+
+      this.onSubmit();
     }
   }
 }

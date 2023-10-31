@@ -112,12 +112,14 @@ export class InventoryCycleCountFormComponent {
       )
       .subscribe({
         next: (data) => {
+          console.log({ data });
           this._inventoryCycleCount.state.inventoryCycleCountResponse = data;
           this._inventoryCycleCount.state.inventoryCycleCountResponseList =
             data;
         },
         error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.log({ error });
+          this._toastr.error('Opps ha ocurrido un error', error.errors.message);
           console.error(error);
         },
         complete: () => {
@@ -190,29 +192,29 @@ export class InventoryCycleCountFormComponent {
     }
   }
 
-  async onSelectRange() {
-    let formItems = this._inventoryCycleCount.state.form.value;
-    let from = DateTime.fromISO(formItems.startDate);
-    let to = DateTime.fromISO(formItems.endDate);
-    let diffDays = 0;
-    if (from && to) {
-      diffDays = from.diff(to, 'days').days;
-      if (diffDays < -90) {
-        await this.setErrorModal(
-          'Error',
-          'El rango supera el limite de 90 dias',
-          '50px'
-        );
-      }
-      if (diffDays > 0) {
-        await this.setErrorModal(
-          'Error',
-          'La fecha final no puede ser menor a la fecha final',
-          '50px'
-        );
-      }
-    }
-  }
+  // async onSelectRange() {
+  //   let formItems = this._inventoryCycleCount.state.form.value;
+  //   let from = DateTime.fromISO(formItems.startDate);
+  //   let to = DateTime.fromISO(formItems.endDate);
+  //   let diffDays = 0;
+  //   if (from && to) {
+  //     diffDays = from.diff(to, 'days').days;
+  //     if (diffDays < -90) {
+  //       await this.setErrorModal(
+  //         'Error',
+  //         'El rango supera el limite de 90 dias',
+  //         '50px'
+  //       );
+  //     }
+  //     if (diffDays > 0) {
+  //       await this.setErrorModal(
+  //         'Error',
+  //         'La fecha final no puede ser menor a la fecha final',
+  //         '50px'
+  //       );
+  //     }
+  //   }
+  // }
 
   async setErrorModal(title: string, text: string, width: string) {
     this.titleModal = title;

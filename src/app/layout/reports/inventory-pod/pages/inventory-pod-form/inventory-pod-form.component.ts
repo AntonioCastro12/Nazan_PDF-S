@@ -121,7 +121,7 @@ export class InventoryPodFormComponent {
     const userRol = this.userSelected.privileges.reportesadministrativos;
     const userStore = this.userSelected.tienda;
 
-    if (userRol.includes('sistemas') || userRol.includes('staff-planeacion ')) {
+    if (userRol.includes('sistemas') || userRol.includes('staff-planeacion')) {
       stores.push(...this.storeList);
     }
 

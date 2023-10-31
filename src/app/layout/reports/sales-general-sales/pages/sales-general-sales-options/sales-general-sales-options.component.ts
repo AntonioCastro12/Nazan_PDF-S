@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import {
-  SalesGeneralSalesApiService,
-  SalesGeneralSalesStateService,
-} from '../../services';
+import { SalesGeneralSalesStateService } from '../../services';
+import { SalesGeneralSalesActionService } from '../../services/sales-general-sales-action.service';
+import * as XLSX from 'xlsx';
+import { DateTime } from 'luxon';
+import { ReportsExcelNames } from '@report-manager/models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -27,10 +28,11 @@ export class SalesGeneralSalesOptionsComponent {
   showDownload: any = true;
   showEye: any = true;
   showFavorite: any = true;
+  isLoading: boolean = false;
 
   constructor(
     public _salesGeneralSales: SalesGeneralSalesStateService,
-    private _salesGeneralSalesApi: SalesGeneralSalesApiService,
+    private _salesGeneralSalesAction: SalesGeneralSalesActionService,
     private _toastr: ToastrService
   ) {}
 
@@ -42,27 +44,64 @@ export class SalesGeneralSalesOptionsComponent {
   handleRefresh() {
     this._salesGeneralSales.state.isLoadingList = true;
 
-    this._salesGeneralSalesApi
-      .inventoryKardexProduct(
-        this._salesGeneralSales.state.salesGeneralSalesDTO
-      )
+    this._salesGeneralSalesAction.onGetList(
+      this._salesGeneralSales.state.salesGeneralSalesDTO
+    );
+  }
+
+  handleDownload() {
+    const filename = `${
+      ReportsExcelNames.INFORME_GENERAL_DE_VENTAS_
+    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+
+    /* pass here the table id */
+    let element = [
+      ...this._salesGeneralSales.state.salesGeneralSalesResponse,
+      ...this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList,
+    ];
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, filename);
+  }
+
+  handleFavorite() {
+    this.isLoading = true;
+    const data: any = {
+      searchCriteria: {
+        storeId: this._salesGeneralSales.state.salesGeneralSalesDTO.storeId,
+        businessDate:
+          this._salesGeneralSales.state.salesGeneralSalesDTO.businessDate,
+      },
+      url: '/sales/general-sales',
+    };
+
+    this._salesGeneralSalesAction._salesGeneralSalesApi
+      .favorite(data)
       .subscribe({
-        next: (data) => {
-          this._salesGeneralSales.state.salesGeneralSalesResponse = data;
-          this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
-            data;
-          this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
-            data;
+        next: async () => {
+          // await this.setErrorModal(
+          //   'Completado',
+          //   'Reporte agregado a favorito',
+          //   '50px'
+          // );
+          this.isLoading = false;
+          this._toastr.success(
+            'El reporte se ha agregado a favoritos sastifactoriamente'
+          );
         },
-        error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-          console.log(error);
+        error: (e) => {
+          console.error('error loading data', e);
+          this._toastr.error('Opps ha ocurrido un error', e.erros.message);
+          this.isLoading = false;
         },
         complete: () => {
-          this._salesGeneralSales.state.isLoadingList = false;
+          this.isLoading = false;
         },
       });
   }
-  handleDownload() {}
-  handleFavorite() {}
 }

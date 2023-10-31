@@ -73,7 +73,6 @@
             [readonlyInput]="true"
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
-            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['startDate'].dirty">
@@ -95,7 +94,6 @@
             [readonlyInput]="true"
             dateFormat="yy-mm-dd"
             [dataType]="'string'"
-            (onSelect)="onSelectRange()"
           ></p-calendar>
 
           <div *ngIf="fg['endDate'].dirty">

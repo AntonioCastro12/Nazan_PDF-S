@@ -135,7 +135,11 @@ export class SegmentAffiliatedKiponFormComponent {
       storeList.push(...temp);
     }
 
-    if (userRol.includes('sistemas') || userRol.includes('staff-kipon')) {
+    if (
+      userRol.includes('sistemas') ||
+      userRol.includes('staff-kipon') ||
+      userRol.includes('staff-menudeo')
+    ) {
       storeList.push(...kiponStores);
     }
 

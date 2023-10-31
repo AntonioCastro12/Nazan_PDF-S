@@ -82,6 +82,7 @@ export const mapUrlReport = [
   {
     url: 'sales/general-sales',
     name: 'Informe general de ventas',
+    showPath: 'sales-general-sales/report',
   },
   {
     url: 'sales/invoice-total',
