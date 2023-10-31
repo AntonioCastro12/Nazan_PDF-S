@@ -43,6 +43,7 @@ export const mapUrlReport = [
   {
     url: 'inventories/inventory-stock/resume',
     name: 'Existencia en Inventario (resumen)',
+    showPath: 'inventory-stock-resume/report',
   },
   {
     url: 'inventories/inventory-stock/detail',

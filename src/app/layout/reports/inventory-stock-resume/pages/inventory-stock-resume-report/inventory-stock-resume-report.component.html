@@ -7,4 +7,7 @@
   <article class="card">
     <inventory-stock-resume-list></inventory-stock-resume-list>
   </article>
+  <article class="card" *ngIf="_inventoryStockResume.state.isVisibleModal">
+    <inventory-stock-detail-list></inventory-stock-detail-list>
+  </article>
 </main>

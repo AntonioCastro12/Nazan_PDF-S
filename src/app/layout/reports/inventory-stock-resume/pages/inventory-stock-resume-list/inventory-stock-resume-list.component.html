@@ -78,4 +78,21 @@
       </tr>
     </ng-template>
   </p-table>
+  <div
+    *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0"
+    class="card-container blue-container flex align-items-center justify-content-start"
+  >
+    <p class="mt-4">
+      <p-button class="mr-3" (onClick)="findDetails()"
+        >Buscar el Detalles</p-button
+      ><p-button
+        (onClick)="showDetails()"
+        *ngIf="
+          this._inventoryStockResume.state.inventoryStockDetailResponse &&
+          this._inventoryStockResume.state.inventoryStockDetailResponse.length > 0
+        "
+        >Mostrar detalle</p-button
+      >
+    </p>
+  </div>
 </main>

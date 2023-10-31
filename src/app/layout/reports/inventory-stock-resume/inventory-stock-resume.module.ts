@@ -9,6 +9,7 @@ import { InventoryStockResumeOptionsComponent } from './pages/inventory-stock-re
 import { InventoryStockResumeReportComponent } from './pages/inventory-stock-resume-report/inventory-stock-resume-report.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeNgModule } from '@shared/vendor';
+import { InventoryStockDetailListComponent } from './pages/inventory-stock-detail-list/inventory-stock-detail-list.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PrimeNgModule } from '@shared/vendor';
     InventoryStockResumeListComponent,
     InventoryStockResumeOptionsComponent,
     InventoryStockResumeReportComponent,
+    InventoryStockDetailListComponent,
   ],
   imports: [
     CommonModule,

@@ -21,8 +21,8 @@
             [dropdown]="true"
             field="name"
             placeholder="{{ TEMPLATE_TXT.selectStore }}"
-            [suggestions]="results"
-            (completeMethod)="filterCountry($event)"
+            [suggestions]="suggestions"
+            (completeMethod)="filterStores($event)"
             styleClass="w-full"
           ></p-autoComplete>
 

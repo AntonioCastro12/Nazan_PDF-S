@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { InventoryStockResumeStateService } from '../../services';
 
 @Component({
   selector: 'inventory-stock-resume-report',
@@ -9,4 +10,6 @@ export class InventoryStockResumeReportComponent {
   TEMPLATE_TEXT = {
     title: 'Existencia en Inventario',
   };
+
+  constructor(public _inventoryStockResume: InventoryStockResumeStateService) {}
 }

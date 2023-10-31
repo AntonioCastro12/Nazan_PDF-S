@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { InventoryStockResumeStateService } from '../../services';
+import {
+  InventoryStockResumeApiService,
+  InventoryStockResumeStateService,
+} from '../../services';
 import { inventoryStockResumeResponseName } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 
@@ -18,8 +21,12 @@ export class InventoryStockResumeListComponent {
   inventoryStockResumeResponseName = inventoryStockResumeResponseName;
 
   searchText = '';
+  isLoading: boolean = false;
 
-  constructor(public _inventoryStockResume: InventoryStockResumeStateService) {}
+  constructor(
+    public _inventoryStockResume: InventoryStockResumeStateService,
+    public _inventoryStockResumeApi: InventoryStockResumeApiService
+  ) {}
 
   handleSearch() {}
   handleChart() {}
@@ -36,5 +43,30 @@ export class InventoryStockResumeListComponent {
     const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
     this._inventoryStockResume.state.inventoryStockResumeResponseList =
       list.filter((item) => objectContainsValue(item, this.searchText));
+  }
+
+  async findDetails() {
+    this.isLoading = true;
+    this._inventoryStockResumeApi
+      .inventoryStockDetails(
+        this._inventoryStockResume.state.inventoryStockResumeDTO
+      )
+      .subscribe({
+        next: (data) => {
+          this._inventoryStockResume.state.inventoryStockDetailResponse = data;
+          this._inventoryStockResume.state.inventoryStockDetailResponseList =
+            data;
+        },
+        error: (e) => {
+          console.error('error loading data', e);
+        },
+        complete: () => {
+          this.isLoading = false;
+        },
+      });
+  }
+
+  async showDetails() {
+    this._inventoryStockResume.state.isVisibleModal = true;
   }
 }

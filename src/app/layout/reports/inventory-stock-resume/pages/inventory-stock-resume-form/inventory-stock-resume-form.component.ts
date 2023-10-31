@@ -15,6 +15,10 @@ import {
 } from '../../services';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'inventory-stock-resume-form',
@@ -38,20 +42,33 @@ export class InventoryStockResumeFormComponent {
   inventoryStockResumeLabels = inventoryStockResumeLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryStockResume: InventoryStockResumeStateService,
     public _inventoryStockResumeApi: InventoryStockResumeApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -63,6 +80,7 @@ export class InventoryStockResumeFormComponent {
   get fg(): { [key: string]: AbstractControl } {
     return this._inventoryStockResume.state.form.controls;
   }
+
   onSubmit() {
     this._inventoryStockResume.state.isLoadingList = true;
     let item: InventoryStockResumeDTO = new InventoryStockResumeDTO();
@@ -78,7 +96,6 @@ export class InventoryStockResumeFormComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log(data);
           this._inventoryStockResume.state.inventoryStockResumeResponse = data;
           this._inventoryStockResume.state.inventoryStockResumeResponseList =
             data;
@@ -97,13 +114,63 @@ export class InventoryStockResumeFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
+  filterStores(event: { query: string }) {
+    const filteredStores: Store[] = [];
+    const storeList: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+
+    if (userRol.includes('tienda')) {
+      const temp = this.storeList.filter((store) => store.id === userStore);
+      storeList.push(...temp);
+    }
+
+    if (userRol.includes('staff-menudeo')) {
+      const temp = this.storeList.filter((x) => x.type === 'R');
+      storeList.push(...temp);
+    }
+
+    if (userRol.includes('staff-mayoreo')) {
+      const temp = this.storeList.filter((x) => x.type === 'W');
+      storeList.push(...temp);
+    }
+
+    if (
+      userRol.includes('sistemas') ||
+      userRol.includes('staff-inventarios-ost ')
+    ) {
+      storeList.push(...this.storeList);
+    }
+
+    for (const store of storeList) {
+      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
+        filteredStores.push(store);
+      }
+    }
+    this.suggestions = filteredStores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/inventories/inventory-stock/resume'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      const selectedStore = this.storeList.find(
+        (item) => item.id === report.searchCriteria.storeId
       );
+
+      this._inventoryStockResume.state.form = this._formBuilder.group({
+        storeId: selectedStore,
+      });
+
+      this.onSubmit();
     }
   }
 }
