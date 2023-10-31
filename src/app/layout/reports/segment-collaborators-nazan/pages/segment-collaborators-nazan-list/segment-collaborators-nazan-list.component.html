@@ -31,12 +31,6 @@
       <tr class="text-sm">
         <th
           class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.ORGANIZATION_ID }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.ORGANIZATION_ID }}
-        </th>
-        <th
-          class="text-center"
           id="{{ segmentCollaboratorsNazanResponseName.CUST_ID }}"
         >
           {{ segmentCollaboratorsNazanResponseName.CUST_ID }}
@@ -71,24 +65,6 @@
         >
           {{ segmentCollaboratorsNazanResponseName.last_name2 }}
         </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.PARTY_TYPE_CODE }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.PARTY_TYPE_CODE }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.CUSTOMER_GROUPS }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.CUSTOMER_GROUPS }}
-        </th>
-        <th
-          class="text-center"
-          id="{{ segmentCollaboratorsNazanResponseName.CUSTOMER_TYPE }}"
-        >
-          {{ segmentCollaboratorsNazanResponseName.CUSTOMER_TYPE }}
-        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage" let-columns>
@@ -104,10 +80,6 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.ORGANIZATION_ID)"
-        ></td>
         <td
           class="text-center"
           [innerHTML]="highlightSearchText(searchText, report.CUST_ID)"
@@ -135,18 +107,6 @@
         <td
           class="text-center"
           [innerHTML]="highlightSearchText(searchText, report.last_name2)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.PARTY_TYPE_CODE)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.CUSTOMER_GROUPS)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.CUSTOMER_TYPE)"
         ></td>
       </tr>
     </ng-template>

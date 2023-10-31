@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SalesGeneralSalesStateService } from '../../services';
 import { salesGeneralSalesResponseName } from '../../models';
-import { objectContainsValue } from '@shared/functions';
+import { objectContainsValue, unicodeToChar } from '@shared/functions';
 
 @Component({
   selector: 'sales-general-sales-list',
@@ -38,7 +38,16 @@ export class SalesGeneralSalesListComponent {
     const list = this._salesGeneralSales.state.salesGeneralSalesResponse;
     this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =
       list.filter((item) => objectContainsValue(item, this.searchText));
+  }
+
+  handleSearchRecordsPayment() {
+    const list =
+      this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList;
     this._salesGeneralSales.state.salesGeneralSalesResponsePayFormsList =
       list.filter((item) => objectContainsValue(item, this.searchText));
+  }
+
+  onConvertUnicodeText(text: string) {
+    return unicodeToChar(text);
   }
 }

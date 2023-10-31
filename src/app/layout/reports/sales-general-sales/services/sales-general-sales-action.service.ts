@@ -17,7 +17,6 @@ export class SalesGeneralSalesActionService {
   onGetList(salesGeneralSalesDTO: SalesGeneralSalesDTO) {
     this._salesGeneralSalesApi.getList(salesGeneralSalesDTO).subscribe({
       next: (data) => {
-        console.log(data);
         this._salesGeneralSales.state.salesGeneralSalesResponse =
           data.sales.data;
         this._salesGeneralSales.state.salesGeneralSalesResponseSalesList =

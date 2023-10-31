@@ -127,7 +127,12 @@
           <tr class="text-sm">
             <td
               class="text-center"
-              [innerHTML]="highlightSearchText(searchText, report.titleLine)"
+              [innerHTML]="
+                highlightSearchText(
+                  searchText,
+                  onConvertUnicodeText(report.translation)
+                )
+              "
             ></td>
             <td
               class="text-center"

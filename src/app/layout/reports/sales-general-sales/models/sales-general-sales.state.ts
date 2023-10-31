@@ -1,12 +1,15 @@
 import { UntypedFormGroup } from '@angular/forms';
 import { SalesGeneralSalesDTO } from './sales-general-sales.dto';
-import { SalesGeneralSalesResponse } from './sales-general-sales.response';
+import {
+  SalesGeneralPaymentResponse,
+  SalesGeneralSalesResponse,
+} from './sales-general-sales.response';
 
 export class SalesGeneralSalesState {
   salesGeneralSalesDTO: SalesGeneralSalesDTO = new SalesGeneralSalesDTO();
   salesGeneralSalesResponse: SalesGeneralSalesResponse[] = [];
   salesGeneralSalesResponseSalesList: SalesGeneralSalesResponse[] = [];
-  salesGeneralSalesResponsePayFormsList: SalesGeneralSalesResponse[] = [];
+  salesGeneralSalesResponsePayFormsList: SalesGeneralPaymentResponse[] = [];
 
   form!: UntypedFormGroup;
 
