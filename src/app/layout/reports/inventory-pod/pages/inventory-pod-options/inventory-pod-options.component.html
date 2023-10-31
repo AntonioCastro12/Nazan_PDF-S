@@ -29,6 +29,7 @@
         icon="pi pi-cloud-download"
         class="mr-1"
         [rounded]="true"
+        [disabled]="_inventoryPod.state.inventoryPodResponse.length <= 0"
       ></p-button>
       <!-- <p-button
           *ngIf="showChart"

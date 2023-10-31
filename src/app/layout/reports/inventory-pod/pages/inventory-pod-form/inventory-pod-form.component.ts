@@ -12,6 +12,10 @@ import {
   InventoryPodStateService,
 } from '../../services';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@report-manager/models';
+import { UserEntity } from '@user-manager/models';
+import { ActivatedRoute } from '@angular/router';
+import { CommonStateService } from '@report-manager/services';
 
 @Component({
   selector: 'inventory-pod-form',
@@ -35,20 +39,33 @@ export class InventoryPodFormComponent {
   inventoryPodLabels = inventoryPodLabels;
 
   today = DateTime.now().toFormat('yyyy-LL-dd');
-  storeList: any;
-  results: any;
+  storeList: Store[];
+  suggestions: Store[] = [];
+  userSelected: UserEntity;
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _inventoryPod: InventoryPodStateService,
     public _inventoryPodApi: InventoryPodApiService,
+    private route: ActivatedRoute,
+    public _common: CommonStateService,
     private _toastr: ToastrService
   ) {
     this.storeList = JSON.parse(sessionStorage.getItem('storeList') as string);
+    this.userSelected = JSON.parse(
+      sessionStorage.getItem('userSelected') as string
+    );
   }
 
   ngOnInit(): void {
     this.onFillForm();
+
+    if (
+      this.route.snapshot.queryParamMap.get('favorite') ||
+      this.route.snapshot.queryParamMap.get('historic')
+    ) {
+      this.onManageFav();
+    }
   }
 
   onFillForm() {
@@ -65,10 +82,16 @@ export class InventoryPodFormComponent {
     this._inventoryPod.state.isLoadingList = true;
     let item: InventoryPodDTO = new InventoryPodDTO();
     let formItems = this._inventoryPod.state.form.value;
+
+    const storesSelected = formItems.storeId
+      .map((s: Store) => s.id)
+      .join("','");
+
     item = {
-      storeId: formItems.storeId.id,
+      storeId: "'" + storesSelected + "'",
       days: formItems.days,
     };
+
     this._inventoryPod.state.inventoryPodDTO = item;
 
     this._inventoryPodApi
@@ -92,13 +115,47 @@ export class InventoryPodFormComponent {
     this.onFillForm();
   }
 
-  filterCountry(event: any) {
-    if (event.query == '') {
-      this.results = this.storeList;
-    } else {
-      this.results = this.storeList.filter((item: any) =>
-        objectContainsValue(item, event.query)
-      );
+  onFilterStores() {
+    const filteredStores: Store[] = [];
+    const stores: Store[] = [];
+    const userRol = this.userSelected.privileges.reportesadministrativos;
+    const userStore = this.userSelected.tienda;
+
+    if (userRol.includes('sistemas') || userRol.includes('staff-planeacion ')) {
+      stores.push(...this.storeList);
+    }
+
+    this.suggestions = stores;
+  }
+
+  onManageFav() {
+    const report: any = this.route.snapshot.queryParamMap.get('favorite')
+      ? this._common.state.favorites.find(
+          (item) => item.url === '/inventories/pod'
+        )
+      : this._common.state.historic.find(
+          (item) =>
+            item.index ===
+            Number(this.route.snapshot.queryParamMap.get('index'))
+        );
+
+    if (report) {
+      let storeSelected = [];
+      const stores = report.searchCriteria.storeId
+        .replace(/["']/g, '')
+        .split(',');
+
+      for (const store of stores) {
+        const temp = this.storeList.find((s) => s.id === store);
+        if (temp !== undefined) storeSelected.push(temp);
+      }
+
+      this._inventoryPod.state.form = this._formBuilder.group({
+        storeId: [storeSelected],
+        days: report.searchCriteria.days,
+      });
+
+      this.onSubmit();
     }
   }
 }

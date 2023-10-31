@@ -61,6 +61,7 @@ export const mapUrlReport = [
   {
     url: 'inventories/pod',
     name: 'Reporte de Recepción de mercancía',
+    showPath: 'inventory-pod/report',
   },
   {
     url: 'point-program/total-movement',
