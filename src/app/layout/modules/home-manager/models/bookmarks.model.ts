@@ -69,12 +69,13 @@ export const mapUrlReport = [
   },
   {
     url: 'point-program/detail-points',
-    name: 'Detalle mov. puntos y monedero',
+    name: 'Detalle mov. puntos y premios',
     showPath: 'point-program-detail/report',
   },
   {
     url: 'point-program/detail-wallet',
     name: 'Detalle mov. puntos y monedero',
+    showPath: 'point-program-detail-wallet/report',
   },
   {
     url: 'sales/general-sales',

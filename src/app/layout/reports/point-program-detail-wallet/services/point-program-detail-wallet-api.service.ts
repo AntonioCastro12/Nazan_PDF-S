@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments';
 import { PointProgramDetailWalletDTO } from '../models';
 import { PointProgramDetailWalletResponse } from '../models/point-program-detail-wallet.response';
+import { Favorite } from '@home-manager/models/bookmarks.model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +12,7 @@ import { PointProgramDetailWalletResponse } from '../models/point-program-detail
 export class PointProgramDetailWalletApiService {
   constructor(private _http: HttpClient) {}
 
-  inventoryKardexProduct(
+  detailWalletList(
     dto: PointProgramDetailWalletDTO
   ): Observable<PointProgramDetailWalletResponse[]> {
     const url = `${environment.apiUrl}/api/point-program/detail-wallet`;
@@ -24,5 +25,12 @@ export class PointProgramDetailWalletApiService {
       .get<PointProgramDetailWalletResponse[]>(url, { params })
       .pipe(map((data: any) => data));
     return response$;
+  }
+
+  favorite(data: any): Observable<Favorite> {
+    return this._http.post<Favorite>(
+      `${environment.apiUrl}/api/bookmarks/favorites`,
+      data
+    );
   }
 }
