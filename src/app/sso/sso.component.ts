@@ -155,7 +155,8 @@ export class SsoComponent implements OnInit {
 
   private withAccess(): boolean {
     return this.identity?.privileges[this.codeApp] ||
-      this.identity?.privileges['*']
+      this.identity?.privileges['*'] ||
+      this.identity?.privileges['xstore']
       ? true
       : false;
   }

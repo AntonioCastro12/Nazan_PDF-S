@@ -143,6 +143,11 @@ export class HomePageComponent implements OnDestroy {
     this._userHydra.getUserInfo(access_token).subscribe({
       next: (data: UserEntity) => {
         //console.log({ DATA_HIDRA: data });
+
+        if (data?.privileges?.xstore) {
+          data.privileges.reportesadministrativos = ['tienda'];
+        }
+
         this._user.state.userSelected = data;
         this._user.state.setStorageUser(data);
 
