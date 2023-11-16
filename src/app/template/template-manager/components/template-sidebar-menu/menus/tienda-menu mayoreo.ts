@@ -1,4 +1,4 @@
-export const tiendaMenu = [
+export const tiendaMenuMayoreo = [
   {
     label: 'Bienvenida',
     items: [
@@ -26,28 +26,6 @@ export const tiendaMenu = [
             label: 'Existencia de inventario',
 
             routerLink: ['inventory-stock-resume'],
-          },
-        ],
-      },
-      {
-        label: 'Segmentos',
-
-        items: [
-          {
-            label: 'Afiliados KIPON SHOE CLUB',
-
-            routerLink: ['segment-affiliated-kipon'],
-          },
-        ],
-      },
-      {
-        label: 'Ventas',
-
-        items: [
-          {
-            label: 'Venta de Mayoreos',
-
-            routerLink: ['sales-wholesale'],
           },
         ],
       },
