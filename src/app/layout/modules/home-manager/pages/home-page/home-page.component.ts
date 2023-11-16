@@ -145,7 +145,8 @@ export class HomePageComponent implements OnDestroy {
         //console.log({ DATA_HIDRA: data });
 
         if (data?.privileges?.xstore) {
-          data.privileges.reportesadministrativos = ['tienda'];
+          const rol = data.tiendaTipo === 'mayoreo' ? 'mayoreo' : 'menudeo';
+          data.privileges.reportesadministrativos = ['tienda', rol];
         }
 
         this._user.state.userSelected = data;

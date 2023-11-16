@@ -10,9 +10,11 @@ import { staffMarketingMenu } from '../components/template-sidebar-menu/menus/st
 import { staffMayoreoMenu } from '../components/template-sidebar-menu/menus/staff-mayoreo-menu';
 import { staffMenudeoMenu } from '../components/template-sidebar-menu/menus/staff-menudeo-menu';
 import { staffPlaneacionMenu } from '../components/template-sidebar-menu/menus/staff-planeacion-menu';
-import { tiendaMenu } from '../components/template-sidebar-menu/menus/tienda-menu';
 import { sistemasMenu } from '../components/template-sidebar-menu/menus/sistemas-menu';
 import { exitMenu } from '../components/template-sidebar-menu/menus/exit-menu';
+import { UserStateService } from '@user-manager/services';
+import { tiendaMenuMenudeo } from '../components/template-sidebar-menu/menus/tienda-menu-menudeo';
+import { tiendaMenuMayoreo } from '../components/template-sidebar-menu/menus/tienda-menu mayoreo';
 
 @Injectable({
   providedIn: 'root',
@@ -28,10 +30,15 @@ export class TemplateActionService {
   staffMayoreoMenu = staffMayoreoMenu;
   staffMenudeoMenu = staffMenudeoMenu;
   staffPlaneacionMenu = staffPlaneacionMenu;
-  tiendaMenu = tiendaMenu;
+  tiendaMenuMenudeo = tiendaMenuMenudeo;
+  tiendaMenuMayoreo = tiendaMenuMayoreo;
   sistemasMenu = sistemasMenu;
   exitMenu = exitMenu;
-  constructor(private _template: TemplateStateService, private router: Router) {
+  constructor(
+    private _template: TemplateStateService,
+    private router: Router,
+    private _user: UserStateService
+  ) {
     const routeParts = this.router.url.split('/');
     const section = routeParts[2];
     this.moduleActive = section;
@@ -75,10 +82,20 @@ export class TemplateActionService {
       let menu: any = staffPlaneacionMenu;
       menu.push(exitMenu);
       this._template.state.currentMenu = staffPlaneacionMenu;
-    } else if (rol == 'tienda') {
-      let menu: any = tiendaMenu;
+    } else if (
+      rol == 'tienda' &&
+      this._user.state.userSelected.tiendaTipo === 'menudeo'
+    ) {
+      let menu: any = tiendaMenuMenudeo;
       menu.push(exitMenu);
-      this._template.state.currentMenu = tiendaMenu;
+      this._template.state.currentMenu = tiendaMenuMenudeo;
+    } else if (
+      rol == 'tienda' &&
+      this._user.state.userSelected.tiendaTipo === 'mayoreo'
+    ) {
+      let menu: any = tiendaMenuMayoreo;
+      menu.push(exitMenu);
+      this._template.state.currentMenu = tiendaMenuMayoreo;
     } else if (rol == 'sistemas') {
       let menu: any = sistemasMenu;
       menu.push(exitMenu);
