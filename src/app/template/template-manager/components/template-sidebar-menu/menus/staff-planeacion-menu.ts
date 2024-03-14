@@ -21,6 +21,10 @@ export const staffPlaneacionMenu = [
             label: 'Reporte de recepción de mercancía (POD)',
             routerLink: ['inventory-pod'],
           },
+          {
+            label: 'Existencia de inventario',
+            routerLink: ['inventory-stock-resume'],
+          },
         ],
       },
     ],
