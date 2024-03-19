@@ -137,7 +137,8 @@ export class InventoryStockResumeFormComponent {
 
     if (
       userRol.includes('sistemas') ||
-      userRol.includes('staff-inventarios-ost')
+      userRol.includes('staff-inventarios-ost') ||
+      userRol.includes('staff-planeacion')
     ) {
       storeList.push(...this.storeList);
     }
