@@ -32,6 +32,13 @@ const routes: Routes = [
           ).then((m) => m.InventoryKardexModule),
       },
       {
+        path: 'prueba',
+        loadChildren: () =>
+          import(
+            'src/app/layout/reports/inventory-kardex/inventory-kardex.module'
+          ).then((m) => m.InventoryKardexModule),
+      },
+      {
         path: 'inventory-comparison',
         loadChildren: () =>
           import(

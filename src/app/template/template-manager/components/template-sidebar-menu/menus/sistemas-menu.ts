@@ -11,6 +11,17 @@ export const sistemasMenu = [
     ],
   },
   {
+    label: ' PRUEBAREPORTE',
+    expanded: true,
+    disabled: true,
+    items: [
+      {
+        label: 'reporte prueba',
+        routerLink: ['/layout/home'],
+      },
+    ],
+  },
+  {
     label: 'Operaciones',
     icon: 'pi pi-fw pi-truck',
     expanded: true,
