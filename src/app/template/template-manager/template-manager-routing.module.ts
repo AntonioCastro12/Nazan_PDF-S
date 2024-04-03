@@ -16,13 +16,13 @@ const routes: Routes = [
             'src/app/layout/modules/home-manager/home-manager.module'
           ).then((m) => m.HomeManagerModule),
       },
-      // {
-      //   path: 'reports',
-      //   loadChildren: () =>
-      //     import('samples/report-manager/report-manager.module').then(
-      //       (m) => m.ReportManagerModule
-      //     ),
-      // },
+      {
+        path: 'alfredo',
+        loadChildren: () =>
+          import('../../layout/reports/prueba-reporte/prueba-reporte.module').then(
+            (m) => m.PruebaReporteModule
+          ),
+      },
 
       {
         path: 'inventory-kardex',

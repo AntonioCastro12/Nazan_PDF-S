@@ -17,7 +17,7 @@ export const sistemasMenu = [
     items: [
       {
         label: 'reporte prueba',
-        routerLink: ['/layout/home'],
+        routerLink: ['alfredo'],
       },
     ],
   },
