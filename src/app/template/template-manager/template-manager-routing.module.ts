@@ -19,8 +19,8 @@ const routes: Routes = [
       {
         path: 'credito-socios',
         loadChildren: () =>
-          import('../../layout/reports/prueba-reporte/prueba-reporte.module').then(
-            (m) => m.PruebaReporteModule
+          import('../../layout/reports/credito-socios/credito-socios.module').then(
+            (m) => m.CreditoSociosModule
           ),
       },
 
