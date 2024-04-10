@@ -17,7 +17,7 @@ const routes: Routes = [
           ).then((m) => m.HomeManagerModule),
       },
       {
-        path: 'alfredo',
+        path: 'credito-socios',
         loadChildren: () =>
           import('../../layout/reports/prueba-reporte/prueba-reporte.module').then(
             (m) => m.PruebaReporteModule
