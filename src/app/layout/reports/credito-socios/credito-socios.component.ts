@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class CreditoSociosComponent {
 
+  TEMPLATE_TEXT = {
+    title: 'Crédito de socios',
+  };
+
 }
