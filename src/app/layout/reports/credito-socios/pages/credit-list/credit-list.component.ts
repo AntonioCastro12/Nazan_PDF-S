@@ -3,7 +3,7 @@ import {
   CreditoApiService,
   CreditoStateService,
 } from '../../services';
-import { inventoryStockResumeResponseName } from '../../models';
+import { inventoryStockResumeResponseName, CustomerInformation } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 
 @Component({
@@ -20,6 +20,8 @@ export class CreditListComponent {
   };
 
   inventoryStockResumeResponseName = inventoryStockResumeResponseName;
+
+  customerInformation = CustomerInformation;
 
   searchText = '';
   isLoading: boolean = false;
