@@ -8,6 +8,7 @@ import { CreditFormComponent } from './pages/credit-form/credit-form.component';
 import { CreditListComponent } from './pages/credit-list/credit-list.component';
 import { CreditDetailListComponent } from './pages/credit-detail-list/credit-detail-list.component';
 import { PrimeNgModule } from '@shared/vendor';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +22,9 @@ import { PrimeNgModule } from '@shared/vendor';
   imports: [
     CommonModule,
     CreditoSociosRoutingModule,
-    PrimeNgModule
+    PrimeNgModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class CreditoSociosModule { }
