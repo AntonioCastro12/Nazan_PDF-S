@@ -10,6 +10,41 @@ export const inventoryStockResumeResponseName = {
   qty: 'Cantidad',
 };
 
+//informacion cliente
+export const CustomerInformation = {
+  no_socio: 'No. Socio',
+  nombre: 'Nombre',
+  ap_paterno: 'Apellido Paterno',
+  ap_materno: 'Apellido MAterno',
+};
+
+//Informacion de cuenta
+export const AccountInformation = {
+  no_cuenta: 'Numero de cuenta',
+  estado: 'Estado',
+  fecha_conf: 'Fecha Configuracion',
+  lim_credito: 'Limite de Credito',
+  cred_disponible: 'Credito Disponible',
+  saldo_pend: 'Saldo Pendiente',
+  cuenta_ret: 'Cuenta Retenida',
+  principal: 'Principal'
+}
+
+//informacion del ticket
+export const ticketInformation = {
+  fecha_ticket:'Fecha Ticket',
+  tienda: 'Tienda',
+  no_cliente: 'No. Cliente',
+  nombre: 'Nombre',
+  ticket: ' Ticket',
+  t_movimiento: 'Tipo Movimiento',
+  monto: 'Monto',
+  f_pago: 'Forma Pago',
+  r_bancaria: 'Referencia Bancaria',
+  r_ticket: 'Referencia Ticket',
+  f_r_deposito: 'Fecha referencia Deopsito' 
+};
+
 export class InventoryStockDetailResponse {
   storeId: string = '';
   itemId: string = '';

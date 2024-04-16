@@ -29,6 +29,7 @@ export class CreditListComponent {
     public _inventoryStockResumeApi: CreditoApiService
   ) {}
 
+  
   handleSearch() {}
   handleChart() {}
   handleRefresh() {}
@@ -44,6 +45,9 @@ export class CreditListComponent {
     const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
     this._inventoryStockResume.state.inventoryStockResumeResponseList =
       list.filter((item) => objectContainsValue(item, this.searchText));
+
+    console.log("Filter: ",this._inventoryStockResume.state.inventoryStockResumeResponseList);
+          
   }
 
   async findDetails() {

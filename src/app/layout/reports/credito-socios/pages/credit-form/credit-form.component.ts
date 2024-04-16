@@ -99,7 +99,6 @@ export class CreditFormComponent {
       .subscribe({
         next: (data) => {
           this._inventoryStockResume.state.inventoryStockResumeResponse = data;
-          console.log(this._inventoryStockResume.state.inventoryStockResumeResponse);
           this._inventoryStockResume.state.inventoryStockResumeResponseList =
             data;
         },
