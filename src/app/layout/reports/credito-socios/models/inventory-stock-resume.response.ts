@@ -4,46 +4,82 @@ export class InventoryStockResumeResponse {
   qty: number | null = null;
 }
 
+/* ----------------------------------------
+----clases para recibir datos de socios----
+-----------------------------------------*/
+export class CustomerInformationResponse {
+  no_socio:number = 0;
+  nombre: string | null = null;
+  ap_paterno: string | null = null;
+  ap_materno: string | null = null;
+}
+
+export class AccountInformationResponse {
+  no_cuenta: string | null = null;
+  estado: string | null = null;
+  fecha_configuracion: string | null = null;
+  lim_credito: string | null = null;
+  cred_disponible: string | null = null;
+  saldo_pendiente: string | null = null;
+  cuenta_retenida: string | null = null;
+  principal: string | null = null;
+} 
+
+export class TransactionsHistoryResponse{
+  fecha_ticket: string | null = null;
+  tienda: string | null = null;
+  no_cliente: string | null = null;
+  nombre: string | null = null;
+  ticket: string | null = null;
+  tipo_movimiento: string | null = null;
+  monto: string | null = null;
+  forma_pago:string | null = null;
+  ref_bancaria: string | null = null;
+  ref_ticket: string | null = null;
+  fecha_ref_deposito: string | null = null;
+}
+
+
+
 export const inventoryStockResumeResponseName = {
   store_id: 'Tienda',
   line: 'Linea',
   qty: 'Cantidad',
 };
 
-//informacion cliente
-export const CustomerInformation = {
-  no_socio: 'No. Socio',
-  nombre: 'Nombre',
-  ap_paterno: 'Apellido Paterno',
-  ap_materno: 'Apellido MAterno',
-};
+//informacion socio
+export const CustomerInformation: any[] = [
+  'No. Socio',
+  'Nombre',
+  'Apellido Paterno',
+  'Apellido MAterno',
+]
 
-//Informacion de cuenta
-export const AccountInformation = {
-  no_cuenta: 'Numero de cuenta',
-  estado: 'Estado',
-  fecha_conf: 'Fecha Configuracion',
-  lim_credito: 'Limite de Credito',
-  cred_disponible: 'Credito Disponible',
-  saldo_pend: 'Saldo Pendiente',
-  cuenta_ret: 'Cuenta Retenida',
-  principal: 'Principal'
-}
+export const AccountInformation: any[] = [
+  'Numero de cuenta',
+  'Estado',
+  'Fecha Configuracion',
+  'Limite de Credito',
+  'Credito Disponible',
+  'Saldo Pendiente',
+  'Cuenta Retenida',
+  'Principal'
+]
 
-//informacion del ticket
-export const ticketInformation = {
-  fecha_ticket:'Fecha Ticket',
-  tienda: 'Tienda',
-  no_cliente: 'No. Cliente',
-  nombre: 'Nombre',
-  ticket: ' Ticket',
-  t_movimiento: 'Tipo Movimiento',
-  monto: 'Monto',
-  f_pago: 'Forma Pago',
-  r_bancaria: 'Referencia Bancaria',
-  r_ticket: 'Referencia Ticket',
-  f_r_deposito: 'Fecha referencia Deopsito' 
-};
+//informacion movimientos
+export const TicketInformation: any[] = [
+  'Fecha Ticket',
+  'Tienda',
+  'No. Cliente',
+  'Nombre',
+  ' Ticket',
+  'Tipo Movimiento',
+  'Monto',
+  'Forma Pago',
+  'Referencia Bancaria',
+  'Referencia Ticket',
+  'Fecha referencia Deopsito'
+]
 
 export class InventoryStockDetailResponse {
   storeId: string = '';

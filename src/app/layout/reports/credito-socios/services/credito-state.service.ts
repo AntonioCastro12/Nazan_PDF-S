@@ -13,6 +13,8 @@ export class CreditoStateService {
 
   state = new InventoryStockResumeState();
 
+  
+
   constructor() {
     this.state$.subscribe((state) => (this.state = state));
   }

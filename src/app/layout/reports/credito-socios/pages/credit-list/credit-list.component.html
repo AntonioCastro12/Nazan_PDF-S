@@ -1,150 +1,24 @@
 <main class="p-5">
   <!-- Tabla funcionando -->
-    <div
-      class="col-4 text-left"
-      *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0"
-    >
-      <span class="p-input-icon-left">
-        <i class="pi pi-search"></i>
-        <input
-          pInputText
-          type="text"
-          placeholder="Buscar..."
-          [(ngModel)]="searchText"
-          (ngModelChange)="handleSearchRecords()"
-        />
-      </span>
-    </div>
-    <p-table
-      #dt2
-      [value]="_inventoryStockResume.state.inventoryStockResumeResponseList"
-      [paginator]="true"
-      [rows]="15"
-      styleClass="mt-3 p-datatable-sm"
-      [loading]="_inventoryStockResume.state.isLoadingList"
-    >
-      <ng-template pTemplate="header">
-        <tr class="text-sm">
-          <th
-            class="text-center"
-            id="{{ inventoryStockResumeResponseName.store_id }}"
-          >
-            {{ inventoryStockResumeResponseName.store_id }}
-          </th>
-          <th
-            class="text-center"
-            id="{{ inventoryStockResumeResponseName.line }}"
-          >
-            {{ inventoryStockResumeResponseName.line }}
-          </th>
-          <th class="text-center" id="{{ inventoryStockResumeResponseName.qty }}">
-            {{ inventoryStockResumeResponseName.qty }}
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage" let-columns>
-        <tr>
-          <td [attr.colspan]="9" class="text-center">
-            {{
-              _inventoryStockResume.state.isLoadingList
-                ? TEMPLATE_TEXT.isLoadingOn
-                : TEMPLATE_TEXT.isResultEmpty
-            }}
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-report>
-        <tr class="text-sm">
-          <td
-            class="text-center"
-            [innerHTML]="
-              highlightSearchText(
-                searchText,
-                _inventoryStockResume.state.inventoryStockResumeDTO.storeId
-              )
-            "
-          ></td>
-          <td
-            class="text-center"
-            [innerHTML]="highlightSearchText(searchText, report.line)"
-          ></td>
-          <td
-            class="text-center"
-            [innerHTML]="highlightSearchText(searchText, report.qty)"
-            [style]="{
-              '
-            width': '100px'
-            }"
-          ></td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <div
-      *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0"
-      class="card-container blue-container flex align-items-center justify-content-start"
-    >
-      <p class="mt-4">
-        <p-button class="mr-3" (onClick)="findDetails()"
-          >Buscar el Detalles</p-button
-        ><p-button
-          (onClick)="showDetails()"
-          *ngIf="
-            this._inventoryStockResume.state.inventoryStockDetailResponse &&
-            this._inventoryStockResume.state.inventoryStockDetailResponse.length > 0
-          "
-          >Mostrar detalle</p-button
-        >
-      </p>
-    </div>
-
-
-    <!-- TABLAS DE PRUEBA  -->
-    
-    <div
-    class="col-6 text-left"
-  
-  >
-    <!-- <span class="p-input-icon-left">
+  <div class="col-4 text-left" *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0">
+    <span class="p-input-icon-left">
       <i class="pi pi-search"></i>
-      <input
-        pInputText
-        type="text"
-        placeholder="Buscar..."
-        [(ngModel)]="searchText"
-        (ngModelChange)="handleSearchRecords()"
-      />
-    </span> -->
-
-    <h4>Información del cliente</h4>
-
+      <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
+        (ngModelChange)="handleSearchRecords()" />
+    </span>
   </div>
-  <p-table
-    #dt2
-    [value]="_inventoryStockResume.state.inventoryStockResumeResponseList"
-    [paginator]="true"
-    [rows]="15"
-    styleClass="mt-3 p-datatable-sm"
-    [loading]="_inventoryStockResume.state.isLoadingList"
-  >
+  <p-table #dt2 [value]="_inventoryStockResume.state.inventoryStockResumeResponseList" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
     <ng-template pTemplate="header">
       <tr class="text-sm">
-        <th
-          class="text-center"
-          id="{{ customerInformation.no_socio }}"
-        >
-          {{ customerInformation.no_socio }}
+        <th class="text-center" id="{{ inventoryStockResumeResponseName.store_id }}">
+          {{ inventoryStockResumeResponseName.store_id }}
         </th>
-        <th
-          class="text-center"
-          id="{{ customerInformation.nombre }}"
-        >
-          {{ customerInformation.nombre }}
+        <th class="text-center" id="{{ inventoryStockResumeResponseName.line }}">
+          {{ inventoryStockResumeResponseName.line }}
         </th>
-        <th class="text-center" id="{{ customerInformation.ap_paterno }}">
-          {{ customerInformation.ap_paterno }}
-        </th>
-        <th class="text-center" id="{{ customerInformation.ap_materno }}">
-          {{ customerInformation.ap_materno }}
+        <th class="text-center" id="{{ inventoryStockResumeResponseName.qty }}">
+          {{ inventoryStockResumeResponseName.qty }}
         </th>
       </tr>
     </ng-template>
@@ -152,42 +26,175 @@
       <tr>
         <td [attr.colspan]="9" class="text-center">
           {{
-            _inventoryStockResume.state.isLoadingList
-              ? TEMPLATE_TEXT.isLoadingOn
-              : TEMPLATE_TEXT.isResultEmpty
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
           }}
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td
-          class="text-center"
-          [innerHTML]="
+        <td class="text-center" [innerHTML]="
+              highlightSearchText(
+                searchText,
+                _inventoryStockResume.state.inventoryStockResumeDTO.storeId
+              )
+            "></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.line)"></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.qty)" [style]="{
+              '
+            width': '100px'
+            }"></td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <div *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0"
+    class="card-container blue-container flex align-items-center justify-content-start">
+    <p class="mt-4">
+      <p-button class="mr-3" (onClick)="findDetails()">Buscar el Detalles</p-button><p-button (onClick)="showDetails()"
+        *ngIf="
+            this._inventoryStockResume.state.inventoryStockDetailResponse &&
+            this._inventoryStockResume.state.inventoryStockDetailResponse.length > 0
+          ">Mostrar detalle</p-button>
+    </p>
+  </div>
+
+  <!-- Borrar tabla anterior cuando se terminen conexiones en nuevas  -->
+
+
+  <!-- TABLAS DE PRUEBA  -->
+  <!-- TABLA INFORMACION SOCIO -->
+
+  <div class="col-6 text-left" style="margin-top: 60px;">
+    
+    <h4>Información del Socio</h4>
+
+  </div>
+  <p-table #dt2 [value]="_inventoryStockResume.state.inventoryStockResumeResponseList" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" *ngFor="let header of customerInformation" id="{{ header }}">
+          {{ header }}
+        </th>
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="customerInformation.length" class="text-center">
+          {{
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td class="text-center" [innerHTML]="
             highlightSearchText(
               searchText,
               _inventoryStockResume.state.inventoryStockResumeDTO.storeId
             )
-          "
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.line)"
-        ></td>
-        <td
-          class="text-center"
-          [innerHTML]="highlightSearchText(searchText, report.qty)"
-          [style]="{
+          "></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.line)"></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.qty)" [style]="{
             '
           width': '100px'
-          }"
-        ></td>
+          }"></td>
       </tr>
     </ng-template>
   </p-table>
- 
+
+  <!-- TABLA INFORMACION CUENTA  -->
+
+  <div class="col-6 text-left" style="margin-top: 20px;">
+    
+    <h4>Información Cuenta</h4>
+
+  </div>
+  <p-table #dt2 [value]="_inventoryStockResume.state.inventoryStockResumeResponseList" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" *ngFor="let header of accountInformation"  id="{{ header }}">
+          {{ header }}
+        </th>      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="accountInformation.length" class="text-center">
+          {{
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td class="text-center" [innerHTML]="
+            highlightSearchText(
+              searchText,
+              _inventoryStockResume.state.inventoryStockResumeDTO.storeId
+            )
+          "></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.line)"></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.qty)" [style]="{
+            '
+          width': '100px'
+          }"></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+
+  <!-- TABLA INFORMACION MOVIMIENTOS  -->
+
+  <div class="col-6 text-left" style="margin-top: 20px;">
+    
+    <h4>Información de Movimientos</h4>
+
+  </div>
+  <p-table #dt2 [value]="_inventoryStockResume.state.inventoryStockResumeResponseList" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+    <ng-template pTemplate="header">
+      <tr class="text-sm" >
+        <th class="text-center" *ngFor="let header of ticketInformation" id="{{ header }}">
+          {{ header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="ticketInformation.length" class="text-center">
+          {{
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td class="text-center" [innerHTML]="
+            highlightSearchText(
+              searchText,
+              _inventoryStockResume.state.inventoryStockResumeDTO.storeId
+            )
+          "></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.line)"></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.qty)" [style]="{
+            '
+          width': '100px'
+          }"></td>
+      </tr>
+    </ng-template>
+  </p-table>
 
 </main>
-
-  
-  
