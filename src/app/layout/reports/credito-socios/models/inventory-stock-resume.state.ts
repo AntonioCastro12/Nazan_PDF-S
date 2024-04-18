@@ -44,7 +44,30 @@ export class InventoryStockResumeState {
   ]
 
   transactionsHistoryResponse: TransactionsHistoryResponse [] = [
-
+    {
+      fecha_ticket: '2024-04-10 00:00:00.000',
+      tienda: '105',
+      no_cliente: 'HAU0105001000009',
+      nombre: 'Jose Cano',
+      ticket: '258671',
+      tipo_movimiento:'CARGO',
+      monto: '500.000000',
+      forma_pago: '',
+      ref_bancaria: ''
+    },
+    {
+      fecha_ticket: '2024-04-10 00:00:00.000',
+      tienda: '105',
+      no_cliente: 'HAU0105001000009',
+      nombre: 'Jose Cano',
+      ticket: '258672',
+      tipo_movimiento:'PAGO',
+      monto: '-500.000000',
+      forma_pago: 'DEPOSIT_BANAMEX',
+      ref_bancaria: 'REFERENCIABANCARIA',
+      ref_ticket: 'TICKETVENTA1',
+      fecha_ref_deposito: '10/04/2024'
+    }
   ]
 
 

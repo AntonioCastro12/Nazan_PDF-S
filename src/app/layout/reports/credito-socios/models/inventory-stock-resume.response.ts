@@ -33,10 +33,10 @@ export class TransactionsHistoryResponse{
   ticket: string | null = null;
   tipo_movimiento: string | null = null;
   monto: string | null = null;
-  forma_pago:string | null = null;
-  ref_bancaria: string | null = null;
-  ref_ticket: string | null = null;
-  fecha_ref_deposito: string | null = null;
+  forma_pago?:string | null = null;
+  ref_bancaria?: string | null = null;
+  ref_ticket?: string | null = null;
+  fecha_ref_deposito?: string | null = null;
 }
 
 

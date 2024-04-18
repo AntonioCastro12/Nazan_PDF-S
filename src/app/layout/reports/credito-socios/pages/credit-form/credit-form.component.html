@@ -6,7 +6,6 @@
     <form
       [formGroup]="_inventoryStockResume.state.form"
       [autocomplete]="'off'"
-      *ngIf="_inventoryStockResume.state.form"
       class="w-full"
     >
       <article class="formgrid grid">
@@ -34,6 +33,12 @@
               >
             </div>
           </div>
+        </section>
+
+
+        <section>
+          
+<p-autoComplete  [forceSelection]="true"   field="name"></p-autoComplete>
         </section>
       </article>
   

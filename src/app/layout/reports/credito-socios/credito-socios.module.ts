@@ -10,6 +10,8 @@ import { CreditDetailListComponent } from './pages/credit-detail-list/credit-det
 import { PrimeNgModule } from '@shared/vendor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AutoCompleteModule } from 'primeng/autocomplete';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CreditoSociosRoutingModule,
     PrimeNgModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AutoCompleteModule
   ]
 })
 export class CreditoSociosModule { }
