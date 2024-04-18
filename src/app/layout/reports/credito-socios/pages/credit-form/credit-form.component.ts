@@ -8,6 +8,7 @@ import {
 import { DateTime } from 'luxon';
 import {
   InventoryStockResumeDTO,
+  creditoSocioDTO,
   inventoryStockResumeLabels,
 } from '../../models';
 import {
@@ -27,22 +28,6 @@ import { CommonStateService } from '@report-manager/services';
   styleUrls: ['./credit-form.component.scss']
 })
 export class CreditFormComponent {
-
-  TEMPLATE_TXT = {
-    labelReturn: 'Volver a usuarios',
-    labelReset: 'Restaurar filtros',
-    labelSave: 'Buscar',
-    labelCancel: 'Cancelar',
-    tooltipCancel: 'Cancelar',
-    required: 'Este campo es obligatorio',
-    selectStore: 'Seleccionar tienda',
-    title: 'Búsqueda por',
-    placeholderProductId: 'Código de producto',
-    placeholderOrigin: 'Seleccionar origen',
-  };
-
-  inventoryStockResumeLabels = inventoryStockResumeLabels;
-
   today = DateTime.now().toFormat('yyyy-LL-dd');
   storeList: Store[];
   suggestions: Store[] = [];
@@ -50,8 +35,8 @@ export class CreditFormComponent {
 
   constructor(
     private _formBuilder: UntypedFormBuilder,
-    public _inventoryStockResume: CreditoStateService,
-    public _inventoryStockResumeApi: CreditoApiService,
+    public _creditoStateService: CreditoStateService,
+    public _creditoStateServiceApi: CreditoApiService,
     private route: ActivatedRoute,
     public _common: CommonStateService,
     private _toastr: ToastrService
@@ -64,117 +49,68 @@ export class CreditFormComponent {
 
   ngOnInit(): void {
     this.onFillForm();
-
-    if (
-      this.route.snapshot.queryParamMap.get('favorite') ||
-      this.route.snapshot.queryParamMap.get('historic')
-    ) {
-      this.onManageFav();
-    }
   }
 
   onFillForm() {
-    this._inventoryStockResume.state.form = this._formBuilder.group({
-      storeId: ['', [Validators.required], []],
+    this._creditoStateService.state.form = this._formBuilder.group({
+      memberId: ['', [Validators.required], []],
     });
   }
 
   get fg(): { [key: string]: AbstractControl } {
-    return this._inventoryStockResume.state.form.controls;
+    return this._creditoStateService.state.form.controls;
   }
 
-  onSubmit() {
-    this._inventoryStockResume.state.isLoadingList = true;
-    let item: InventoryStockResumeDTO = new InventoryStockResumeDTO();
-    let formItems = this._inventoryStockResume.state.form.value;
-    item = {
-      storeId: formItems.storeId.id,
-    };
-    this._inventoryStockResume.state.inventoryStockResumeDTO = item;
+  socioSubmit() {
+    this._creditoStateService.state.isLoadingList = true;
+    let item: creditoSocioDTO = new creditoSocioDTO();
+    let formItems = this._creditoStateService.state.form.value;
+     item = {
+      memberId: formItems.memberId
+    }
+    if (item.memberId === '1114215091') {
+      setTimeout(() => {
+        this._creditoStateService.state.accountInformation = this._creditoStateService.state.accountInformationData;
+        this._creditoStateService.state.customerInformationResponse = this._creditoStateService.state.CustomerInformationResponseData;
+        this._creditoStateService.state.transactionsHistoryResponse = this._creditoStateService.state.transactionsHistoryResponseData;
+        
+      }, 1000);
+      setTimeout(() => {
+        this._creditoStateService.state.isLoadingList = false;
+      }, 1500);
 
-    this._inventoryStockResumeApi
-      .inventoryStockResume(
-        this._inventoryStockResume.state.inventoryStockResumeDTO
-      )
-      .subscribe({
-        next: (data) => {
-          this._inventoryStockResume.state.inventoryStockResumeResponse = data;
-          this._inventoryStockResume.state.inventoryStockResumeResponseList =
-            data;
-        },
-        error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-          console.error(error);
-        },
-        complete: () => {
-          this._inventoryStockResume.state.isLoadingList = false;
-        },
-      });
+    }
+    else{ 
+      setTimeout(() => {
+        this._creditoStateService.state.isLoadingList = false;
+      }, 2000);
+    }
+
+    // this._inventoryStockResume.state.inventoryStockResumeDTO = item;
+
+    // this._inventoryStockResumeApi
+    //   .inventoryStockResume(
+    //     this._inventoryStockResume.state.inventoryStockResumeDTO
+    //   )
+    //   .subscribe({
+    //     next: (data) => {
+    //       this._inventoryStockResume.state.inventoryStockResumeResponse = data;
+    //       this._inventoryStockResume.state.inventoryStockResumeResponseList =
+    //         data;
+    //     },
+    //     error: (error) => {
+    //       this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+    //       console.error(error);
+    //     },
+    //     complete: () => {
+    //       this._inventoryStockResume.state.isLoadingList = false;
+    //     },
+    //   });
   }
 
   onReset() {
     this.onFillForm();
   }
 
-  filterStores(event: { query: string }) {
-    const filteredStores: Store[] = [];
-    const storeList: Store[] = [];
-    const userRol = this.userSelected.privileges.reportesadministrativos;
-    const userStore = this.userSelected.tienda;
-
-    if (userRol.includes('tienda')) {
-      const temp = this.storeList.filter((store) => store.id === userStore);
-      storeList.push(...temp);
-    }
-
-    if (userRol.includes('staff-menudeo')) {
-      const temp = this.storeList.filter((x) => x.type === 'R');
-      storeList.push(...temp);
-    }
-
-    if (userRol.includes('staff-mayoreo')) {
-      const temp = this.storeList.filter((x) => x.type === 'W');
-      storeList.push(...temp);
-    }
-
-    if (
-      userRol.includes('sistemas') ||
-      userRol.includes('staff-inventarios-ost') ||
-      userRol.includes('staff-planeacion')
-    ) {
-      storeList.push(...this.storeList);
-    }
-
-    for (const store of storeList) {
-      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
-        filteredStores.push(store);
-      }
-    }
-    this.suggestions = filteredStores;
-  }
-
-  onManageFav() {
-    const report: any = this.route.snapshot.queryParamMap.get('favorite')
-      ? this._common.state.favorites.find(
-          (item) => item.url === '/inventories/inventory-stock/resume'
-        )
-      : this._common.state.historic.find(
-          (item) =>
-            item.index ===
-            Number(this.route.snapshot.queryParamMap.get('index'))
-        );
-
-    if (report) {
-      const selectedStore = this.storeList.find(
-        (item) => item.id === report.searchCriteria.storeId
-      );
-
-      this._inventoryStockResume.state.form = this._formBuilder.group({
-        storeId: selectedStore,
-      });
-
-      this.onSubmit();
-    }
-  }
 
 }

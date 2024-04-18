@@ -21,29 +21,30 @@ export class InventoryStockResumeState {
    * variables prueba para tablas de socios
    */
 
-  customerInformationResponse: CustomerInformationResponse [] = [
+  CustomerInformationResponseData: CustomerInformationResponse [] = [
     {
       no_socio:1114215091,
       nombre: 'jose',
       ap_paterno:'cano',
       ap_materno:'hernandez' 
     }
-  ];
-
-  accountInformation: AccountInformationResponse [] = [
-    {
-    no_cuenta: 'HA0105001000006',
-    estado: 'OPEN',
-    fecha_configuracion: '2024-04-09 00:00:00.000',
-    lim_credito: '10000.000000',
-    cred_disponible: '10000.000000',
-    saldo_pendiente: '0.000000',
-    cuenta_retenida: 'no',
-    principal:'si'
-    }
   ]
 
-  transactionsHistoryResponse: TransactionsHistoryResponse [] = [
+  accountInformationData: AccountInformationResponse [] = [
+
+    {
+      no_cuenta: 'HA0105001000006',
+      estado: 'OPEN',
+      fecha_configuracion: '2024-04-09 00:00:00.000',
+      lim_credito: '10000.000000',
+      cred_disponible: '10000.000000',
+      saldo_pendiente: '0.000000',
+      cuenta_retenida: 'no',
+      principal:'si'
+      }
+  ]
+
+  transactionsHistoryResponseData: TransactionsHistoryResponse [] = [
     {
       fecha_ticket: '2024-04-10 00:00:00.000',
       tienda: '105',
@@ -69,6 +70,12 @@ export class InventoryStockResumeState {
       fecha_ref_deposito: '10/04/2024'
     }
   ]
+
+  customerInformationResponse: CustomerInformationResponse [] = [ ];
+
+  accountInformation: AccountInformationResponse [] = []
+
+  transactionsHistoryResponse: TransactionsHistoryResponse [] = []
 
 
   /**
