@@ -7,9 +7,7 @@ import {
 } from '@angular/forms';
 import { DateTime } from 'luxon';
 import {
-  InventoryStockResumeDTO,
-  creditoSocioDTO,
-  inventoryStockResumeLabels,
+  creditoSocioDTO
 } from '../../models';
 import {
   CreditoApiService,

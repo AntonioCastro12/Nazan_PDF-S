@@ -20,7 +20,7 @@
           (onClick)="handleRefresh()"
           [rounded]="true"
           [disabled]="
-            _inventoryStockResume.state.inventoryStockResumeResponse.length == 0
+          _creditoStateService.state.customerInformationResponse.length == 0
           "
         ></p-button>
         <p-button
@@ -32,7 +32,7 @@
           class="mr-1"
           [rounded]="true"
           [disabled]="
-            _inventoryStockResume.state.inventoryStockResumeResponse.length <= 0
+          _creditoStateService.state.customerInformationResponse.length <= 0
           "
         ></p-button>
         <p-button
@@ -44,7 +44,7 @@
           [rounded]="true"
           (onClick)="handleFavorite()"
           [disabled]="
-            _inventoryStockResume.state.inventoryStockResumeResponse.length == 0
+          _creditoStateService.state.customerInformationResponse.length == 0
           "
         ></p-button>
       </div>

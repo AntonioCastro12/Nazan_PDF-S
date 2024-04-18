@@ -35,88 +35,88 @@ export class CreditOptionsComponent {
   isLoading: boolean = false;
 
   constructor(
-    public _inventoryStockResume: CreditoStateService,
+    public _creditoStateService: CreditoStateService,
     private _inventoryStockResumeApi: CreditoApiService,
     private _toastr: ToastrService
   ) {}
 
   handleSearch() {
-    this._inventoryStockResume.state.isVisibleForm =
-      !this._inventoryStockResume.state.isVisibleForm;
+    this._creditoStateService.state.isVisibleForm =
+      !this._creditoStateService.state.isVisibleForm;
   }
   handleChart() {}
   handleRefresh() {
-    this._inventoryStockResume.state.isLoadingList = true;
+    // this._creditoStateService.state.isLoadingList = true;
 
-    this._inventoryStockResumeApi
-      .inventoryStockResume(
-        this._inventoryStockResume.state.inventoryStockResumeDTO
-      )
-      .subscribe({
-        next: (data) => {
-          this._inventoryStockResume.state.inventoryStockResumeResponse = data;
-          this._inventoryStockResume.state.inventoryStockResumeResponseList =
-            data;
-        },
-        error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-          console.log(error);
-        },
-        complete: () => {
-          this._inventoryStockResume.state.isLoadingList = false;
-        },
-      });
+    // this._inventoryStockResumeApi
+    //   .inventoryStockResume(
+    //     this._creditoStateService.state.inventoryStockResumeDTO
+    //   )
+    //   .subscribe({
+    //     next: (data) => {
+    //       this._creditoStateService.state.inventoryStockResumeResponse = data;
+    //       this._creditoStateService.state.inventoryStockResumeResponseList =
+    //         data;
+    //     },
+    //     error: (error) => {
+    //       this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+    //       console.log(error);
+    //     },
+    //     complete: () => {
+    //       this._creditoStateService.state.isLoadingList = false;
+    //     },
+    //   });
   }
 
   handleDownload() {
-    const filename = `${
-      ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_RESUMEN_
-    }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    // const filename = `${
+    //   ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_RESUMEN_
+    // }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
 
-    /* pass here the table id */
-    let element =
-      this._inventoryStockResume.state.inventoryStockResumeResponseList;
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+    // /* pass here the table id */
+    // let element =
+    //   this._creditoStateService.state.inventoryStockResumeResponseList;
+    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
 
-    /* generate workbook and add the worksheet */
-    const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    // /* generate workbook and add the worksheet */
+    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
 
-    /* save to file */
-    XLSX.writeFile(wb, filename);
+    // /* save to file */
+    // XLSX.writeFile(wb, filename);
   }
 
   handleFavorite() {
-    this.isLoading = true;
-    const data: any = {
-      searchCriteria: {
-        storeId:
-          this._inventoryStockResume.state.inventoryStockResumeDTO.storeId,
-      },
-      url: '/inventories/inventory-stock/resume',
-    };
+  //   this.isLoading = true;
+  //   const data: any = {
+  //     searchCriteria: {
+  //       storeId:
+  //         this._creditoStateService.state.inventoryStockResumeDTO.storeId,
+  //     },
+  //     url: '/inventories/inventory-stock/resume',
+  //   };
 
-    this._inventoryStockResumeApi.favorite(data).subscribe({
-      next: async () => {
-        // await this.setErrorModal(
-        //   'Completado',
-        //   'Reporte agregado a favorito',
-        //   '50px'
-        // );
-        this.isLoading = false;
-        this._toastr.success(
-          'El reporte se ha agregado a favoritos sastifactoriamente'
-        );
-      },
-      error: (e) => {
-        console.error('error loading data', e);
-        this._toastr.error('Opps ha ocurrido un error', e.erros.message);
-        this.isLoading = false;
-      },
-      complete: () => {
-        this.isLoading = false;
-      },
-    });
+  //   this._inventoryStockResumeApi.favorite(data).subscribe({
+  //     next: async () => {
+  //       // await this.setErrorModal(
+  //       //   'Completado',
+  //       //   'Reporte agregado a favorito',
+  //       //   '50px'
+  //       // );
+  //       this.isLoading = false;
+  //       this._toastr.success(
+  //         'El reporte se ha agregado a favoritos sastifactoriamente'
+  //       );
+  //     },
+  //     error: (e) => {
+  //       console.error('error loading data', e);
+  //       this._toastr.error('Opps ha ocurrido un error', e.erros.message);
+  //       this.isLoading = false;
+  //     },
+  //     complete: () => {
+  //       this.isLoading = false;
+  //     },
+  //   });
   }
 
 }
