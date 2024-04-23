@@ -2,15 +2,15 @@
 /* tslint:disable */
 export const VERSION = {
     "dirty": true,
-    "raw": "dc5df80-dirty",
-    "hash": "dc5df80",
+    "raw": "58af469-dirty",
+    "hash": "58af469",
     "distance": null,
     "tag": null,
     "semver": null,
-    "suffix": "dc5df80-dirty",
+    "suffix": "58af469-dirty",
     "semverString": null,
-    "version": "2.0.2",
-    "date": "2024-04-22T23:07:10.967Z",
-    "shortdate": "2024-04-22"
+    "version": "2.0.3",
+    "date": "2024-04-23T12:14:05.917Z",
+    "shortdate": "2024-04-23"
 };
 /* tslint:enable */
