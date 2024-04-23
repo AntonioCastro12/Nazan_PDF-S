@@ -15,11 +15,12 @@ export class SalesSearchDeliveredApiService {
   constructor(private _http: HttpClient) {}
 
   getList(dto: SalesSearchDeliveredDTO): Observable<any> {
-    const url = `${environment.apiUrl}/api/sales/general-sales`;
+    const url = `${environment.apiUrl}/api/sales/products-delivered`;
     const params: any = {};
 
-    params['storeId'] = dto.storeId;
-    params['businessDate'] = dto.businessDate;
+    params['cardNumber'] = dto.cardNumber;
+    params['startDate'] = dto.startDate;
+    params['endDate'] = dto.endDate;
 
     let response$: any = this._http
       .get<any>(url, { params })

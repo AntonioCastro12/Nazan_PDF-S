@@ -74,10 +74,12 @@ export class SalesSearchDeliveredOptionsComponent {
     this.isLoading = true;
     const data: any = {
       searchCriteria: {
-        storeId:
-          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.storeId,
-        businessDate:
-          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.businessDate,
+        cardNumber:
+          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.cardNumber,
+        startDate:
+          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.startDate,
+        endDate:
+          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.endDate,
       },
       url: '/sales/general-sales',
     };

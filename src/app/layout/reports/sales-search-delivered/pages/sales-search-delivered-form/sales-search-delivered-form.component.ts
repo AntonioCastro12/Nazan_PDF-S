@@ -33,7 +33,7 @@ export class SalesSearchDeliveredFormComponent {
     labelCancel: 'Cancelar',
     tooltipCancel: 'Cancelar',
     required: 'Este campo es obligatorio',
-    selectStore: 'Seleccionar tienda',
+    cardNumber: 'Número de afiliado',
     title: 'Búsqueda por',
     placeholderProductId: 'Código de producto',
     placeholderOrigin: 'Seleccionar origen',
@@ -72,8 +72,9 @@ export class SalesSearchDeliveredFormComponent {
 
   onFillForm() {
     this._SalesSearchDelivered.state.form = this._formBuilder.group({
-      storeId: ['', [Validators.required], []],
-      businessDate: [this.today, [Validators.required], []],
+      cardNumber: ['', [Validators.required], []],
+      startDate: [this.today, [Validators.required], []],
+      endDate: [this.today, [Validators.required], []],
     });
   }
 
@@ -86,8 +87,9 @@ export class SalesSearchDeliveredFormComponent {
     let item: SalesSearchDeliveredDTO = new SalesSearchDeliveredDTO();
     let formItems = this._SalesSearchDelivered.state.form.value;
     item = {
-      storeId: formItems.storeId.id,
-      businessDate: formItems.businessDate,
+      cardNumber: formItems.cardNumber,
+      startDate: formItems.startDate,
+      endDate: formItems.endDate,
     };
     this._SalesSearchDelivered.state.SalesSearchDeliveredDTO = item;
 

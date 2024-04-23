@@ -1,9 +1,11 @@
 export class SalesSearchDeliveredDTO {
-  storeId: string = '';
-  businessDate: string = '';
+  cardNumber: string = '';
+  startDate: string = '';
+  endDate: string = '';
 }
 
 export const SalesSearchDeliveredLabels = {
-  storeId: 'Tienda',
-  businessDate: 'Fecha',
+  cardNumber: 'Numero de afiliado',
+  startDate: 'Desde',
+  endDate: 'Hasta',
 };
