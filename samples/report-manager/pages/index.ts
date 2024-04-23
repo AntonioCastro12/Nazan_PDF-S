@@ -12,3 +12,4 @@ export * from './report-sales-invoice-total';
 export * from './report-sales-wholesale';
 export * from './report-segment-affiliated-kipon';
 export * from './report-segment-collaborators-nazan';
+export * from './report-sales-search-delivered';

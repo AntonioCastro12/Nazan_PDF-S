@@ -109,6 +109,13 @@ const routes: Routes = [
           ).then((m) => m.SalesWholesaleModule),
       },
       {
+        path: 'sales-search-delivered',
+        loadChildren: () =>
+          import(
+            'src/app/layout/reports/sales-search-delivered/sales-search-delivered.module'
+          ).then((m) => m.SalesSearchDeliveredModule),
+      },
+      {
         path: 'segment-affiliated-kipon',
         loadChildren: () =>
           import(
