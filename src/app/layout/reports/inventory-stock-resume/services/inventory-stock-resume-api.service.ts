@@ -18,7 +18,9 @@ export class InventoryStockResumeApiService {
   inventoryStockResume(
     dto: InventoryStockResumeDTO
   ): Observable<InventoryStockResumeResponse[]> {
-    const url = `${environment.apiUrl}/api/inventories/inventory-stock/resume`;
+    
+    // const url = `${environment.apiUrl}/api/inventories/inventory-stock/resume`;
+    const url = `${environment.apiUrl}/api/membership-credit/inventory-stock/resume`;
     const params: any = {};
 
     params['storeId'] = dto.storeId;

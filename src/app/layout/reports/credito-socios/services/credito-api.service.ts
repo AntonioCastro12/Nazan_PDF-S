@@ -6,6 +6,7 @@ import {
   InventoryStockDetailResponse,
   InventoryStockResumeDTO,
   InventoryStockResumeResponse,
+  creditoSocioDTO,
 } from '../models';
 import { Favorite } from '@home-manager/models/bookmarks.model';
 
@@ -14,6 +15,16 @@ import { Favorite } from '@home-manager/models/bookmarks.model';
 })
 export class CreditoApiService {
   constructor(private _http: HttpClient) {}
+
+  membershipCreditHistory(memberId:creditoSocioDTO){
+    const url= `${environment.apiUrl}/api/membership-credit/credit-history`
+    const params: any = {};
+    console.log(typeof(memberId));
+    params['memberId'] = memberId;
+    let response$: any = this._http
+      .get<any[]>(url, { params });
+    return response$;
+  }
 
   inventoryStockResume(
     dto: InventoryStockResumeDTO

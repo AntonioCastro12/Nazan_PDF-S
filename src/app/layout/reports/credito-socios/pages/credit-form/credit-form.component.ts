@@ -34,7 +34,7 @@ export class CreditFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _creditoStateService: CreditoStateService,
-    public _creditoStateServiceApi: CreditoApiService,
+    public _creditServiceApi: CreditoApiService,
     private route: ActivatedRoute,
     public _common: CommonStateService,
     private _toastr: ToastrService
@@ -60,32 +60,62 @@ export class CreditFormComponent {
   }
 
   socioSubmit() {
+    
+    //PRUEBA DE ENDPOINT
     this._creditoStateService.state.isLoadingList = true;
     let item: creditoSocioDTO = new creditoSocioDTO();
+    // let item: string;
     let formItems = this._creditoStateService.state.form.value;
      item = {
       memberId: formItems.memberId
     }
-    if (item.memberId === '1114215091') {
-      setTimeout(() => {
-        this._creditoStateService.state.accountInformation = this._creditoStateService.state.accountInformationData;
-        this._creditoStateService.state.customerInformationResponse = this._creditoStateService.state.CustomerInformationResponseData;
-        this._creditoStateService.state.transactionsHistoryResponse = this._creditoStateService.state.transactionsHistoryResponseData;
+    console.log(item);
+    this._creditoStateService.state.isLoadingList = true;
+    this._creditServiceApi.membershipCreditHistory(item).subscribe({
+          next: (data:any) => {
+            console.log(data);
+          },
+          error: (error: { erros: { message: string | undefined; }; }) => {
+            this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+            console.error(error);
+          },
+          complete: () => {
+            this._creditoStateService.state.isLoadingList = false;
+          },
+        });
+
+
+
+
+    // this._creditoStateService.state.isLoadingList = true;
+    // let item: creditoSocioDTO = new creditoSocioDTO();
+    // let formItems = this._creditoStateService.state.form.value;
+    //  item = {
+    //   memberId: formItems.memberId
+    // }
+
+    // if (item.memberId === '1114215091') {
+    //   setTimeout(() => {
+    //     this._creditoStateService.state.accountInformation = this._creditoStateService.state.accountInformationData;
+    //     this._creditoStateService.state.customerInformationResponse = this._creditoStateService.state.CustomerInformationResponseData;
+    //     this._creditoStateService.state.transactionsHistoryResponse = this._creditoStateService.state.transactionsHistoryResponseData;
         
-      }, 1000);
-      setTimeout(() => {
-        this._creditoStateService.state.isLoadingList = false;
-      }, 1500);
+    //   }, 1000);
+    //   setTimeout(() => {
+    //     this._creditoStateService.state.isLoadingList = false;
+    //   }, 1500);
 
-    }
-    else{ 
-      setTimeout(() => {
-        this._creditoStateService.state.isLoadingList = false;
-      }, 2000);
-    }
+    // }
+    // else{ 
+    //   setTimeout(() => {
+    //     this._creditoStateService.state.isLoadingList = false;
+    //   }, 2000);
+    // }
 
+
+
+    //Consutla anterior (Eliminar)
     // this._inventoryStockResume.state.inventoryStockResumeDTO = item;
-
     // this._inventoryStockResumeApi
     //   .inventoryStockResume(
     //     this._inventoryStockResume.state.inventoryStockResumeDTO
