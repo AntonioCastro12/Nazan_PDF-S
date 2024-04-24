@@ -1,11 +1,12 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { InventoryStockResumeDTO } from './inventory-stock-resume.dto';
+import { InventoryStockResumeDTO, creditoSocioDTO } from './inventory-stock-resume.dto';
 import {
   InventoryStockDetailResponse,
   InventoryStockResumeResponse,
   CustomerInformationResponse,
   AccountInformationResponse,
-  TransactionsHistoryResponse
+  TransactionsHistoryResponse,
+  AccountAutResponse
 } from './inventory-stock-resume.response';
 
 export class InventoryStockResumeState {
@@ -15,6 +16,14 @@ export class InventoryStockResumeState {
   inventoryStockResumeResponseList: InventoryStockResumeResponse[] = [];
   inventoryStockDetailResponse: InventoryStockDetailResponse[] = [];
   inventoryStockDetailResponseList: InventoryStockDetailResponse[] = [];
+
+
+  //datos de credito recepcion
+  creditoSocioDTO:creditoSocioDTO= new creditoSocioDTO;
+  customerInformationResponse: CustomerInformationResponse [] = [ ];
+  accountInformation: AccountInformationResponse [] = []
+  transactionsHistoryResponse: TransactionsHistoryResponse [] = []
+  memberAut: AccountAutResponse [] = [];
 
 
   /**
@@ -39,8 +48,7 @@ export class InventoryStockResumeState {
       lim_credito: '10000.000000',
       cred_disponible: '10000.000000',
       saldo_pendiente: '0.000000',
-      cuenta_retenida: 'no',
-      principal:'si'
+      cuenta_retenida: 'no'
       }
   ]
 
@@ -71,11 +79,6 @@ export class InventoryStockResumeState {
     }
   ]
 
-  customerInformationResponse: CustomerInformationResponse [] = [ ];
-
-  accountInformation: AccountInformationResponse [] = []
-
-  transactionsHistoryResponse: TransactionsHistoryResponse [] = []
 
 
   /**

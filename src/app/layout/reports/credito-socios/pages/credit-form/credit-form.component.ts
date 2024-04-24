@@ -70,10 +70,26 @@ export class CreditFormComponent {
       memberId: formItems.memberId
     }
     console.log(item);
+    this._creditoStateService.state.creditoSocioDTO = item;
     this._creditoStateService.state.isLoadingList = true;
-    this._creditServiceApi.membershipCreditHistory(item).subscribe({
+    this._creditServiceApi.membershipCreditHistory(
+      this._creditoStateService.state.creditoSocioDTO = item
+    ).subscribe({
           next: (data:any) => {
             console.log(data);
+
+            this._creditoStateService.state.customerInformationResponse = data['memberDesc'];
+            console.log("memberDesc", this._creditoStateService.state.customerInformationResponse);
+
+            this._creditoStateService.state.accountInformation = data['creditDesc'];
+            console.log("creditDesc", this._creditoStateService.state.accountInformation);
+
+            this._creditoStateService.state.memberAut = data['memberAut'];
+            console.log("memberAut", this._creditoStateService.state.memberAut);
+
+            this._creditoStateService.state.transactionsHistoryResponse = data['transactionHistory'];
+            console.log("transactionHistory", this._creditoStateService.state.transactionsHistoryResponse);
+
           },
           error: (error: { erros: { message: string | undefined; }; }) => {
             this._toastr.error('Opps ha ocurrido un error', error.erros.message);

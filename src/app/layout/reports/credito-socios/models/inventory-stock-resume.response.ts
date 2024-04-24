@@ -22,8 +22,13 @@ export class AccountInformationResponse {
   cred_disponible: string | null = null;
   saldo_pendiente: string | null = null;
   cuenta_retenida: string | null = null;
-  principal: string | null = null;
 } 
+
+export class AccountAutResponse {
+	principal: string | null = null;
+	No_cliente: string | null = null;
+	nombre: string | null = null;
+}
 
 export class TransactionsHistoryResponse{
   fecha_ticket: string | null = null;
