@@ -26,7 +26,7 @@ export class AccountInformationResponse {
 
 export class AccountAutResponse {
 	principal: string | null = null;
-	No_cliente: string | null = null;
+	no_cliente: string | null = null;
 	nombre: string | null = null;
 }
 
@@ -71,6 +71,11 @@ export const AccountInformation: any[] = [
   'Principal'
 ]
 
+export const membersAut: any [] = [
+  'No cliente',
+	'Nombre',
+  'Principal'
+]
 //informacion movimientos
 export const TicketInformation: any[] = [
   'Fecha Ticket',

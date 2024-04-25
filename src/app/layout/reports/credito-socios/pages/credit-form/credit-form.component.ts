@@ -60,13 +60,13 @@ export class CreditFormComponent {
   }
 
   socioSubmit() {
-    
+
     //PRUEBA DE ENDPOINT
     this._creditoStateService.state.isLoadingList = true;
     let item: creditoSocioDTO = new creditoSocioDTO();
     // let item: string;
     let formItems = this._creditoStateService.state.form.value;
-     item = {
+    item = {
       memberId: formItems.memberId
     }
     console.log(item);
@@ -75,81 +75,25 @@ export class CreditFormComponent {
     this._creditServiceApi.membershipCreditHistory(
       this._creditoStateService.state.creditoSocioDTO = item
     ).subscribe({
-          next: (data:any) => {
-            console.log(data);
+      next: (data: any) => {
 
-            this._creditoStateService.state.customerInformationResponse = data['memberDesc'];
-            console.log("memberDesc", this._creditoStateService.state.customerInformationResponse);
+        this._creditoStateService.state.customerInformationResponse = data['memberDesc'];
 
-            this._creditoStateService.state.accountInformation = data['creditDesc'];
-            console.log("creditDesc", this._creditoStateService.state.accountInformation);
+        this._creditoStateService.state.accountInformation = data['creditDesc'];
 
-            this._creditoStateService.state.memberAut = data['memberAut'];
-            console.log("memberAut", this._creditoStateService.state.memberAut);
+        this._creditoStateService.state.memberAut = data['memberAut'];
 
-            this._creditoStateService.state.transactionsHistoryResponse = data['transactionHistory'];
-            console.log("transactionHistory", this._creditoStateService.state.transactionsHistoryResponse);
+        this._creditoStateService.state.transactionsHistoryResponse = data['transactionHistory'];
 
-          },
-          error: (error: { erros: { message: string | undefined; }; }) => {
-            this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-            console.error(error);
-          },
-          complete: () => {
-            this._creditoStateService.state.isLoadingList = false;
-          },
-        });
-
-
-
-
-    // this._creditoStateService.state.isLoadingList = true;
-    // let item: creditoSocioDTO = new creditoSocioDTO();
-    // let formItems = this._creditoStateService.state.form.value;
-    //  item = {
-    //   memberId: formItems.memberId
-    // }
-
-    // if (item.memberId === '1114215091') {
-    //   setTimeout(() => {
-    //     this._creditoStateService.state.accountInformation = this._creditoStateService.state.accountInformationData;
-    //     this._creditoStateService.state.customerInformationResponse = this._creditoStateService.state.CustomerInformationResponseData;
-    //     this._creditoStateService.state.transactionsHistoryResponse = this._creditoStateService.state.transactionsHistoryResponseData;
-        
-    //   }, 1000);
-    //   setTimeout(() => {
-    //     this._creditoStateService.state.isLoadingList = false;
-    //   }, 1500);
-
-    // }
-    // else{ 
-    //   setTimeout(() => {
-    //     this._creditoStateService.state.isLoadingList = false;
-    //   }, 2000);
-    // }
-
-
-
-    //Consutla anterior (Eliminar)
-    // this._inventoryStockResume.state.inventoryStockResumeDTO = item;
-    // this._inventoryStockResumeApi
-    //   .inventoryStockResume(
-    //     this._inventoryStockResume.state.inventoryStockResumeDTO
-    //   )
-    //   .subscribe({
-    //     next: (data) => {
-    //       this._inventoryStockResume.state.inventoryStockResumeResponse = data;
-    //       this._inventoryStockResume.state.inventoryStockResumeResponseList =
-    //         data;
-    //     },
-    //     error: (error) => {
-    //       this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-    //       console.error(error);
-    //     },
-    //     complete: () => {
-    //       this._inventoryStockResume.state.isLoadingList = false;
-    //     },
-    //   });
+      },
+      error: (error: { erros: { message: string | undefined; }; }) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.error(error);
+      },
+      complete: () => {
+        this._creditoStateService.state.isLoadingList = false;
+      },
+    });
   }
 
   onReset() {

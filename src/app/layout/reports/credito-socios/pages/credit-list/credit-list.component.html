@@ -115,7 +115,7 @@
 
   <div class="col-6 text-left" style="margin-top: 20px;">
 
-    <h4>Información Cuenta</h4>
+    <h4>Detalles del crédito</h4>
 
   </div>
   <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [paginator]="true" [rows]="15"
@@ -148,6 +148,50 @@
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.saldo_pendiente)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cuenta_retenida)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)"></td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- autorizados en cuenta -->
+  <div class="col-6 text-left" >
+
+    <h4>Clientes autorizados del credito</h4>
+
+  </div>
+  <p-table #dt2 [value]="_inventoryStockResume.state.memberAut" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" *ngFor="let header of memberAut" id="{{ header }}">
+          {{ header }}
+        </th>
+
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="memberAut.length" class="text-center">
+          {{
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+        <td class="text-center" [innerHTML]="
+            highlightSearchText(
+              searchText,
+              report.no_cliente
+            )
+          "></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)" [style]="{
+            '
+          width': '100px'
+          }"></td>
       </tr>
     </ng-template>
   </p-table>
