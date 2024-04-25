@@ -61,10 +61,8 @@ export class CreditFormComponent {
 
   socioSubmit() {
 
-    //PRUEBA DE ENDPOINT
     this._creditoStateService.state.isLoadingList = true;
     let item: creditoSocioDTO = new creditoSocioDTO();
-    // let item: string;
     let formItems = this._creditoStateService.state.form.value;
     item = {
       memberId: formItems.memberId
@@ -75,23 +73,21 @@ export class CreditFormComponent {
       this._creditoStateService.state.creditoSocioDTO = item
     ).subscribe({
       next: (data: any) => {
-
-        console.log(data);
-      
+   
         this._creditoStateService.state.customerInformationResponse = data['memberDesc'];
 
         this._creditoStateService.state.accountInformation = data['creditDesc'];
         this._creditoStateService.state.accountInformation.forEach(credito => {
           credito.fecha_configuracion = credito.fecha_configuracion?.split('T')[0];
         });
+
         this._creditoStateService.state.memberAut = data['memberAut'];
+
         this._creditoStateService.state.transactionsHistoryResponse = data['transactionHistory'];
-        +
         this._creditoStateService.state.transactionsHistoryResponse.forEach(transaccion => {
           transaccion.fecha_ticket = transaccion.fecha_ticket?.split('T')[0];
         });
-      
-
+    
       },
       error: (error: { erros: { message: string | undefined; }; }) => {
         this._toastr.error('Opps ha ocurrido un error', error.erros.message);

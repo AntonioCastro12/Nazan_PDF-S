@@ -160,7 +160,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
+        <td class="text-center" [class.red-text]="isDateOlderThanTenDays(report.fecha_ticket)" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.tienda)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cliente)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>

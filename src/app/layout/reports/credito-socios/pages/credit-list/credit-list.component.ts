@@ -45,6 +45,14 @@ export class CreditListComponent {
     return field;
   }
 
+  isDateOlderThanTenDays(fecha: string): boolean {
+    const fechaTicket = new Date(fecha);
+    const hoy = new Date();
+    const diferenciaEnMs = hoy.getTime() - fechaTicket.getTime();
+    const diferenciaEnDias = Math.floor(diferenciaEnMs / (1000 * 60 * 60 * 24));
+    return diferenciaEnDias > 20;
+  }
+
   handleSearchRecords() {
     // const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
     // this._inventoryStockResume.state.inventoryStockResumeResponseList =

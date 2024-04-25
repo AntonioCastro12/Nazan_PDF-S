@@ -87,7 +87,7 @@ export const TicketInformation: any[] = [
   'Forma Pago',
   'Referencia Bancaria',
   'Referencia Ticket',
-  'Fecha referencia Deopsito'
+  'Fecha referencia Deposito'
 ]
 
 export class InventoryStockDetailResponse {
