@@ -10,12 +10,6 @@ import {
 } from './inventory-stock-resume.response';
 
 export class InventoryStockResumeState {
-  inventoryStockResumeDTO: InventoryStockResumeDTO =
-    new InventoryStockResumeDTO();
-  inventoryStockResumeResponse: InventoryStockResumeResponse[] = [];
-  inventoryStockResumeResponseList: InventoryStockResumeResponse[] = [];
-  inventoryStockDetailResponse: InventoryStockDetailResponse[] = [];
-  inventoryStockDetailResponseList: InventoryStockDetailResponse[] = [];
 
 
   //datos de credito recepcion

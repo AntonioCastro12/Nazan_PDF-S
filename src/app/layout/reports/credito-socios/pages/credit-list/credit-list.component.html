@@ -1,72 +1,9 @@
 <main class="p-5">
-  <!-- Tabla funcionando -->
-  <!-- <div class="col-4 text-left" *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText type="text" placeholder="Buscar..." [(ngModel)]="searchText"
-        (ngModelChange)="handleSearchRecords()" />
-    </span>
-  </div>
-  <p-table #dt2 [value]="_inventoryStockResume.state.inventoryStockResumeResponseList" [paginator]="true" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-    <ng-template pTemplate="header">
-      <tr class="text-sm">
-        <th class="text-center" id="{{ inventoryStockResumeResponseName.store_id }}">
-          {{ inventoryStockResumeResponseName.store_id }}
-        </th>
-        <th class="text-center" id="{{ inventoryStockResumeResponseName.line }}">
-          {{ inventoryStockResumeResponseName.line }}
-        </th>
-        <th class="text-center" id="{{ inventoryStockResumeResponseName.qty }}">
-          {{ inventoryStockResumeResponseName.qty }}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-columns>
-      <tr>
-        <td [attr.colspan]="9" class="text-center">
-          {{
-          _inventoryStockResume.state.isLoadingList
-          ? TEMPLATE_TEXT.isLoadingOn
-          : TEMPLATE_TEXT.isResultEmpty
-          }}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-report>
-      <tr class="text-sm">
-        <td class="text-center" [innerHTML]="
-              highlightSearchText(
-                searchText,
-                _inventoryStockResume.state.inventoryStockResumeDTO.storeId
-              )
-            "></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.line)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.qty)" [style]="{
-              '
-            width': '100px'
-            }"></td>
-      </tr>
-    </ng-template>
-  </p-table>
-  <div *ngIf="_inventoryStockResume.state.inventoryStockResumeResponse.length > 0"
-    class="card-container blue-container flex align-items-center justify-content-start">
-    <p class="mt-4">
-      <p-button class="mr-3" (onClick)="findDetails()">Buscar el Detalles</p-button><p-button (onClick)="showDetails()"
-        *ngIf="
-            this._inventoryStockResume.state.inventoryStockDetailResponse &&
-            this._inventoryStockResume.state.inventoryStockDetailResponse.length > 0
-          ">Mostrar detalle</p-button>
-    </p>
-  </div> -->
-
-  <!-- Borrar tabla anterior cuando se terminen conexiones en nuevas  -->
-  <!-- TABLAS DE PRUEBA  -->
   <!-- TABLA INFORMACION SOCIO -->
 
   <div class="col-6 text-left" >
 
-    <h4>Información del Socio</h4>
+    <h4>Información del socio</h4>
 
   </div>
   <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse" [paginator]="true" [rows]="15"
@@ -115,7 +52,7 @@
 
   <div class="col-6 text-left" style="margin-top: 20px;">
 
-    <h4>Detalles del crédito</h4>
+    <h4>Información del crédito</h4>
 
   </div>
   <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [paginator]="true" [rows]="15"
@@ -155,7 +92,7 @@
   <!-- autorizados en cuenta -->
   <div class="col-6 text-left" >
 
-    <h4>Clientes autorizados del credito</h4>
+    <h4>Clientes autorizados del crédito</h4>
 
   </div>
   <p-table #dt2 [value]="_inventoryStockResume.state.memberAut" [paginator]="true" [rows]="15"
@@ -199,7 +136,7 @@
   <!-- TABLA INFORMACION MOVIMIENTOS  -->
 
   <div class="col-6 text-left" style="margin-top: 20px;">
-    <h4>Información de Movimientos</h4>
+    <h4>Información de movimientos</h4>
   </div>
   <p-table #dt2 [value]="_inventoryStockResume.state.transactionsHistoryResponse" [paginator]="true" [rows]="15"
     styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">

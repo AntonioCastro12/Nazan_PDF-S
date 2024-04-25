@@ -17,7 +17,7 @@ export class CustomerInformationResponse {
 export class AccountInformationResponse {
   no_cuenta: string | null = null;
   estado: string | null = null;
-  fecha_configuracion: string | null = null;
+  fecha_configuracion: string | null | undefined = null;
   lim_credito: string | null = null;
   cred_disponible: string | null = null;
   saldo_pendiente: string | null = null;
@@ -31,7 +31,7 @@ export class AccountAutResponse {
 }
 
 export class TransactionsHistoryResponse{
-  fecha_ticket: string | null = null;
+  fecha_ticket: string | null | undefined= null;
   tienda: string | null = null;
   no_cliente: string | null = null;
   nombre: string | null = null;
@@ -57,21 +57,21 @@ export const CustomerInformation: any[] = [
   'No. Socio',
   'Nombre',
   'Apellido Paterno',
-  'Apellido MAterno',
+  'Apellido Materno',
 ]
 
 export const AccountInformation: any[] = [
   'Numero de cuenta',
   'Estado',
-  'Fecha Configuracion',
-  'Limite de Credito',
-  'Credito Disponible',
+  'Fecha de Apertura',
+  'Límite de Crédito',
+  'Crédito Disponible',
   'Saldo Pendiente',
   'Cuenta Retenida'
 ]
 
 export const membersAut: any [] = [
-  'No cliente',
+  'No. cliente',
 	'Nombre',
   'Principal'
 ]
