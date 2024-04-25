@@ -67,8 +67,7 @@ export const AccountInformation: any[] = [
   'Limite de Credito',
   'Credito Disponible',
   'Saldo Pendiente',
-  'Cuenta Retenida',
-  'Principal'
+  'Cuenta Retenida'
 ]
 
 export const membersAut: any [] = [

@@ -46,33 +46,33 @@ export class CreditListComponent {
   }
 
   handleSearchRecords() {
-    const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
-    this._inventoryStockResume.state.inventoryStockResumeResponseList =
-      list.filter((item) => objectContainsValue(item, this.searchText));
+    // const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
+    // this._inventoryStockResume.state.inventoryStockResumeResponseList =
+    //   list.filter((item) => objectContainsValue(item, this.searchText));
 
-    console.log("Filter: ",this._inventoryStockResume.state.inventoryStockResumeResponseList);
+    // console.log("Filter: ",this._inventoryStockResume.state.inventoryStockResumeResponseList);
           
   }
 
   async findDetails() {
-    this.isLoading = true;
-    this._inventoryStockResumeApi
-      .inventoryStockDetails(
-        this._inventoryStockResume.state.inventoryStockResumeDTO
-      )
-      .subscribe({
-        next: (data) => {
-          this._inventoryStockResume.state.inventoryStockDetailResponse = data;
-          this._inventoryStockResume.state.inventoryStockDetailResponseList =
-            data;
-        },
-        error: (e) => {
-          console.error('error loading data', e);
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+    // this.isLoading = true;
+    // this._inventoryStockResumeApi
+    //   .inventoryStockDetails(
+    //     this._inventoryStockResume.state.inventoryStockResumeDTO
+    //   )
+    //   .subscribe({
+    //     next: (data) => {
+    //       this._inventoryStockResume.state.inventoryStockDetailResponse = data;
+    //       this._inventoryStockResume.state.inventoryStockDetailResponseList =
+    //         data;
+    //     },
+    //     error: (e) => {
+    //       console.error('error loading data', e);
+    //     },
+    //     complete: () => {
+    //       this.isLoading = false;
+    //     },
+    //   });
   }
 
   async showDetails() {
