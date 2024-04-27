@@ -68,23 +68,57 @@ export class CreditOptionsComponent {
     //   });
   }
 
+  // handleDownload() {
+  //   const filename = `${
+  //     ReportsExcelNames.CREDITO_DE_SOCIOS
+  //   }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+   
+  //     /* generate workbook and add the worksheet */
+  //   const wb: XLSX.WorkBook = XLSX.utils.book_new();
+
+  //   /* pass here the table id */
+  //   let element =
+  //     this._creditoStateService.state.customerInformationResponse;
+  //   let element2 =
+  //     this._creditoStateService.state.accountInformation;
+  //   let element3 =
+  //     this._creditoStateService.state.transactionsHistoryResponse;
+      
+  //   const elements = [
+  //     element, element2, element3
+  //   ]; 
+
+  //   elements.forEach((element, index) => {
+  //     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+  //     const sheetName = `Sheet${index + 1}`; 
+  //     XLSX.utils.book_append_sheet(wb, ws, sheetName);
+      
+  //   });
+  //   XLSX.writeFile(wb, filename);
+  // }
+
   handleDownload() {
-    // const filename = `${
-    //   ReportsExcelNames.EXISTENCIA_DE_INVENTARIO_RESUMEN_
-    // }${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    const filename = `${ReportsExcelNames.CREDITO_DE_SOCIOS}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
 
-    // /* pass here the table id */
-    // let element =
-    //   this._creditoStateService.state.inventoryStockResumeResponseList;
-    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+    // Generar workbook
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
 
-    // /* generate workbook and add the worksheet */
-    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    // Obtener elementos del estado
+    const { customerInformationResponse, accountInformation, transactionsHistoryResponse } = this._creditoStateService.state;
 
-    // /* save to file */
-    // XLSX.writeFile(wb, filename);
-  }
+    // Crear arreglo de elementos
+    const elements = [customerInformationResponse, accountInformation, transactionsHistoryResponse];
+
+    // Generar hojas en el workbook
+    elements.forEach((element, index) => {
+        const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
+        XLSX.utils.book_append_sheet(wb, ws, `Sheet${index + 1}`);
+    });
+
+    // Escribir archivo
+    XLSX.writeFile(wb, filename);
+}
+
 
   handleFavorite() {
   //   this.isLoading = true;

@@ -55,9 +55,7 @@ export const inventoryStockResumeResponseName = {
 //informacion socio
 export const CustomerInformation: any[] = [
   'No. Socio',
-  'Nombre',
-  'Apellido Paterno',
-  'Apellido Materno',
+  'Nombre'
 ]
 
 export const AccountInformation: any[] = [

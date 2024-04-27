@@ -1,137 +1,88 @@
 <main class="p-5">
-  <!-- TABLA INFORMACION SOCIO -->
 
-  <div class="col-6 text-left" >
+  <div class="custom-grid">
+    <div class="custom-col-4">
+      <div class=" text-left">
 
-    <h4>Información del socio</h4>
+        <h4>Información del socio</h4>
 
-  </div>
-  <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse" [paginator]="true" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-    <ng-template pTemplate="header">
-      <tr class="text-sm">
-        <th class="text-center" *ngFor="let header of customerInformation" id="{{ header }}">
-          {{ header }}
-        </th>
+      </div>
+      <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse" [paginator]="true" [rows]="15"
+        styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+        <ng-template pTemplate="header">
+          <tr class="text-sm" >
+            <th  class="text-center" *ngFor="let header of customerInformation" id="{{ header }}">
+               {{ header }} 
+            </th>
 
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-columns>
-      <tr>
-        <td [attr.colspan]="customerInformation.length" class="text-center">
-          {{
-          _inventoryStockResume.state.isLoadingList
-          ? TEMPLATE_TEXT.isLoadingOn
-          : TEMPLATE_TEXT.isResultEmpty
-          }}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-report>
-      <tr class="text-sm">
-        <td class="text-center" [innerHTML]="
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="customerInformation.length" class="text-center">
+              {{
+              _inventoryStockResume.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+              }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr class="text-sm">
+            <td class="text-center" [innerHTML]="
             highlightSearchText(
               searchText,
               report.no_socio
             )
           "></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.ap_paterno)" [style]="{
-            '
-          width': '100px'
-          }"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.ap_materno)" [style]="{
-            '
-          width': '100px'
-          }"></td>
-      </tr>
-    </ng-template>
-  </p-table>
+            <td class="text-center" >{{report.nombre}} {{report.ap_paterno}} {{report.ap_materno}}</td>
+            
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <div class="custom-col-6">
+      <div class=" text-left" >
 
-  <!-- TABLA INFORMACION CUENTA  -->
+        <h4>Información del crédito</h4>
 
-  <div class="col-6 text-left" style="margin-top: 20px;">
-
-    <h4>Información del crédito</h4>
-
-  </div>
-  <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [paginator]="true" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-    <ng-template pTemplate="header">
-      <tr class="text-sm">
-        <th class="text-center" *ngFor="let header of accountInformation" id="{{ header }}">
-          {{ header }}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-columns>
-      <tr>
-        <td [attr.colspan]="accountInformation.length" class="text-center">
-          {{
-          _inventoryStockResume.state.isLoadingList
-          ? TEMPLATE_TEXT.isLoadingOn
-          : TEMPLATE_TEXT.isResultEmpty
-          }}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-report>
-      <tr class="text-sm">
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cuenta)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.estado)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_configuracion)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.lim_credito)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cred_disponible)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.saldo_pendiente)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cuenta_retenida)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)"></td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-  <!-- autorizados en cuenta -->
-  <div class="col-6 text-left" >
-
-    <h4>Clientes autorizados del crédito</h4>
-
-  </div>
-  <p-table #dt2 [value]="_inventoryStockResume.state.memberAut" [paginator]="true" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-    <ng-template pTemplate="header">
-      <tr class="text-sm">
-        <th class="text-center" *ngFor="let header of memberAut" id="{{ header }}">
-          {{ header }}
-        </th>
-
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-columns>
-      <tr>
-        <td [attr.colspan]="memberAut.length" class="text-center">
-          {{
-          _inventoryStockResume.state.isLoadingList
-          ? TEMPLATE_TEXT.isLoadingOn
-          : TEMPLATE_TEXT.isResultEmpty
-          }}
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-report>
-      <tr class="text-sm">
-        <td class="text-center" [innerHTML]="
-            highlightSearchText(
-              searchText,
-              report.no_cliente
-            )
-          "></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)" [style]="{
-            '
-          width': '100px'
-          }"></td>
-      </tr>
-    </ng-template>
-  </p-table>
+      </div>
+      <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [paginator]="true" [rows]="15"
+        styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+        <ng-template pTemplate="header">
+          <tr class="text-sm">
+            <th class="text-center" *ngFor="let header of accountInformation" id="{{ header }}">
+              {{ header }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td [attr.colspan]="accountInformation.length" class="text-center">
+              {{
+              _inventoryStockResume.state.isLoadingList
+              ? TEMPLATE_TEXT.isLoadingOn
+              : TEMPLATE_TEXT.isResultEmpty
+              }}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+          <tr class="text-sm">
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cuenta)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.estado)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_configuracion)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.lim_credito)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cred_disponible)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.saldo_pendiente)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cuenta_retenida)"></td>
+            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)"></td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+</div>
 
   <!-- TABLA INFORMACION MOVIMIENTOS  -->
 
@@ -160,7 +111,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td class="text-center" [class.red-text]="isDateOlderThanTenDays(report.fecha_ticket)" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
+        <td class="text-center" [class.red-text]="isDateOlderThanTenDays(report.fecha_ticket)"
+          [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.tienda)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cliente)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>

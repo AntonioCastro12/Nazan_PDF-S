@@ -1,3 +1,19 @@
 .red-text {
     color: red;
   }
+
+  .custom-grid {
+    display: flex;
+}
+
+.custom-col-6 {
+    flex: 0 0 70%;
+    width: 70%;
+    padding: 0 1px; /* Ajusta el espaciado entre columnas según sea necesario */
+}
+.custom-col-4 {
+    flex: 0 0 30%;
+    width: 30%;
+    padding: 0 1px; /* Ajusta el espaciado entre columnas según sea necesario */
+}
+
