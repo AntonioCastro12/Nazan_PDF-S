@@ -43,7 +43,7 @@ import { DividerModule } from 'primeng/divider';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { CheckboxModule } from 'primeng/checkbox';
 import { PrimeNGConfig } from 'primeng/api';
-
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 // import { ErrorMessageComponent } from './pages/error-message';
 
 // import { PrettyPrintPipe } from './pipes/preatty-json.pipe';
@@ -94,6 +94,7 @@ const primeModules = [
   DividerModule,
   CardModule,
   CheckboxModule,
+  ProgressSpinnerModule,
 ];
 
 // const components = [ErrorMessageComponent, PrettyPrintPipe];

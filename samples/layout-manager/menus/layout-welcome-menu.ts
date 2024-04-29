@@ -37,7 +37,7 @@ export const welcomeMenu = [
 
             routerLink: ['/layout/reports/inventories/sap-xstore'],
           },
-        ]
+        ],
       },
       {
         label: 'Segmentos',
@@ -53,7 +53,7 @@ export const welcomeMenu = [
 
             routerLink: ['/layout/reports/segments/affiliated-kipon'],
           },
-        ]
+        ],
       },
     ],
   },
@@ -80,7 +80,7 @@ export const welcomeMenu = [
 
             routerLink: ['/layout/reports/point-program/detail-wallet'],
           },
-        ]
+        ],
       },
     ],
   },
@@ -102,7 +102,7 @@ export const welcomeMenu = [
 
             routerLink: ['/layout/reports/sales/general-sales'],
           },
-        ]
+        ],
       },
       {
         label: 'Inventarios',
@@ -118,7 +118,7 @@ export const welcomeMenu = [
 
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
-        ]
+        ],
       },
     ],
   },
@@ -139,7 +139,7 @@ export const welcomeMenu = [
             icon: 'pi pi›-fw pi-minus',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
-        ]
+        ],
       },
     ],
   },

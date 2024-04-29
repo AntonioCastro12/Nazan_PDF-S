@@ -145,6 +145,16 @@ export const welcomeMenu = [
           },
         ],
       },
+      {
+        label: 'Articulos Similares',
+
+        items: [
+          {
+            label: 'Carga de archivo para Surtidores',
+            routerLink: ['inventory-upload'],
+          },
+        ],
+      },
     ],
   },
 ];

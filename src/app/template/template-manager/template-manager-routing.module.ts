@@ -60,6 +60,13 @@ const routes: Routes = [
           ).then((m) => m.InventoryPodModule),
       },
       {
+        path: 'inventory-upload',
+        loadChildren: () =>
+          import(
+            'src/app/layout/reports/inventory-upload/inventory-upload.module'
+          ).then((m) => m.InventoryUploadModule),
+      },
+      {
         path: 'inventory-sap-xstore',
         loadChildren: () =>
           import(

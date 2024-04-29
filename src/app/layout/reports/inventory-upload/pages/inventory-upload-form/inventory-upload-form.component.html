@@ -1,0 +1,82 @@
+<!-- Form ******************************************************* -->
+<section class="container">
+  <form
+    [formGroup]="_inventoryUpload.state.form"
+    [autocomplete]="'off'"
+    *ngIf="_inventoryUpload.state.form"
+    class="w-full"
+  >
+    <article class="formgrid grid">
+      <!-- ************************************************* -->
+      <section #file class="mb-1 col-12 md:col-12 lg:col-6">
+        <div class="form-field--container">
+          <label for="file">{{ inventoryUploadLabels.file }}</label>
+          <input
+            inputId="file"
+            id="file"
+            formControlName="file"
+            type="file"
+            class="hidden"
+            accept=".csv"
+            (change)="handleFileInput($event)"
+            #fileUpload
+          />
+          <button
+            pButton
+            pRipple
+            type="button"
+            (click)="fileUpload.click()"
+            icon="pi pi-cloud-upload"
+            class="w-full bg-blue-500 text-white px-4 py-2 rounded"
+            id="exportModel"
+          ></button>
+        </div>
+      </section>
+
+      <section class="mt-5 mb-1 col-12 md:col-12 lg:col-12">
+        <b>{{ message }}</b>
+      </section>
+
+      <section
+        *ngIf="_inventoryUpload.state.isLoadingList"
+        class="mt-5 mb-1 col-12 md:col-12 lg:col-12"
+      >
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
+      </section>
+    </article>
+
+    <!-- Buttons -->
+
+    <article class="flex align-items-center justify-content-start mt-5">
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-replay"
+          class="p-button-secondary p-button-rounded"
+          pTooltip="{{ TEMPLATE_TXT.labelReset }}"
+          tooltipPosition="top"
+          (click)="onReset()"
+          [disabled]="!_inventoryUpload.state.form.dirty"
+        ></button>
+      </div>
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-check"
+          class="p-button-warning p-button-rounded"
+          (click)="onSubmit()"
+          [disabled]="
+            !_inventoryUpload.state.form.valid ||
+            _inventoryUpload.state.isLoadingList
+          "
+          pTooltip="{{ TEMPLATE_TXT.labelSave }}"
+          tooltipPosition="top"
+        ></button>
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>

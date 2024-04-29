@@ -26,7 +26,7 @@ export const staffPlaneacionMenu = [
             icon: 'pi pi›-fw pi-minus',
             routerLink: ['/layout/reports/inventories/inventory-stock/resume'],
           },
-        ]
+        ],
       },
     ],
   },
