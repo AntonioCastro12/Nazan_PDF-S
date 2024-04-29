@@ -7,7 +7,7 @@
         <h4>Información del socio</h4>
 
       </div>
-      <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse" [paginator]="true" [rows]="15"
+      <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse"  [rows]="15"
         styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
         <ng-template pTemplate="header">
           <tr class="text-sm" >
@@ -44,11 +44,9 @@
     </div>
     <div class="custom-col-6">
       <div class=" text-left" >
-
         <h4>Información del crédito</h4>
-
       </div>
-      <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [paginator]="true" [rows]="15"
+      <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [rows]="15"
         styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
         <ng-template pTemplate="header">
           <tr class="text-sm">

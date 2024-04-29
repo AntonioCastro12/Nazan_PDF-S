@@ -9,6 +9,7 @@ import { CreditListComponent } from './pages/credit-list/credit-list.component';
 import { CreditDetailListComponent } from './pages/credit-detail-list/credit-detail-list.component';
 import { PrimeNgModule } from '@shared/vendor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CalendarModule } from 'primeng/calendar';
 
 import { AutoCompleteModule } from 'primeng/autocomplete';
 
@@ -27,7 +28,8 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    CalendarModule
   ]
 })
 export class CreditoSociosModule { }

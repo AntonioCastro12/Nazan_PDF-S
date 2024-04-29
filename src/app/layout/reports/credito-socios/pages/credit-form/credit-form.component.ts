@@ -45,6 +45,8 @@ export class CreditFormComponent {
     );
   }
 
+  value="";
+
   ngOnInit(): void {
     this.onFillForm();
   }
@@ -52,6 +54,8 @@ export class CreditFormComponent {
   onFillForm() {
     this._creditoStateService.state.form = this._formBuilder.group({
       memberId: ['', [Validators.required], []],
+      startDate: [this.today, [Validators.required], []],
+      endDate: [this.today, [Validators.required], []]
     });
   }
 
@@ -59,13 +63,15 @@ export class CreditFormComponent {
     return this._creditoStateService.state.form.controls;
   }
 
-  socioSubmit() {
+  async socioSubmit() {
 
     this._creditoStateService.state.isLoadingList = true;
     let item: creditoSocioDTO = new creditoSocioDTO();
     let formItems = this._creditoStateService.state.form.value;
     item = {
-      memberId: formItems.memberId
+      memberId: formItems.memberId,
+      startDate: formItems.startDate.replace(/-/g, ""),
+      endDate: formItems.endDate.replace(/-/g, "")
     }
     this._creditoStateService.state.creditoSocioDTO = item;
     this._creditoStateService.state.isLoadingList = true;

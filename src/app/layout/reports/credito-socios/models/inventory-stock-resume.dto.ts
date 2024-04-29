@@ -5,6 +5,8 @@ export class InventoryStockResumeDTO {
 }
 export class creditoSocioDTO {
   memberId: string = '';
+  startDate: string='';
+  endDate: string ='';
 }
 
 export const inventoryStockResumeLabels = {
