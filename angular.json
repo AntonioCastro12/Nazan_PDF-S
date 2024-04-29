@@ -7,26 +7,28 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-            "style": "scss",
-            "skipTests": true
+          "style": "scss",
+          "inlineStyle": true,
+          "inlineTemplate": true,
+          "skipTests": true
         },
         "@schematics/angular:class": {
-            "skipTests": true
+          "skipTests": true
         },
         "@schematics/angular:directive": {
-            "skipTests": true
+          "skipTests": true
         },
         "@schematics/angular:guard": {
-            "skipTests": true
+          "skipTests": true
         },
         "@schematics/angular:module": {},
         "@schematics/angular:pipe": {
-            "skipTests": true
+          "skipTests": true
         },
         "@schematics/angular:service": {
-            "skipTests": true
+          "skipTests": true
         }
-    },
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "",
@@ -34,11 +36,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "allowedCommonJsDependencies": [
-              "angular-highcharts",
-              "highcharts",
-              "highcharts/highcharts-more"
-            ],
+            "allowedCommonJsDependencies": ["csv-file-validator"],
             "outputPath": "dist/nazan-admin-reports-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
