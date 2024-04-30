@@ -1,13 +1,22 @@
-<main class="p-5">
+<main class="p-1">
 
-  <div class="custom-grid">
+  <div class="custom-grid" style="border: 1.2px solid #eceff4; border-radius: 10px;">
     <div class="custom-col-4">
       <div class=" text-left">
-
         <h4>Información del socio</h4>
+      </div>
+      <div>
+        <div>
+          <div>
+            <p>No. Socio: <span> {{_inventoryStockResume.state.customerInformationResponse[0].no_socio}}</span></p>
+          </div>
+          <p>Nombre: <span> {{_inventoryStockResume.state.customerInformationResponse[0].nombre}}
+              {{_inventoryStockResume.state.customerInformationResponse[0].ap_paterno}}
+              {{_inventoryStockResume.state.customerInformationResponse[0].ap_materno}}</span></p>
+        </div>
 
       </div>
-      <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse"  [rows]="15"
+      <!-- <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse"  [rows]="15"
         styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
         <ng-template pTemplate="header">
           <tr class="text-sm" >
@@ -40,13 +49,44 @@
             
           </tr>
         </ng-template>
-      </p-table>
+      </p-table> -->
     </div>
-    <div class="custom-col-6">
-      <div class=" text-left" >
+    <div class="custom-col-6" style="padding: 2px;">
+      <div class="text-left">
         <h4>Información del crédito</h4>
       </div>
-      <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [rows]="15"
+      <div class="custom-grid">
+        <div style="min-width: 50%;">
+          <div >
+            <p>No. Cuenta: <span> {{_inventoryStockResume.state.accountInformation[0].no_cuenta}}</span></p>
+          </div>
+          <div >
+            <p>Estado: <span> {{_inventoryStockResume.state.accountInformation[0].estado}}</span></p>
+          </div>
+          <div >
+            <p>Fecha Configuracion: <span> {{_inventoryStockResume.state.accountInformation[0].fecha_configuracion}}</span></p>
+          </div>
+          <div >
+            <p>Limite de credito: <span> {{_inventoryStockResume.state.accountInformation[0].lim_credito}}</span></p>
+          </div>
+
+        </div>
+        <div style="min-width: 50%;">
+          <div>
+            <p>Credito Disponible: <span> {{_inventoryStockResume.state.accountInformation[0].cred_disponible}}</span></p>
+          </div>
+          <div>
+            <p>Saldo Pendiente: <span> {{_inventoryStockResume.state.accountInformation[0].saldo_pendiente}}</span></p>
+          </div>
+          <div>
+            <p>Cuenta Retenida: <span> {{_inventoryStockResume.state.accountInformation[0].cuenta_retenida}}</span></p>
+          </div>
+          
+        </div>
+      </div>
+
+
+      <!-- <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [rows]="15"
         styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
         <ng-template pTemplate="header">
           <tr class="text-sm">
@@ -78,9 +118,9 @@
             <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)"></td>
           </tr>
         </ng-template>
-      </p-table>
+      </p-table> -->
     </div>
-</div>
+  </div>
 
   <!-- TABLA INFORMACION MOVIMIENTOS  -->
 
