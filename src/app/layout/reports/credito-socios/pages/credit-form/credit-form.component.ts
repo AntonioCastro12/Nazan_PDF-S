@@ -75,12 +75,11 @@ export class CreditFormComponent {
     }
     this._creditoStateService.state.creditoSocioDTO = item;
 
-    console.log(this._creditoStateService.state.creditoSocioDTO);
-
     this._creditoStateService.state.isLoadingList = true;
     this._creditServiceApi.membershipCreditHistory(this._creditoStateService.state.creditoSocioDTO).subscribe({
       next: (data: any) => {
    
+        console.log("Data recibida: ",data);
         this._creditoStateService.state.customerInformationResponse = data['memberDesc'];
 
         this._creditoStateService.state.accountInformation = data['creditDesc'];

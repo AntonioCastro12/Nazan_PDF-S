@@ -37,11 +37,13 @@ export class TransactionsHistoryResponse{
   nombre: string | null = null;
   ticket: string | null = null;
   tipo_movimiento: string | null = null;
-  monto: string | null = null;
+  monto_a_credito: string | null = null;
   forma_pago?:string | null = null;
   ref_bancaria?: string | null = null;
   ref_ticket?: string | null = null;
   fecha_ref_deposito?: string | null = null;
+  total_ticket: string | null = null;
+  caja: string | null = null;
 }
 
 
@@ -75,17 +77,19 @@ export const membersAut: any [] = [
 ]
 //informacion movimientos
 export const TicketInformation: any[] = [
+  'Ticket',
   'Fecha Ticket',
-  'Tienda',
-  'No. Cliente',
-  'Nombre',
-  ' Ticket',
+  'Total Ticket',
+  'Monto a Crédito',
   'Tipo Movimiento',
-  'Monto',
   'Forma Pago',
   'Referencia Bancaria',
   'Referencia Ticket',
-  'Fecha referencia Deposito'
+  'Fecha referencia Deposito',
+  'Tienda',
+  'Caja',
+  'No. Cliente',
+  'Nombre'  
 ]
 
 export class InventoryStockDetailResponse {
