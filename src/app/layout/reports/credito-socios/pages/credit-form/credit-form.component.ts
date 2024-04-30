@@ -63,7 +63,7 @@ export class CreditFormComponent {
     return this._creditoStateService.state.form.controls;
   }
 
-  async socioSubmit() {
+  socioSubmit() {
 
     this._creditoStateService.state.isLoadingList = true;
     let item: creditoSocioDTO = new creditoSocioDTO();
@@ -74,10 +74,11 @@ export class CreditFormComponent {
       endDate: formItems.endDate.replace(/-/g, "")
     }
     this._creditoStateService.state.creditoSocioDTO = item;
+
+    console.log(this._creditoStateService.state.creditoSocioDTO);
+
     this._creditoStateService.state.isLoadingList = true;
-    this._creditServiceApi.membershipCreditHistory(
-      this._creditoStateService.state.creditoSocioDTO = item
-    ).subscribe({
+    this._creditServiceApi.membershipCreditHistory(this._creditoStateService.state.creditoSocioDTO).subscribe({
       next: (data: any) => {
    
         this._creditoStateService.state.customerInformationResponse = data['memberDesc'];

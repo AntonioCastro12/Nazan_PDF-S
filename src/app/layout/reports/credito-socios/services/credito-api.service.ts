@@ -20,6 +20,8 @@ export class CreditoApiService {
     const url= `${environment.apiUrl}/api/membership-credit/credit-history`
     const params: any = {};
     params['memberId'] = dto.memberId;
+    params['startDate'] = dto.startDate;
+    params['endDate'] = dto.endDate;
     let response$: any = this._http
       .get<any[]>(url, { params });
     return response$;
