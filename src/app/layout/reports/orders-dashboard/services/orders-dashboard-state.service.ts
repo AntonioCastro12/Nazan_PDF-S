@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { OrdersDashboardResponse } from '../models/orders-dashboard.response';
+import { StoreEntity } from 'src/app/layout/config/store-manager/models';
 
-class OrdersDashboardState {}
+class OrdersDashboardState {
+  storeSelected: StoreEntity = new StoreEntity();
+  storeList: StoreEntity[] = [];
+  isLoadingList: boolean = false;
+  orderStateInfo: OrdersDashboardResponse = new OrdersDashboardResponse();
+}
 
 @Injectable({
   providedIn: 'root',

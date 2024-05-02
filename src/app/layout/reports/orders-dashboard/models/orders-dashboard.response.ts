@@ -1,6 +1,6 @@
 export class OrdersDashboardResponse {
   tienda: any;
-  porStatus: OrderByStatus = new OrderByStatus();
+  totalsByStatus: OrderByStatus[] = [];
   porAntiguedad: OrderByAge = new OrderByAge();
   anteriores: OrderDashboardRecord[] = [];
   unMes: OrderDashboardRecord[] = [];
@@ -8,9 +8,8 @@ export class OrdersDashboardResponse {
 }
 
 class OrderByStatus {
-  tienda: any;
-  status: any;
-  cantidad: any;
+  order_status: any;
+  qty: any;
 }
 
 class OrderByAge {

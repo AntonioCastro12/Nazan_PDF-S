@@ -11,9 +11,13 @@ import { OrderDashboardInfoComponent } from './pages/order-dashboard-home/ui/ord
 import { OrderDashboardMonthListComponent } from './pages/order-dashboard-home/ui/order-dashboard-month-list/order-dashboard-month-list.component';
 import { OrderDashboardWeekListComponent } from './pages/order-dashboard-home/ui/order-dashboard-week-list/order-dashboard-week-list.component';
 import { OrderDashboardFilterComponent } from './pages/order-dashboard-home/ui/order-dashboard-filter/order-dashboard-filter.component';
+import { PrimeNgModule } from '@shared/vendor';
+import { FormsModule } from '@angular/forms';
+import { OrdersDashboardStoreSelectorComponent } from './pages/order-dashboard-home/ui/orders-dashboard-store-selector/orders-dashboard-store-selector.component';
 
 @NgModule({
   declarations: [
+    OrdersDashboardStoreSelectorComponent,
     OrderDashboardAgeComponent,
     OrderDashboardBeforeListComponent,
     OrderDashboardFilterComponent,
@@ -24,6 +28,11 @@ import { OrderDashboardFilterComponent } from './pages/order-dashboard-home/ui/o
     OrderDashboardHomeComponent,
     OrdersDashboardComponent,
   ],
-  imports: [CommonModule, OrdersDashboardRoutingModule],
+  imports: [
+    CommonModule,
+    OrdersDashboardRoutingModule,
+    PrimeNgModule,
+    FormsModule,
+  ],
 })
 export class OrdersDashboardModule {}

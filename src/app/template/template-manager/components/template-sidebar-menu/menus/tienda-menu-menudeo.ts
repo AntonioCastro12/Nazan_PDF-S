@@ -38,6 +38,11 @@ export const tiendaMenuMenudeo = [
 
             routerLink: ['sales-wholesale'],
           },
+          {
+            label: 'Dashboard de órdenes',
+
+            routerLink: ['orders-dashboard'],
+          },
         ],
       },
     ],

@@ -129,6 +129,13 @@ const routes: Routes = [
             'src/app/layout/reports/segment-collaborators-nazan/segment-collaborators-nazan.module'
           ).then((m) => m.SegmentCollaboratorsNazanModule),
       },
+      {
+        path: 'orders-dashboard',
+        loadChildren: () =>
+          import(
+            'src/app/layout/reports/orders-dashboard/orders-dashboard.module'
+          ).then((m) => m.OrdersDashboardModule),
+      },
     ],
   },
 ];

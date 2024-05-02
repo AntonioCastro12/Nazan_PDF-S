@@ -64,6 +64,11 @@ export const staffMenudeoMenu = [
 
             routerLink: ['sales-wholesale'],
           },
+          {
+            label: 'Dashboard de órdenes',
+
+            routerLink: ['orders-dashboard'],
+          },
         ],
       },
     ],

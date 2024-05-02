@@ -54,7 +54,7 @@ export class SalesWholesaleOptionsComponent {
           this._salesWholesale.state.salesWholesaleResponseList = data;
         },
         error: (error) => {
-          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          this._toastr.error('Opps ha ocurrido un error', error.error.message);
           console.log(error);
         },
         complete: () => {
