@@ -16,6 +16,11 @@ export class OrdersDashboardActionService {
     this._ordersDashboardApi.ordersDashboardInfo(store).subscribe({
       next: (response) => {
         this._ordersDashboard.state.orderStateInfo = response;
+        this._ordersDashboard.state.orderStateInfo.totalsByStatusFinal = 0;
+        const sumatoria = response.totalsByStatus.map((x) => {
+          this._ordersDashboard.state.orderStateInfo.totalsByStatusFinal +=
+            x.qty;
+        });
       },
       error: (error) => {
         this._toastr.error('Ups... ha ocurrido un error', error.error.message);

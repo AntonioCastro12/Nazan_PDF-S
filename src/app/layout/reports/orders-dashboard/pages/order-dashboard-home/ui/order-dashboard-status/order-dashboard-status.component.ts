@@ -5,7 +5,7 @@ import { OrdersDashboardStateService } from '../../../../services/orders-dashboa
   selector: 'order-dashboard-status',
   standalone: false,
   template: `
-    <section>
+    <section class="w-full">
       <p-table
         #dt2
         [value]="_ordersDashboard.state.orderStateInfo.totalsByStatus"
@@ -45,7 +45,7 @@ import { OrdersDashboardStateService } from '../../../../services/orders-dashboa
               [innerHTML]="
                 highlightSearchText(
                   searchText,
-                  _ordersDashboard.state.storeSelected
+                  _ordersDashboard.state.storeSelected.id
                 )
               "
             ></td>
@@ -61,6 +61,17 @@ import { OrdersDashboardStateService } from '../../../../services/orders-dashboa
           width': '100px'
               }"
             ></td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <tr>
+            <td></td>
+            <td class="text-center w-full">Total</td>
+            <td class="text-center w-full">
+              {{
+                this._ordersDashboard.state.orderStateInfo.totalsByStatusFinal
+              }}
+            </td>
           </tr>
         </ng-template>
       </p-table>

@@ -8,6 +8,7 @@ class OrdersDashboardState {
   storeList: StoreEntity[] = [];
   isLoadingList: boolean = false;
   orderStateInfo: OrdersDashboardResponse = new OrdersDashboardResponse();
+  filter: string = '';
 }
 
 @Injectable({
