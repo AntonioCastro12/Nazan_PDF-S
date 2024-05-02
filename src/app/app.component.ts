@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $Loading.open();
+    // $Loading.open();
   }
   onLogoutSSO = () => {
     this._template.state.identity = null;
