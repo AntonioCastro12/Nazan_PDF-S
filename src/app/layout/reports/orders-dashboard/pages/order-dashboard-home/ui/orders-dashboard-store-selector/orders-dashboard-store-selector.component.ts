@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { OrdersDashboardStateService } from '../../../../services/orders-dashboard-state.service';
 import { OrdersDashboardActionService } from '../../../../services/orders-dashboard.action.service';
+import { OrdersDashboardResponse } from '../../../../models/orders-dashboard.response';
 
 @Component({
   selector: 'orders-dashboard-store-selector',
@@ -9,12 +10,11 @@ import { OrdersDashboardActionService } from '../../../../services/orders-dashbo
     <p-dropdown
       inputId="storeId"
       [options]="_ordersDashboard.state.storeList"
-      [(ngModel)]="this._ordersDashboard.state.storeSelected"
-      optionValue="id"
+      [(ngModel)]="_ordersDashboard.state.storeSelected"
       optionLabel="name"
       placeholder="{{ TEMPLATE_TXT.selectStore }}"
       styleClass="w-full"
-      (onClick)="searchInfo()"
+      (onChange)="searchInfo()"
     ></p-dropdown>
   `,
   styles: ``,
@@ -28,6 +28,7 @@ export class OrdersDashboardStoreSelectorComponent {
   };
 
   searchInfo() {
+    this._ordersDashboard.state.orderStateInfo = new OrdersDashboardResponse();
     this._ordersDashboardAction.onOrdersDashboardInfo(
       this._ordersDashboard.state.storeSelected.id
     );

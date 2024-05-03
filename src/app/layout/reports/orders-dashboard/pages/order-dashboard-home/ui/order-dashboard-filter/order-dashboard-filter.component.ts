@@ -6,12 +6,14 @@ import { OrdersDashboardStateService } from '../../../../services/orders-dashboa
   standalone: false,
   template: `
     <section>
-      <input
-        placeholder="Buscador"
-        type="text"
-        pInputText
-        [(ngModel)]="_ordersDashboard.state.filter"
-      />
+      <p-card header="Buscador">
+        <input
+          placeholder="Buscador"
+          type="text"
+          pInputText
+          [(ngModel)]="_ordersDashboard.state.filter"
+        />
+      </p-card>
     </section>
   `,
   styles: ``,
