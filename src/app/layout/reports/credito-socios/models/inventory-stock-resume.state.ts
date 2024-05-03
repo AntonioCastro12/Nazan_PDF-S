@@ -6,6 +6,8 @@ import {
   CustomerInformationResponse,
   AccountInformationResponse,
   TransactionsHistoryResponse,
+  TicketResumeItemResponse,
+  TicketResumeTndrResponse,
   AccountAutResponse
 } from './inventory-stock-resume.response';
 
@@ -18,6 +20,9 @@ export class InventoryStockResumeState {
   accountInformation: AccountInformationResponse [] = []
   transactionsHistoryResponse: TransactionsHistoryResponse [] = []
   memberAut: AccountAutResponse [] = [];
+  ticketResumeResponse: TicketResumeItemResponse [] = []
+  ticketResumeTndrResponse:TicketResumeTndrResponse [] = [] 
+
 
   currentStore!: string;
   form!: UntypedFormGroup;

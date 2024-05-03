@@ -3,8 +3,7 @@ import {
   CreditoApiService,
   CreditoStateService,
 } from '../../services';
-import { inventoryStockResumeResponseName, CustomerInformation, AccountInformation, TicketInformation, membersAut } from '../../models';
-import { objectContainsValue } from '@shared/functions';
+import { inventoryStockResumeResponseName, CustomerInformation, AccountInformation, TicketInformation, membersAut,TicketResumeItem, TicketResumeTndr  } from '../../models';
 
 @Component({
   selector: 'credit-list',
@@ -24,22 +23,32 @@ export class CreditListComponent {
   accountInformation = AccountInformation;
   ticketInformation = TicketInformation;
   memberAut = membersAut;
+  ticketResumeItem= TicketResumeItem;
+  ticketResumeTndr= TicketResumeTndr ; 
+
 
   searchText = '';
   isLoading: boolean = false;
+  visible: boolean = false;
+  ticketSelected: string = '';
 
   constructor(
     public _inventoryStockResume: CreditoStateService,
     public _inventoryStockResumeApi: CreditoApiService
-  ) {}
+  ) { }
 
-  
-  handleSearch() {}
-  handleChart() {}
-  handleRefresh() {}
+  ticketResume(ticket: string) {
+        this.visible = true;
+    this.ticketSelected = `Ticket # ${ticket}`;
+  }
 
-  handleDownload() {}
-  handleFavorite() {}
+
+  handleSearch() { }
+  handleChart() { }
+  handleRefresh() { }
+
+  handleDownload() { }
+  handleFavorite() { }
 
   highlightSearchText(searchText: string, field: any) {
     return field;
@@ -59,32 +68,7 @@ export class CreditListComponent {
     //   list.filter((item) => objectContainsValue(item, this.searchText));
 
     // console.log("Filter: ",this._inventoryStockResume.state.inventoryStockResumeResponseList);
-          
-  }
 
-  async findDetails() {
-    // this.isLoading = true;
-    // this._inventoryStockResumeApi
-    //   .inventoryStockDetails(
-    //     this._inventoryStockResume.state.inventoryStockResumeDTO
-    //   )
-    //   .subscribe({
-    //     next: (data) => {
-    //       this._inventoryStockResume.state.inventoryStockDetailResponse = data;
-    //       this._inventoryStockResume.state.inventoryStockDetailResponseList =
-    //         data;
-    //     },
-    //     error: (e) => {
-    //       console.error('error loading data', e);
-    //     },
-    //     complete: () => {
-    //       this.isLoading = false;
-    //     },
-    //   });
-  }
-
-  async showDetails() {
-    this._inventoryStockResume.state.isVisibleModal = true;
   }
 
 }

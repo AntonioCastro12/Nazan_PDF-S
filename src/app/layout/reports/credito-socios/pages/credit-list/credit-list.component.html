@@ -1,124 +1,69 @@
 <main class="p-1">
 
-  <div class="custom-grid" style="border: 1.2px solid #eceff4; border-radius: 10px;">
-    <div class="custom-col-4">
+  <div class="custom-grid card">
+    <p-progressSpinner *ngIf="_inventoryStockResume.state.isLoadingList"></p-progressSpinner>
+    <div *ngIf="!_inventoryStockResume.state.isLoadingList" class="custom-col-half ">
       <div class=" text-left">
         <h4>Información del socio</h4>
       </div>
       <div>
         <div>
           <div>
-            <p>No. Socio: <span> {{_inventoryStockResume.state.customerInformationResponse[0].no_socio}}</span></p>
+            <p>No. Socio: <b> {{_inventoryStockResume.state.customerInformationResponse[0].no_socio}}</b></p>
           </div>
-          <p>Nombre: <span> {{_inventoryStockResume.state.customerInformationResponse[0].nombre}}
+          <p>Nombre: <b>{{_inventoryStockResume.state.customerInformationResponse[0].nombre}}
               {{_inventoryStockResume.state.customerInformationResponse[0].ap_paterno}}
-              {{_inventoryStockResume.state.customerInformationResponse[0].ap_materno}}</span></p>
+              {{_inventoryStockResume.state.customerInformationResponse[0].ap_materno}}</b> </p>
         </div>
 
       </div>
-      <!-- <p-table #dt2 [value]="_inventoryStockResume.state.customerInformationResponse"  [rows]="15"
-        styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-        <ng-template pTemplate="header">
-          <tr class="text-sm" >
-            <th  class="text-center" *ngFor="let header of customerInformation" id="{{ header }}">
-               {{ header }} 
-            </th>
-
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage" let-columns>
-          <tr>
-            <td [attr.colspan]="customerInformation.length" class="text-center">
-              {{
-              _inventoryStockResume.state.isLoadingList
-              ? TEMPLATE_TEXT.isLoadingOn
-              : TEMPLATE_TEXT.isResultEmpty
-              }}
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-report>
-          <tr class="text-sm">
-            <td class="text-center" [innerHTML]="
-            highlightSearchText(
-              searchText,
-              report.no_socio
-            )
-          "></td>
-            <td class="text-center" >{{report.nombre}} {{report.ap_paterno}} {{report.ap_materno}}</td>
-            
-          </tr>
-        </ng-template>
-      </p-table> -->
     </div>
-    <div class="custom-col-6" style="padding: 2px;">
+    <div *ngIf="!_inventoryStockResume.state.isLoadingList" class="custom-col-half">
       <div class="text-left">
         <h4>Información del crédito</h4>
       </div>
       <div class="custom-grid">
         <div style="min-width: 50%;">
-          <div >
-            <p>No. Cuenta: <span> {{_inventoryStockResume.state.accountInformation[0].no_cuenta}}</span></p>
+          <div>
+            <p>No. Cuenta: <b> {{_inventoryStockResume.state.accountInformation[0].no_cuenta}}</b></p>
           </div>
-          <div >
-            <p>Estado: <span> {{_inventoryStockResume.state.accountInformation[0].estado}}</span></p>
+          <div>
+            <p>Estado: <b> {{_inventoryStockResume.state.accountInformation[0].estado}}</b></p>
           </div>
-          <div >
-            <p>Fecha Configuracion: <span> {{_inventoryStockResume.state.accountInformation[0].fecha_configuracion}}</span></p>
+          <div>
+            <p>Fecha Apertura: <b> {{_inventoryStockResume.state.accountInformation[0].fecha_configuracion}}</b></p>
           </div>
-          <div >
-            <p>Limite de credito: <span> {{_inventoryStockResume.state.accountInformation[0].lim_credito}}</span></p>
+          <div>
+            <p>Cuenta Retenida: <b> {{_inventoryStockResume.state.accountInformation[0].cuenta_retenida}}</b></p>
           </div>
-
         </div>
         <div style="min-width: 50%;">
-          <div>
-            <p>Credito Disponible: <span> {{_inventoryStockResume.state.accountInformation[0].cred_disponible}}</span></p>
+          <div class="custom-grid">
+            <div class="custom-col-half">
+              <div>
+                <p>Limite de credito: </p>
+              </div>
+              <div>
+                <p>Credito Disponible: </p>
+              </div>
+              <div>
+                <p>Saldo Pendiente: </p>
+              </div>
+            </div>
+            <div class="custom-col-half">
+              <div>
+                <p> <b> {{_inventoryStockResume.state.accountInformation[0].lim_credito}}</b></p>
+              </div>
+              <div>
+                <p> <b> {{_inventoryStockResume.state.accountInformation[0].cred_disponible}}</b></p>
+              </div>
+              <div>
+                <p> <b> {{_inventoryStockResume.state.accountInformation[0].saldo_pendiente}}</b></p>
+              </div>
+            </div>
           </div>
-          <div>
-            <p>Saldo Pendiente: <span> {{_inventoryStockResume.state.accountInformation[0].saldo_pendiente}}</span></p>
-          </div>
-          <div>
-            <p>Cuenta Retenida: <span> {{_inventoryStockResume.state.accountInformation[0].cuenta_retenida}}</span></p>
-          </div>
-          
         </div>
       </div>
-
-
-      <!-- <p-table #dt2 [value]="_inventoryStockResume.state.accountInformation" [rows]="15"
-        styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
-        <ng-template pTemplate="header">
-          <tr class="text-sm">
-            <th class="text-center" *ngFor="let header of accountInformation" id="{{ header }}">
-              {{ header }}
-            </th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage" let-columns>
-          <tr>
-            <td [attr.colspan]="accountInformation.length" class="text-center">
-              {{
-              _inventoryStockResume.state.isLoadingList
-              ? TEMPLATE_TEXT.isLoadingOn
-              : TEMPLATE_TEXT.isResultEmpty
-              }}
-            </td>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-report>
-          <tr class="text-sm">
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cuenta)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.estado)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_configuracion)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.lim_credito)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cred_disponible)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.saldo_pendiente)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.cuenta_retenida)"></td>
-            <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.principal)"></td>
-          </tr>
-        </ng-template>
-      </p-table> -->
     </div>
   </div>
 
@@ -149,9 +94,8 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.ticket)"></td>
-        <td class="text-center" [class.red-text]="isDateOlderThanTenDays(report.fecha_ticket)"
-          [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
+         <td class="text-center" (click)="ticketResume(report.ticket)">{{report.ticket}}</td>
+        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.total_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.monto_a_credito)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.tipo_movimiento)"></td>
@@ -167,4 +111,66 @@
     </ng-template>
   </p-table>
 
+
 </main>
+  <p-dialog 
+      [header]="ticketSelected" 
+      [modal]="true" 
+      [(visible)]="visible" 
+      [style]="{ width: '50rem' }" 
+      [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+      [maximizable]="true">
+          
+      <p-table #dt2 [value]="_inventoryStockResume.state.ticketResumeTndrResponse" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+    <ng-template pTemplate="header">
+      <tr class="text-sm">
+        <th class="text-center" *ngFor="let header of ticketResumeTndr" id="{{ header }}">
+          {{ header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td [attr.colspan]="ticketResumeTndr.length" class="text-center">
+          {{
+          _inventoryStockResume.state.isLoadingList
+          ? TEMPLATE_TEXT.isLoadingOn
+          : TEMPLATE_TEXT.isResultEmpty
+          }}
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-report>
+      <tr class="text-sm">
+         <td class="text-center" >dato ticket</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <p-table #dt2 [value]="_inventoryStockResume.state.ticketResumeResponse" [rows]="15"
+  styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+  <ng-template pTemplate="header">
+    <tr class="text-sm">
+      <th class="text-center" *ngFor="let header of ticketResumeItem" id="{{ header }}">
+        {{ header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage" let-columns>
+    <tr>
+      <td [attr.colspan]="ticketResumeItem.length" class="text-center">
+        {{
+        _inventoryStockResume.state.isLoadingList
+        ? TEMPLATE_TEXT.isLoadingOn
+        : TEMPLATE_TEXT.isResultEmpty
+        }}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-report>
+    <tr class="text-sm">
+       <td class="text-center" >dato ticket</td>
+    </tr>
+  </ng-template>
+</p-table>
+  </p-dialog>

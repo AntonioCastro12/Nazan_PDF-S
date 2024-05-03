@@ -45,6 +45,17 @@ export class TransactionsHistoryResponse{
   total_ticket: string | null = null;
   caja: string | null = null;
 }
+export class TicketResumeItemResponse{
+  Item: string | null = null;
+  Articulo: string | null = null;
+  Cantidad: string | null = null;
+  Precio: string | null = null;
+  Importe: string | null = null;
+}
+export class TicketResumeTndrResponse{
+  tndr_id: string | null = null;
+  amt: string | null = null;
+}
 
 
 
@@ -91,6 +102,19 @@ export const TicketInformation: any[] = [
   'No. Cliente',
   'Nombre'  
 ]
+
+export const TicketResumeItem: any[] = [
+  'Item',
+	'Articulo',
+  'Cantidad',
+  'Precio',
+  'Importe'
+]
+export const TicketResumeTndr: any[] = [
+  'tndr_id',
+  'amt'
+]
+
 
 export class InventoryStockDetailResponse {
   storeId: string = '';
