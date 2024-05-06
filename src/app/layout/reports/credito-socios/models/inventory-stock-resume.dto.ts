@@ -8,6 +8,12 @@ export class creditoSocioDTO {
   startDate: string='';
   endDate: string ='';
 }
+export class TicketDetailDTO {
+  store: number = 0;
+  date: string='';
+  ticketNumber: number =0;
+  cashRegister: number =0;
+}
 
 export const inventoryStockResumeLabels = {
   storeId: 'Tienda',

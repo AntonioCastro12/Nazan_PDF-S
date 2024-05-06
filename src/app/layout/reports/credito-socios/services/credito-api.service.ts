@@ -7,6 +7,7 @@ import {
   InventoryStockResumeDTO,
   InventoryStockResumeResponse,
   creditoSocioDTO,
+  TicketDetailDTO
 } from '../models';
 import { Favorite } from '@home-manager/models/bookmarks.model';
 
@@ -22,6 +23,19 @@ export class CreditoApiService {
     params['memberId'] = dto.memberId;
     params['startDate'] = dto.startDate;
     params['endDate'] = dto.endDate;
+    let response$: any = this._http
+      .get<any[]>(url, { params });
+    return response$;
+  }
+
+  // ticketDetail(dto:creditoSocioDTO){
+  ticketDetail(dto:TicketDetailDTO){
+    const url= `${environment.apiUrl}/api/membership-credit/ticket-resume`
+    const params: any = {};
+    params['store'] = dto.store;
+    params['date'] = dto.date;
+    params['ticketNumber'] = dto.ticketNumber;
+    params['cashRegister'] = dto.cashRegister;
     let response$: any = this._http
       .get<any[]>(url, { params });
     return response$;

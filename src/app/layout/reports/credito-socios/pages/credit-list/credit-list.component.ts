@@ -3,7 +3,8 @@ import {
   CreditoApiService,
   CreditoStateService,
 } from '../../services';
-import { inventoryStockResumeResponseName, CustomerInformation, AccountInformation, TicketInformation, membersAut,TicketResumeItem, TicketResumeTndr  } from '../../models';
+import { inventoryStockResumeResponseName, CustomerInformation, AccountInformation, TicketInformation, membersAut, TicketResumeItem, TicketResumeTndr, TicketDetailDTO } from '../../models';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'credit-list',
@@ -23,8 +24,8 @@ export class CreditListComponent {
   accountInformation = AccountInformation;
   ticketInformation = TicketInformation;
   memberAut = membersAut;
-  ticketResumeItem= TicketResumeItem;
-  ticketResumeTndr= TicketResumeTndr ; 
+  ticketResumeItem = TicketResumeItem;
+  ticketResumeTndr = TicketResumeTndr;
 
 
   searchText = '';
@@ -33,12 +34,51 @@ export class CreditListComponent {
   ticketSelected: string = '';
 
   constructor(
-    public _inventoryStockResume: CreditoStateService,
-    public _inventoryStockResumeApi: CreditoApiService
+    public _creditoStateService: CreditoStateService,
+    public _creditoServiceApi: CreditoApiService,
+
+    // public _inventoryStockResume: CreditoStateService,
+    // public _inventoryStockResumeApi: CreditoApiService
+
+    private _toastr: ToastrService
   ) { }
 
-  ticketResume(ticket: string) {
-        this.visible = true;
+  ticketResume(tienda:string, fecha_ticket:string, ticket:string, caja: string) {
+
+    let item: TicketDetailDTO = new TicketDetailDTO();
+    item={
+      store: Number(tienda),
+      ticketNumber: Number(ticket),
+      date:fecha_ticket.replace(/-/g, ""),
+      cashRegister: Number(caja)
+    }
+
+    this._creditoStateService.state.ticketResumeItemResponse = [];
+        this._creditoStateService.state.ticketResumeTndrResponse = [];
+        this._creditoStateService.state.isLoadingTicket = true;
+  
+
+    this._creditoServiceApi.ticketDetail(item).subscribe({
+      
+      next: (data: any) => {
+        console.log("Data recibida: ",data);
+        this._creditoStateService.state.ticketResumeItemResponse = data['item'];
+        this._creditoStateService.state.ticketResumeTndrResponse = data['tndr'];
+        this._creditoStateService.state.isLoadingTicket = false;
+        
+        
+
+      },
+      error: (error: { erros: { message: string | undefined; }; }) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        this._creditoStateService.state.isLoadingTicket = false;
+        console.error(error);
+      },
+      complete: () => {
+        this._creditoStateService.state.isLoadingTicket = false;
+      },
+    });
+    this.visible = true;
     this.ticketSelected = `Ticket # ${ticket}`;
   }
 
@@ -62,13 +102,5 @@ export class CreditListComponent {
     return diferenciaEnDias > 20;
   }
 
-  handleSearchRecords() {
-    // const list = this._inventoryStockResume.state.inventoryStockResumeResponse;
-    // this._inventoryStockResume.state.inventoryStockResumeResponseList =
-    //   list.filter((item) => objectContainsValue(item, this.searchText));
-
-    // console.log("Filter: ",this._inventoryStockResume.state.inventoryStockResumeResponseList);
-
-  }
 
 }

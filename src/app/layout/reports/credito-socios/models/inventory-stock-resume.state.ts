@@ -20,8 +20,10 @@ export class InventoryStockResumeState {
   accountInformation: AccountInformationResponse [] = []
   transactionsHistoryResponse: TransactionsHistoryResponse [] = []
   memberAut: AccountAutResponse [] = [];
-  ticketResumeResponse: TicketResumeItemResponse [] = []
-  ticketResumeTndrResponse:TicketResumeTndrResponse [] = [] 
+
+  //ticket detail response
+  ticketResumeItemResponse: TicketResumeItemResponse [] = [];
+  ticketResumeTndrResponse: TicketResumeTndrResponse [] = [];
 
 
   currentStore!: string;
@@ -29,5 +31,6 @@ export class InventoryStockResumeState {
 
   isVisibleForm: boolean = false;
   isLoadingList: boolean = false;
+  isLoadingTicket: boolean = false;
   isVisibleModal: boolean = false;
 }

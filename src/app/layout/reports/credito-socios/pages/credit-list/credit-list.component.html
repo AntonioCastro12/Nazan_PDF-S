@@ -1,40 +1,40 @@
 <main class="p-1">
 
   <div class="custom-grid card">
-    <p-progressSpinner *ngIf="_inventoryStockResume.state.isLoadingList"></p-progressSpinner>
-    <div *ngIf="!_inventoryStockResume.state.isLoadingList" class="custom-col-half ">
+    <p-progressSpinner *ngIf="_creditoStateService.state.isLoadingList"></p-progressSpinner>
+    <div *ngIf="!_creditoStateService.state.isLoadingList" class="custom-col-half ">
       <div class=" text-left">
         <h4>Información del socio</h4>
       </div>
       <div>
         <div>
           <div>
-            <p>No. Socio: <b> {{_inventoryStockResume.state.customerInformationResponse[0].no_socio}}</b></p>
+            <p>No. Socio: <b> {{_creditoStateService.state.customerInformationResponse[0].no_socio}}</b></p>
           </div>
-          <p>Nombre: <b>{{_inventoryStockResume.state.customerInformationResponse[0].nombre}}
-              {{_inventoryStockResume.state.customerInformationResponse[0].ap_paterno}}
-              {{_inventoryStockResume.state.customerInformationResponse[0].ap_materno}}</b> </p>
+          <p>Nombre: <b>{{_creditoStateService.state.customerInformationResponse[0].nombre}}
+              {{_creditoStateService.state.customerInformationResponse[0].ap_paterno}}
+              {{_creditoStateService.state.customerInformationResponse[0].ap_materno}}</b> </p>
         </div>
 
       </div>
     </div>
-    <div *ngIf="!_inventoryStockResume.state.isLoadingList" class="custom-col-half">
+    <div *ngIf="!_creditoStateService.state.isLoadingList" class="custom-col-half">
       <div class="text-left">
         <h4>Información del crédito</h4>
       </div>
       <div class="custom-grid">
         <div style="min-width: 50%;">
           <div>
-            <p>No. Cuenta: <b> {{_inventoryStockResume.state.accountInformation[0].no_cuenta}}</b></p>
+            <p>No. Cuenta: <b> {{_creditoStateService.state.accountInformation[0].no_cuenta}}</b></p>
           </div>
           <div>
-            <p>Estado: <b> {{_inventoryStockResume.state.accountInformation[0].estado}}</b></p>
+            <p>Estado: <b> {{_creditoStateService.state.accountInformation[0].estado}}</b></p>
           </div>
           <div>
-            <p>Fecha Apertura: <b> {{_inventoryStockResume.state.accountInformation[0].fecha_configuracion}}</b></p>
+            <p>Fecha Apertura: <b> {{_creditoStateService.state.accountInformation[0].fecha_configuracion}}</b></p>
           </div>
           <div>
-            <p>Cuenta Retenida: <b> {{_inventoryStockResume.state.accountInformation[0].cuenta_retenida}}</b></p>
+            <p>Cuenta Retenida: <b> {{_creditoStateService.state.accountInformation[0].cuenta_retenida}}</b></p>
           </div>
         </div>
         <div style="min-width: 50%;">
@@ -52,13 +52,13 @@
             </div>
             <div class="custom-col-half">
               <div>
-                <p> <b> {{_inventoryStockResume.state.accountInformation[0].lim_credito}}</b></p>
+                <p> <b> {{_creditoStateService.state.accountInformation[0].lim_credito}}</b></p>
               </div>
               <div>
-                <p> <b> {{_inventoryStockResume.state.accountInformation[0].cred_disponible}}</b></p>
+                <p> <b> {{_creditoStateService.state.accountInformation[0].cred_disponible}}</b></p>
               </div>
               <div>
-                <p> <b> {{_inventoryStockResume.state.accountInformation[0].saldo_pendiente}}</b></p>
+                <p> <b> {{_creditoStateService.state.accountInformation[0].saldo_pendiente}}</b></p>
               </div>
             </div>
           </div>
@@ -72,8 +72,8 @@
   <div class="col-6 text-left" style="margin-top: 20px;">
     <h4>Información de movimientos</h4>
   </div>
-  <p-table #dt2 [value]="_inventoryStockResume.state.transactionsHistoryResponse" [paginator]="true" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+  <p-table #dt2 [value]="_creditoStateService.state.transactionsHistoryResponse" [paginator]="true" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_creditoStateService.state.isLoadingList">
     <ng-template pTemplate="header">
       <tr class="text-sm">
         <th class="text-center" *ngFor="let header of ticketInformation" id="{{ header }}">
@@ -85,7 +85,7 @@
       <tr>
         <td [attr.colspan]="ticketInformation.length" class="text-center">
           {{
-          _inventoryStockResume.state.isLoadingList
+            _creditoStateService.state.isLoadingList
           ? TEMPLATE_TEXT.isLoadingOn
           : TEMPLATE_TEXT.isResultEmpty
           }}
@@ -94,7 +94,7 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-         <td class="text-center" (click)="ticketResume(report.ticket)">{{report.ticket}}</td>
+         <td class="text-center resume-btn" (click)="ticketResume( report.tienda, report.fecha_ticket, report.ticket, report.caja)">{{report.ticket}}</td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.total_ticket)"></td>
         <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.monto_a_credito)"></td>
@@ -121,8 +121,8 @@
       [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
       [maximizable]="true">
           
-      <p-table #dt2 [value]="_inventoryStockResume.state.ticketResumeTndrResponse" [rows]="15"
-    styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+      <p-table #dt2 [value]="_creditoStateService.state.ticketResumeTndrResponse" [rows]="15"
+    styleClass="mt-3 p-datatable-sm" [loading]="_creditoStateService.state.isLoadingTicket">
     <ng-template pTemplate="header">
       <tr class="text-sm">
         <th class="text-center" *ngFor="let header of ticketResumeTndr" id="{{ header }}">
@@ -134,7 +134,7 @@
       <tr>
         <td [attr.colspan]="ticketResumeTndr.length" class="text-center">
           {{
-          _inventoryStockResume.state.isLoadingList
+            _creditoStateService.state.isLoadingList
           ? TEMPLATE_TEXT.isLoadingOn
           : TEMPLATE_TEXT.isResultEmpty
           }}
@@ -143,12 +143,14 @@
     </ng-template>
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
-         <td class="text-center" >dato ticket</td>
+         <td class="text-center" >{{report.tndr_id}}</td>
+      
+         <td class="text-center" >{{report.amt}}</td>
       </tr>
     </ng-template>
   </p-table>
-  <p-table #dt2 [value]="_inventoryStockResume.state.ticketResumeResponse" [rows]="15"
-  styleClass="mt-3 p-datatable-sm" [loading]="_inventoryStockResume.state.isLoadingList">
+  <p-table #dt2 [value]="_creditoStateService.state.ticketResumeItemResponse" [rows]="15"
+  styleClass="mt-3 p-datatable-sm" [loading]="_creditoStateService.state.isLoadingTicket">
   <ng-template pTemplate="header">
     <tr class="text-sm">
       <th class="text-center" *ngFor="let header of ticketResumeItem" id="{{ header }}">
@@ -160,7 +162,7 @@
     <tr>
       <td [attr.colspan]="ticketResumeItem.length" class="text-center">
         {{
-        _inventoryStockResume.state.isLoadingList
+          _creditoStateService.state.isLoadingList
         ? TEMPLATE_TEXT.isLoadingOn
         : TEMPLATE_TEXT.isResultEmpty
         }}
@@ -169,7 +171,11 @@
   </ng-template>
   <ng-template pTemplate="body" let-report>
     <tr class="text-sm">
-       <td class="text-center" >dato ticket</td>
+       <td class="text-center" >{{report.Item}}</td>
+       <td class="text-center" >{{report.Articulo}}</td>
+       <td class="text-center" >{{report.Cantidad}}</td>
+       <td class="text-center" >{{report.Precio}}</td>
+       <td class="text-center" >{{report.Importe}}</td>
     </tr>
   </ng-template>
 </p-table>
