@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'filterListByFieldBefore',
+  name: 'filterListByField',
 })
-export class FilterListByFieldBeforePipe implements PipeTransform {
+export class filterListByFieldPipe implements PipeTransform {
   transform(arrayBefore: any[], searchText: string): any[] {
     // || searchText.length < 3
     if (searchText === '') {

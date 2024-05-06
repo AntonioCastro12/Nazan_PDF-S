@@ -11,7 +11,8 @@ import { OrdersDashboardStateService } from '../../../../services/orders-dashboa
           #dt2
           [value]="
             _ordersDashboard.state.orderStateInfo.week
-              | filterListByFieldBefore : _ordersDashboard.state.filter
+              | filterListByField : _ordersDashboard.state.filter
+              | filterListByFieldDays : _ordersDashboard.state.filterDays
           "
           [paginator]="false"
           [rows]="15"

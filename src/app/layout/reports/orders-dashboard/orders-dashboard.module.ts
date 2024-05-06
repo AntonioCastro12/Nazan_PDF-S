@@ -14,7 +14,6 @@ import { OrderDashboardFilterComponent } from './pages/order-dashboard-home/ui/o
 import { PrimeNgModule } from '@shared/vendor';
 import { FormsModule } from '@angular/forms';
 import { OrdersDashboardStoreSelectorComponent } from './pages/order-dashboard-home/ui/orders-dashboard-store-selector/orders-dashboard-store-selector.component';
-import { FilterListByFieldBeforePipe } from '@shared/pipes';
 import { CommonManagerModule } from '../../../shared/common-manager.module';
 
 @NgModule({

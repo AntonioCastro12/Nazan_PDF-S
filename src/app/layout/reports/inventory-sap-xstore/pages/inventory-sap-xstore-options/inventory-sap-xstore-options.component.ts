@@ -59,7 +59,7 @@ export class InventorySapXstoreOptionsComponent {
             data;
         },
         error: (error) => {
-          console.log(error);
+          console.error(error);
         },
         complete: () => {
           this._inventorySapXstoreApstate.state.isLoadingList = false;
@@ -106,7 +106,7 @@ export class InventorySapXstoreOptionsComponent {
       },
       error: (error) => {
         this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-        console.log(error);
+        console.error(error);
       },
       complete: () => {
         this.isLoading = false;

@@ -86,7 +86,7 @@ export class InventoryComparisonFormComponent {
     //       this._inventoryComparison.state.inventoryComparisonResponse = data;
     //     },
     //     error: (error) => {
-    //       console.log(error);
+    //       console.error(error);
     //     },
     //     complete: () => {
     //       this._inventoryComparison.state.isLoadingList = false;

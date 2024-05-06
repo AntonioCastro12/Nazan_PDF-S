@@ -59,7 +59,7 @@ export class PointProgramDetailWalletOptionsComponent {
         },
         error: (error) => {
           this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-          console.log(error);
+          console.error(error);
         },
         complete: () => {
           this._pointProgramDetailWallet.state.isLoadingList = false;

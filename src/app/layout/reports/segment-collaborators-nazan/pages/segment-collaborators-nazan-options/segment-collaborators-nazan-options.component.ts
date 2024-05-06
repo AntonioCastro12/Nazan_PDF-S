@@ -54,7 +54,7 @@ export class SegmentCollaboratorsNazanOptionsComponent {
           data;
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
       },
       complete: () => {
         this._segmentCollaboratorsNazan.state.isLoadingList = false;

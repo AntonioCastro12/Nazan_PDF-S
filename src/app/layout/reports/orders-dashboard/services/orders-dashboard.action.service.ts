@@ -13,6 +13,8 @@ export class OrdersDashboardActionService {
   _toastr = inject(ToastrService);
 
   onOrdersDashboardInfo(store: string) {
+    this._ordersDashboard.state.isLoaddingInfo = true;
+    this._ordersDashboard.state.isVisibleInfo = false;
     this._ordersDashboardApi.ordersDashboardInfo(store).subscribe({
       next: (response) => {
         this._ordersDashboard.state.orderStateInfo = response;
@@ -21,13 +23,20 @@ export class OrdersDashboardActionService {
           this._ordersDashboard.state.orderStateInfo.totalsByStatusFinal +=
             x.qty;
         });
+        this._ordersDashboard.state.isVisibleInfo = true;
+        this._ordersDashboard.state.isLoaddingInfo = false;
       },
       error: (error) => {
-        this._toastr.error('Ups... ha ocurrido un error', error.error.message);
-        console.log(error);
+        this._toastr.error(
+          error.error.errors[0].message,
+          'Ups... ha ocurrido un error'
+        );
+        console.error(error);
+        this._ordersDashboard.state.isLoaddingInfo = false;
       },
       complete: () => {
         this._ordersDashboard.state.isLoadingList = false;
+        this._ordersDashboard.state.isLoaddingInfo = false;
       },
     });
   }

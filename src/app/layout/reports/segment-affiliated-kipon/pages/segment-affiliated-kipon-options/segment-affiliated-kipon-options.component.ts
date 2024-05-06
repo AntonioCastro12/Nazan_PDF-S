@@ -59,7 +59,7 @@ export class SegmentAffiliatedKiponOptionsComponent {
         },
         error: (error) => {
           this._toastr.error('Opps ha ocurrido un error', error.errors.message);
-          console.log(error);
+          console.error(error);
         },
         complete: () => {
           this._segmentAffiliatedKipon.state.isLoadingList = false;

@@ -73,7 +73,7 @@ export class SegmentCollaboratorsNazanFormComponent {
           data;
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
         this._toastr.error('Opps ha ocurrido un error', error.erros.message);
       },
       complete: () => {

@@ -112,13 +112,11 @@ export class InventoryCycleCountFormComponent {
       )
       .subscribe({
         next: (data) => {
-          console.log({ data });
           this._inventoryCycleCount.state.inventoryCycleCountResponse = data;
           this._inventoryCycleCount.state.inventoryCycleCountResponseList =
             data;
         },
         error: (error) => {
-          console.log({ error });
           this._toastr.error('Opps ha ocurrido un error', error.errors.message);
           console.error(error);
         },

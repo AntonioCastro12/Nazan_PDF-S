@@ -7,8 +7,11 @@ class OrdersDashboardState {
   storeSelected: StoreEntity = new StoreEntity();
   storeList: StoreEntity[] = [];
   isLoadingList: boolean = false;
+  isVisibleInfo: boolean = false;
+  isLoaddingInfo: boolean = false;
   orderStateInfo: OrdersDashboardResponse = new OrdersDashboardResponse();
   filter: string = '';
+  filterDays: string = '';
 }
 
 @Injectable({

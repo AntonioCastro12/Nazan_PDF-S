@@ -55,7 +55,7 @@ export class SalesWholesaleOptionsComponent {
         },
         error: (error) => {
           this._toastr.error('Opps ha ocurrido un error', error.error.message);
-          console.log(error);
+          console.error(error);
         },
         complete: () => {
           this._salesWholesale.state.isLoadingList = false;

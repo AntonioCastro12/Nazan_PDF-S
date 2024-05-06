@@ -11,8 +11,8 @@ export class OrdersDashboardApiService {
   constructor(private _http: HttpClient) {}
 
   ordersDashboardInfo(store: string): Observable<OrdersDashboardResponse> {
-    const url = `http://localhost:3151/api/orders-dashboard?storeId=${store}`;
-    //const url = `${environment.apiUrl}/api/orders-dashboard?storeId=${store}`;
+    //const url = `http://localhost:3151/api/orders-dashboard?storeId=${store}`;
+    const url = `${environment.apiUrl}/api/orders-dashboard?storeId=${store}`;
     let response$: any = this._http
       .get<OrdersDashboardResponse>(url)
       .pipe(map((data: any) => data));

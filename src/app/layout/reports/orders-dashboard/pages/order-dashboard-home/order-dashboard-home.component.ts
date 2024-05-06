@@ -1,5 +1,5 @@
 import { filter } from 'rxjs';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { OrdersDashboardStateService } from '../../services/orders-dashboard-state.service';
 import { OrdersDashboardActionService } from '../../services/orders-dashboard.action.service';
 
@@ -12,7 +12,10 @@ import { OrdersDashboardActionService } from '../../services/orders-dashboard.ac
         <order-dashboard-info></order-dashboard-info>
         <orders-dashboard-store-selector />
       </article>
-      <section class="card flex flex-row gap-3">
+      <section
+        class="card flex flex-row gap-3"
+        *ngIf="_ordersDashboard.state.isVisibleInfo"
+      >
         <article class="basis-1/2">
           <order-dashboard-status />
         </article>
@@ -21,20 +24,32 @@ import { OrdersDashboardActionService } from '../../services/orders-dashboard.ac
         </article>
       </section>
 
-      <section class="card">
+      <section class="card" *ngIf="_ordersDashboard.state.isVisibleInfo">
         <order-dashboard-filter />
       </section>
 
-      <section class="card">
+      <section class="card" *ngIf="_ordersDashboard.state.isVisibleInfo">
         <order-dashboard-before-list />
         <order-dashboard-month-list />
         <order-dashboard-week-list />
+      </section>
+      <section
+        class="card text-center"
+        *ngIf="!_ordersDashboard.state.isVisibleInfo"
+      >
+        <p>Seleccione una tienda</p>
+      </section>
+      <section
+        class="text-center"
+        *ngIf="_ordersDashboard.state.isLoaddingInfo"
+      >
+        <p-progressSpinner ariaLabel="loading"></p-progressSpinner>
       </section>
     </ng-container>
   `,
   styles: ``,
 })
-export class OrderDashboardHomeComponent implements OnInit {
+export class OrderDashboardHomeComponent implements OnInit, OnDestroy {
   _ordersDashboard = inject(OrdersDashboardStateService);
   _ordersDashboardAction = inject(OrdersDashboardActionService);
 
@@ -46,14 +61,9 @@ export class OrderDashboardHomeComponent implements OnInit {
     this._ordersDashboard.state.storeList = JSON.parse(
       sessionStorage.getItem('storeList') as string
     ).filter((x: any) => x.type == 'W');
+  }
 
-    console.log('Selected store:', this._ordersDashboard.state.storeSelected);
-    console.log('Store list:', this._ordersDashboard.state.storeList);
-
-    if (this._ordersDashboard.state.storeSelected.id) {
-      this._ordersDashboardAction.onOrdersDashboardInfo(
-        this._ordersDashboard.state.storeSelected.id
-      );
-    }
+  ngOnDestroy(): void {
+    this._ordersDashboard.state.isVisibleInfo = false;
   }
 }

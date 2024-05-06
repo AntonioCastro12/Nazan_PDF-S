@@ -10,6 +10,7 @@ import { OrdersDashboardResponse } from '../../../../models/orders-dashboard.res
     <p-dropdown
       inputId="storeId"
       [options]="_ordersDashboard.state.storeList"
+      [filter]="true"
       [(ngModel)]="_ordersDashboard.state.storeSelected"
       optionLabel="name"
       placeholder="{{ TEMPLATE_TXT.selectStore }}"

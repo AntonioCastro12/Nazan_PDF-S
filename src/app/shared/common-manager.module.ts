@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
-import { FilterListByFieldBeforePipe } from './pipes';
+import { filterListByFieldPipe } from './pipes';
+import { filterListByFieldDaysPipe } from './pipes/filter-list-by-field-days.pipe';
 
 @NgModule({
-  declarations: [FilterListByFieldBeforePipe],
+  declarations: [filterListByFieldPipe, filterListByFieldDaysPipe],
   imports: [],
-  exports: [FilterListByFieldBeforePipe],
+  exports: [filterListByFieldPipe, filterListByFieldDaysPipe],
 })
 export class CommonManagerModule {}
