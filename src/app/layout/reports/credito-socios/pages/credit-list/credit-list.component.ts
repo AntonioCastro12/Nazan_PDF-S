@@ -3,7 +3,7 @@ import {
   CreditoApiService,
   CreditoStateService,
 } from '../../services';
-import { inventoryStockResumeResponseName, CustomerInformation, AccountInformation, TicketInformation, membersAut, TicketResumeItem, TicketResumeTndr, TicketDetailDTO } from '../../models';
+import { CustomerInformation, AccountInformation, TicketInformation, membersAut, TicketResumeItem, TicketResumeTndr, TicketDetailDTO } from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -19,7 +19,6 @@ export class CreditListComponent {
     isResultEmpty: 'No hay datos para mostrar',
   };
 
-  inventoryStockResumeResponseName = inventoryStockResumeResponseName;
   customerInformation = CustomerInformation;
   accountInformation = AccountInformation;
   ticketInformation = TicketInformation;
@@ -37,8 +36,6 @@ export class CreditListComponent {
     public _creditoStateService: CreditoStateService,
     public _creditoServiceApi: CreditoApiService,
 
-    // public _inventoryStockResume: CreditoStateService,
-    // public _inventoryStockResumeApi: CreditoApiService
 
     private _toastr: ToastrService
   ) { }
@@ -84,11 +81,8 @@ export class CreditListComponent {
 
 
   handleSearch() { }
-  handleChart() { }
-  handleRefresh() { }
 
   handleDownload() { }
-  handleFavorite() { }
 
   highlightSearchText(searchText: string, field: any) {
     return field;

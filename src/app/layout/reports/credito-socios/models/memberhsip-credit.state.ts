@@ -1,15 +1,13 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { InventoryStockResumeDTO, creditoSocioDTO } from './inventory-stock-resume.dto';
+import { InventoryStockResumeDTO, creditoSocioDTO } from './memberhsip-credit-resume.dto';
 import {
-  InventoryStockDetailResponse,
-  InventoryStockResumeResponse,
   CustomerInformationResponse,
   AccountInformationResponse,
   TransactionsHistoryResponse,
   TicketResumeItemResponse,
   TicketResumeTndrResponse,
   AccountAutResponse
-} from './inventory-stock-resume.response';
+} from './memberhsip-credit.response';
 
 export class InventoryStockResumeState {
 
