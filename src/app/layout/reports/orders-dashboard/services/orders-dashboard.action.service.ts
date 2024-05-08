@@ -27,10 +27,11 @@ export class OrdersDashboardActionService {
         this._ordersDashboard.state.isLoaddingInfo = false;
       },
       error: (error) => {
-        this._toastr.error(
-          error.error.errors[0].message,
-          'Ups... ha ocurrido un error'
-        );
+        const showError = error.error.name.includes('tbNAZ_OrderDetail')
+          ? 'Esta tienda no está configurada para este reporte'
+          : error.error.errors[0].message;
+
+        this._toastr.error(showError, 'Ups... ha ocurrido un error');
         console.error(error);
         this._ordersDashboard.state.isLoaddingInfo = false;
       },
