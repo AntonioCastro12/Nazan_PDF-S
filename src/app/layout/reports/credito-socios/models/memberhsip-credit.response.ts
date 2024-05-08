@@ -97,6 +97,6 @@ export const TicketResumeItem: any[] = [
   'Importe'
 ]
 export const TicketResumeTndr: any[] = [
-  'tndr_id',
-  'amt'
+  'Forma de pago',
+  'Total'
 ]

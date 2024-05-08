@@ -52,13 +52,13 @@
             </div>
             <div class="custom-col-half">
               <div>
-                <p> <b> {{_creditoStateService.state.accountInformation[0].lim_credito}}</b></p>
+                <p> <b>$ {{_creditoStateService.state.accountInformation[0].lim_credito}}</b></p>
               </div>
               <div>
-                <p> <b> {{_creditoStateService.state.accountInformation[0].cred_disponible}}</b></p>
+                <p> <b>$ {{_creditoStateService.state.accountInformation[0].cred_disponible}}</b></p>
               </div>
               <div>
-                <p> <b> {{_creditoStateService.state.accountInformation[0].saldo_pendiente}}</b></p>
+                <p> <b>$ {{_creditoStateService.state.accountInformation[0].saldo_pendiente}}</b></p>
               </div>
             </div>
           </div>
@@ -95,18 +95,18 @@
     <ng-template pTemplate="body" let-report>
       <tr class="text-sm">
          <td class="text-center resume-btn" (click)="ticketResume( report.tienda, report.fecha_ticket, report.ticket, report.caja)">{{report.ticket}}</td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_ticket)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.total_ticket)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.monto_a_credito)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.tipo_movimiento)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.forma_pago)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.ref_bancaria)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.ref_ticket)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.fecha_ref_deposito)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.tienda)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.caja)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.no_cliente)"></td>
-        <td class="text-center" [innerHTML]="highlightSearchText(searchText, report.nombre)"></td>
+        <td class="text-center" >{{report.fecha_ticket}}</td>
+        <td class="text-center" >$ {{report.total_ticket}}</td>
+        <td class="text-center" >$ {{report.monto_a_credito}}</td>
+        <td class="text-center" >{{report.tipo_movimiento}}</td>
+        <td class="text-center" >{{report.forma_pago}}</td>
+        <td class="text-center" >{{report.ref_bancaria}}</td>
+        <td class="text-center" >{{report.ref_ticket}}</td>
+        <td class="text-center" >{{report.fecha_ref_deposito}}</td>
+        <td class="text-center" >{{report.tienda}}</td>
+        <td class="text-center" >{{report.caja}}</td>
+        <td class="text-center" >{{report.no_cliente}}</td>
+        <td class="text-center" >{{report.nombre}}</td>
       </tr>
     </ng-template>
   </p-table>
@@ -145,7 +145,7 @@
       <tr class="text-sm">
          <td class="text-center" >{{report.tndr_id}}</td>
       
-         <td class="text-center" >{{report.amt}}</td>
+         <td class="text-center" >$ {{report.amt}}</td>
       </tr>
     </ng-template>
   </p-table>
@@ -174,8 +174,8 @@
        <td class="text-center" >{{report.Item}}</td>
        <td class="text-center" >{{report.Articulo}}</td>
        <td class="text-center" >{{report.Cantidad}}</td>
-       <td class="text-center" >{{report.Precio}}</td>
-       <td class="text-center" >{{report.Importe}}</td>
+       <td class="text-center" >$ {{report.Precio}}</td>
+       <td class="text-center" >$ {{report.Importe}}</td>
     </tr>
   </ng-template>
 </p-table>
