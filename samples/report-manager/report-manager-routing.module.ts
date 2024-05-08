@@ -15,32 +15,70 @@ import { ReportSegmentAffiliatedKipon } from './pages/report-segment-affiliated-
 import { ReportSegmentCollaboratorsNazan } from './pages/report-segment-collaborators-nazan/report-segment-collaborators-nazan.component';
 import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cycle-count/report-inventory-cycle-count.component';
 import { ReportSalesWholesaleComponent } from './pages/report-sales-wholesale/report-sales-wholesale.component';
+import { ReportSalesSearchDelivered } from './pages';
 
-
-const routes: Routes = [{ path: '', redirectTo: 'inventories', pathMatch: 'full' }, {
-  path: '',
-  component: ReportManagerComponent,
-  children: [
-    { path: 'inventories', redirectTo: 'inventories/kardex', pathMatch: 'full' },
-    { path: 'inventories/kardex', component: ReportInventoryKardexComponent },
-    { path: 'inventories/inventory-stock/resume', component: ReportInventoryStockResumeComponent },
-    { path: 'inventories/comparison', component: ReportInventoryComparisonComponent },
-    { path: 'inventories/pod', component: ReportInventoryPodComponent },
-    { path: 'inventories/sap-xstore', component: ReportInventorySapXtoreComponent },
-    { path: 'inventories/cycle-count', component: ReportInventoryCycleCountComponent },
-    { path: 'point-program/total-movement', component: ReportPointProgramTotalMovementComponent },
-    { path: 'point-program/detail-points', component: ReportPointProgramDetailPointsComponent },
-    { path: 'point-program/detail-wallet', component: ReportPointProgramDetailWalletComponent },
-    { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
-    { path: 'sales/general-sales', component: ReportSalesGeneralSales },
-    { path: 'sales/wholesale-sales', component: ReportSalesWholesaleComponent },
-    { path: 'segments/affiliated-kipon', component: ReportSegmentAffiliatedKipon },
-    { path: 'segments/collaborators-nazan', component: ReportSegmentCollaboratorsNazan },
-  ],
-},];
+const routes: Routes = [
+  { path: '', redirectTo: 'inventories', pathMatch: 'full' },
+  {
+    path: '',
+    component: ReportManagerComponent,
+    children: [
+      {
+        path: 'inventories',
+        redirectTo: 'inventories/kardex',
+        pathMatch: 'full',
+      },
+      { path: 'inventories/kardex', component: ReportInventoryKardexComponent },
+      {
+        path: 'inventories/inventory-stock/resume',
+        component: ReportInventoryStockResumeComponent,
+      },
+      {
+        path: 'inventories/comparison',
+        component: ReportInventoryComparisonComponent,
+      },
+      { path: 'inventories/pod', component: ReportInventoryPodComponent },
+      {
+        path: 'inventories/sap-xstore',
+        component: ReportInventorySapXtoreComponent,
+      },
+      {
+        path: 'inventories/cycle-count',
+        component: ReportInventoryCycleCountComponent,
+      },
+      {
+        path: 'point-program/total-movement',
+        component: ReportPointProgramTotalMovementComponent,
+      },
+      {
+        path: 'point-program/detail-points',
+        component: ReportPointProgramDetailPointsComponent,
+      },
+      {
+        path: 'point-program/detail-wallet',
+        component: ReportPointProgramDetailWalletComponent,
+      },
+      { path: 'sales/invoice-total', component: ReportSalesInvoiceTotal },
+      { path: 'sales/general-sales', component: ReportSalesGeneralSales },
+      {
+        path: 'sales/wholesale-sales',
+        component: ReportSalesWholesaleComponent,
+      },
+      { path: 'sales/search-delivered', component: ReportSalesSearchDelivered },
+      {
+        path: 'segments/affiliated-kipon',
+        component: ReportSegmentAffiliatedKipon,
+      },
+      {
+        path: 'segments/collaborators-nazan',
+        component: ReportSegmentCollaboratorsNazan,
+      },
+    ],
+  },
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ReportManagerRoutingModule { }
+export class ReportManagerRoutingModule {}

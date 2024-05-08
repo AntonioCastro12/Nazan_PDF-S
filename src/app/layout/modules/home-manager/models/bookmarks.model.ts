@@ -36,6 +36,11 @@ export const mapUrlReport = [
     showPath: 'sales-wholesale/report',
   },
   {
+    url: 'sales/products-delivered',
+    name: 'Reporte de Productos de Busqueda APP entregados',
+    showPath: 'sales-search-delivered/report',
+  },
+  {
     url: 'inventories/kardex-product',
     name: 'Kardex de inventario',
     showPath: 'inventory-kardex/report',

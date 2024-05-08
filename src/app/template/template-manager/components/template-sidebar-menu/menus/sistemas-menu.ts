@@ -32,7 +32,6 @@ export const sistemasMenu = [
           },
           {
             label: 'Diferencia de inventario SAP vs Xstore',
-
             routerLink: ['inventory-sap-xstore'],
           },
         ],
@@ -55,17 +54,18 @@ export const sistemasMenu = [
       },
       {
         label: 'Ventas',
-
         items: [
           {
             label: 'Venta de Mayoreos',
-
             routerLink: ['sales-wholesale'],
           },
           {
             label: 'Dashboard de órdenes',
-
             routerLink: ['orders-dashboard'],
+          },
+          {
+            label: 'Reporte de Productos de Busqueda APP entregados',
+            routerLink: ['sales-search-delivered'],
           },
         ],
       },

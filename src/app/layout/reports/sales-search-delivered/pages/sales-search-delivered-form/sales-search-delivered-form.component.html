@@ -1,0 +1,71 @@
+<!-- Form ******************************************************* -->
+<section class="container" *ngIf="_SalesSearchDelivered.state.isVisibleForm">
+  <div class="mt-5 mb-2">
+    <span>{{ TEMPLATE_TXT.title }}:</span>
+  </div>
+  <form
+    [formGroup]="_SalesSearchDelivered.state.form"
+    [autocomplete]="'off'"
+    *ngIf="_SalesSearchDelivered.state.form"
+    class="w-full"
+  >
+    <article class="formgrid grid">
+      <!-- ************************************************* -->
+      <section #storeId class="mb-1 col-12 md:col-12 lg:col-12">
+        <div class="form-field--container">
+          <label for="storeId">{{ SalesSearchDeliveredLabels.storeId }}</label>
+
+          <p-autoComplete
+            inputId="storeId"
+            formControlName="storeId"
+            [dropdown]="true"
+            field="name"
+            placeholder="{{ TEMPLATE_TXT.storeId }}"
+            [suggestions]="suggestions"
+            (completeMethod)="onFilterStores($event)"
+            styleClass="w-full"
+          ></p-autoComplete>
+
+          <div *ngIf="fg['storeId'].dirty">
+            <small
+              class="p-error block"
+              *ngIf="fg['storeId'].errors?.['required']"
+              >{{ TEMPLATE_TXT.required }}</small
+            >
+          </div>
+        </div>
+      </section>
+    </article>
+
+    <!-- Buttons -->
+
+    <article class="flex align-items-center justify-content-start mt-5">
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-filter-slash"
+          class="p-button-secondary p-button-rounded"
+          pTooltip="{{ TEMPLATE_TXT.labelReset }}"
+          tooltipPosition="top"
+          (click)="onReset()"
+          [disabled]="!_SalesSearchDelivered.state.form.dirty"
+        ></button>
+      </div>
+      <div class="ml-3">
+        <button
+          pButton
+          pRipple
+          icon="pi pi-check"
+          class="p-button-warning p-button-rounded"
+          (click)="onSubmit()"
+          [disabled]="!_SalesSearchDelivered.state.form.valid"
+          pTooltip="{{ TEMPLATE_TXT.labelSave }}"
+          tooltipPosition="top"
+        ></button>
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>

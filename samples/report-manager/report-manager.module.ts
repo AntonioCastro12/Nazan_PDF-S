@@ -20,6 +20,7 @@ import { ReportInventoryCycleCountComponent } from './pages/report-inventory-cyc
 import { ReportSalesWholesaleComponent } from './pages/report-sales-wholesale/report-sales-wholesale.component';
 import { ReportInventoryKardexComponent } from './pages/report-inventory-cardex/report-inventory-kardex.component';
 import { ReportInventoryStockResumeComponent } from './pages/report-inventory-stock-resume/report-inventory-stock-resume.component';
+import { ReportSalesSearchDelivered } from './pages/report-sales-search-delivered/report-sales-search-delivered.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ReportInventoryStockResumeComponent } from './pages/report-inventory-st
     ReportSegmentCollaboratorsNazan,
     ReportInventoryCycleCountComponent,
     ReportSalesWholesaleComponent,
+    ReportSalesSearchDelivered,
   ],
   imports: [
     LuxonModule,
@@ -48,4 +50,4 @@ import { ReportInventoryStockResumeComponent } from './pages/report-inventory-st
     ChartModule,
   ],
 })
-export class ReportManagerModule { }
+export class ReportManagerModule {}
