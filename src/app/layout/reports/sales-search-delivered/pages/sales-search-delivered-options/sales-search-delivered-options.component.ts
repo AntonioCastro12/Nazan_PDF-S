@@ -57,8 +57,7 @@ export class SalesSearchDeliveredOptionsComponent {
     /* pass here the table id */
     let element = [
       ...this._SalesSearchDelivered.state.SalesSearchDeliveredResponse,
-      ...this._SalesSearchDelivered.state
-        .SalesSearchDeliveredResponsePayFormsList,
+      ...this._SalesSearchDelivered.state.SalesSearchDeliveredResponseOnTheWay,
     ];
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(element);
 
@@ -75,11 +74,7 @@ export class SalesSearchDeliveredOptionsComponent {
     const data: any = {
       searchCriteria: {
         cardNumber:
-          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.cardNumber,
-        startDate:
-          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.startDate,
-        endDate:
-          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.endDate,
+          this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.storeId,
       },
       url: '/sales/general-sales',
     };

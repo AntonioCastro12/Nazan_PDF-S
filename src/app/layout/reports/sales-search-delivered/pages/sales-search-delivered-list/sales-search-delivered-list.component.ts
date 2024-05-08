@@ -13,8 +13,8 @@ export class SalesSearchDeliveredListComponent {
     isLoadingOn: 'Por favor espere...',
     isLoadingOff: 'Tenemos resultados',
     isResultEmpty: 'No hay datos para mostrar',
-    headerSales: 'Ventas',
-    headerPayForms: 'Formas de pago',
+    headerReceived: 'Recibidos',
+    headerOnTheWay: 'En Camino',
   };
 
   SalesSearchDeliveredResponseName = SalesSearchDeliveredResponseName;
@@ -36,16 +36,19 @@ export class SalesSearchDeliveredListComponent {
 
   handleSearchRecords() {
     const list = this._salesSearchDelivered.state.SalesSearchDeliveredResponse;
-    this._salesSearchDelivered.state.SalesSearchDeliveredResponseSalesList =
+    this._salesSearchDelivered.state.SalesSearchDeliveredResponseReceived =
+      list.filter((item) => objectContainsValue(item, this.searchText));
+
+    this._salesSearchDelivered.state.SalesSearchDeliveredResponseOnTheWay =
       list.filter((item) => objectContainsValue(item, this.searchText));
   }
 
-  handleSearchRecordsPayment() {
-    const list =
-      this._salesSearchDelivered.state.SalesSearchDeliveredResponsePayFormsList;
-    this._salesSearchDelivered.state.SalesSearchDeliveredResponsePayFormsList =
-      list.filter((item) => objectContainsValue(item, this.searchText));
-  }
+  // handleSearchRecordsPayment() {
+  //   const list =
+  //     this._salesSearchDelivered.state.SalesSearchDeliveredResponsePayFormsList;
+  //   this._salesSearchDelivered.state.SalesSearchDeliveredResponsePayFormsList =
+  //     list.filter((item) => objectContainsValue(item, this.searchText));
+  // }
 
   onConvertUnicodeText(text: string) {
     return unicodeToChar(text);

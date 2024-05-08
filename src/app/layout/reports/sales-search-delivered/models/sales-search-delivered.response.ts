@@ -1,26 +1,31 @@
 export class SalesSearchDeliveredResponse {
-  titleLine: string | null = null;
-  countTransactions: number | null = null;
-  totalMoney: number | null = null;
-  translation?: string | null = null;
+  codigo: string | null = null;
+  nombre: string | null = null;
+  talla: string | null = null;
+  cantidad: number | null = null;
+  ordenSurtido: string | null = null;
+  listaEmbarque: string | null = null;
+  recibido: string | null = null;
+  socio: string | null = null;
+  fechaRecibido: string | null = null;
+  tienda: string | null = null;
+  nombreSocio: string | null = null;
+  telefono: string | null = null;
+  entregado: boolean | null = null;
 }
 
 export const SalesSearchDeliveredResponseName = {
-  titleLine: 'Texto',
-  countTransactions: 'Cantidad transacciones',
-  totalMoney: 'Valor',
-};
-
-export class SalesGeneralPaymentResponse {
-  titleLine: string | null = null;
-  countTransactions: number | null = null;
-  totalMoney: number | null = null;
-  translation: string | null = null;
-}
-
-export const SalesGeneralPaymentResponseName = {
-  titleLine: 'Texto',
-  countTransactions: 'Cantidad transacciones',
-  totalMoney: 'Valor',
-  translation: 'Traducción',
+  code: 'Código',
+  name: 'Nombre',
+  size: 'Talla',
+  quantity: 'Cantidad',
+  orderAssortment: 'Orden Surtido',
+  boardinglist: 'Lista de Embarque',
+  received: 'Recibido',
+  member: 'Socio',
+  dateReceived: 'Fecha de Recibido',
+  store: 'Tienda',
+  memberName: 'Nombre Socio',
+  phone: 'Teléfono',
+  delivered: 'Entregado',
 };

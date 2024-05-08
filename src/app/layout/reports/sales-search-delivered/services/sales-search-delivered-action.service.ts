@@ -17,16 +17,17 @@ export class SalesSearchDeliveredActionService {
   onGetList(SalesSearchDeliveredDTO: SalesSearchDeliveredDTO) {
     this._SalesSearchDeliveredApi.getList(SalesSearchDeliveredDTO).subscribe({
       next: (data) => {
-        this._SalesSearchDelivered.state.SalesSearchDeliveredResponse =
-          data.sales.data;
-        this._SalesSearchDelivered.state.SalesSearchDeliveredResponseSalesList =
-          data.sales.data;
-        this._SalesSearchDelivered.state.SalesSearchDeliveredResponsePayFormsList =
-          data.paymentMethod.data;
+        this._SalesSearchDelivered.state.SalesSearchDeliveredResponse = data;
+        const onTheWay = data.filter((item: any) => item.entregado === false);
+        const received = data.filter((item: any) => item.entregado === true);
+        this._SalesSearchDelivered.state.SalesSearchDeliveredResponseOnTheWay =
+          onTheWay;
+        this._SalesSearchDelivered.state.SalesSearchDeliveredResponseReceived =
+          received;
       },
       error: (error) => {
-        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
         console.error(error);
+        this._toastr.error('Opps ha ocurrido un error', error.erros?.message);
       },
       complete: () => {
         this._SalesSearchDelivered.state.isLoadingList = false;

@@ -1,16 +1,13 @@
 import { UntypedFormGroup } from '@angular/forms';
 import { SalesSearchDeliveredDTO } from './sales-search-delivered.dto';
-import {
-  SalesGeneralPaymentResponse,
-  SalesSearchDeliveredResponse,
-} from './sales-search-delivered.response';
+import { SalesSearchDeliveredResponse } from './sales-search-delivered.response';
 
 export class SalesSearchDeliveredState {
   SalesSearchDeliveredDTO: SalesSearchDeliveredDTO =
     new SalesSearchDeliveredDTO();
   SalesSearchDeliveredResponse: SalesSearchDeliveredResponse[] = [];
-  SalesSearchDeliveredResponseSalesList: SalesSearchDeliveredResponse[] = [];
-  SalesSearchDeliveredResponsePayFormsList: SalesGeneralPaymentResponse[] = [];
+  SalesSearchDeliveredResponseReceived: SalesSearchDeliveredResponse[] = [];
+  SalesSearchDeliveredResponseOnTheWay: SalesSearchDeliveredResponse[] = [];
 
   form!: UntypedFormGroup;
 

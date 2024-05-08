@@ -4,16 +4,12 @@ import {
   UntypedFormBuilder,
   Validators,
 } from '@angular/forms';
-import { objectContainsValue } from '@shared/functions';
 import { DateTime } from 'luxon';
 import {
   SalesSearchDeliveredDTO,
   SalesSearchDeliveredLabels,
 } from '../../models';
-import {
-  SalesSearchDeliveredApiService,
-  SalesSearchDeliveredStateService,
-} from '../../services';
+import { SalesSearchDeliveredStateService } from '../../services';
 import { SalesSearchDeliveredActionService } from '../../services/sales-search-delivered-action.service';
 import { Store } from '@report-manager/models';
 import { UserEntity } from '@user-manager/models';
@@ -27,6 +23,7 @@ import { CommonStateService } from '@report-manager/services';
 })
 export class SalesSearchDeliveredFormComponent {
   TEMPLATE_TXT = {
+    storeId: 'Tienda',
     labelReturn: 'Volver a usuarios',
     labelReset: 'Restaurar filtros',
     labelSave: 'Buscar',
@@ -72,9 +69,7 @@ export class SalesSearchDeliveredFormComponent {
 
   onFillForm() {
     this._SalesSearchDelivered.state.form = this._formBuilder.group({
-      cardNumber: ['', [Validators.required], []],
-      startDate: [this.today, [Validators.required], []],
-      endDate: [this.today, [Validators.required], []],
+      storeId: ['', [Validators.required], []],
     });
   }
 
@@ -87,9 +82,7 @@ export class SalesSearchDeliveredFormComponent {
     let item: SalesSearchDeliveredDTO = new SalesSearchDeliveredDTO();
     let formItems = this._SalesSearchDelivered.state.form.value;
     item = {
-      cardNumber: formItems.cardNumber,
-      startDate: formItems.startDate,
-      endDate: formItems.endDate,
+      storeId: formItems.storeId.id,
     };
     this._SalesSearchDelivered.state.SalesSearchDeliveredDTO = item;
 
@@ -106,15 +99,38 @@ export class SalesSearchDeliveredFormComponent {
     const userRol = this.userSelected.privileges.reportesadministrativos;
     const userStore = this.userSelected.tienda;
 
-    if (userRol.includes('sistemas') || userRol.includes('staff-ingresos')) {
-      stores.push(...this.storeList);
-    }
+    // if (userRol.includes('tienda')) {
+    //   const temp = this.storeList.filter((store) => store.id === userStore);
+    //   stores.push(...temp);
+    // }
+
+    // if (userRol.includes('staff-menudeo')) {
+    //   const temp = this.storeList.filter((x) => x.type === 'R');
+    //   stores.push(...temp);
+    // }
+
+    // if (userRol.includes('staff-mayoreo')) {
+    //   const temp = this.storeList.filter((x) => x.type === 'W');
+    //   stores.push(...temp);
+    // }
+
+    // if (
+    //   userRol.includes('sistemas') ||
+    //   userRol.includes('staff-inventarios-ost') ||
+    //   userRol.includes('staff-planeacion')
+    // ) {
+    //   stores.push(...this.storeList);
+    // }
+
+    const temp = this.storeList.filter((x) => x.type === 'W');
+    stores.push(...temp);
 
     for (const store of stores) {
       if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
         filteredStores.push(store);
       }
     }
+
     this.suggestions = filteredStores;
   }
 

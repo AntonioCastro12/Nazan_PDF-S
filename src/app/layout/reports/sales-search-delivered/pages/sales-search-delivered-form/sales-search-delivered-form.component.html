@@ -11,73 +11,25 @@
   >
     <article class="formgrid grid">
       <!-- ************************************************* -->
-      <section #storeId class="mb-1 col-12 md:col-12 lg:col-4">
+      <section #storeId class="mb-1 col-12 md:col-12 lg:col-12">
         <div class="form-field--container">
-          <label for="storeId">{{ SalesSearchDeliveredLabels.cardNumber }}</label>
+          <label for="storeId">{{ SalesSearchDeliveredLabels.storeId }}</label>
 
           <p-autoComplete
-            inputId="cardNumber"
-            formControlName="cardNumber"
+            inputId="storeId"
+            formControlName="storeId"
             [dropdown]="true"
             field="name"
-            placeholder="{{ TEMPLATE_TXT.cardNumber }}"
+            placeholder="{{ TEMPLATE_TXT.storeId }}"
             [suggestions]="suggestions"
             (completeMethod)="onFilterStores($event)"
             styleClass="w-full"
           ></p-autoComplete>
 
-          <div *ngIf="fg['cardNumber'].dirty">
+          <div *ngIf="fg['storeId'].dirty">
             <small
               class="p-error block"
-              *ngIf="fg['cardNumber'].errors?.['required']"
-              >{{ TEMPLATE_TXT.required }}</small
-            >
-          </div>
-        </div>
-      </section>
-      <!-- ************************************************* -->
-      <section #startDate class="mb-1 col-12 md:col-12 lg:col-4">
-        <div class="form-field--container">
-          <label for="startDate">{{
-            SalesSearchDeliveredLabels.startDate
-          }}</label>
-
-          <p-calendar
-            formControlName="startDate"
-            [readonlyInput]="true"
-            dateFormat="yy-mm-dd"
-            [dataType]="'string'"
-            styleClass="w-full"
-          ></p-calendar>
-
-          <div *ngIf="fg['startDate'].dirty">
-            <small
-              class="p-error block"
-              *ngIf="fg['startDate'].errors?.['required']"
-              >{{ TEMPLATE_TXT.required }}</small
-            >
-          </div>
-        </div>
-      </section>
-      <!-- ************************************************* -->
-      <section #endDate class="mb-1 col-12 md:col-12 lg:col-4">
-        <div class="form-field--container">
-          <label for="endDate">{{
-            SalesSearchDeliveredLabels.endDate
-          }}</label>
-
-          <p-calendar
-            formControlName="endDate"
-            [readonlyInput]="true"
-            dateFormat="yy-mm-dd"
-            [dataType]="'string'"
-            styleClass="w-full"
-          ></p-calendar>
-
-          <div *ngIf="fg['endDate'].dirty">
-            <small
-              class="p-error block"
-              *ngIf="fg['endDate'].errors?.['required']"
+              *ngIf="fg['storeId'].errors?.['required']"
               >{{ TEMPLATE_TXT.required }}</small
             >
           </div>
