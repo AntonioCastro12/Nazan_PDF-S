@@ -76,7 +76,7 @@ export class SalesSearchDeliveredOptionsComponent {
         cardNumber:
           this._SalesSearchDelivered.state.SalesSearchDeliveredDTO.storeId,
       },
-      url: '/sales/general-sales',
+      url: '/sales/products-delivered',
     };
 
     this._SalesSearchDeliveredAction._SalesSearchDeliveredApi

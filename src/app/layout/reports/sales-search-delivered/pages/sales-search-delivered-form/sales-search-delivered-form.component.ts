@@ -137,7 +137,7 @@ export class SalesSearchDeliveredFormComponent {
   onManageFav() {
     const report: any = this.route.snapshot.queryParamMap.get('favorite')
       ? this._common.state.favorites.find(
-          (item) => item.url === '/sales/general-sales'
+          (item) => item.url === '/sales/products-delivered'
         )
       : this._common.state.historic.find(
           (item) =>
@@ -152,7 +152,6 @@ export class SalesSearchDeliveredFormComponent {
 
       this._SalesSearchDelivered.state.form = this._formBuilder.group({
         storeId: selectedStore,
-        businessDate: report.searchCriteria.businessDate,
       });
 
       this.onSubmit();

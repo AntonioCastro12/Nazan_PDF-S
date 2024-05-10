@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { TemplateStateService } from 'src/app/template';
+import { SalesSearchDeliveredStateService } from './services';
 
 @Component({
   selector: 'sales-search-delivered',
@@ -7,7 +8,10 @@ import { TemplateStateService } from 'src/app/template';
   styleUrls: ['./sales-search-delivered.component.scss'],
 })
 export class SalesSearchDeliveredComponent {
-  constructor(private _template: TemplateStateService) {
+  constructor(
+    private _template: TemplateStateService,
+    public _SalesSearchDelivered: SalesSearchDeliveredStateService
+  ) {
     let userSelected = JSON.parse(
       sessionStorage.getItem('userSelected') as string
     );
@@ -16,5 +20,6 @@ export class SalesSearchDeliveredComponent {
 
   ngOnInit() {
     this._template.state.sidebarOverlayVisible = false;
+    this._SalesSearchDelivered.state.isVisibleForm = true;
   }
 }
