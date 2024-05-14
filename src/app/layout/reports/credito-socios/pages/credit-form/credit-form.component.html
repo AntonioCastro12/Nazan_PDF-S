@@ -1,0 +1,57 @@
+<!-- Form ******************************************************* -->
+<section class="container" *ngIf="_creditoStateService.state.isVisibleForm">
+  <div class="mt-5 mb-2">
+    <span>Búsqueda por:</span>
+  </div>
+
+  <!-- Form para realizar busqueda por numero de socio -->
+  <form [formGroup]="_creditoStateService.state.form" [autocomplete]="'off'" class="w-full">
+    <article class="formgrid grid">
+      <!-- ************************************************* -->
+      <section #memberId class="mb-1 col-12 md:col-12 lg:col-3">
+        <div class="form-field--container">
+          <label for="memberId">Socio</label>
+          <input  placeholder="Número de socio" inputId="memberId" formControlName="memberId" type="text"
+            pInputText />
+        </div>
+      </section>
+      <section #memberId class="mb-1 col-12 md:col-6 lg:col-2">
+        <div class="form-field--container">
+          <label for="startDate">Desde</label>
+          <p-calendar
+            formControlName="startDate"
+            [readonlyInput]="true"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
+          ></p-calendar>
+        </div>
+      </section>
+      <section #memberId class="mb-1 col-12 md:col-6 lg:col-2">
+        <div class="form-field--container">
+          <label for="endDate">Hasta</label>
+          <p-calendar
+            formControlName="endDate"
+            [readonlyInput]="true"
+            dateFormat="yy-mm-dd"
+            [dataType]="'string'"
+          ></p-calendar>
+        </div>
+      </section>
+    </article>
+
+    <!-- boton para socio -->
+    <article class="flex align-items-center justify-content-start mt-5">
+      <div class="ml-3">
+        <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
+          pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
+          [disabled]="!_creditoStateService.state.form.dirty"></button>
+      </div>
+      <div class="ml-3">
+        <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
+          pTooltip="Buscar" tooltipPosition="top" [disabled]="!_creditoStateService.state.form.valid"></button>
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>

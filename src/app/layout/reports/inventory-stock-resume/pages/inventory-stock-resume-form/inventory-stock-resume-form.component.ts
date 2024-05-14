@@ -99,6 +99,8 @@ export class InventoryStockResumeFormComponent {
           this._inventoryStockResume.state.inventoryStockResumeResponse = data;
           this._inventoryStockResume.state.inventoryStockResumeResponseList =
             data;
+
+          console.log("Datos enviados en api: ",this._inventoryStockResume.state.inventoryStockResumeDTO);
         },
         error: (error) => {
           this._toastr.error('Opps ha ocurrido un error', error.erros.message);

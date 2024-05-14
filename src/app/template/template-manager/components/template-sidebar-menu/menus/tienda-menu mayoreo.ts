@@ -27,8 +27,14 @@ export const tiendaMenuMayoreo = [
 
             routerLink: ['inventory-stock-resume'],
           },
+          
         ],
       },
+      {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      }
     ],
   },
 ];
