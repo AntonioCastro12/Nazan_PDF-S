@@ -78,10 +78,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "nazan-admin-reports-frontend:build:production"
+              "browserTarget": "nazan-admin-reports-frontend:build:production"
             },
             "development": {
-              "buildTarget": "nazan-admin-reports-frontend:build:development"
+              "browserTarget": "nazan-admin-reports-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "nazan-admin-reports-frontend:build"
+            "browserTarget": "nazan-admin-reports-frontend:build"
           }
         },
         "test": {
