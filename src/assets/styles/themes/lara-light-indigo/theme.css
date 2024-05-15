@@ -5979,7 +5979,7 @@ p-treeselect.p-treeselect-clearable .p-treeselect-clear-icon {
 }
 .p-panelmenu .p-panelmenu-content {
   padding: 0.25rem 0;
-  border: 1px solid #dee2e6;
+  /* border: 1px solid #dee2e6; */
   background: #ffffff;
   color: #495057;
   margin-bottom: 4px;
