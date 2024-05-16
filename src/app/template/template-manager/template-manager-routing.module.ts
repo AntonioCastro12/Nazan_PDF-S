@@ -16,16 +16,23 @@ const routes: Routes = [
             'src/app/layout/modules/home-manager/home-manager.module'
           ).then((m) => m.HomeManagerModule),
       },
-      // {
-      //   path: 'reports',
-      //   loadChildren: () =>
-      //     import('samples/report-manager/report-manager.module').then(
-      //       (m) => m.ReportManagerModule
-      //     ),
-      // },
+      {
+        path: 'credito-socios',
+        loadChildren: () =>
+          import('../../layout/reports/credito-socios/credito-socios.module').then(
+            (m) => m.CreditoSociosModule
+          ),
+      },
 
       {
         path: 'inventory-kardex',
+        loadChildren: () =>
+          import(
+            'src/app/layout/reports/inventory-kardex/inventory-kardex.module'
+          ).then((m) => m.InventoryKardexModule),
+      },
+      {
+        path: 'prueba',
         loadChildren: () =>
           import(
             'src/app/layout/reports/inventory-kardex/inventory-kardex.module'
