@@ -23,7 +23,13 @@ const routes: Routes = [
             (m) => m.CreditoSociosModule
           ),
       },
-
+      {
+        path: 'tiempo-aire-gral',
+        loadChildren: () =>
+          import('../../layout/reports/tiempo-aire-gral/tiempo-aire-gral.module').then(
+            (m) => m.TiempoAireGralModule
+          ),
+      },
       {
         path: 'inventory-kardex',
         loadChildren: () =>
