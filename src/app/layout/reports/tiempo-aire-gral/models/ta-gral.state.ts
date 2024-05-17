@@ -1,5 +1,5 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { creditoSocioDTO } from './ta-gral.dto';
+import { taGralDTO } from './ta-gral.dto';
 import {
   CustomerInformationResponse,
   AccountInformationResponse,
@@ -13,8 +13,9 @@ export class TaGralResumeState {
 
 
   //datos de credito recepcion
-  creditoSocioDTO:creditoSocioDTO= new creditoSocioDTO;
+  taGralDTO:taGralDTO= new taGralDTO;
   customerInformationResponse: CustomerInformationResponse [] = [ ];
+
   accountInformation: AccountInformationResponse [] = []
   transactionsHistoryResponse: TransactionsHistoryResponse [] = []
   memberAut: AccountAutResponse [] = [];

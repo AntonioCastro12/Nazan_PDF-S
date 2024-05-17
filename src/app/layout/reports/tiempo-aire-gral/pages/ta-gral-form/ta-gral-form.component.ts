@@ -6,15 +6,13 @@ import {
 } from '@angular/forms';
 
 import { DateTime } from 'luxon';
-import {
-  creditoSocioDTO
-} from '../../models';
 
 import {
   TaGralApiService,
   TaGralStateService,
 } from '../../services';
 
+import { taGralDTO } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@report-manager/models';
@@ -37,7 +35,7 @@ export class TaGralFormComponent {
   constructor(
     private _formBuilder: UntypedFormBuilder,
     public _taGralStateService: TaGralStateService,
-    public _creditServiceApi: TaGralApiService,
+    public _taServiceApi: TaGralApiService,
     private route: ActivatedRoute,
     public _common: CommonStateService,
     private _toastr: ToastrService
@@ -61,7 +59,7 @@ export class TaGralFormComponent {
     placeholderOrigin: 'Seleccionar origen',
   };
 
-  value="";
+  value = "";
 
   ngOnInit(): void {
     this.onFillForm();
@@ -69,10 +67,9 @@ export class TaGralFormComponent {
 
   onFillForm() {
     this._taGralStateService.state.form = this._formBuilder.group({
-      memberId: ['', [Validators.required], []],
       startDate: [this.today, [Validators.required], []],
       endDate: [this.today, [Validators.required], []],
-    storeId: ['', [Validators.required], []],
+      storeId: ['', [Validators.required], []],
     });
   }
 
@@ -80,22 +77,44 @@ export class TaGralFormComponent {
     return this._taGralStateService.state.form.controls;
   }
 
-  // socioSubmit() {
+  socioSubmit() {
+    let formItems = this._taGralStateService.state.form.value;
+    this._taGralStateService.state.isLoadingList = true;
+    let item: taGralDTO = new taGralDTO();
+    item = {
+      // storeId: formItems.storeId.id,
+      storeId: '105',
+      startDate: formItems.startDate.replace(/-/g, ""),
+      endDate: formItems.endDate.replace(/-/g, "")
+    }
+    this._taGralStateService.state.taGralDTO = item;
+    console.log("item: ", this._taGralStateService.state.taGralDTO);
 
-  //   this._taGralStateService.state.isLoadingList = true;
-  //   let item: creditoSocioDTO = new creditoSocioDTO();
-  //   let formItems = this._taGralStateService.state.form.value;
-  //   item = {
-  //     memberId: formItems.memberId,
-  //     startDate: formItems.startDate.replace(/-/g, ""),
-  //     endDate: formItems.endDate.replace(/-/g, "")
-  //   }
+    this._taServiceApi.getTaGral(this._taGralStateService.state.taGralDTO).subscribe({
+      next: (data: any) => {
+
+        console.log("Data recibida: ", data);
+        
+
+      },
+      error: (error: { erros: { message: string | undefined; }; }) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.error(error);
+      },
+      complete: () => {
+        this._taGralStateService.state.isLoadingList = false;
+      },
+    });
+
+
+  }
+
   //   this._taGralStateService.state.creditoSocioDTO = item;
 
   //   this._taGralStateService.state.isLoadingList = true;
   //   this._creditServiceApi.membershipCreditHistory(this._taGralStateService.state.creditoSocioDTO).subscribe({
   //     next: (data: any) => {
-   
+
   //       console.log("Data recibida: ",data);
   //       this._taGralStateService.state.customerInformationResponse = data['memberDesc'];
 
@@ -110,7 +129,7 @@ export class TaGralFormComponent {
   //       this._taGralStateService.state.transactionsHistoryResponse.forEach(transaccion => {
   //         transaccion.fecha_ticket = transaccion.fecha_ticket?.split('T')[0];
   //       });
-    
+
   //     },
   //     error: (error: { erros: { message: string | undefined; }; }) => {
   //       this._toastr.error('Opps ha ocurrido un error', error.erros.message);
