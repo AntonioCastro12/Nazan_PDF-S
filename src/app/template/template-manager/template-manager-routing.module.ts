@@ -31,6 +31,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'tiempo-aire-detalle',
+        loadChildren: () =>
+          import('../../layout/reports/tiempo-aire-detalle/tiempo-aire-detalle.module').then(
+            (m) => m.TiempoAireDetalleModule
+          ),
+      },
+      {
         path: 'inventory-kardex',
         loadChildren: () =>
           import(

@@ -43,11 +43,11 @@ export const tiendaMenuMayoreo = [
 
             routerLink: ['tiempo-aire-gral'],
           },
-          // {
-          //   label: 'Existencia de inventario',
+          {
+            label: 'Reporte Detalle Recargas TA',
 
-          //   routerLink: ['inventory-stock-resume'],
-          // },
+            routerLink: ['tiempo-aire-detalle'],
+          },
           
         ],
       },

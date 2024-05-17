@@ -3,7 +3,7 @@ import {
   TaGralApiService,
   TaGralStateService,
 } from '../../services';
-import { CustomerInformation, AccountInformation, TicketInformation, membersAut, TicketResumeItem, TicketResumeTndr, TaGralResume} from '../../models';
+import {TaGralResume} from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -19,12 +19,7 @@ export class TaGralListComponent {
     isResultEmpty: 'No hay datos para mostrar',
   };
 
-  customerInformation = CustomerInformation;
-  accountInformation = AccountInformation;
   taGralResume = TaGralResume;
-  memberAut = membersAut;
-  ticketResumeItem = TicketResumeItem;
-  ticketResumeTndr = TicketResumeTndr;
 
 
   searchText = '';

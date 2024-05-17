@@ -1,8 +1,8 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { taGralDTO } from './ta-gral.dto';
+import { taGralDTO } from './ta-det.dto';
 import {
   taGralResponse
-} from './ta-gral.response';
+} from './ta-det.response';
 
 export class TaGralResumeState {
 
