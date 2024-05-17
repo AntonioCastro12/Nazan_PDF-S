@@ -82,8 +82,8 @@ export class TaGralFormComponent {
     this._taGralStateService.state.isLoadingList = true;
     let item: taGralDTO = new taGralDTO();
     item = {
-      // storeId: formItems.storeId.id,
-      storeId: '105',
+      storeId: formItems.storeId.id,
+      // storeId: '105',
       startDate: formItems.startDate.replace(/-/g, ""),
       endDate: formItems.endDate.replace(/-/g, "")
     }
