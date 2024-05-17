@@ -45,30 +45,20 @@ export class TaGralOptionsComponent {
   handleChart() { }
 
   handleDownload() {
-    const filename = `${ReportsExcelNames.CREDITO_DE_SOCIOS}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
-
+    const filename = `${ReportsExcelNames.TA_GENERAL}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+  
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-
-    const { customerInformationResponse, accountInformation, transactionsHistoryResponse } = this._taGralStateService.state;
-
-    const ws1: XLSX.WorkSheet = XLSX.utils.json_to_sheet(customerInformationResponse);
-
-    const ws2: XLSX.WorkSheet = XLSX.utils.json_to_sheet(accountInformation);
-
-    const ws3: XLSX.WorkSheet = XLSX.utils.json_to_sheet(transactionsHistoryResponse);
-
-    const combinedData: any[][] = [
-      ...(<any[][]>XLSX.utils.sheet_to_json(ws1, { header: 1 })),
-      [], // Fila en blanco
-      ...(<any[][]>XLSX.utils.sheet_to_json(ws2, { header: 1 })),
-      [], // Fila en blanco
-      ...(<any[][]>XLSX.utils.sheet_to_json(ws3, { header: 1 }))
-    ];
-    const combinedSheet: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(combinedData);
-    XLSX.utils.book_append_sheet(wb, combinedSheet, 'CombinedSheet');
-
-    // Escribir archivo
+  
+    const { taGralResponse } = this._taGralStateService.state;
+  
+    // Convertir los datos de accountInformation en una hoja de cálculo
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(taGralResponse);
+    
+    // Añadir la hoja de cálculo al libro de trabajo
+    XLSX.utils.book_append_sheet(wb, ws, 'AccountInformation');
+  
+    // Escribir el archivo
     XLSX.writeFile(wb, filename);
-
   }
+  
 }
