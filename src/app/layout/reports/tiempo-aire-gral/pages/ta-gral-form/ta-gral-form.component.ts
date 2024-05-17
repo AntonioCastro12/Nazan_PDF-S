@@ -94,6 +94,9 @@ export class TaGralFormComponent {
       next: (data: any) => {
 
         console.log("Data recibida: ", data);
+        this._taGralStateService.state.taGralResponse=data;
+
+        console.log("data en servicio: ", this._taGralStateService.state.taGralResponse);
         
 
       },
@@ -105,42 +108,7 @@ export class TaGralFormComponent {
         this._taGralStateService.state.isLoadingList = false;
       },
     });
-
-
   }
-
-  //   this._taGralStateService.state.creditoSocioDTO = item;
-
-  //   this._taGralStateService.state.isLoadingList = true;
-  //   this._creditServiceApi.membershipCreditHistory(this._taGralStateService.state.creditoSocioDTO).subscribe({
-  //     next: (data: any) => {
-
-  //       console.log("Data recibida: ",data);
-  //       this._taGralStateService.state.customerInformationResponse = data['memberDesc'];
-
-  //       this._taGralStateService.state.accountInformation = data['creditDesc'];
-  //       this._taGralStateService.state.accountInformation.forEach(credito => {
-  //         credito.fecha_configuracion = credito.fecha_configuracion?.split('T')[0];
-  //       });
-
-  //       this._taGralStateService.state.memberAut = data['memberAut'];
-
-  //       this._taGralStateService.state.transactionsHistoryResponse = data['transactionHistory'];
-  //       this._taGralStateService.state.transactionsHistoryResponse.forEach(transaccion => {
-  //         transaccion.fecha_ticket = transaccion.fecha_ticket?.split('T')[0];
-  //       });
-
-  //     },
-  //     error: (error: { erros: { message: string | undefined; }; }) => {
-  //       this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-  //       console.error(error);
-  //     },
-  //     complete: () => {
-  //       this._taGralStateService.state.isLoadingList = false;
-  //     },
-  //   });
-  // }
-
 
   filterStores(event: { query: string }) {
     const filteredStores: Store[] = [];

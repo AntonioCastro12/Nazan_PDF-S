@@ -6,7 +6,8 @@ import {
   TransactionsHistoryResponse,
   TicketResumeItemResponse,
   TicketResumeTndrResponse,
-  AccountAutResponse
+  AccountAutResponse,
+  taGralResponse
 } from './ta-gral.response';
 
 export class TaGralResumeState {
@@ -14,6 +15,10 @@ export class TaGralResumeState {
 
   //datos de credito recepcion
   taGralDTO:taGralDTO= new taGralDTO;
+  taGralResponse: taGralResponse[]=[];
+
+
+
   customerInformationResponse: CustomerInformationResponse [] = [ ];
 
   accountInformation: AccountInformationResponse [] = []
