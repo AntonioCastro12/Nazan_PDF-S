@@ -93,8 +93,8 @@ export class TaGralFormComponent {
     this._taServiceApi.getTaGral(this._taGralStateService.state.taGralDTO).subscribe({
       next: (data: any) => {
 
-        console.log("Data recibida: ", data);
-        this._taGralStateService.state.taGralResponse=data;
+        console.log("Data recibida: ", data.resume);
+        this._taGralStateService.state.taGralResponse=data.resume;
 
         console.log("data en servicio: ", this._taGralStateService.state.taGralResponse);
         
