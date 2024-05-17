@@ -1,1 +1,74 @@
-<p>ta-det-form works!</p>
+<!-- Form ******************************************************* -->
+<section class="container" *ngIf="_taDetStateService.state.isVisibleForm">
+    <div class="mt-5 mb-2">
+      <span>Búsqueda por:</span>
+    </div>
+  
+    <!-- Form para realizar busqueda por numero de socio -->
+    <form [formGroup]="_taDetStateService.state.form" [autocomplete]="'off'" class="w-full">
+      <article class="formgrid grid">
+        <section #storeId class="mb-1 col-12 md:col-12 lg:col-6">
+          <div class="form-field--container">
+            <label for="storeId">Tienda</label>
+  
+            <p-autoComplete
+              inputId="storeId"
+              formControlName="storeId"
+              [dropdown]="true"
+              field="name"
+              placeholder="{{ TEMPLATE_TXT.selectStore }}"
+              [suggestions]="suggestions"
+              (completeMethod)="filterStores($event)"
+              styleClass="w-full"
+            ></p-autoComplete>
+  
+            <div *ngIf="fg['storeId'].dirty">
+              <small
+                class="p-error block"
+                *ngIf="fg['storeId'].errors?.['required']"
+                >{{ TEMPLATE_TXT.required }}</small
+              >
+            </div>
+          </div>
+        </section>
+        <section #memberId class="mb-1 col-12 md:col-6 lg:col-2">
+          <div class="form-field--container">
+            <label for="startDate">Desde</label>
+            <p-calendar
+              formControlName="startDate"
+              [readonlyInput]="true"
+              dateFormat="yy-mm-dd"
+              [dataType]="'string'"
+            ></p-calendar>
+          </div>
+        </section>
+        <section #memberId class="mb-1 col-12 md:col-6 lg:col-2">
+          <div class="form-field--container">
+            <label for="endDate">Hasta</label>
+            <p-calendar
+              formControlName="endDate"
+              [readonlyInput]="true"
+              dateFormat="yy-mm-dd"
+              [dataType]="'string'"
+            ></p-calendar>
+          </div>
+        </section>
+      </article>
+  
+      <!-- boton para socio -->
+      <article class="flex align-items-center justify-content-start mt-5">
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
+            pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
+            [disabled]="!_taDetStateService.state.form.dirty"></button>
+        </div>
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
+            pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taDetStateService.state.form.valid"></button>
+          <!-- <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button> -->
+        </div>
+      </article>
+    </form>
+  </section>
+  
+  <p-toast></p-toast>

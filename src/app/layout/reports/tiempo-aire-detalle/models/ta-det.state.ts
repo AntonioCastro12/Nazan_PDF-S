@@ -1,15 +1,14 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { taGralDTO } from './ta-det.dto';
-import {
-  taGralResponse
+import { taDetDTO } from './ta-det.dto';
+import { airTimeDetailResonpse
 } from './ta-det.response';
 
-export class TaGralResumeState {
+export class TaDetResumeState {
 
 
   //datos de credito recepcion
-  taGralDTO:taGralDTO= new taGralDTO;
-  taGralResponse: taGralResponse[]=[];
+  taDetDTO:taDetDTO= new taDetDTO;
+  taDetResponse: airTimeDetailResonpse[]=[];
 
   currentStore!: string;
   form!: UntypedFormGroup;

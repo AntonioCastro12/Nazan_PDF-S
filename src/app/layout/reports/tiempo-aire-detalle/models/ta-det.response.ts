@@ -1,22 +1,24 @@
-
-
-
-
-export class taGralResponse{
-  business_date: string | null | undefined = null;
-  item_desc: string | null = null;
-  item_id: string | null = null;
-  quantity: number = 0;
+export class airTimeDetailResonpse {
   rtl_loc_id: number = 0;
-total: string | null = null;
+  business_date: null | string | undefined= null;
+  wkstn_id: number = 0;
+  trans_seq: number = 0;
+  quantity: number = 0;
+  item_id: null | string = null;
+  item_desc: null | string = null;
+  total: null | string = null;
+  employee_id: number = 0;
 }
 
-export const TaGralResume: any [] = [
+export const TaDetResume: any[] = [
   'Fecha',
   'Tienda',
   'Descripción',
   'Id',
   'Cantidad',
-  'Total'
-
+  'Total',
+  'No. Empleado',
+  'Nombre',
+  'wkstn_id',
+  'transacción'
 ]

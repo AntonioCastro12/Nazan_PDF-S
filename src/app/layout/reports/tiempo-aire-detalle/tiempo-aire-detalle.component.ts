@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class TiempoAireDetalleComponent {
 
-  // TEMPLATE_TEXT = {
-  //   title: ' Reporte General Recargas TA',
-  // };
+  TEMPLATE_TEXT = {
+    title: ' Reporte Detalle Recargas TA',
+  };
 
 }
