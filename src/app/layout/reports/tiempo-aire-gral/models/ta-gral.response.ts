@@ -103,7 +103,7 @@ export const TicketResumeTndr: any[] = [
 
 
 export class taGralResponse{
-  business_date: string | null = null;
+  business_date: string | null | undefined = null;
   item_desc: string | null = null;
   item_id: string | null = null;
   quantity: number = 0;

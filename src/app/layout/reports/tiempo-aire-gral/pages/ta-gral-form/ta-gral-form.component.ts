@@ -95,6 +95,9 @@ export class TaGralFormComponent {
 
         console.log("Data recibida: ", data.resume);
         this._taGralStateService.state.taGralResponse=data.resume;
+        this._taGralStateService.state.taGralResponse.forEach(transaccion => {
+          transaccion.business_date = transaccion.business_date?.split('T')[0];
+        });
 
         console.log("data en servicio: ", this._taGralStateService.state.taGralResponse);
         
