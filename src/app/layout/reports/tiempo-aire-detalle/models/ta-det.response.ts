@@ -8,17 +8,18 @@ export class airTimeDetailResonpse {
   item_desc: null | string = null;
   total: null | string = null;
   employee_id: number = 0;
+  name: null | string = null;
 }
 
 export const TaDetResume: any[] = [
-  'Fecha',
   'Tienda',
-  'Descripción',
-  'Id',
+  'Fecha',
+  'Caja',
+  'Ticket',
   'Cantidad',
+  'Ítem id',
+  'Descripción',
   'Total',
-  'No. Empleado',
-  'Nombre',
-  'wkstn_id',
-  'transacción'
+  'Id empleado',
+  'Nombre de empleado'
 ]

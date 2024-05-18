@@ -45,7 +45,7 @@ export class TaDetOptionsComponent {
   handleChart() { }
 
   handleDownload() {
-    const filename = `${ReportsExcelNames.TA_GENERAL}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    const filename = `${ReportsExcelNames.TA_DETALLE}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
   
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
   
