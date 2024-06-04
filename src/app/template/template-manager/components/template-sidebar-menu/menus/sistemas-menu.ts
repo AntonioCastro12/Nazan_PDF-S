@@ -37,6 +37,11 @@ export const sistemasMenu = [
         ],
       },
       {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+      {
         label: 'Segmentos',
 
         items: [
@@ -97,6 +102,19 @@ export const sistemasMenu = [
             routerLink: ['point-program-detail-wallet'],
           },
         ],
+      },
+      {
+        label:'Catálogos Digitales',
+        items:[
+        {
+          label:'Calculadora de Incrementos',
+          routerLink: ['uno'],
+        },
+        {
+          label:'Catálogos PDF Preciado',
+          routerLink: ['dos'],
+        }
+        ]
       },
       {
         label: 'Segmentos',
