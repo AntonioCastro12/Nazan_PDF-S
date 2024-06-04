@@ -37,6 +37,11 @@ export const sistemasMenu = [
         ],
       },
       {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+      {
         label: 'Segmentos',
 
         items: [
