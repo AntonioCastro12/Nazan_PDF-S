@@ -99,6 +99,19 @@ export const sistemasMenu = [
         ],
       },
       {
+        label:'Catálogos Digitales',
+        items:[
+        {
+          label:'Calculadora de Incrementos',
+          routerLink: ['uno'],
+        },
+        {
+          label:'Catálogos PDF Preciado',
+          routerLink: ['dos'],
+        }
+        ]
+      },
+      {
         label: 'Segmentos',
 
         items: [
