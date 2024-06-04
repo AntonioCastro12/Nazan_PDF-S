@@ -42,6 +42,22 @@ export const sistemasMenu = [
         routerLink: ['credito-socios'],
       },
       {
+        label: 'Tiempo Aire',
+        items: [
+          {
+            label: 'Reporte General Recargas TA',
+
+            routerLink: ['tiempo-aire-gral'],
+          },
+          {
+            label: 'Reporte Detalle Recargas TA',
+
+            routerLink: ['tiempo-aire-detalle'],
+          },
+          
+        ],
+      },
+      {
         label: 'Segmentos',
 
         items: [
@@ -108,7 +124,7 @@ export const sistemasMenu = [
         items:[
         {
           label:'Calculadora de Incrementos',
-          routerLink: ['uno'],
+          routerLink: ['calc-incremento'],
         },
         {
           label:'Catálogos PDF Preciado',

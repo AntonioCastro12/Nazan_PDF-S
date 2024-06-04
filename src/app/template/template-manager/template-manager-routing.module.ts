@@ -17,6 +17,13 @@ const routes: Routes = [
           ).then((m) => m.HomeManagerModule),
       },
       {
+        path: 'calc-incremento',
+        loadChildren: () =>
+          import('../../layout/reports/calc-inc/calc-inc.module').then(
+            (m) => m.CalcIncModule
+          ),
+      },
+      {
         path: 'credito-socios',
         loadChildren: () =>
           import('../../layout/reports/credito-socios/credito-socios.module').then(

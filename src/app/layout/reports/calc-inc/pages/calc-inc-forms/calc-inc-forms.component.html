@@ -1,0 +1,44 @@
+<!-- Form ******************************************************* -->
+<section class="container" *ngIf="_taGralStateService.state.isVisibleForm">
+  <div class="mt-5 mb-2">
+    <h5>Catálogo:</h5>
+
+  </div>
+
+  <!-- Form para realizar busqueda por numero de socio -->
+  <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
+    <article class="formgrid grid">
+      <section #storeId class="mb-1 col-12 md:col-12 lg:col-6">
+        <div class="form-field--container">
+          <div class="card">
+            <form class="flex align-items-center gap-1" [formGroup]="formGroup">
+              <p-checkbox formControlName="city" value="New York" inputId="ny" />
+              <label for="ny">New York</label>
+            </form>
+          </div>
+        </div>
+      </section>
+      <section #memberId class="mb-1 col-12 md:col-6 lg:col-6">
+        <div class="form-field--container">
+          <!-- Nuevos datos -->
+        </div>
+      </section>
+    </article>
+
+    <!-- boton para socio -->
+    <article class="flex align-items-center justify-content-start mt-5">
+      <div class="ml-3">
+        <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
+          pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
+          [disabled]="!_taGralStateService.state.form.dirty"></button>
+      </div>
+      <div class="ml-3">
+        <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
+          pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
+        <!-- <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button> -->
+      </div>
+    </article>
+  </form>
+</section>
+
+<p-toast></p-toast>
