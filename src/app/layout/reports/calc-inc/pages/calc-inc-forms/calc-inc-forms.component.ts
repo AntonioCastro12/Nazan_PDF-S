@@ -28,11 +28,11 @@ import { CommonStateService } from '@report-manager/services';
   styleUrl: './calc-inc-forms.component.scss'
 })
 export class CalcIncFormsComponent {
+  value = "";
 
+  selectedCategory: any = null;
   formGroup: FormGroup | undefined | any;
-
-  checked:boolean=true;
-
+  checked: boolean = true;
   today = DateTime.now().toFormat('yyyy-LL-dd');
   storeList: Store[];
   suggestions: Store[] = [];
@@ -52,7 +52,13 @@ export class CalcIncFormsComponent {
     );
   }
 
-  
+  ngOnInit(): void {
+    console.log("ng on init");
+    this.onFillForm();
+    this.getCatalogos();
+  }
+
+
 
   TEMPLATE_TXT = {
     labelReturn: 'Volver a usuarios',
@@ -67,29 +73,35 @@ export class CalcIncFormsComponent {
     placeholderOrigin: 'Seleccionar origen',
   };
 
-  value = "";
-
-  ngOnInit(): void {
-    console.log("ng on init");
-    this.onFillForm();
-    this.getCatalogos();
-  }
-  selectedCategory: any = null;
+  
 
 
-  getCatalogos(){
-    this._taGralStateService.state.isLoadingCatalogues=true;
-    this._taServiceApi.catActuales().subscribe((data:any)=>{
-      this._taGralStateService.state.catActuales = data;
-      console.log("Data: ", this._taGralStateService.state.catActuales);
-    });
+  getCatalogos() {
+    this._taGralStateService.state.isLoadingCatalogues = true;
+    this._taServiceApi.catActuales().subscribe(
+
+     { next: (data: any) => {
+      this._taGralStateService.state.catActuales = data.resume;
+        console.log("Data: ", this._taGralStateService.state.catActuales);
+      },
+      error: (error: { erros: { message: string | undefined; }; }) => {
+        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+        console.error(error);
+        this._taGralStateService.state.isLoadingCatalogues = false;
+      },
+      complete: () => {
+        this._taGralStateService.state.isLoadingCatalogues = false;
+      },
+
+    }
+    );
   }
 
   onFillForm() {
     this._taGralStateService.state.form = this._formBuilder.group({
-      dama: '',
-      cab: '',
-      niña: '',
+      catalogos: '',
+      incPred: '',
+      incPers: ''
     });
   }
 
@@ -98,8 +110,8 @@ export class CalcIncFormsComponent {
   }
 
   socioSubmit() {
-    console.log("items: ",this._taGralStateService.state.form.value );
-    
+    console.log("items: ", this._taGralStateService.state.form.value);
+
   }
 
   onReset() {
