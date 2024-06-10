@@ -1,3 +1,3 @@
-export * from './ta-gral.dto';
-export * from './ta-gral.response';
-export * from './ta-gral.state';
+export * from './calc-inc.dto';
+export * from './calc-inc.response';
+export * from './calc-inc.state';

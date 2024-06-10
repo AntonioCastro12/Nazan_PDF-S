@@ -4,6 +4,7 @@ import { PrimeNgModule } from '@shared/vendor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { RadioButtonModule } from 'primeng/radiobutton';
 
 import { CalcIncComponent } from './calc-inc.component';
 import { CalcIncFormsComponent } from './pages/calc-inc-forms/calc-inc-forms.component';
@@ -26,7 +27,8 @@ import { CalcIncRoutingModule } from './calc-inc-routing.module';
     FormsModule,
     ReactiveFormsModule,
     CalendarModule,
-    CheckboxModule
+    CheckboxModule,
+    RadioButtonModule
   ]
 })
 export class CalcIncModule { }

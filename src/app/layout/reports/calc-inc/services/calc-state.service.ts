@@ -14,9 +14,7 @@ export class CalcStateService {
 
   state = new TaGralResumeState();
 
-  
-
-  constructor() {
+   constructor() {
     this.state$.subscribe((state) => (this.state = state));
   }
 }

@@ -1,6 +1,9 @@
 
 
-
+export class catActuales{
+  Catalogo: string| null | undefined = null;
+  Id: string | null | undefined = null;
+}
 
 export class taGralResponse{
   business_date: string | null | undefined = null;

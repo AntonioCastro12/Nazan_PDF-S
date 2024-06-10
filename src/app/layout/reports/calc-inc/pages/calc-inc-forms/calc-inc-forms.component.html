@@ -2,25 +2,36 @@
 <section class="container" *ngIf="_taGralStateService.state.isVisibleForm">
   <div class="mt-5 mb-2">
     <h5>Catálogo:</h5>
-
   </div>
-
+  <!-- <div>loading</div> -->
+<div>
   <!-- Form para realizar busqueda por numero de socio -->
   <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
     <article class="formgrid grid">
       <section #storeId class="mb-1 col-12 md:col-12 lg:col-6">
         <div class="form-field--container">
-          <div class="card">
-            <form class="flex align-items-center gap-1" [formGroup]="formGroup">
-              <p-checkbox formControlName="city" value="New York" inputId="ny" />
-              <label for="ny">New York</label>
-            </form>
+          <div class="card ">
+            <!-- <form class="flex align-items-center gap-1" > -->
+              <div class="flex align-items-center gap-1">
+                <p-checkbox formControlName="dama" value="dama" />
+              <label for="ny">DAMA PRIMAVERA VERANO 2024</label>
+              </div>
+              <div class="flex align-items-center gap-1">
+                <p-checkbox formControlName="cab" value="cab"  />
+              <label for="ny">CABALLERO PRIMAVERA VERANO 2024</label>
+              </div>
+              <div class="flex align-items-center gap-1">
+                <p-checkbox formControlName="niña" value="niña"  />
+              <label for="ny">NIÑA PRIMAVERA VERANO 2024</label>
+              </div>
+             
+            <!-- </form> -->
           </div>
         </div>
       </section>
       <section #memberId class="mb-1 col-12 md:col-6 lg:col-6">
         <div class="form-field--container">
-          <!-- Nuevos datos -->
+          
         </div>
       </section>
     </article>
@@ -39,6 +50,8 @@
       </div>
     </article>
   </form>
+</div>
 </section>
+
 
 <p-toast></p-toast>

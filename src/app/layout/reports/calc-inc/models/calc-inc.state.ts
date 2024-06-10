@@ -1,10 +1,13 @@
 import { UntypedFormGroup } from '@angular/forms';
-import { taGralDTO } from './ta-gral.dto';
+import { taGralDTO } from './calc-inc.dto';
 import {
+  catActuales,
   taGralResponse
-} from './ta-gral.response';
+} from './calc-inc.response';
 
 export class TaGralResumeState {
+
+  catActuales: catActuales[] = [];
 
 
   //datos de credito recepcion
@@ -14,6 +17,7 @@ export class TaGralResumeState {
   currentStore!: string;
   form!: UntypedFormGroup;
 
+  isLoadingCatalogues: boolean = false;
   isVisibleForm: boolean = false;
   isLoadingList: boolean = false;
   isLoadingTicket: boolean = false;

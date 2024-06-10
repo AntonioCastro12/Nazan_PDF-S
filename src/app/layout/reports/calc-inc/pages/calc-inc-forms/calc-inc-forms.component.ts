@@ -30,7 +30,6 @@ import { CommonStateService } from '@report-manager/services';
 export class CalcIncFormsComponent {
 
   formGroup: FormGroup | undefined | any;
-  selectedCategories: any[] = [];
 
   checked:boolean=true;
 
@@ -71,18 +70,26 @@ export class CalcIncFormsComponent {
   value = "";
 
   ngOnInit(): void {
-    this.formGroup = new FormGroup({
-      city: new FormControl<string | null>(null)
-  });
-
+    console.log("ng on init");
     this.onFillForm();
+    this.getCatalogos();
+  }
+  selectedCategory: any = null;
+
+
+  getCatalogos(){
+    this._taGralStateService.state.isLoadingCatalogues=true;
+    this._taServiceApi.catActuales().subscribe((data:any)=>{
+      this._taGralStateService.state.catActuales = data;
+      console.log("Data: ", this._taGralStateService.state.catActuales);
+    });
   }
 
   onFillForm() {
     this._taGralStateService.state.form = this._formBuilder.group({
-      startDate: [this.today, [Validators.required], []],
-      endDate: [this.today, [Validators.required], []],
-      storeId: ['', [Validators.required], []],
+      dama: '',
+      cab: '',
+      niña: '',
     });
   }
 
@@ -91,76 +98,8 @@ export class CalcIncFormsComponent {
   }
 
   socioSubmit() {
-    let formItems = this._taGralStateService.state.form.value;
-    this._taGralStateService.state.isLoadingList = true;
-    let item: taGralDTO = new taGralDTO();
-    item = {
-      storeId: formItems.storeId.id,
-      // storeId: '105',
-      startDate: formItems.startDate.replace(/-/g, ""),
-      endDate: formItems.endDate.replace(/-/g, "")
-    }
-    this._taGralStateService.state.taGralDTO = item;
-    console.log("item: ", this._taGralStateService.state.taGralDTO);
-
-    this._taServiceApi.getTaGral(this._taGralStateService.state.taGralDTO).subscribe({
-      next: (data: any) => {
-
-        console.log("Data recibida: ", data.resume);
-        this._taGralStateService.state.taGralResponse=data.resume;
-        this._taGralStateService.state.taGralResponse.forEach(transaccion => {
-          transaccion.business_date = transaccion.business_date?.split('T')[0];
-        });
-
-        console.log("data en servicio: ", this._taGralStateService.state.taGralResponse);
-        
-
-      },
-      error: (error: { erros: { message: string | undefined; }; }) => {
-        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-        console.error(error);
-      },
-      complete: () => {
-        this._taGralStateService.state.isLoadingList = false;
-      },
-    });
-  }
-
-  filterStores(event: { query: string }) {
-    const filteredStores: Store[] = [];
-    const storeList: Store[] = [];
-    const userRol = this.userSelected.privileges.reportesadministrativos;
-    const userStore = this.userSelected.tienda;
-
-    if (userRol.includes('tienda')) {
-      const temp = this.storeList.filter((store) => store.id === userStore);
-      storeList.push(...temp);
-    }
-
-    if (userRol.includes('staff-menudeo')) {
-      const temp = this.storeList.filter((x) => x.type === 'R');
-      storeList.push(...temp);
-    }
-
-    if (userRol.includes('staff-mayoreo')) {
-      const temp = this.storeList.filter((x) => x.type === 'W');
-      storeList.push(...temp);
-    }
-
-    if (
-      userRol.includes('sistemas') ||
-      userRol.includes('staff-inventarios-ost') ||
-      userRol.includes('staff-planeacion')
-    ) {
-      storeList.push(...this.storeList);
-    }
-
-    for (const store of storeList) {
-      if (store.name.toLowerCase().includes(event.query.toLowerCase())) {
-        filteredStores.push(store);
-      }
-    }
-    this.suggestions = filteredStores;
+    console.log("items: ",this._taGralStateService.state.form.value );
+    
   }
 
   onReset() {

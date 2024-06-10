@@ -12,14 +12,10 @@ export class CalcApiService {
     private _http: HttpClient,
   ) { }
 
-  getTaGral(dto:taGralDTO){
-    const url= `${environment.apiUrl}/api/airtime/general`
-    const params: any = {};
-    params['storeId'] = dto.storeId;
-    params['startDate'] = dto.startDate;
-    params['endDate'] = dto.endDate;
+  catActuales(){
+    const url= `${environment.apiUrl}/api/cat-calculator/cat-disponibles`
     let response$: any = this._http
-      .get<any[]>(url, { params });
+      .get<any[]>(url);
     return response$;
   }
 }
