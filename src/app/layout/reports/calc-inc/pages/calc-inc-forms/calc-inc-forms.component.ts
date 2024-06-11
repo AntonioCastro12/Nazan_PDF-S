@@ -14,7 +14,7 @@ import {
   CalcStateService,
 } from '../../services';
 
-import { taGralDTO } from '../../models';
+import { predeterminadoDTO, perGeneralDTO, perDiferenciadoDTO } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@report-manager/models';
@@ -53,7 +53,6 @@ export class CalcIncFormsComponent {
   }
 
   ngOnInit(): void {
-    console.log("ng on init");
     this.onFillForm();
     this.getCatalogos();
   }
@@ -73,18 +72,12 @@ export class CalcIncFormsComponent {
     placeholderOrigin: 'Seleccionar origen',
   };
 
-  pizza: string[] = [];
-
-  
-
-
   getCatalogos() {
     this._taGralStateService.state.isLoadingCatalogues = true;
     this._taServiceApi.catActuales().subscribe(
 
      { next: (data: any) => {
       this._taGralStateService.state.catActuales = data.resume;
-        console.log("Data: ", this._taGralStateService.state.catActuales);
       },
       error: (error: { erros: { message: string | undefined; }; }) => {
         this._toastr.error('Opps ha ocurrido un error', error.erros.message);
@@ -104,7 +97,12 @@ export class CalcIncFormsComponent {
       catalogos: '',
       incPred: '',
       incPers: '',
-      text:''
+      gralbase:'',
+      gralsocio:'',
+      DNBase:'',
+      DNSocio:'',
+      DIBase:'',
+      DISocio:''
 
     });
   }
@@ -114,7 +112,52 @@ export class CalcIncFormsComponent {
   }
 
   socioSubmit() {
-    console.log("items: ", this._taGralStateService.state.form.value);
+        let formItems = this._taGralStateService.state.form.value;
+        const cadenacat = formItems.catalogos.join(',');
+        console.log("cadena catalogos: ", cadenacat);
+
+
+
+    console.log("Form items: ",formItems)
+    switch (this._taGralStateService.state.tipoCalculo) {
+      case 1: //Calculo Predeterminado
+        console.log("guardar predeterminado");
+        let preItems:predeterminadoDTO = new predeterminadoDTO();
+       
+        preItems = {
+          catalogos: cadenacat,
+          incremento: formItems.incPred
+        }
+        console.log("Predeterminado items: ",preItems); 
+        break;
+
+      case 2: //Personalizado General
+        console.log("personalizado general");
+        let perGralItem: perGeneralDTO = new perGeneralDTO();
+        perGralItem = {
+          catalogos: cadenacat,
+          gralBase: formItems.gralbase,
+          gralSocio: formItems.gralsocio
+        } 
+        console.log("Perso Gral: ", perGralItem)
+        break;
+
+      case 3: //Personalizado diferenciado
+        console.log("personalizado diferenciado");
+        let perDifItem : perDiferenciadoDTO = new perDiferenciadoDTO();
+        perDifItem = {
+          catalogos: cadenacat,
+          diBase: formItems.DIBase,
+          diSocio: formItems.DISocio,
+          dnBase: formItems.DNBase,
+          dnSocio: formItems.DNSocio
+        }
+        console.log("Perso Diferenciado: ", perDifItem);
+        break;
+    
+      default:
+        break;
+    }
 
   }
 
@@ -124,15 +167,19 @@ export class CalcIncFormsComponent {
 
 
   predeterminado(){
+    this._taGralStateService.state.tipoCalculo =1
     this._taGralStateService.state.predeterminado=true;
   }
   personalizado(){
+    this._taGralStateService.state.tipoCalculo =2
     this._taGralStateService.state.predeterminado=false;
   }
   general(){
+    this._taGralStateService.state.tipoCalculo =2
     this._taGralStateService.state.PersonalizadoGral=true;
   }
   diferenciado(){
+    this._taGralStateService.state.tipoCalculo =3
     this._taGralStateService.state.PersonalizadoGral=false;
   }
 

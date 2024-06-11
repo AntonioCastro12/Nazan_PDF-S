@@ -9,7 +9,7 @@
     <!-- Form para realizar busqueda por numero de socio -->
     <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
       <article class="formgrid grid">
-        <section #storeId class="mb-1 col-12 md:col-12 lg:col-6">
+        <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
           <div class="form-field--container">
             <div class="card ">
               <!-- <form class="flex align-items-center gap-1" > -->
@@ -36,12 +36,14 @@
                 <h3 style="margin-bottom: 0;">Predeterminado</h3>
                 <p>Seleccione % de incremento: </p>
                 <div class="checkbox-container">
-                  <div class="checkbox-item" *ngFor="let descuento of _taGralStateService.state.descPredeterminado; let i = index">
-                    <p-checkbox formControlName="incPred" [value]="descuento.idDescuento" [ngStyle]="{'margin-right': '5%'}"></p-checkbox>
+                  <div class="checkbox-item"
+                    *ngFor="let descuento of _taGralStateService.state.descPredeterminado; let i = index">
+                    <p-checkbox formControlName="incPred" [value]="descuento.idDescuento"
+                      [ngStyle]="{'margin-right': '5%'}"></p-checkbox>
                     <label for="ny">{{descuento.descuento}}</label>
                   </div>
                 </div>
-                
+
 
               </div>
 
@@ -53,7 +55,7 @@
                   <p-button label="General (NAC/IMP)" severity="contrast" (click)="general()"
                     [ngStyle]="{'margin-right': '15%'}" />
                   <p-button label="Diferenciado" severity="contrast" (click)="diferenciado()" />
-                </div >
+                </div>
 
                 <div class="opciones-personalizado">
                   <div *ngIf="_taGralStateService.state.PersonalizadoGral">
@@ -61,47 +63,41 @@
                     <div class="input-row">
                       <div class="input-group">
                         <label for="l-base">Lista base (%):</label>
-                        <input id="l-base" type="text" pInputText formControlName="text" />
+                        <input id="l-base" type="text" pInputText formControlName="gralbase" />
                       </div>
                       <div class="input-group">
                         <label for="i-socio">Incremento Socio (%):</label>
-                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                        <input id="i-socio" type="text" pInputText formControlName="gralsocio" />
                       </div>
                     </div>
-                    
-                      <!-- <label for="l-base">Lista base (%):</label>
-                      <input id="l-base" type="text" pInputText formControlName="text" />
-                      <label for="i-socio">Incremento Socio (%):</label>
-                      <input id="i-socio" type="text" pInputText formControlName="text" /> -->
-                    
                   </div>
                   <div *ngIf="!_taGralStateService.state.PersonalizadoGral">
                     <article class="formgrid grid">
                       <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
                         <div class="form-field--container">
-                          
-                          
+
+
                           <div class="card ">
                             <h4>Nacional</h4>
-                            <label for="l-base">Lista base (%):</label>
-                          <input id="l-base" type="text" pInputText formControlName="text" />
+                            <label for="n-base">Lista base (%):</label>
+                            <input id="n-base" type="text" pInputText formControlName="DNBase" />
 
-                          <label for="i-socio">Incremento Socio (%):</label>
-                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                            <label for="n-socio">Incremento Socio (%):</label>
+                            <input id="n-socio" type="text" pInputText formControlName="DNSocio" />
                           </div>
-                        </div>                                                                            
+                        </div>
                       </section>
                       <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
                         <div class="form-field--container">
-                          
-                          
+
+
                           <div class="card ">
                             <h4>Importado</h4>
-                            <label for="l-base">Lista base (%):</label>
-                          <input id="l-base" type="text" pInputText formControlName="text" />
+                            <label for="i-base">Lista base (%):</label>
+                            <input id="i-base" type="text" pInputText formControlName="DIBase" />
 
-                          <label for="i-socio">Incremento Socio (%):</label>
-                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                            <label for="in-socio">Incremento Socio (%):</label>
+                            <input id="in-socio" type="text" pInputText formControlName="DISocio" />
                           </div>
                         </div>
                       </section>
@@ -124,8 +120,9 @@
             [disabled]="!_taGralStateService.state.form.dirty"></button>
         </div>
         <div class="ml-3">
-          <button pButton pRipple icon="pi pi-calculator" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
-            pTooltip="Calcular" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
+          <button pButton pRipple icon="pi pi-calculator" class="p-button-warning p-button-rounded"
+            (click)="socioSubmit()" pTooltip="Calcular" tooltipPosition="top"
+            [disabled]="!_taGralStateService.state.form.valid"></button>
         </div>
       </article>
     </form>

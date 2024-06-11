@@ -9,7 +9,12 @@ import {
 export class TaGralResumeState {
 
   // tipo de calculo 
-  tipoCalculo:string = '';
+  /*
+  1.Predeterminado
+  2.Personalizado Gral
+  3.Personalizado Diferenciado
+  */
+  tipoCalculo:number = 1;
 
   //Descuentos predeterminados
   descPredeterminado: descPred[] = [
