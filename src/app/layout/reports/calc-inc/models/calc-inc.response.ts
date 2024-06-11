@@ -5,6 +5,11 @@ export class catActuales{
   Id: string | null | undefined = null;
 }
 
+export class descPred{
+  descuento: string | null | undefined= null;
+  idDescuento: string | null| undefined = null;
+}
+
 export class taGralResponse{
   business_date: string | null | undefined = null;
   item_desc: string | null = null;

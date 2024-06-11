@@ -63,7 +63,7 @@ export class CalcIncFormsComponent {
   TEMPLATE_TXT = {
     labelReturn: 'Volver a usuarios',
     labelReset: 'Restaurar filtros',
-    labelSave: 'Buscar',
+    labelSave: 'Calcular',
     labelCancel: 'Cancelar',
     tooltipCancel: 'Cancelar',
     required: 'Este campo es obligatorio',
@@ -72,6 +72,8 @@ export class CalcIncFormsComponent {
     placeholderProductId: 'Código de producto',
     placeholderOrigin: 'Seleccionar origen',
   };
+
+  pizza: string[] = [];
 
   
 
@@ -116,6 +118,17 @@ export class CalcIncFormsComponent {
 
   onReset() {
     this.onFillForm();
+  }
+
+  clickuno(){
+    console.log("click en boton uno");
+  }
+
+  predeterminado(){
+    this._taGralStateService.state.predeterminado=true;
+  }
+  personalizado(){
+    this._taGralStateService.state.predeterminado=false;
   }
 
 

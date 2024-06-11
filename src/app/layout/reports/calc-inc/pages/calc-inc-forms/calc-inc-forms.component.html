@@ -3,8 +3,8 @@
   <div class="mt-5 mb-2">
     <h5>Catálogo:</h5>
   </div>
-    <p-progressSpinner *ngIf="_taGralStateService.state.isLoadingCatalogues"></p-progressSpinner>
-  
+  <p-progressSpinner *ngIf="_taGralStateService.state.isLoadingCatalogues"></p-progressSpinner>
+
   <div *ngIf="!_taGralStateService.state.isLoadingCatalogues">
     <!-- Form para realizar busqueda por numero de socio -->
     <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
@@ -13,7 +13,8 @@
           <div class="form-field--container">
             <div class="card ">
               <!-- <form class="flex align-items-center gap-1" > -->
-              <div class="flex align-items-center gap-1" *ngFor="let catalogo of _taGralStateService.state.catActuales; let i = index">
+              <div class="flex align-items-center gap-1"
+                *ngFor="let catalogo of _taGralStateService.state.catActuales; let i = index">
                 <p-checkbox formControlName="catalogos" value="{{catalogo.Id}}" />
                 <label for="ny">{{catalogo.Catalogo}}</label>
               </div>
@@ -23,6 +24,40 @@
         </section>
         <section #memberId class="mb-1 col-12 md:col-6 lg:col-6">
           <div class="form-field--container">
+            <div class="select-descuento" style="margin-bottom: 10px;">
+              <p-button label="Predeterminado" severity="contrast" (click)="predeterminado()"
+                [ngStyle]="{'margin-right': '33%'}" />
+
+              <p-button label="Personalizado" severity="contrast" (click)="personalizado()" />
+
+            </div>
+            <div class="opciones-calculo">
+              <div *ngIf="_taGralStateService.state.predeterminado">
+                <h3 style="margin-bottom: 0;">Predeterminado</h3>
+                <p>Seleccione % de incremento: </p>
+                <div class="checkbox-container">
+                  <div class="checkbox-item" *ngFor="let descuento of _taGralStateService.state.descPredeterminado; let i = index">
+                    <p-checkbox formControlName="incPred" [value]="descuento.idDescuento" [ngStyle]="{'margin-right': '5%'}"></p-checkbox>
+                    <label for="ny">{{descuento.descuento}}</label>
+                  </div>
+                </div>
+                
+
+              </div>
+
+              <!-- Personalizado -->
+              <div *ngIf="!_taGralStateService.state.predeterminado">
+                <h3 style="margin-bottom: 0;">Personalizado</h3>
+                <p>Seleccione tipo de incremento: </p>
+                <div class="select-descuento" style="margin-bottom: 10px;">
+                  <p-button label="General (NAC/IMP)" severity="contrast" (click)="predeterminado()"
+                    [ngStyle]="{'margin-right': '15%'}" />
+    
+                  <p-button label="Diferenciado" severity="contrast" (click)="personalizado()" />
+    
+                </div>
+              </div>
+            </div>
 
           </div>
         </section>
@@ -37,8 +72,7 @@
         </div>
         <div class="ml-3">
           <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
-            pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
-          <!-- <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button> -->
+            pTooltip="Calcular" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
         </div>
       </article>
     </form>
