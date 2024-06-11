@@ -50,11 +50,19 @@
                 <h3 style="margin-bottom: 0;">Personalizado</h3>
                 <p>Seleccione tipo de incremento: </p>
                 <div class="select-descuento" style="margin-bottom: 10px;">
-                  <p-button label="General (NAC/IMP)" severity="contrast" (click)="predeterminado()"
+                  <p-button label="General (NAC/IMP)" severity="contrast" (click)="general()"
                     [ngStyle]="{'margin-right': '15%'}" />
-    
-                  <p-button label="Diferenciado" severity="contrast" (click)="personalizado()" />
-    
+                  <p-button label="Diferenciado" severity="contrast" (click)="diferenciado()" />
+                </div >
+
+                <div class="opciones-personalizado">
+                  <div *ngIf="_taGralStateService.state.PersonalizadoGral">
+                    General
+                  </div>
+                  <div *ngIf="!_taGralStateService.state.PersonalizadoGral">
+                    Diferenciado
+                  </div>
+
                 </div>
               </div>
             </div>

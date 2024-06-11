@@ -120,15 +120,18 @@ export class CalcIncFormsComponent {
     this.onFillForm();
   }
 
-  clickuno(){
-    console.log("click en boton uno");
-  }
 
   predeterminado(){
     this._taGralStateService.state.predeterminado=true;
   }
   personalizado(){
     this._taGralStateService.state.predeterminado=false;
+  }
+  general(){
+    this._taGralStateService.state.PersonalizadoGral=true;
+  }
+  diferenciado(){
+    this._taGralStateService.state.PersonalizadoGral=false;
   }
 
 

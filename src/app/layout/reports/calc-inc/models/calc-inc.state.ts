@@ -48,6 +48,8 @@ export class TaGralResumeState {
 
   //seleccionar tipo de calculo
   predeterminado = true;
+  //seleccionar tipo de calculo personalizado
+  PersonalizadoGral = true;
 
   //datos de credito recepcion
   taGralDTO: taGralDTO = new taGralDTO;
