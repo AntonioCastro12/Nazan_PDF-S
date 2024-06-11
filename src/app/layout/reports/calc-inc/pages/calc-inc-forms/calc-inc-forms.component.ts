@@ -103,7 +103,9 @@ export class CalcIncFormsComponent {
     this._taGralStateService.state.form = this._formBuilder.group({
       catalogos: '',
       incPred: '',
-      incPers: ''
+      incPers: '',
+      text:''
+
     });
   }
 

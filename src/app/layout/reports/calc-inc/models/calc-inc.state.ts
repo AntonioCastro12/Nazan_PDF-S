@@ -8,6 +8,9 @@ import {
 
 export class TaGralResumeState {
 
+  // tipo de calculo 
+  tipoCalculo:string = '';
+
   //Descuentos predeterminados
   descPredeterminado: descPred[] = [
     {
@@ -43,6 +46,7 @@ export class TaGralResumeState {
       idDescuento: "NI"
     },
   ];
+  
   //Recepcion de catalogos
   catActuales: catActuales[] = [];
 

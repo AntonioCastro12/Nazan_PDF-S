@@ -10,3 +10,19 @@
     align-items: center;
   }
   
+
+  //personalizado general
+  .input-row {
+    display: flex;
+    gap: 20px; /* Espacio entre cada grupo de entrada */
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group label {
+    margin-right: 5px;
+  }
+  

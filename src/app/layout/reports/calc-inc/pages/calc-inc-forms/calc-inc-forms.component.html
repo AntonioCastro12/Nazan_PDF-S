@@ -57,10 +57,55 @@
 
                 <div class="opciones-personalizado">
                   <div *ngIf="_taGralStateService.state.PersonalizadoGral">
-                    General
+                    <h4>General</h4>
+                    <div class="input-row">
+                      <div class="input-group">
+                        <label for="l-base">Lista base (%):</label>
+                        <input id="l-base" type="text" pInputText formControlName="text" />
+                      </div>
+                      <div class="input-group">
+                        <label for="i-socio">Incremento Socio (%):</label>
+                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                      </div>
+                    </div>
+                    
+                      <!-- <label for="l-base">Lista base (%):</label>
+                      <input id="l-base" type="text" pInputText formControlName="text" />
+                      <label for="i-socio">Incremento Socio (%):</label>
+                      <input id="i-socio" type="text" pInputText formControlName="text" /> -->
+                    
                   </div>
                   <div *ngIf="!_taGralStateService.state.PersonalizadoGral">
-                    Diferenciado
+                    <article class="formgrid grid">
+                      <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
+                        <div class="form-field--container">
+                          
+                          
+                          <div class="card ">
+                            <h4>Nacional</h4>
+                            <label for="l-base">Lista base (%):</label>
+                          <input id="l-base" type="text" pInputText formControlName="text" />
+
+                          <label for="i-socio">Incremento Socio (%):</label>
+                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                          </div>
+                        </div>                                                                            
+                      </section>
+                      <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
+                        <div class="form-field--container">
+                          
+                          
+                          <div class="card ">
+                            <h4>Importado</h4>
+                            <label for="l-base">Lista base (%):</label>
+                          <input id="l-base" type="text" pInputText formControlName="text" />
+
+                          <label for="i-socio">Incremento Socio (%):</label>
+                        <input id="i-socio" type="text" pInputText formControlName="text" />
+                          </div>
+                        </div>
+                      </section>
+                    </article>
                   </div>
 
                 </div>
@@ -79,7 +124,7 @@
             [disabled]="!_taGralStateService.state.form.dirty"></button>
         </div>
         <div class="ml-3">
-          <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
+          <button pButton pRipple icon="pi pi-calculator" class="p-button-warning p-button-rounded" (click)="socioSubmit()"
             pTooltip="Calcular" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
         </div>
       </article>
