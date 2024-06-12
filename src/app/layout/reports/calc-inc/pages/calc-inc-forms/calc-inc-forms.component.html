@@ -33,9 +33,12 @@
             </div>
             <div class="opciones-calculo">
               <div *ngIf="_taGralStateService.state.predeterminado">
+
                 <h3 style="margin-bottom: 0;">Predeterminado</h3>
                 <p>Seleccione % de incremento: </p>
+
                 <div class="checkbox-container">
+
                   <div class="checkbox-item"
                     *ngFor="let descuento of _taGralStateService.state.descPredeterminado; let i = index">
                     <p-checkbox formControlName="incPred" [value]="descuento.idDescuento"
@@ -43,8 +46,6 @@
                     <label for="ny">{{descuento.descuento}}</label>
                   </div>
                 </div>
-
-
               </div>
 
               <!-- Personalizado -->

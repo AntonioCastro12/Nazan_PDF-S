@@ -76,19 +76,20 @@ export class CalcIncFormsComponent {
     this._taGralStateService.state.isLoadingCatalogues = true;
     this._taServiceApi.catActuales().subscribe(
 
-     { next: (data: any) => {
-      this._taGralStateService.state.catActuales = data.resume;
-      },
-      error: (error: { erros: { message: string | undefined; }; }) => {
-        this._toastr.error('Opps ha ocurrido un error', error.erros.message);
-        console.error(error);
-        this._taGralStateService.state.isLoadingCatalogues = false;
-      },
-      complete: () => {
-        this._taGralStateService.state.isLoadingCatalogues = false;
-      },
+      {
+        next: (data: any) => {
+          this._taGralStateService.state.catActuales = data.resume;
+        },
+        error: (error: { erros: { message: string | undefined; }; }) => {
+          this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+          console.error(error);
+          this._taGralStateService.state.isLoadingCatalogues = false;
+        },
+        complete: () => {
+          this._taGralStateService.state.isLoadingCatalogues = false;
+        },
 
-    }
+      }
     );
   }
 
@@ -97,12 +98,12 @@ export class CalcIncFormsComponent {
       catalogos: '',
       incPred: '',
       incPers: '',
-      gralbase:'',
-      gralsocio:'',
-      DNBase:'',
-      DNSocio:'',
-      DIBase:'',
-      DISocio:''
+      gralbase: '',
+      gralsocio: '',
+      DNBase: '',
+      DNSocio: '',
+      DIBase: '',
+      DISocio: ''
 
     });
   }
@@ -112,23 +113,40 @@ export class CalcIncFormsComponent {
   }
 
   socioSubmit() {
-        let formItems = this._taGralStateService.state.form.value;
-        const cadenacat = formItems.catalogos.join(',');
-        console.log("cadena catalogos: ", cadenacat);
 
+    let formItems = this._taGralStateService.state.form.value;
+    const cadenacat = formItems.catalogos.join(',');
 
-
-    console.log("Form items: ",formItems)
     switch (this._taGralStateService.state.tipoCalculo) {
       case 1: //Calculo Predeterminado
         console.log("guardar predeterminado");
-        let preItems:predeterminadoDTO = new predeterminadoDTO();
-       
+        let preItems: predeterminadoDTO = new predeterminadoDTO();
+        let especial=0;
+
+        for (let i = 0; i < formItems.incPred.length; i++) {
+          if (formItems.incPred[i] === "NI") {
+              especial = 1;
+              formItems.incPred.splice(i, 1);
+              i--; // Decrementa el índice para verificar el nuevo elemento en la posición actual
+          }
+      }
+      let cadenaNumeros = formItems.incPred.map((num: any) => `[${num}]`).join(',');
+
         preItems = {
           catalogos: cadenacat,
-          incremento: formItems.incPred
+          incremento: cadenaNumeros,
+          cEspecial: especial
         }
-        console.log("Predeterminado items: ",preItems); 
+        console.log("Predeterminado items: ", preItems);
+
+        this._taServiceApi.calcPredeterminado(preItems).subscribe(
+          (data:any)=>{
+            console.log("Data recived: ", data );
+          }
+        );
+
+
+        
         break;
 
       case 2: //Personalizado General
@@ -138,13 +156,13 @@ export class CalcIncFormsComponent {
           catalogos: cadenacat,
           gralBase: formItems.gralbase,
           gralSocio: formItems.gralsocio
-        } 
+        }
         console.log("Perso Gral: ", perGralItem)
         break;
 
       case 3: //Personalizado diferenciado
         console.log("personalizado diferenciado");
-        let perDifItem : perDiferenciadoDTO = new perDiferenciadoDTO();
+        let perDifItem: perDiferenciadoDTO = new perDiferenciadoDTO();
         perDifItem = {
           catalogos: cadenacat,
           diBase: formItems.DIBase,
@@ -154,7 +172,7 @@ export class CalcIncFormsComponent {
         }
         console.log("Perso Diferenciado: ", perDifItem);
         break;
-    
+
       default:
         break;
     }
@@ -166,21 +184,21 @@ export class CalcIncFormsComponent {
   }
 
 
-  predeterminado(){
-    this._taGralStateService.state.tipoCalculo =1
-    this._taGralStateService.state.predeterminado=true;
+  predeterminado() {
+    this._taGralStateService.state.tipoCalculo = 1
+    this._taGralStateService.state.predeterminado = true;
   }
-  personalizado(){
-    this._taGralStateService.state.tipoCalculo =2
-    this._taGralStateService.state.predeterminado=false;
+  personalizado() {
+    this._taGralStateService.state.tipoCalculo = 2
+    this._taGralStateService.state.predeterminado = false;
   }
-  general(){
-    this._taGralStateService.state.tipoCalculo =2
-    this._taGralStateService.state.PersonalizadoGral=true;
+  general() {
+    this._taGralStateService.state.tipoCalculo = 2
+    this._taGralStateService.state.PersonalizadoGral = true;
   }
-  diferenciado(){
-    this._taGralStateService.state.tipoCalculo =3
-    this._taGralStateService.state.PersonalizadoGral=false;
+  diferenciado() {
+    this._taGralStateService.state.tipoCalculo = 3
+    this._taGralStateService.state.PersonalizadoGral = false;
   }
 
 

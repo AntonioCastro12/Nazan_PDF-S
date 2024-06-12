@@ -8,7 +8,8 @@ export class taGralDTO {
 
 export class predeterminadoDTO{
   catalogos:string='';
-  incremento: string [] = [];
+  incremento: string ='';
+  cEspecial: number = 0;
 }
 
 export class perGeneralDTO{
