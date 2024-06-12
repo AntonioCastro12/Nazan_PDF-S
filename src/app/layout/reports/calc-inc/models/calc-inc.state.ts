@@ -3,7 +3,8 @@ import { taGralDTO } from './calc-inc.dto';
 import {
   catActuales,
   descPred,
-  taGralResponse
+  taGralResponse,
+  predeterminadoResponse
 } from './calc-inc.response';
 
 export class TaGralResumeState {
@@ -15,6 +16,20 @@ export class TaGralResumeState {
   3.Personalizado Diferenciado
   */
   tipoCalculo:number = 1;
+
+  //Datos del header predeterminado
+  headerPredeterminado: any[] = [
+    'ID',
+    'Titulo',
+    'Descripción',
+    'Precio',
+    'Link',
+    'Link Imagen',
+    'Link Adicional Imagen',
+    'Marca',
+    'Talla',
+    'Color'
+  ]
 
   //Descuentos predeterminados
   descPredeterminado: descPred[] = [
@@ -51,6 +66,9 @@ export class TaGralResumeState {
       idDescuento: "NI"
     },
   ];
+
+  // Recepcion de aumentos predeterminados 
+  predeterminadoResponse: predeterminadoResponse [] = [];
   
   //Recepcion de catalogos
   catActuales: catActuales[] = [];

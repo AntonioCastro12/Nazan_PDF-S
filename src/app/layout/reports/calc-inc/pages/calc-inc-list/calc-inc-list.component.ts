@@ -3,7 +3,7 @@ import {
   CalcApiService,
   CalcStateService,
 } from '../../services';
-import {headerPersonalizadoGral} from '../../models';
+import {headerPredeterminado} from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -19,8 +19,7 @@ export class CalcIncListComponent {
     isResultEmpty: 'No hay datos para mostrar',
   };
 
-  taGralResume = headerPersonalizadoGral;
-
+  headerPred = headerPredeterminado;
 
   searchText = '';
   isLoading: boolean = false;

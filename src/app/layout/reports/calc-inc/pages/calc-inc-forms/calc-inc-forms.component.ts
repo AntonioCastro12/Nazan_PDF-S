@@ -121,16 +121,16 @@ export class CalcIncFormsComponent {
       case 1: //Calculo Predeterminado
         console.log("guardar predeterminado");
         let preItems: predeterminadoDTO = new predeterminadoDTO();
-        let especial=0;
+        let especial = 0;
 
         for (let i = 0; i < formItems.incPred.length; i++) {
           if (formItems.incPred[i] === "NI") {
-              especial = 1;
-              formItems.incPred.splice(i, 1);
-              i--; // Decrementa el índice para verificar el nuevo elemento en la posición actual
+            especial = 1;
+            formItems.incPred.splice(i, 1);
+            i--; // Decrementa el índice para verificar el nuevo elemento en la posición actual
           }
-      }
-      let cadenaNumeros = formItems.incPred.map((num: any) => `[${num}]`).join(',');
+        }
+        let cadenaNumeros = formItems.incPred.map((num: any) => `[${num}]`).join(',');
 
         preItems = {
           catalogos: cadenacat,
@@ -140,13 +140,23 @@ export class CalcIncFormsComponent {
         console.log("Predeterminado items: ", preItems);
 
         this._taServiceApi.calcPredeterminado(preItems).subscribe(
-          (data:any)=>{
-            console.log("Data recived: ", data );
+          {
+            next: (data: any) => {
+              this._taGralStateService.state.predeterminadoResponse = data;
+              console.log("variable state data pred: ", this._taGralStateService.state.predeterminadoResponse);
+            },
+            error: (error: { erros: { message: string | undefined; }; }) => {
+              this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+              console.error(error);
+            },
+            complete: () => {
+            },
+
           }
         );
 
 
-        
+
         break;
 
       case 2: //Personalizado General
