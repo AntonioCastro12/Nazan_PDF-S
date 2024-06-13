@@ -14,7 +14,7 @@ import {
   CalcStateService,
 } from '../../services';
 
-import { predeterminadoDTO, perGeneralDTO, perDiferenciadoDTO } from '../../models';
+import { predeterminadoDTO, personalizadoDTO  } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@report-manager/models';
@@ -119,7 +119,9 @@ export class CalcIncFormsComponent {
 
     switch (this._taGralStateService.state.tipoCalculo) {
       case 1: //Calculo Predeterminado
-        console.log("guardar predeterminado");
+        formItems.incPred.forEach((descuento: any) => {
+          this._taGralStateService.state.headerPredeterminado.push(descuento)
+        });
         let preItems: predeterminadoDTO = new predeterminadoDTO();
         let especial = 0;
 
@@ -161,24 +163,28 @@ export class CalcIncFormsComponent {
 
       case 2: //Personalizado General
         console.log("personalizado general");
-        let perGralItem: perGeneralDTO = new perGeneralDTO();
+        let perGralItem: personalizadoDTO = new personalizadoDTO();
         perGralItem = {
           catalogos: cadenacat,
-          gralBase: formItems.gralbase,
-          gralSocio: formItems.gralsocio
+          base: formItems.gralbase,
+          socio: formItems.gralsocio,
+          incremento:0,
+          baseI:'0',
+          socioI: '0'
         }
         console.log("Perso Gral: ", perGralItem)
         break;
 
       case 3: //Personalizado diferenciado
         console.log("personalizado diferenciado");
-        let perDifItem: perDiferenciadoDTO = new perDiferenciadoDTO();
+        let perDifItem: personalizadoDTO = new personalizadoDTO();
         perDifItem = {
           catalogos: cadenacat,
-          diBase: formItems.DIBase,
-          diSocio: formItems.DISocio,
-          dnBase: formItems.DNBase,
-          dnSocio: formItems.DNSocio
+          incremento:1,
+          baseI: formItems.DIBase,
+          socioI: formItems.DISocio,
+          base: formItems.DNBase,
+          socio: formItems.DNSocio
         }
         console.log("Perso Diferenciado: ", perDifItem);
         break;

@@ -3,7 +3,6 @@ import {
   CalcApiService,
   CalcStateService,
 } from '../../services';
-import {headerPredeterminado} from '../../models';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -19,7 +18,6 @@ export class CalcIncListComponent {
     isResultEmpty: 'No hay datos para mostrar',
   };
 
-  headerPred = headerPredeterminado;
 
   searchText = '';
   isLoading: boolean = false;

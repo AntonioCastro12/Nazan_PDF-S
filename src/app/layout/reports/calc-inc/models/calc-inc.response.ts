@@ -35,16 +35,3 @@ export class predeterminadoResponse {
   
   //Faltan los precios con descuento
 }
-
-export let headerPredeterminado: any[] = [
-  'ID',
-  'Titulo',
-  'Descripción',
-  'Precio',
-  'Link',
-  'Link Imagen',
-  'Link Adicional Imagen',
-  'Marca',
-  'Talla',
-  'Color'
-]

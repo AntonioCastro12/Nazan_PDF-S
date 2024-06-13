@@ -19,13 +19,13 @@ export class perGeneralDTO{
 
 }
 
-export class perDiferenciadoDTO{
+export class personalizadoDTO{
   catalogos:string='';
+  incremento: number = 0;
   //diferenciado importado
-  diBase: string ='';
-  diSocio: string = '';
-
+  base: string ='';
+  socio: string = '';
   //Diferenciado nacional
-  dnBase: string = '';
-  dnSocio: string = '';
+  baseI?: string = '';
+  socioI?: string = '';
 }

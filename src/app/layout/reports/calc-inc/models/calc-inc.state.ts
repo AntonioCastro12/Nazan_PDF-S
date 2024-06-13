@@ -31,6 +31,7 @@ export class TaGralResumeState {
     'Color'
   ]
 
+  
   //Descuentos predeterminados
   descPredeterminado: descPred[] = [
     {
