@@ -4,7 +4,8 @@ import {
   catActuales,
   descPred,
   taGralResponse,
-  predeterminadoResponse
+  predeterminadoResponse,
+  personalizadoResponse
 } from './calc-inc.response';
 
 export class TaGralResumeState {
@@ -15,7 +16,7 @@ export class TaGralResumeState {
   2.Personalizado Gral
   3.Personalizado Diferenciado
   */
-  tipoCalculo:number = 1;
+  tipoCalculo: number = 1;
 
   //Datos del header predeterminado
   headerPredeterminado: any[] = [
@@ -31,7 +32,16 @@ export class TaGralResumeState {
     'Color'
   ]
 
-  
+  // Datos del header personalizado
+  headerPersonalizado: any[] = [
+    'Codigo internet',
+    'Descripción',
+    'Precio calculado',
+    'Precio',
+    'Titulo'
+  ]
+
+
   //Descuentos predeterminados
   descPredeterminado: descPred[] = [
     {
@@ -69,8 +79,11 @@ export class TaGralResumeState {
   ];
 
   // Recepcion de aumentos predeterminados 
-  predeterminadoResponse: predeterminadoResponse [] = [];
-  
+  predeterminadoResponse: predeterminadoResponse[] = [];
+
+  //Recepción de personalizados
+  personalizadoResponse: personalizadoResponse[] = [];
+
   //Recepcion de catalogos
   catActuales: catActuales[] = [];
 

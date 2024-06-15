@@ -14,7 +14,7 @@ import {
   CalcStateService,
 } from '../../services';
 
-import { predeterminadoDTO, personalizadoDTO  } from '../../models';
+import { predeterminadoDTO, personalizadoDTO } from '../../models';
 import { objectContainsValue } from '@shared/functions';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@report-manager/models';
@@ -113,6 +113,8 @@ export class CalcIncFormsComponent {
   }
 
   socioSubmit() {
+    this._taGralStateService.state.personalizadoResponse = [];
+    this._taGralStateService.state.predeterminadoResponse = [];
 
     let formItems = this._taGralStateService.state.form.value;
     const cadenacat = formItems.catalogos.join(',');
@@ -128,7 +130,7 @@ export class CalcIncFormsComponent {
         for (let i = 0; i < formItems.incPred.length; i++) {
           if (formItems.incPred[i] === "NI") {
             especial = 1;
-            formItems.incPred.splice(i, 1);
+            formItems.incPred.splice(i, 1); 
             i--; // Decrementa el índice para verificar el nuevo elemento en la posición actual
           }
         }
@@ -162,16 +164,33 @@ export class CalcIncFormsComponent {
         break;
 
       case 2: //Personalizado General
-        console.log("personalizado general");
         let perGralItem: personalizadoDTO = new personalizadoDTO();
         perGralItem = {
           catalogos: cadenacat,
           base: formItems.gralbase,
           socio: formItems.gralsocio,
-          incremento:0,
-          baseI:'0',
+          incremento: 0,
+          baseI: '0',
           socioI: '0'
         }
+
+        this._taServiceApi.calcPerzonalizado(perGralItem).subscribe(
+          {
+            next: (data: any) => {
+              this._taGralStateService.state.personalizadoResponse = data;
+              console.log("variable state data pers: ", this._taGralStateService.state.personalizadoResponse);
+              console.log("variable predeterminado: ", this._taGralStateService.state.predeterminadoResponse);
+            },
+            error: (error: { erros: { message: string | undefined; }; }) => {
+              this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+              console.error(error);
+            },
+            complete: () => {
+            },
+
+          }
+
+        );
         console.log("Perso Gral: ", perGralItem)
         break;
 
@@ -180,13 +199,31 @@ export class CalcIncFormsComponent {
         let perDifItem: personalizadoDTO = new personalizadoDTO();
         perDifItem = {
           catalogos: cadenacat,
-          incremento:1,
+          incremento: 1,
           baseI: formItems.DIBase,
           socioI: formItems.DISocio,
           base: formItems.DNBase,
           socio: formItems.DNSocio
         }
         console.log("Perso Diferenciado: ", perDifItem);
+
+        this._taServiceApi.calcPerzonalizado(perDifItem).subscribe(
+          {
+
+            next: (data: any) => {
+
+              this._taGralStateService.state.personalizadoResponse = data;
+              console.log("variable state data perso: ", this._taGralStateService.state.personalizadoResponse);
+            },
+            error: (error: { erros: { message: string | undefined; }; }) => {
+              this._toastr.error('Opps ha ocurrido un error', error.erros.message);
+              console.error(error);
+            },
+            complete: () => {
+            },
+
+          }
+        );
         break;
 
       default:

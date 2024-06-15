@@ -38,9 +38,39 @@
 
 </div>
 
-<div *ngIf="_taGralState.state.tipoCalculo===2">
-    Personalizado general
+<div *ngIf="_taGralState.state.tipoCalculo===2 || _taGralState.state.tipoCalculo===3">
+    <p-table #dt2 [value]="_taGralState.state.personalizadoResponse" [paginator]="true" [rows]="15"
+        styleClass="mt-3 p-datatable-sm" [loading]="_taGralState.state.isLoadingList">
+        <ng-template pTemplate="header">
+            <tr class="text-sm">
+                <th class="text-center" *ngFor="let header of _taGralState.state.headerPersonalizado"
+                    id="{{ header }}">
+                    {{ header }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+            <tr>
+                <td [attr.colspan]="_taGralState.state.headerPredeterminado.length" class="text-center">
+                    {{
+                    _taGralState.state.isLoadingList
+                    ? TEMPLATE_TEXT.isLoadingOn
+                    : TEMPLATE_TEXT.isResultEmpty
+                    }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-report>
+            <tr class="text-sm">
+                <td class="text-center">{{report.CODIGO_INTERNET}}</td>
+                <td class="text-center">{{report.DESCRIPTION}}</td>
+                <td class="text-center">{{report.PRECIO_CALCULADO}}</td>
+                <td class="text-center">{{report.PRICE}}</td>
+                <td class="text-center">{{report.TITLE}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
-<div *ngIf="_taGralState.state.tipoCalculo===3">
+<!-- <div *ngIf="_taGralState.state.tipoCalculo===3">
     Personalizado diferenciado
-</div>
+</div> -->

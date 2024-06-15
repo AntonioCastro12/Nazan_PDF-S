@@ -30,8 +30,16 @@ export class predeterminadoResponse {
   Image_Link: string | null | undefined = null;
   Additional_Image_Link: string | null | undefined = null;
   BRAND: string | null | undefined = null;
-  SIZE_EXTENDED	: string | null | undefined = null;
-  COLOR	: string | null | undefined = null;
-  
+  SIZE_EXTENDED: string | null | undefined = null;
+  COLOR: string | null | undefined = null;
+
   //Faltan los precios con descuento
+}
+
+export class personalizadoResponse {
+  CODIGO_INTERNET: string | null | undefined = null;
+  DESCRIPCION: string | null | undefined = null;
+  PRECIO_CALCULADO: number = 0;
+  PRICE: number = 0;
+  TITLE: string | null | undefined = null;
 }
