@@ -106,6 +106,7 @@ export class CalcIncFormsComponent {
       DISocio: ''
 
     });
+    
   }
 
   get fg(): { [key: string]: AbstractControl } {
@@ -178,8 +179,7 @@ export class CalcIncFormsComponent {
           {
             next: (data: any) => {
               this._taGralStateService.state.personalizadoResponse = data;
-              console.log("variable state data pers: ", this._taGralStateService.state.personalizadoResponse);
-              console.log("variable predeterminado: ", this._taGralStateService.state.predeterminadoResponse);
+              console.log("predeterminado: ", this._taGralStateService.state.predeterminadoResponse.length);
             },
             error: (error: { erros: { message: string | undefined; }; }) => {
               this._toastr.error('Opps ha ocurrido un error', error.erros.message);

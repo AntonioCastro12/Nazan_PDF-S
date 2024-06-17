@@ -45,17 +45,30 @@ export class CalcIncOptionsComponent {
   handleChart() { }
 
   handleDownload() {
-    const filename = `${ReportsExcelNames.TA_GENERAL}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    let filename;
   
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    
+    let data; 
+    let title;
+
+    if(this._taGralStateService.state.predeterminadoResponse.length<=0){
+      data = this._taGralStateService.state.personalizadoResponse
+      title ='Personalizado';
+      filename = `${ReportsExcelNames.CALCULO_PERSONALIZADO}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    }else{
+      data = this._taGralStateService.state.predeterminadoResponse
+      title = 'Predeterminado';
+      filename = `${ReportsExcelNames.CALCULO_PREDETEMRINADO}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
+    }
   
-    const { taGralResponse } = this._taGralStateService.state;
+    // const { taGralResponse } = this._taGralStateService.state;
   
     // Convertir los datos de accountInformation en una hoja de cálculo
-    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(taGralResponse);
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     
     // Añadir la hoja de cálculo al libro de trabajo
-    XLSX.utils.book_append_sheet(wb, ws, 'AccountInformation');
+    XLSX.utils.book_append_sheet(wb, ws, title);
   
     // Escribir el archivo
     XLSX.writeFile(wb, filename);
