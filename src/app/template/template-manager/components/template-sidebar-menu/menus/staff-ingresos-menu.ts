@@ -34,6 +34,19 @@ export const staffIngresosMenu = [
       },
     ],
   },
+  {
+    label: 'Operaciones',
+    icon: 'pi pi-fw pi-truck',
+    expanded: true,
+    disabled: true,
+    items: [
+      {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+    ],
+  },
 ];
 
 function goMap() {

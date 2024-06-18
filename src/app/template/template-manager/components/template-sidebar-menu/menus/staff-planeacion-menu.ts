@@ -10,6 +10,35 @@ export const staffPlaneacionMenu = [
     ],
   },
   {
+    label: 'Operaciones',
+    icon: 'pi pi-fw pi-truck',
+    expanded: true,
+    disabled: true,
+    items: [
+      {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+      {
+        label: 'Tiempo Aire',
+        items: [
+          {
+            label: 'Reporte General Recargas TA',
+
+            routerLink: ['tiempo-aire-gral'],
+          },
+          {
+            label: 'Reporte Detalle Recargas TA',
+
+            routerLink: ['tiempo-aire-detalle'],
+          },
+          
+        ],
+      },
+    ],
+  },
+  {
     label: 'Planeación y Compras',
     icon: 'pi pi-fw pi-list',
     items: [
