@@ -61,9 +61,7 @@ export class CalcIncOptionsComponent {
       title = 'Predeterminado';
       filename = `${ReportsExcelNames.CALCULO_PREDETEMRINADO}${DateTime.local().toFormat('yyyy-MM-dd_HH_mm_ss')}.xlsx`;
     }
-  
-    // const { taGralResponse } = this._taGralStateService.state;
-  
+    
     // Convertir los datos de accountInformation en una hoja de cálculo
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     

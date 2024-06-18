@@ -116,6 +116,7 @@ export class CalcIncFormsComponent {
   socioSubmit() {
     this._taGralStateService.state.personalizadoResponse = [];
     this._taGralStateService.state.predeterminadoResponse = [];
+    this._taGralStateService.state.isLoadingList = true;
 
     let formItems = this._taGralStateService.state.form.value;
     const cadenacat = formItems.catalogos.join(',');
@@ -155,6 +156,7 @@ export class CalcIncFormsComponent {
               console.error(error);
             },
             complete: () => {
+              this._taGralStateService.state.isLoadingList = false;
             },
 
           }
@@ -186,6 +188,7 @@ export class CalcIncFormsComponent {
               console.error(error);
             },
             complete: () => {
+              this._taGralStateService.state.isLoadingList = false;
             },
 
           }
@@ -220,6 +223,7 @@ export class CalcIncFormsComponent {
               console.error(error);
             },
             complete: () => {
+              this._taGralStateService.state.isLoadingList = false;
             },
 
           }
