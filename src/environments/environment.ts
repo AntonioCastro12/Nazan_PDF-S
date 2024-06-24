@@ -3,10 +3,10 @@ export const environment = {
   production: true,
   hostname: 'localhost',
   //host: 'http://localhost',
-  apiUrl: 'http://localhost:4090',
+  // apiUrl: 'http://localhost:4090',
   host: 'https://administrativo.impuls.com.mx',
 
-  // apiUrl: 'https://administrativoapi.impuls.com.mx',
+  apiUrl: 'https://administrativoapi.impuls.com.mx',
 
   apiSecurity: 'https://hydra.impuls.com.mx',
   utilityUrl: 'https://utilityapi.impuls.com.mx',
