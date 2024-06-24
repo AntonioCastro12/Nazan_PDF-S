@@ -32,7 +32,10 @@ export class predeterminadoResponse {
   BRAND: string | null | undefined = null;
   SIZE_EXTENDED: string | null | undefined = null;
   COLOR: string | null | undefined = null;
-
+  Diez?:number
+  Veinte?:number
+  Treinta?:number
+  
   //Faltan los precios con descuento
 }
 

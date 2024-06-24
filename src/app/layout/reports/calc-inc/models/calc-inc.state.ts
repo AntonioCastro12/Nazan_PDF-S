@@ -25,8 +25,6 @@ export class TaGralResumeState {
     'Descripción',
     'Precio',
     'Link',
-    'Link Imagen',
-    'Link Adicional Imagen',
     'Marca',
     'Talla',
     'Color'

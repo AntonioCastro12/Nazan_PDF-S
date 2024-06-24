@@ -17,4 +17,5 @@ export class CalcStateService {
    constructor() {
     this.state$.subscribe((state) => (this.state = state));
   }
+  
 }

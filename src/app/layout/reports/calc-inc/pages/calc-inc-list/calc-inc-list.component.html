@@ -27,11 +27,18 @@
                 <td class="text-center">{{report.DESCRIPTION}}</td>
                 <td class="text-center">{{report.PRICE}}</td>
                 <td class="text-center">{{report.LINK}}</td>
-                <td class="text-center">{{report.IMAGE_LINK}}</td>
-                <td class="text-center">{{report.ADDITIONAL_IMAGE_LINK}}</td>
+                <!-- <td class="text-center">{{report.IMAGE_LINK}}</td>
+                <td class="text-center">{{report.ADDITIONAL_IMAGE_LINK}}</td> -->
                 <td class="text-center">{{report.BRAND}}</td>
                 <td class="text-center">{{report.SIZE_EXTENDED}}</td>
                 <td class="text-center">{{report.COLOR}}</td>
+                <td *ngIf="report.Diez > 0" class="text-center">{{report.Diez}}</td>
+                <td *ngIf="report.Veinte > 0" class="text-center">{{report.Veinte}}</td>
+                <td *ngIf="report.Treinta > 0" class="text-center">{{report.Treinta}}</td>
+                <td *ngIf="report.Cuarenta > 0"  class="text-center">{{report.Cuarenta}}</td>
+                <td  *ngIf="report.Cincuenta > 0" class="text-center">{{report.Cincuenta}}</td>
+                <td *ngIf="report.Sesenta > 0"  class="text-center">{{report.Sesenta}}</td>
+                <td *ngIf="report.Setenta > 0"  class="text-center">{{report.Setenta}}</td>
             </tr>
         </ng-template>
     </p-table>
