@@ -30,6 +30,27 @@ export const tiendaMenuMenudeo = [
         ],
       },
       {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+      {
+        label: 'Tiempo Aire',
+        items: [
+          {
+            label: 'Reporte General Recargas TA',
+
+            routerLink: ['tiempo-aire-gral'],
+          },
+          {
+            label: 'Reporte Detalle Recargas TA',
+
+            routerLink: ['tiempo-aire-detalle'],
+          },
+          
+        ],
+      },
+      {
         label: 'Ventas',
 
         items: [

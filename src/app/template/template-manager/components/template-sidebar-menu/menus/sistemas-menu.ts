@@ -37,6 +37,27 @@ export const sistemasMenu = [
         ],
       },
       {
+        label: 'Crédito de Socios',
+
+        routerLink: ['credito-socios'],
+      },
+      {
+        label: 'Tiempo Aire',
+        items: [
+          {
+            label: 'Reporte General Recargas TA',
+
+            routerLink: ['tiempo-aire-gral'],
+          },
+          {
+            label: 'Reporte Detalle Recargas TA',
+
+            routerLink: ['tiempo-aire-detalle'],
+          },
+          
+        ],
+      },
+      {
         label: 'Segmentos',
 
         items: [
@@ -97,6 +118,19 @@ export const sistemasMenu = [
             routerLink: ['point-program-detail-wallet'],
           },
         ],
+      },
+      {
+        label:'Catálogos Digitales',
+        items:[
+        {
+          label:'Calculadora de Incrementos',
+          routerLink: ['calc-incremento'],
+        },
+        {
+          label:'Catálogos PDF Preciado',
+          routerLink: ['dos'],
+        }
+        ]
       },
       {
         label: 'Segmentos',

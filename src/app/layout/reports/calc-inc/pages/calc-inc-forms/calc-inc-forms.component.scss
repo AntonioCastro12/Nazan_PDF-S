@@ -1,0 +1,28 @@
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem; /* Ajusta el espacio entre elementos según sea necesario */
+  }
+  
+  .checkbox-item {
+    flex: 1 1 20%; /* Cada elemento ocupará el 25% del ancho del contenedor */
+    display: flex;
+    align-items: center;
+  }
+  
+
+  //personalizado general
+  .input-row {
+    display: flex;
+    gap: 20px; /* Espacio entre cada grupo de entrada */
+  }
+  
+  .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group label {
+    margin-right: 5px;
+  }
+  

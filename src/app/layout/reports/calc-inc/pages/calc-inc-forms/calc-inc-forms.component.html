@@ -1,0 +1,134 @@
+<!-- Form ******************************************************* -->
+<section class="container" *ngIf="_taGralStateService.state.isVisibleForm">
+  <div class="mt-5 mb-2">
+    <h5>Catálogo:</h5>
+  </div>
+  <p-progressSpinner *ngIf="_taGralStateService.state.isLoadingCatalogues"></p-progressSpinner>
+
+  <div *ngIf="!_taGralStateService.state.isLoadingCatalogues">
+    <!-- Form para realizar busqueda por numero de socio -->
+    <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
+      <article class="formgrid grid">
+        <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
+          <div class="form-field--container">
+            <div class="card ">
+              <!-- <form class="flex align-items-center gap-1" > -->
+              <div class="flex align-items-center gap-1"
+                *ngFor="let catalogo of _taGralStateService.state.catActuales; let i = index">
+                <p-checkbox formControlName="catalogos" value="{{catalogo.Id}}" />
+                <label for="ny">{{catalogo.Catalogo}}</label>
+              </div>
+              <!-- </form> -->
+            </div>
+          </div>
+        </section>
+        <section #memberId class="mb-1 col-12 md:col-6 lg:col-6">
+          <div class="form-field--container">
+            <div class="select-descuento" style="margin-bottom: 10px;">
+              <p-button label="Predeterminado" severity="contrast" (click)="predeterminado()"
+                [ngStyle]="{'margin-right': '33%'}" />
+
+              <p-button label="Personalizado" severity="contrast" (click)="personalizado()" />
+
+            </div>
+            <div class="opciones-calculo">
+              <div *ngIf="_taGralStateService.state.predeterminado">
+
+                <h3 style="margin-bottom: 0;">Predeterminado</h3>
+                <p>Seleccione % de incremento: </p>
+
+                <div class="checkbox-container">
+
+                  <div class="checkbox-item"
+                    *ngFor="let descuento of _taGralStateService.state.descPredeterminado; let i = index">
+                    <p-checkbox formControlName="incPred" [value]="descuento.idDescuento"
+                      [ngStyle]="{'margin-right': '5%'}"></p-checkbox>
+                    <label for="ny">{{descuento.descuento}}</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Personalizado -->
+              <div *ngIf="!_taGralStateService.state.predeterminado">
+                <h3 style="margin-bottom: 0;">Personalizado</h3>
+                <p>Seleccione tipo de incremento: </p>
+                <div class="select-descuento" style="margin-bottom: 10px;">
+                  <p-button label="General (NAC/IMP)" severity="contrast" (click)="general()"
+                    [ngStyle]="{'margin-right': '15%'}" />
+                  <p-button label="Diferenciado" severity="contrast" (click)="diferenciado()" />
+                </div>
+
+                <div class="opciones-personalizado">
+                  <div *ngIf="_taGralStateService.state.PersonalizadoGral">
+                    <h4>General</h4>
+                    <div class="input-row">
+                      <div class="input-group">
+                        <label for="l-base">Lista base (%):</label>
+                        <input id="l-base" type="text" pInputText formControlName="gralbase" />
+                      </div>
+                      <div class="input-group">
+                        <label for="i-socio">Incremento Socio (%):</label>
+                        <input id="i-socio" type="text" pInputText formControlName="gralsocio" />
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="!_taGralStateService.state.PersonalizadoGral">
+                    <article class="formgrid grid">
+                      <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
+                        <div class="form-field--container">
+
+
+                          <div class="card ">
+                            <h4>Nacional</h4>
+                            <label for="n-base">Lista base (%):</label>
+                            <input id="n-base" type="text" pInputText formControlName="DNBase" />
+
+                            <label for="n-socio">Incremento Socio (%):</label>
+                            <input id="n-socio" type="text" pInputText formControlName="DNSocio" />
+                          </div>
+                        </div>
+                      </section>
+                      <section #storeId class="mb-1 col-12 md:col-6 lg:col-6">
+                        <div class="form-field--container">
+
+
+                          <div class="card ">
+                            <h4>Importado</h4>
+                            <label for="i-base">Lista base (%):</label>
+                            <input id="i-base" type="text" pInputText formControlName="DIBase" />
+
+                            <label for="in-socio">Incremento Socio (%):</label>
+                            <input id="in-socio" type="text" pInputText formControlName="DISocio" />
+                          </div>
+                        </div>
+                      </section>
+                    </article>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+      </article>
+
+      <!-- boton para socio -->
+      <article class="flex align-items-center justify-content-start mt-5">
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
+            pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
+            [disabled]="!_taGralStateService.state.form.dirty"></button>
+        </div>
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-calculator" class="p-button-warning p-button-rounded"
+            (click)="socioSubmit()" pTooltip="Calcular" tooltipPosition="top"
+            [disabled]="!_taGralStateService.state.form.valid"></button>
+        </div>
+      </article>
+    </form>
+  </div>
+</section>
+
+
+<p-toast></p-toast>
