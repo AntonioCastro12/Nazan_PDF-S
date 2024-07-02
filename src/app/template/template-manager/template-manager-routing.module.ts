@@ -24,6 +24,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'pdf-preciado',
+        loadChildren: () =>
+          import('../../layout/reports/pdf-preciado/pdf-preciado.module').then(
+            (m) => m.PdfPreciadoModule
+          ),
+      },
+      {
         path: 'credito-socios',
         loadChildren: () =>
           import('../../layout/reports/credito-socios/credito-socios.module').then(

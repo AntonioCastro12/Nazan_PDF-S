@@ -128,7 +128,7 @@ export const sistemasMenu = [
         },
         {
           label:'Catálogos PDF Preciado',
-          routerLink: ['dos'],
+          routerLink: ['pdf-preciado'],
         }
         ]
       },
