@@ -3,7 +3,6 @@
     <div class="mt-5 mb-2">
       <span>Cargar archivos:</span>
     </div>
-
     
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 
@@ -34,8 +33,6 @@
 <div class="row m-2">
   <div class="card">
   <div class="col">
-    <!-- Shared >> Msg's -->
-
     <div *ngIf="modifiedPdfUrl">
       <h3>PDF Modificado:</h3>
       <div class="text-center">
@@ -47,24 +44,6 @@
   </div>
 </div>
 
-
-
-    <!-- <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
-      <article class="formgrid grid">
-      </article>
-  
-      <article class="flex align-items-center justify-content-start mt-5">
-        <div class="ml-3">
-          <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
-            pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
-            [disabled]="!_taGralStateService.state.form.dirty"></button>
-        </div>
-        <div class="ml-3">
-          <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="buscar()"
-            pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
-        </div>
-      </article>
-    </form> -->
   </section>
   
   <p-toast></p-toast>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PrimeNgModule } from '@shared/vendor';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
+import { SafePipe} from './safe.pipe';
  
 import {PdfPreciadoComponent} from './pdf-preciado.component';
 import {PdfPreciadoFormComponent} from './pages/pdf-preciado-form/pdf-preciado-form.component';
@@ -17,7 +18,8 @@ import { PdfPreciadoRoutingModule } from './pdf-preciado-routing.module';
     PdfPreciadoComponent,
     PdfPreciadoFormComponent,
     PdfPreciadoListComponent,
-    PdfPreciadoOptionsComponent
+    PdfPreciadoOptionsComponent,
+    SafePipe
   ],
   imports: [
     CommonModule,

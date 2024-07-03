@@ -35,6 +35,8 @@
     "@angular/platform-browser": "^17.3.6",
     "@angular/platform-browser-dynamic": "^17.3.6",
     "@angular/router": "^17.3.6",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^2.16.105",
     "@rxweb/reactive-form-validators": "^13.0.1",
     "@types/luxon": "^3.3.0",
     "chart.js": "^4.4.0",
