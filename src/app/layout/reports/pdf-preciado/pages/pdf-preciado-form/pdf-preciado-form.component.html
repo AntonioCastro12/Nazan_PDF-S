@@ -1,1 +1,70 @@
-<p>pdf-preciado-form works!</p>
+
+<section class="container" *ngIf="_taGralStateService.state.isVisibleForm">
+    <div class="mt-5 mb-2">
+      <span>Cargar archivos:</span>
+    </div>
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
+<div class="row m-4">
+
+  <div class="card">
+    <div class="form-group m-1">
+      <label class="form-label">Excel: </label>
+      <input class="form-control" type="file" id="excel" name="excel" (change)="onFileExcel($event)" accept="application/vnd.ms-excel,.csv,.xlsx">
+    </div>
+    <div class="form-group m-1">
+      <label class="form-label">PDF: </label>
+      <input class="form-control" type="file" id="pdf" name="pdf" (change)="onFilePdf($event)" accept="application/pdf">
+    </div>
+    <table class="text-center">
+      <tr>
+        <td>
+          <div class="m-1">
+            <button class="btn btn-primary" (click)="onProcessing($event)">Procesar DATOS</button>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>
+
+<div class="row m-2">
+  <div class="card">
+  <div class="col">
+    <!-- Shared >> Msg's -->
+
+    <div *ngIf="modifiedPdfUrl">
+      <h3>PDF Modificado:</h3>
+      <div class="text-center">
+        <embed [src]="modifiedPdfUrl | sanitizeUrl" width="1000" height="600" type="application/pdf">
+      </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+
+    <!-- <form [formGroup]="_taGralStateService.state.form" [autocomplete]="'off'" class="w-full">
+      <article class="formgrid grid">
+      </article>
+  
+      <article class="flex align-items-center justify-content-start mt-5">
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-filter-slash" class="p-button-secondary p-button-rounded"
+            pTooltip="Restaurar filtros" tooltipPosition="top" (click)="onReset()"
+            [disabled]="!_taGralStateService.state.form.dirty"></button>
+        </div>
+        <div class="ml-3">
+          <button pButton pRipple icon="pi pi-check" class="p-button-warning p-button-rounded" (click)="buscar()"
+            pTooltip="Buscar" tooltipPosition="top" [disabled]="!_taGralStateService.state.form.valid"></button>
+        </div>
+      </article>
+    </form> -->
+  </section>
+  
+  <p-toast></p-toast>
