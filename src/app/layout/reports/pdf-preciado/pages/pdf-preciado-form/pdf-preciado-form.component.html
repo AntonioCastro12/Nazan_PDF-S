@@ -31,19 +31,6 @@
     </div>
   </div>
 
-  <div class="row m-2">
-    <div class="card">
-      <div class="col">
-        <div *ngIf="modifiedPdfUrl">
-          <h3>PDF Modificado:</h3>
-          <div class="text-center">
-            <embed [src]="modifiedPdfUrl | sanitizeUrl" width="1000" height="600" type="application/pdf">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </section>
 
 <p-toast></p-toast>

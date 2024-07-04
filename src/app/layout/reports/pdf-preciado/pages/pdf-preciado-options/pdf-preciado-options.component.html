@@ -11,7 +11,7 @@
           (onClick)="handleSearch()"
           [rounded]="true"
         ></p-button>
-        <p-button
+        <!-- <p-button
           *ngIf="showDownload"
           (onClick)="handleDownload()"
           pTooltip="{{ TEMPLATE_TEXT.showDownload }}"
@@ -22,6 +22,15 @@
           [disabled]="
           _taGralStateService.state.taGralResponse.length <= 0
           "
+        ></p-button> -->
+        <p-button
+          *ngIf="showDownload"
+          (onClick)="handleDownload()"
+          pTooltip="{{ TEMPLATE_TEXT.showDownload }}"
+          tooltipPosition="bottom"
+          icon="pi pi-cloud-download"
+          class="mr-1"
+          [rounded]="true"
         ></p-button>
       </div>
     </section>

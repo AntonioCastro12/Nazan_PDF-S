@@ -36,16 +36,6 @@ interface ExcelData {
 })
 export class PdfPreciadoFormComponent {
 
-  /**
-   * datos para funcionamiento de lectura de excel y pdf
-   */
- // Variable que se le asigna el archivo pdf
- public pdf:File | null =null;
- // Variable que se le asigna el archivo excel
- public excel:File | null =null;
-
- //Variable para mostrar el pdf modificado
- modifiedPdfUrl: string | null = null;
 
  //variable para accesar a los datos del excel ID-codigoInternet   PRICE-Precio
  rows: ExcelData[] = [ { ID: "Find", PRICE: "Find3" }];
@@ -57,7 +47,7 @@ export class PdfPreciadoFormComponent {
       if(target.files[0].name.substring(target.files[0].name.lastIndexOf('.'),target.files[0].name.length) != ".xlsx")
         return;
       //this.excel = target.files[0].name;
-      this.excel = target.files[0];
+      this._taGralStateService.state.excel = target.files[0];
   }
   else{
     console.log("Vacio");
@@ -65,7 +55,7 @@ export class PdfPreciadoFormComponent {
 }
 
 onProcessingExcel(event: Event):void{
-  if(this.excel == null){
+  if(this._taGralStateService.state.excel == null){
     alert("EXCEL VACIO");
     return;
   }
@@ -74,8 +64,8 @@ onProcessingExcel(event: Event):void{
 
 async ReadExcel(){
   console.log("Reading excel file")
-  if(this.excel != null){
-    const arrayBuffer = await this.excel.arrayBuffer();
+  if(this._taGralStateService.state.excel != null){
+    const arrayBuffer = await this._taGralStateService.state.excel.arrayBuffer();
     var workbook = XLSX.read(arrayBuffer);
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const lstData = XLSX.utils.sheet_to_json<ExcelData>(worksheet);
@@ -92,7 +82,7 @@ onFilePdf(event: Event) :void{
   if (target.files && target.files.length > 0) {
       if(target.files[0].name.substring(target.files[0].name.lastIndexOf('.'),target.files[0].name.length) != ".pdf")
         return;
-      this.pdf = target.files[0];
+      this._taGralStateService.state.pdf = target.files[0];
   }
   else{
     console.log("Vacio");
@@ -100,7 +90,7 @@ onFilePdf(event: Event) :void{
 }
 
 onProcessingPDF(event: Event):void{
-  if(this.pdf == null){
+  if(this._taGralStateService.state.pdf == null){
     alert("PDF VACIO");
     return;
   }
@@ -109,16 +99,12 @@ onProcessingPDF(event: Event):void{
 
 async UpdatePDF(){
   console.log("updating pdf file")
-if(this.pdf != null){
+if(this._taGralStateService.state.pdf != null){
 
 
-    const arrayBuffer = await this.pdf.arrayBuffer();
+    const arrayBuffer = await this._taGralStateService.state.pdf.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const pdfDoc = await PDFDocument.load(arrayBuffer);
-
-    //const searchWord = '768154'; // El código de internet que deseas buscar
-    //const numberToAdd = '$ 2,345.00'; // El número que deseas agregar
-
 
     for(let f=1; f < this.rows.length; f++)
     {
@@ -149,7 +135,7 @@ if(this.pdf != null){
                 maxWidth:width,
                 lineHeight:height,
                 size: 12,
-                color: rgb(1, 0, 0),
+                color: rgb(1, 1, 1),
               });
             }
           }
@@ -157,7 +143,7 @@ if(this.pdf != null){
     }
     const modifiedPdfBytes = await pdfDoc.save();
     const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-    this.modifiedPdfUrl = URL.createObjectURL(blob);
+    this._taGralStateService.state.modifiedPdfUrl = URL.createObjectURL(blob);
   }
   console.log("Pdf url ")
 }
@@ -165,16 +151,15 @@ if(this.pdf != null){
 // ********************* PROCESAR DATA
 onProcessing(event: Event):void{
 
-  if(this.excel == null){
+  if(this._taGralStateService.state.excel == null){
     alert("EXCEL VACIO");
     return;
   }
 
-  if(this.pdf == null){
+  if(this._taGralStateService.state.pdf == null){
     alert("PDF VACIO");
     return;
   }
-
 
   console.log("Procesando Datos");
   this.ProccessData();
@@ -223,7 +208,7 @@ async onFileSelected(event: Event) {
 
     const modifiedPdfBytes = await pdfDoc.save();
     const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-    this.modifiedPdfUrl = URL.createObjectURL(blob);
+    this._taGralStateService.state.modifiedPdfUrl = URL.createObjectURL(blob);
   }
 }
 

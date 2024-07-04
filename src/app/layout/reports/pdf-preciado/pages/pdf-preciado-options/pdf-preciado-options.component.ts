@@ -49,7 +49,7 @@ export class PdfPreciadoOptionsComponent {
   
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
   
-    const { taGralResponse } = this._taGralStateService.state;
+    const  taGralResponse: any []  = [];
   
     // Convertir los datos de accountInformation en una hoja de cálculo
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(taGralResponse);

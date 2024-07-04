@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { PdfPreciadoApiService, PdfPreciadoStateService } from '../../services';
 
 @Component({
   selector: 'pdf-preciado-list',
@@ -6,5 +7,11 @@ import { Component } from '@angular/core';
   styleUrl: './pdf-preciado-list.component.scss'
 })
 export class PdfPreciadoListComponent {
+
+  constructor(
+    public _taGralStateService: PdfPreciadoStateService,
+    public _taServiceApi: PdfPreciadoApiService,
+  ) { }
+
 
 }
