@@ -135,7 +135,7 @@ if(this._taGralStateService.state.pdf != null){
                 maxWidth:width,
                 lineHeight:height,
                 size: 12,
-                color: rgb(1, 1, 1),
+                color: rgb(1, 0, 0),
               });
             }
           }
@@ -173,44 +173,7 @@ ProccessData(){
 //******************************************* */
 
 
-async onFileSelected(event: Event) {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files.length > 0) {
-    const file = input.files[0];
-    const arrayBuffer = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
-    const pdfDoc = await PDFDocument.load(arrayBuffer);
-    const searchWord = 'ETIQUETAS'; // El código de internet que deseas buscar
-    const numberToAdd = '2345'; // El número que deseas agregar
-
-    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-      const page = await pdf.getPage(pageNum);
-      const textContent = await page.getTextContent();
-
-      const items = textContent.items.map(item => item as any);
-      const pageText = items.map(item => item.str).join(' ');
-
-      for (let i = 0; i < items.length; i++) {
-        if (items[i].str.includes(searchWord)) {
-          const { x, y, width, height } = items[i].transform;
-          const pdfPage = pdfDoc.getPage(pageNum - 1);
-
-          pdfPage.drawText(numberToAdd, {
-            x: x,
-            y: y + 10, // Ajusta esta posición según necesites
-            size: 38,
-            color: rgb(1, 0, 0),
-          });
-        }
-      }
-    }
-
-    const modifiedPdfBytes = await pdfDoc.save();
-    const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-    this._taGralStateService.state.modifiedPdfUrl = URL.createObjectURL(blob);
-  }
-}
 
 
 
