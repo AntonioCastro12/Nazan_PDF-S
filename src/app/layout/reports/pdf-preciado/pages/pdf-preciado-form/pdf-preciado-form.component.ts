@@ -106,7 +106,7 @@ if(this._taGralStateService.state.pdf != null){
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
     const pdfDoc = await PDFDocument.load(arrayBuffer);
 
-    for(let f=1; f < this.rows.length; f++)
+    for(let f=0; f < this.rows.length; f++)
     {
         console.log("codigoInternet: " + this.rows[f].ID + " - Precio: " + this.rows[f].PRICE);
         const searchWord = this.rows[f].ID.toString();
@@ -129,13 +129,21 @@ if(this._taGralStateService.state.pdf != null){
               //console.log(items[i].transform);
               const pdfPage = pdfDoc.getPage(pageNum - 1);
 
+              pdfPage.drawRectangle({
+                x: width +140,
+                y: height -5, // ajusta la posición del fondo
+                width: 40,
+                height: 20,
+                color: rgb(0.9, 0.9, 0.9)
+              });
+
               pdfPage.drawText(numberToAdd, {
-                x: width +2,
-                y: height + 15, // Ajusta esta posición según necesites
+                x: width +150,
+                y: height + 0, // Ajusta esta posición según necesites
                 maxWidth:width,
                 lineHeight:height,
                 size: 12,
-                color: rgb(1, 0, 0),
+                color: rgb(0, 0, 0),
               });
             }
           }

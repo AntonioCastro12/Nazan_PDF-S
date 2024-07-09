@@ -1,51 +1,10 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+
 <section class="container" *ngIf="_taGralStateService.state.isVisibleForm">
   <div class="mt-5 mb-2">
     <span>Cargar archivos:</span>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
-
-  <!-- <div class="row m-4">
-
-    <div class="card">
-      <div class="form-group m-1">
-        <label class="form-label">Excel: </label>
-        <input class="form-control" type="file" id="excel" name="excel" (change)="onFileExcel($event)"
-          accept="application/vnd.ms-excel,.csv,.xlsx">
-      </div>
-      <div class="form-group m-1">
-        <label class="form-label">PDF: </label>
-        <input class="form-control" type="file" id="pdf" name="pdf" (change)="onFilePdf($event)"
-          accept="application/pdf">
-      </div>
-      <table class="text-center">
-        <tr>
-          <td>
-            <div class="m-1">
-              <button class="btn btn-primary" (click)="onProcessing($event)">Procesar DATOS</button>
-            </div>
-          </td>
-        </tr>
-      </table>
-
-    </div>
-  </div> -->
-
-  <!-- <div class="p-m-4">
-    <div class="p-card">
-      <div class="p-field p-m-1">
-        <label for="excel">Excel:</label>
-        <input pInputText type="file" id="excel" name="excel" (change)="onFileExcel($event)" accept="application/vnd.ms-excel,.csv,.xlsx">
-      </div>
-      <div class="p-field p-m-1">
-        <label for="pdf">PDF:</label>
-        <input pInputText type="file" id="pdf" name="pdf" (change)="onFilePdf($event)" accept="application/pdf">
-      </div>
-      <div class="p-d-flex p-jc-center p-m-1">
-        <button pButton type="button" label="Procesar DATOS" (click)="onProcessing($event)" class="p-button-primary"></button>
-      </div>
-    </div>
-  </div> -->
 
   <div class="p-m-4">
     <!-- <div class="p-card"> -->
