@@ -25,11 +25,19 @@ const routes: Routes = [
       },
       {
         path: 'pdf-preciado',
+        // console.log('LLEGA AL ROUTES'),
         loadChildren: () =>
-          import('../../layout/reports/pdf-preciado/pdf-preciado.module').then(
-            (m) => m.PdfPreciadoModule
+          import('../../layout/reports/pdf-generete/pdf-excel/pdf-generete.module').then(
+            (m) => m.PdfAppModule
           ),
       },
+      // {
+      //   path: 'pdf-generete',
+      //   loadChildren: () =>
+      //     import('../../layout/reports/pdf-generete/pdf-excel/pdf-generete.module').then(
+      //       (m) => m.PdfAppModule
+      //     ),
+      // },
       {
         path: 'credito-socios',
         loadChildren: () =>

@@ -54,7 +54,7 @@ export const sistemasMenu = [
 
             routerLink: ['tiempo-aire-detalle'],
           },
-          
+
         ],
       },
       {
