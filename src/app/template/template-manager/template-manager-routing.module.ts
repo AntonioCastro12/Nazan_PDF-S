@@ -31,20 +31,17 @@ const routes: Routes = [
             (m) => m.PdfAppModule
           ),
       },
-      // {
-      //   path: 'pdf-generete',
-      //   loadChildren: () =>
-      //     import('../../layout/reports/pdf-generete/pdf-excel/pdf-generete.module').then(
-      //       (m) => m.PdfAppModule
-      //     ),
-      // },
+
       {
-        path: 'credito-socios',
+        path: 'app-plantillas-pdf',
+        // console.log('LLEGA AL ROUTES'),
         loadChildren: () =>
-          import('../../layout/reports/credito-socios/credito-socios.module').then(
-            (m) => m.CreditoSociosModule
+          import('../../layout/reports/PDF-Plantillas/Plantillas/Plantillas-generete.module').then(
+            (m) => m.PlantillaModule
           ),
       },
+
+
       {
         path: 'tiempo-aire-gral',
         loadChildren: () =>

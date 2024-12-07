@@ -1,1 +1,48 @@
-<p>plantillas works!</p>
+<div class="container my-5">
+  <h1 class="text-center text-primary mb-4">Plantillas PDF</h1>
+
+  <div class="row">
+    <!-- Carga de PDF -->
+    <div class="col-lg-6 col-md-12 mb-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h2 class="h5 text-center text-secondary mb-4">Carga el PDF</h2>
+          <input
+            type="file"
+            id="pdf-upload"
+            class="form-control mb-3"
+            accept=".pdf"
+            (change)="onFileSelected($event)"
+          />
+          <div *ngIf="pdfUrl">
+            <ngx-extended-pdf-viewer [src]="pdfUrl" [height]="'500px'" [showSidebarButton]="true"></ngx-extended-pdf-viewer>
+            <button class="btn btn-success mt-3" (click)="addToFavorites()">Agregar a Favoritos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de favoritos -->
+    <div class="col-lg-6 col-md-12 mb-4">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body">
+          <h2 class="h5 text-center text-secondary mb-4">Favoritos</h2>
+          <div *ngIf="favorites.length > 0">
+            <ul class="list-group">
+              <li *ngFor="let favorite of favorites" class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ favorite.name }}</span>
+                <div>
+                  <button class="btn btn-link text-primary" (click)="openFavorite(favorite)">Abrir</button>
+                  <button class="btn btn-link text-danger" (click)="removeFavorite(favorite)">Eliminar</button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="favorites.length === 0" class="text-center text-secondary">
+            No hay favoritos guardados.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

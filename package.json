@@ -45,6 +45,7 @@
     "git-describe": "^4.1.1",
     "luxon": "^3.3.0",
     "luxon-angular": "^6.0.0",
+    "ngx-extended-pdf-viewer": "^22.0.1",
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^18.0.0",
     "pdf-lib": "^1.17.1",

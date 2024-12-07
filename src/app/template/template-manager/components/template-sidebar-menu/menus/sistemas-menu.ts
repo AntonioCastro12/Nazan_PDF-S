@@ -129,7 +129,12 @@ export const sistemasMenu = [
         {
           label:'Catálogos PDF Preciado',
           routerLink: ['pdf-preciado'],
+        },
+        {
+          label:'Plantillas PDF',
+          routerLink: ['app-plantillas-pdf'],
         }
+
         ]
       },
       {
