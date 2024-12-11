@@ -83,7 +83,7 @@ export class PdfExcelComponent {
     this.selectedCells
       .filter((cell) => cell.page === this.currentPage)
       .forEach((cell) => {
-        context.fillStyle = 'rgba(0, 255, 0, 0.2)';
+        context.fillStyle = 'rgba(0, 255, 0, 1)';
         context.fillRect(cell.x, canvasHeight - cell.y - cellSize, cellSize, cellSize);
       });
   }
@@ -192,7 +192,7 @@ export class PdfExcelComponent {
                 margenX: 20,
                 margenY: 30,
                 espacioEntreLineas: 15,
-                tamanioFuente: 10,
+                tamanioFuente: 15,
               }
             );
           }
