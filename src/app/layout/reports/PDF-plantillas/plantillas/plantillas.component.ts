@@ -185,28 +185,29 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./plantillas.component.scss'],
 })
 export class PlantillasComponent {
-  public pdfUrl: SafeResourceUrl | null = null;
-  public annotations: { x: number; y: number }[] = [];
-  public favorites: { name: string; url: SafeResourceUrl }[] = [];
+  public pdfUrl: SafeResourceUrl | null = null; // URL segura para el visor PDF
+  public annotations: { x: number; y: number }[] = []; // Coordenadas de las anotaciones
+  public favorites: { name: string; url: SafeResourceUrl }[] = []; // Archivos favoritos
 
   @ViewChild('pdfViewer', { static: false }) pdfViewer!: ElementRef<HTMLIFrameElement>;
 
   constructor(private sanitizer: DomSanitizer) {}
 
-  // Maneja la carga de archivos PDF
-  onFileSelected(event: any) {
+  // Cargar un archivo PDF
+  onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file && file.type === 'application/pdf') {
       const unsafeUrl = URL.createObjectURL(file);
       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
+      this.annotations = []; // Reinicia las anotaciones al cargar un nuevo PDF
     } else {
       alert('Por favor, selecciona un archivo PDF válido.');
     }
   }
 
-  // Maneja el clic en el PDF
-  onPdfClick(event: MouseEvent) {
-    const overlay = this.pdfViewer.nativeElement.parentElement?.querySelector('.overlay');
+  // Manejar clic en el visor PDF
+  onPdfClick(event: MouseEvent): void {
+    const overlay = this.pdfViewer.nativeElement.parentElement?.querySelector('.overlay') as HTMLElement;
     if (!overlay) {
       console.error('Overlay no encontrado.');
       return;
@@ -229,7 +230,7 @@ export class PlantillasComponent {
   }
 
   // Añadir PDF a favoritos
-  addToFavorites() {
+  addToFavorites(): void {
     if (this.pdfUrl) {
       const name = prompt('Introduce un nombre para este archivo:');
       if (name) {
@@ -241,19 +242,17 @@ export class PlantillasComponent {
     }
   }
 
-  openFavorite(favorite: { name: string; url: SafeResourceUrl }) {
+  // Abrir un archivo favorito
+  openFavorite(favorite: { name: string; url: SafeResourceUrl }): void {
     this.pdfUrl = favorite.url;
-    this.annotations = []; // Resetea las anotaciones al cambiar de PDF
+    this.annotations = []; // Reinicia las anotaciones al cambiar de PDF
   }
 
-  // Eliminar PDF de favoritos
-  removeFavorite(favorite: { name: string; url: SafeResourceUrl }) {
+  // Eliminar un archivo favorito
+  removeFavorite(favorite: { name: string; url: SafeResourceUrl }): void {
     const confirmation = confirm(`¿Estás seguro de eliminar "${favorite.name}" de favoritos?`);
     if (confirmation) {
       this.favorites = this.favorites.filter((item) => item !== favorite);
     }
   }
 }
-
-
-
