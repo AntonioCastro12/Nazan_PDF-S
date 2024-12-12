@@ -4,35 +4,35 @@
 // import * as pdfjsLib from 'pdfjs-dist';
 // import * as XLSX from 'xlsx';
 
-// (pdfjsLib as any).GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js`;
-
-// @Component({
-//   selector: 'app-plantillas',
-//   templateUrl: './plantillas.component.html',
-//   styleUrls: ['./plantillas.component.css']
-// })
-// export class PlantillasComponent {
-//   // Variables y propiedades que se usan en la plantilla HTML
-//   public data: any[] = [];
-//   public displayedColumns = [
-//     'CODIGO_INTERNET',
-//     'Diez',
-//     'Veinte',
-//     'Treinta',
-//     'Cuarenta',
-//     'Cincuenta',
-//     'Sesenta',
-//     'Setenta',
-//   ];
-//   public selectedColumn: string = '';
-//   public pdfDoc: PDFDocument | null = null;
-//   public pdfjsDoc: any = null;
-//   public isDownloading: boolean = false;
-//   public downloadProgress: number = 0;
-//   public manualPositions: { [key: string]: { x: number; y: number; page: number; price: number } } = {};
-//   public positionedPrices: { [page: number]: { x: number; y: number }[] } = {};
-//   public selectedCells: { x: number; y: number; page: number }[] = [];
-//   public currentPage: number = 1;
+@Component({
+  selector: 'app-pdf-excel',
+  templateUrl: './pdf-excel.component.html',
+  styleUrls: ['./pdf-excel.component.css']
+})
+export class PdfExcelComponent {
+  public data: any[] = [];
+  public displayedColumns = [
+    'CODIGO_INTERNET',
+    'Perzonalizados',
+    // 'Veinte',
+    // 'Treinta',
+    // 'Cuarenta',
+    // 'Cincuenta',
+    // 'Sesenta',
+    // 'Setenta',
+    // 'Predeterminado',
+    // 'NI',
+    // 'Encontrado'
+  ];
+  public selectedColumn: string = '';
+  public pdfDoc: PDFDocument | null = null;
+  public pdfjsDoc: any = null;
+  public isDownloading: boolean = false;
+  public downloadProgress: number = 0;
+  public manualPositions: { [key: string]: { x: number; y: number; page: number; price: number } } = {};
+  public positionedPrices: { [page: number]: { x: number; y: number }[] } = {};
+  public selectedCells: { x: number; y: number; page: number }[] = [];
+  public currentPage: number = 1;
 
 //   @ViewChild('pdfCanvas', { static: false }) pdfCanvas!: ElementRef<HTMLCanvasElement>;
 
@@ -219,15 +219,16 @@
 //       const page = await pdfjsDoc.getPage(i + 1);
 //       const textContent = await page.getTextContent();
 
-//       textContent.items.forEach((item: any) => {
-//         if (item.str.includes(codigo)) {
-//           foundCoords = {
-//             x: item.transform[4],
-//             y: item.transform[5],
-//             page: i + 1,
-//           };
-//         }
-//       });
+      textContent.items.forEach((item: any) => {
+        if (item.str.includes(codigo)) {
+          foundCoords = {
+            x: item.transform[4],
+            y: item.transform[5],
+            page: i + 1,
+            scrollTop: item.transform
+          };
+        }
+      });
 
 //       if (foundCoords) break;
 //     }
