@@ -13,13 +13,13 @@ export class PdfExcelComponent {
   public data: any[] = [];
   public displayedColumns = [
     'CODIGO_INTERNET',
-    'Perzonalizados',
-    // 'Veinte',
-    // 'Treinta',
-    // 'Cuarenta',
-    // 'Cincuenta',
-    // 'Sesenta',
-    // 'Setenta',
+    'Diez',
+    'Veinte',
+    'Treinta',
+    'Cuarenta',
+    'Cincuenta',
+    'Sesenta',
+    'Setenta',
     // 'Predeterminado',
     // 'NI',
     // 'Encontrado'
@@ -83,7 +83,7 @@ export class PdfExcelComponent {
     this.selectedCells
       .filter((cell) => cell.page === this.currentPage)
       .forEach((cell) => {
-        context.fillStyle = 'rgba(0, 255, 0, 1)';
+        context.fillStyle = 'rgba(0, 255, 0, 0.2)';
         context.fillRect(cell.x, canvasHeight - cell.y - cellSize, cellSize, cellSize);
       });
   }
@@ -192,7 +192,7 @@ export class PdfExcelComponent {
                 margenX: 20,
                 margenY: 30,
                 espacioEntreLineas: 15,
-                tamanioFuente: 15,
+                tamanioFuente: 10,
               }
             );
           }
@@ -233,7 +233,6 @@ export class PdfExcelComponent {
             x: item.transform[4],
             y: item.transform[5],
             page: i + 1,
-            scrollTop: item.transform
           };
         }
       });
