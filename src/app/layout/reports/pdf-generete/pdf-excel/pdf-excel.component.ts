@@ -13,13 +13,13 @@ export class PdfExcelComponent {
   public data: any[] = [];
   public displayedColumns = [
     'CODIGO_INTERNET',
-    'Diez',
-    'Veinte',
-    'Treinta',
-    'Cuarenta',
-    'Cincuenta',
-    'Sesenta',
-    'Setenta',
+    'Perzonalizados',
+    // 'Veinte',
+    // 'Treinta',
+    // 'Cuarenta',
+    // 'Cincuenta',
+    // 'Sesenta',
+    // 'Setenta',
     // 'Predeterminado',
     // 'NI',
     // 'Encontrado'
@@ -233,6 +233,7 @@ export class PdfExcelComponent {
             x: item.transform[4],
             y: item.transform[5],
             page: i + 1,
+            scrollTop: item.transform
           };
         }
       });
