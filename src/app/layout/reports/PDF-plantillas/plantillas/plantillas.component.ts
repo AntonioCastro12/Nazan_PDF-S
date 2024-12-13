@@ -1,6 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // import { Component, ElementRef, ViewChild } from '@angular/core';
+=======
+// import { Component, OnInit } from '@angular/core';
+// import * as pdfjsLib from 'pdfjs-dist';
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
 // import { Component, OnInit } from '@angular/core';
 // import * as pdfjsLib from 'pdfjs-dist';
@@ -16,6 +21,7 @@
 //   templateUrl: './plantillas.component.html',
 //   styleUrls: ['./plantillas.component.scss'],
 // })
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 // export class PlantillasComponent {
@@ -89,11 +95,40 @@
 //       const unsafeUrl = URL.createObjectURL(file);
 //       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl); // Sanitizar URL
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
+// export class PlantillasComponent implements OnInit {
+//   public pdfUrl: SafeResourceUrl | null = null; // URL segura para el visor
+//   public favorites: { name: string; url: SafeResourceUrl }[] = []; // Lista de favoritos
+
+//   constructor(private sanitizer: DomSanitizer) {
+//     // Configuración del worker de pdf.js
+//     (pdfjsLib as any).GlobalWorkerOptions.workerSrc = 'assets/pdf.worker.min.js';
+//   }
+
+//   ngOnInit(): void {
+//     // Cargar favoritos desde localStorage al inicializar
+//     const storedFavorites = localStorage.getItem('pdfFavorites');
+//     if (storedFavorites) {
+//       this.favorites = JSON.parse(storedFavorites);
+//     }
+//   }
+
+//   /**
+//    * Maneja la selección de un archivo PDF.
+//    * @param event Evento del input de archivo.
+//    */
+//   onFileSelected(event: any) {
+//     const file = event.target.files[0];
+//     if (file && file.type === 'application/pdf') {
+//       const unsafeUrl = URL.createObjectURL(file);
+//       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl); // Sanitizar URL
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 //     } else {
 //       alert('Por favor, selecciona un archivo PDF válido.');
 //     }
 //   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 //   onPdfClick(event: MouseEvent): void {
@@ -123,6 +158,8 @@
 =======
 =======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 //   /**
 //    * Añade el PDF actual a la lista de favoritos.
 //    */
@@ -140,6 +177,7 @@
 //     }
 //   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 //   openFavorite(favorite: { name: string; url: SafeResourceUrl }): void {
@@ -171,6 +209,16 @@
 //   }
 
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
+//   /**
+//    * Abre un PDF de la lista de favoritos.
+//    * @param favorite Objeto del favorito seleccionado.
+//    */
+//   openFavorite(favorite: { name: string; url: SafeResourceUrl }) {
+//     this.pdfUrl = favorite.url;
+//   }
+
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 //   /**
 //    * Elimina un PDF de la lista de favoritos.
 //    * @param favorite Objeto del favorito a eliminar.
@@ -181,6 +229,9 @@
 //       this.favorites = this.favorites.filter((item) => item !== favorite);
 //       this.saveFavorites(); // Actualizar localStorage
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
@@ -197,7 +248,10 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
 // import { Component, ElementRef, ViewChild } from '@angular/core';
@@ -314,7 +368,12 @@ export class PlantillasComponent {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   onFileSelected(event: any): void {
+=======
+  // Maneja la carga de archivos PDF
+  onFileSelected(event: any) {
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
   // Maneja la carga de archivos PDF
   onFileSelected(event: any) {
@@ -329,7 +388,10 @@ export class PlantillasComponent {
       this.pdfUrl = this.sanitizer.bypassSecurityTrustResourceUrl(unsafeUrl);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       this.annotations = [];
+=======
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
@@ -341,8 +403,14 @@ export class PlantillasComponent {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   onPdfClick(event: MouseEvent): void {
     const overlay = this.pdfViewer.nativeElement.parentElement?.querySelector('.overlay') as HTMLElement;
+=======
+  // Maneja el clic en el PDF
+  onPdfClick(event: MouseEvent) {
+    const overlay = this.pdfViewer.nativeElement.parentElement?.querySelector('.overlay');
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
   // Maneja el clic en el PDF
   onPdfClick(event: MouseEvent) {
@@ -376,7 +444,12 @@ export class PlantillasComponent {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   addToFavorites(): void {
+=======
+  // Añadir PDF a favoritos
+  addToFavorites() {
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
   // Añadir PDF a favoritos
   addToFavorites() {
@@ -396,6 +469,7 @@ export class PlantillasComponent {
     }
   }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   openFavorite(favorite: { name: string; url: SafeResourceUrl }): void {
@@ -421,12 +495,22 @@ export class PlantillasComponent {
   }
 
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
+  openFavorite(favorite: { name: string; url: SafeResourceUrl }) {
+    this.pdfUrl = favorite.url;
+    this.annotations = []; // Resetea las anotaciones al cambiar de PDF
+  }
+
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
   // Eliminar PDF de favoritos
   removeFavorite(favorite: { name: string; url: SafeResourceUrl }) {
     const confirmation = confirm(`¿Estás seguro de eliminar "${favorite.name}" de favoritos?`);
     if (confirmation) {
       this.favorites = this.favorites.filter((item) => item !== favorite);
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 3a044f5 (Plantillas modificando)
+=======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
 =======
 >>>>>>> parent of 3a044f5 (Plantillas modificando)
